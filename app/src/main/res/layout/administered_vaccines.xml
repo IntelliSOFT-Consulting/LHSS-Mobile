@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvVaccineName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="Vaccine Name"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvDosage"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:text="dosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

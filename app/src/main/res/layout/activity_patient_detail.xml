@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".patient_list.PatientDetailActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.LHSS.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="Patient Details"
+                app:titleTextColor="@android:color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="10dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/TextAppearance.Material3.TitleMedium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mary Odhiambo" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/status"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gender:" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_gender"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/last_contact"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date of Birth:" />
+
+                            <TextView
+                                android:id="@+id/tv_dob"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextAppearance.Material3.TitleMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Contact:" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_contact"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Telephone:" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_phone"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gender:" />
+
+                            <TextView
+                                android:id="@+id/tv_contact_gender"
+                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/administered_vaccines"
+                android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnScreening"
+            android:textAllCaps="true"
+            android:text="Cross border Screening"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

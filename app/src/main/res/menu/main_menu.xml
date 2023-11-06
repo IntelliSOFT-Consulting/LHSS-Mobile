@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_item_option1"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="View Details"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_item_option2"
+        android:icon="@android:drawable/ic_lock_power_off"
+        app:iconTint="@android:color/holo_red_dark"
+        android:title="Log Out"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+</menu>
