@@ -1,5 +1,7 @@
 package com.intellisoft.lhss
 
+import android.app.ProgressDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -10,7 +12,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.intellisoft.lhss.databinding.ActivityMainBinding
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.screening.Screening
 import com.intellisoft.lhss.viewmodel.MainActivityViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +43,23 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navController.navigate(R.id.home_patient_list)
 
+        binding.addPatient.setOnClickListener {
+
+            CoroutineScope(Dispatchers.IO).launch {
+                formatter.saveSharedPref(
+                    "questionnaire",
+                    "new-patient-registration-paginated.json",
+                    this@MainActivity)
+
+                val intent = Intent(this@MainActivity, Screening::class.java)
+                startActivity(intent)
+            }
+
+        }
 
 
 
     }
+
+
 }

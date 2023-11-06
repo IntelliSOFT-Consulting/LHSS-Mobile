@@ -1,5 +1,6 @@
 package com.intellisoft.lhss.screening
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,10 @@ import com.google.android.fhir.datacapture.QuestionnaireFragment
 import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class Screening : AppCompatActivity() {
 
@@ -27,18 +32,36 @@ class Screening : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         val questionnaire = formatterClass.getSharedPref("questionnaire", this)
-        questionnaireJsonString = getStringFromAssets(questionnaire.toString())
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add(
-                    R.id.fragment_container_view,
-                    QuestionnaireFragment.builder().setQuestionnaire(questionnaireJsonString!!).build()
-                )
-            }
+
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val progressDialog = ProgressDialog(this@Screening)
+            progressDialog.setTitle("Loading form")
+            progressDialog.setMessage("Please wait")
+            progressDialog.show()
+
+            val job = Job()
+            CoroutineScope(Dispatchers.IO + job).launch {
+
+                questionnaireJsonString = getStringFromAssets(questionnaire.toString())
+                if (savedInstanceState == null) {
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        add(
+                            R.id.fragment_container_view,
+                            QuestionnaireFragment.builder().setQuestionnaire(questionnaireJsonString!!).build()
+                        )
+                    }
+                }
+
+            }.join()
+
+            progressDialog.dismiss()
+
         }
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.submit_menu, menu)
