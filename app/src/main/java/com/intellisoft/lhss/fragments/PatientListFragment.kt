@@ -35,6 +35,8 @@ import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.patient_list.PatientItemRecyclerViewAdapter
 import com.intellisoft.lhss.patient_list.PatientListViewModel
 import com.intellisoft.lhss.viewmodel.MainActivityViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.roundToInt
@@ -90,7 +92,15 @@ class PatientListFragment : Fragment() {
             },
         )
 
-        Toast.makeText(requireContext(), "Here", Toast.LENGTH_SHORT).show()
+        CoroutineScope(Dispatchers.IO).launch {
+            val patientList = patientListViewModel.getPatients()
+            println("------")
+            println(patientList)
+            println("------")
+        }
+
+
+
 
         patientListViewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
             Timber.d("Submitting ${it.count()} patient records")
