@@ -154,10 +154,10 @@ class PatientListFragment : Fragment() {
                 },
             )
 
-//        binding.apply {
-//            addPatient.setOnClickListener { onAddPatientClick() }
-//            addPatient.setColorFilter(Color.WHITE)
-//        }
+        binding.apply {
+            addPatient.setOnClickListener { onAddPatientClick() }
+            addPatient.setColorFilter(Color.WHITE)
+        }
         setHasOptionsMenu(true)
 
         lifecycleScope.launch {
@@ -215,19 +215,16 @@ class PatientListFragment : Fragment() {
     private fun onPatientItemClicked(patientItem: PatientListViewModel.PatientItem) {
 
         formatterClass.saveSharedPref("patientId",patientItem.resourceId, requireContext())
-//        val action = PatientListFragmentDirections.actionPatientListToPatientDetailActivity(patientItem.resourceId)
-//
-//
-//        findNavController().navigate(action)
+        findNavController().navigate(R.id.patientDetailActivity)
     }
 
-//    private fun onAddPatientClick() {
-//
+    private fun onAddPatientClick() {
+
 //        val bundle = Bundle()
 //        bundle.putString(QUESTIONNAIRE_FILE_PATH_KEY, "new-patient-registration-paginated.json")
 //        findNavController().navigate(R.id.addPatientFragment, bundle)
-//
-//    }
+
+    }
 
     private fun fadeInTopBanner(state: SyncJobStatus) {
         if (topBanner.visibility != View.VISIBLE) {

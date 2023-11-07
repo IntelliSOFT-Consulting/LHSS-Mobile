@@ -39,23 +39,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.triggerOneTimeSync()
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_bottem_navigation) as NavHostFragment
-        val navController = navHostFragment.navController
-        navController.navigate(R.id.home_patient_list)
+//            CoroutineScope(Dispatchers.IO).launch {
+//                formatter.saveSharedPref(
+//                    "questionnaire",
+//                    "new-patient-registration-paginated.json",
+//                    this@MainActivity)
+//
+//                val intent = Intent(this@MainActivity, Screening::class.java)
+//                startActivity(intent)
+//            }
 
-        binding.addPatient.setOnClickListener {
-
-            CoroutineScope(Dispatchers.IO).launch {
-                formatter.saveSharedPref(
-                    "questionnaire",
-                    "new-patient-registration-paginated.json",
-                    this@MainActivity)
-
-                val intent = Intent(this@MainActivity, Screening::class.java)
-                startActivity(intent)
-            }
-
-        }
 
 
 
