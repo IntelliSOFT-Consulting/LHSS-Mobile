@@ -148,37 +148,8 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
     override fun toString(): String = code
   }
 
-  fun getPatients() = runBlocking {
-    getPatientsList("")
-  }
 
-  private suspend fun getPatientsList(nameQuery: String) : MutableList<PatientItem> {
 
-    val patients: MutableList<PatientItem> = mutableListOf()
-    fhirEngine
-      .search<Patient> {
-        if (nameQuery.isNotEmpty()) {
-          filter(
-            Patient.NAME,
-            {
-              modifier = StringFilterModifier.CONTAINS
-              value = nameQuery
-            },
-          )
-        }
-        sort(Patient.GIVEN, Order.ASCENDING)
-        count = 100
-        from = 0
-      }
-      .mapIndexed { index, fhirPatient -> fhirPatient.toPatientItem(index + 1) }
-      .let { patients.addAll(it) }
-
-    return patients
-  }
-
-  private fun createPatient(it: Patient) {
-    TODO("Not yet implemented")
-  }
 
   class PatientListViewModelFactory(
     private val application: Application,

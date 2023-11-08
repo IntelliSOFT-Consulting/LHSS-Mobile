@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -29,14 +28,11 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.sync.SyncJobStatus
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentPatientListBinding
-import com.intellisoft.lhss.databinding.FragmentPatientListViewBinding
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
-import com.intellisoft.lhss.patient_list.PatientItemRecyclerViewAdapter
+import com.intellisoft.lhss.patient_list.PatientListAdapter
 import com.intellisoft.lhss.patient_list.PatientListViewModel
 import com.intellisoft.lhss.viewmodel.MainActivityViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.roundToInt
@@ -57,6 +53,7 @@ class PatientListFragment : Fragment() {
         get() = _binding!!
 
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
+    private lateinit var recyclerView:RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,28 +80,20 @@ class PatientListFragment : Fragment() {
                 ),
             )
                 .get(PatientListViewModel::class.java)
-        val recyclerView: RecyclerView = binding.patientListContainer.patientList
-        val adapter = PatientItemRecyclerViewAdapter(this::onPatientItemClicked)
-        recyclerView.adapter = adapter
+        recyclerView = binding.patientListContainer.patientList
         recyclerView.addItemDecoration(
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
                 setDrawable(ColorDrawable(Color.LTGRAY))
             },
         )
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val patientList = patientListViewModel.getPatients()
-            println("------")
-            println(patientList)
-            println("------")
-        }
-
 
 
 
         patientListViewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
             Timber.d("Submitting ${it.count()} patient records")
-            adapter.submitList(it)
+            processData(it)
+
         }
 
         patientListViewModel.patientCount.observe(viewLifecycleOwner) {
@@ -205,6 +194,11 @@ class PatientListFragment : Fragment() {
         }
 
 
+    }
+
+    private fun processData(it: List<PatientListViewModel.PatientItem>) {
+        val adapter = PatientListAdapter(it, requireContext())
+        recyclerView.adapter = adapter
     }
 
     override fun onDestroyView() {
