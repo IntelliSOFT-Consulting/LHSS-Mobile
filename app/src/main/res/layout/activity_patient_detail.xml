@@ -98,15 +98,6 @@
                                 android:layout_height="wrap_content"
                                 android:text="" />
                         </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="15dp">
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -128,45 +119,9 @@
                                 android:text="" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Telephone:" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/tv_phone"
-                                style="@style/TextAppearance.MaterialComponents.Subtitle1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="4dp"
-                                android:text="" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Gender:" />
-
-                            <TextView
-                                android:id="@+id/tv_contact_gender"
-                                style="@style/TextAppearance.MaterialComponents.Subtitle2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="" />
-                        </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

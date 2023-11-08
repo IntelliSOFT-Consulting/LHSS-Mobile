@@ -64,10 +64,12 @@ class PatientDetailsViewModel(
             dob = LocalDate.parse(it.birthDateElement.valueAsString, DateTimeFormatter.ISO_DATE)
                 .toString()
             gender = it.genderElement.valueAsString
-            contact_name = if (it.hasContact()) it.contactFirstRep.name.nameAsSingleString else ""
+            contact_name = if (it.hasTelecom()) it.telecomFirstRep.value.toString() else ""
             contact_phone = if (it.hasContact()) it.contactFirstRep.telecomFirstRep.value else ""
             contact_gender =
                 if (it.hasContact()) AppUtils().capitalizeFirstLetter(it.contactFirstRep.genderElement.valueAsString) else ""
+
+
         }
 
         return PatientData(

@@ -63,8 +63,6 @@ class PatientDetailActivity : AppCompatActivity() {
                 tvGender.text = AppUtils().capitalizeFirstLetter(it.gender)
                 tvDob.text = it.dob
                 tvContact.text = it.contact_name
-                tvPhone.text = it.contact_phone
-                tvContactGender.text = it.contact_gender
             }
         }
         patientDetailsViewModel.getPatientDetailData()
