@@ -16,6 +16,7 @@
 
 package com.intellisoft.lhss.add_patient
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -27,6 +28,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.fhir.datacapture.QuestionnaireFragment
 import com.intellisoft.lhss.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.QuestionnaireResponse
 
 /** A fragment class to show patient registration screen. */
@@ -42,6 +47,7 @@ class AddPatientFragment : Fragment(R.layout.add_patient_fragment) {
     updateArguments()
     if (savedInstanceState == null) {
       addQuestionnaireFragment()
+
     }
     observePatientSaveAction()
 
@@ -76,13 +82,32 @@ class AddPatientFragment : Fragment(R.layout.add_patient_fragment) {
   }
 
   private fun addQuestionnaireFragment() {
-    childFragmentManager.commit {
-      replace(
-        R.id.add_patient_container,
-        QuestionnaireFragment.builder().setQuestionnaire(viewModel.questionnaireJson).build(),
-        QUESTIONNAIRE_FRAGMENT_TAG,
-      )
+
+    CoroutineScope(Dispatchers.Main).launch {
+
+      val progressDialog = ProgressDialog(requireContext())
+      progressDialog.setTitle("Loading Forms")
+      progressDialog.setMessage("Please wait as the form loads")
+      progressDialog.setCanceledOnTouchOutside(false)
+      progressDialog.show()
+
+      val job = Job()
+      CoroutineScope(Dispatchers.IO + job).launch {
+        childFragmentManager.commit {
+          replace(
+            R.id.add_patient_container,
+            QuestionnaireFragment.builder().setQuestionnaire(viewModel.questionnaireJson).build(),
+            QUESTIONNAIRE_FRAGMENT_TAG,
+          )
+        }
+
+      }.join()
+
+      progressDialog.dismiss()
+
     }
+
+
   }
 
   private fun onSubmitAction() {

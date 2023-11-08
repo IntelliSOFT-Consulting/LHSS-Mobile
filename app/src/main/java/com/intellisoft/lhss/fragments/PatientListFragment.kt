@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.sync.SyncJobStatus
 import com.intellisoft.lhss.R
+import com.intellisoft.lhss.add_patient.AddPatientFragment.Companion.QUESTIONNAIRE_FILE_PATH_KEY
 import com.intellisoft.lhss.databinding.FragmentPatientListBinding
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -206,17 +207,12 @@ class PatientListFragment : Fragment() {
         _binding = null
     }
 
-    private fun onPatientItemClicked(patientItem: PatientListViewModel.PatientItem) {
-
-        formatterClass.saveSharedPref("patientId",patientItem.resourceId, requireContext())
-        findNavController().navigate(R.id.patientDetailActivity)
-    }
 
     private fun onAddPatientClick() {
 
-//        val bundle = Bundle()
-//        bundle.putString(QUESTIONNAIRE_FILE_PATH_KEY, "new-patient-registration-paginated.json")
-//        findNavController().navigate(R.id.addPatientFragment, bundle)
+        val bundle = Bundle()
+        bundle.putString(QUESTIONNAIRE_FILE_PATH_KEY, "new-patient-registration-paginated.json")
+        findNavController().navigate(R.id.addPatientFragment, bundle)
 
     }
 
