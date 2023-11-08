@@ -17,6 +17,7 @@
         android:theme="@style/Theme.LHSS"
         tools:targetApi="31">
         <activity
+            android:parentActivityName=".patient_list.PatientDetailActivity"
             android:name=".screening.Screening"
             android:exported="false" />
         <activity

@@ -1,0 +1,468 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "Vital Signs",
+  "status": "active",
+  "description": "Capture LHSS Vital Signs",
+  "item": [
+    {
+      "item": [
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "Cel",
+                "display": "Cel"
+              }
+            },
+            {
+              "valueBoolean": true,
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract"
+            }
+          ],
+          "linkId": "/52479-3/52481-9/8310-5",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "8310-5",
+              "display": "Temperature (deg F) OR"
+            }
+          ],
+          "text": "Body Temperature (deg F) OR",
+          "required": false,
+          "repeats": false,
+          "item": [
+            {
+              "text": "Describes how well the body can make and disperse heat The average normal oral temperature is 98.6°F (37°C) Can be neasured in Degrees Celsius(°C)",
+              "type": "display",
+              "linkId": "/52479-3/52481-9/8310-5_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "valueBoolean": true,
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+              "valueDecimal": 60
+            }
+          ],
+          "linkId": "/52479-3/52481-9/8867-4",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "8867-4",
+              "display": "Heart Rate (beats/min)"
+            }
+          ],
+          "text": "Heart Rate (beats/min)",
+          "required": false,
+          "item": [
+            {
+              "text": "Describes the speed at which the heart pumps blood A normal resting heart rate should be between 60 to 100 beats per minute",
+              "type": "display",
+              "linkId": "/52479-3/52481-9/8867-4_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "quantity",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "{breaths}/min",
+                "display": "{breaths}/min"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "{counts/min}",
+                "display": "{counts/min}"
+              }
+            }
+          ],
+          "linkId": "/52479-3/52481-9/9279-1",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "9279-1",
+              "display": "Respiratory Rate (breaths/min)"
+            }
+          ],
+          "text": "Respiratory Rate (breaths/min)",
+          "required": false,
+          "item": [
+            {
+              "text": "Describes the number of breathes a person takes per minute. The normal respiration rate for an adult at rest is 12 to 20 breaths per minute",
+              "type": "display",
+              "linkId": "/52479-3/52481-9/9279-1_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "mm[Hg]",
+                "display": "mm[Hg]"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+              "valueDecimal": 60
+            },
+            {
+              "valueBoolean": true,
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract"
+            }
+          ],
+          "linkId": "/52479-3/52481-9/8480-6",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "8480-6",
+              "display": "Systolic Blood Pressure (mm/Hg)"
+            }
+          ],
+          "text": "Systolic Blood Pressure (mm/Hg)",
+          "required": false
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "mm[Hg]",
+                "display": "mm[Hg]"
+              }
+            },
+            {
+              "valueBoolean": true,
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract"
+            }
+          ],
+          "linkId": "/52479-3/52481-9/8462-4",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "8462-4",
+              "display": "Diastolic Blood Pressure (mm/Hg)"
+            }
+          ],
+          "text": "Diastolic Blood Pressure (mm/Hg)",
+          "required": false
+        }
+      ],
+      "type": "group",
+      "linkId": "7413795171002",
+      "code": [
+        {
+          "code": "52481-9",
+          "display": "Vital Signs"
+        }
+      ],
+      "text": "Vital Signs",
+      "required": false
+    },
+    {
+      "item": [
+        {
+          "type": "quantity",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "display": "centimeters"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "display": "feet"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "display": "inches"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "display": "meters"
+              }
+            }
+          ],
+          "linkId": "/8302-2",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "8302-2",
+              "display": "Body height"
+            }
+          ],
+          "text": "Body height",
+          "required": false,
+          "item": [
+            {
+              "text": "Height is an Observable Entity representing the height of a PATIENT",
+              "type": "display",
+              "linkId": "/8302-2_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "quantity",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "[lb_av]",
+                "display": "[lb_av]"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "kg",
+                "display": "kg"
+              }
+            }
+          ],
+          "linkId": "/3141-9",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "3141-9",
+              "display": "Weight Measured"
+            }
+          ],
+          "text": "Weight Measured",
+          "required": false,
+          "item": [
+            {
+              "text": "Describes the result of the Clinical Investigation which measures the PATIENT's Weight,  the UNIT OF MEASUREMENT is 'Kilograms (kg)'.",
+              "type": "display",
+              "linkId": "/3141-9_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "kg/m2",
+                "display": "kg/m2"
+              }
+            }
+          ],
+          "linkId": "/39156-5",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "39156-5",
+              "display": "BMI"
+            }
+          ],
+          "text": "BMI",
+          "required": false
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "[object Object]",
+                "display": "[object Object]"
+              }
+            }
+          ],
+          "linkId": "9666772650974",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "33172-8",
+              "display": "Head Circumference"
+            }
+          ],
+          "text": "Head Circumference",
+          "item": [
+            {
+              "text": "(HC) is a method of determining if infant head size is too large (megacephaly) or too small (microcephaly).",
+              "type": "display",
+              "linkId": "9666772650974_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "linkId": "492804683885",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "20081-6",
+              "display": "Pulse oximetry site"
+            }
+          ],
+          "text": "Pulse oximetry",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA11862-2",
+                "display": "Finger"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA11863-0",
+                "display": "Ear lobe"
+              }
+            }
+          ],
+          "item": [
+            {
+              "text": "A method used to measure the oxygen level of the blood",
+              "type": "display",
+              "linkId": "492804683885_helpText",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "text": "Help-Button",
+                    "coding": [
+                      {
+                        "code": "help",
+                        "display": "Help-Button",
+                        "system": "http://hl7.org/fhir/questionnaire-item-control"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "type": "group",
+      "linkId": "2475137421841",
+      "code": [
+        {
+          "code": "74728-7",
+          "display": "Vital signs, weight, height, head circumference, oximetry, BMI, and BSA panel - HL7.CCDAr1.1"
+        }
+      ],
+      "text": "Vital signs, weight, height, head circumference, oximetry, BMI, and BSA panel - HL7.CCDAr1.1",
+      "required": false
+    }
+  ]
+}

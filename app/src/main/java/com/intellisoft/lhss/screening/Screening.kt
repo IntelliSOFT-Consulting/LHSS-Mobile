@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import ca.uhn.fhir.context.FhirContext
 import ca.uhn.fhir.context.FhirVersionEnum
 import com.google.android.fhir.datacapture.QuestionnaireFragment
@@ -16,8 +17,9 @@ import com.intellisoft.lhss.R
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class Screening : AppCompatActivity() {
 
@@ -33,35 +35,31 @@ class Screening : AppCompatActivity() {
 
         val questionnaire = formatterClass.getSharedPref("questionnaire", this)
 
-        CoroutineScope(Dispatchers.Main).launch {
+        // Perform the time-consuming operation in the background using lifecycleScope
+        lifecycleScope.launch(Dispatchers.IO) {
+            val questionnaireJsonString = getStringFromAssets(questionnaire.toString())
 
-            val progressDialog = ProgressDialog(this@Screening)
-            progressDialog.setTitle("Loading form")
-            progressDialog.setMessage("Please wait")
-            progressDialog.show()
+            // Use lifecycleScope to execute the UI-related code on the main thread
+            launch(Dispatchers.Main) {
+                val questionnaireFragment = QuestionnaireFragment.builder()
+                    .setQuestionnaire(questionnaireJsonString!!)
+                    .build()
 
-            val job = Job()
-            CoroutineScope(Dispatchers.IO + job).launch {
-
-                questionnaireJsonString = getStringFromAssets(questionnaire.toString())
-                if (savedInstanceState == null) {
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        add(
-                            R.id.fragment_container_view,
-                            QuestionnaireFragment.builder().setQuestionnaire(questionnaireJsonString!!).build()
-                        )
-                    }
-                }
-
-            }.join()
-
-            progressDialog.dismiss()
-
+                addQuestionnaireFragment(questionnaireFragment)
+            }
         }
+
 
     }
 
+    private fun addQuestionnaireFragment(questionnaireFragment: QuestionnaireFragment) {
+        if (!isFinishing) {
+            // Check if the activity is not finishing before making UI changes
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container_view, questionnaireFragment)
+                .commit()
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.submit_menu, menu)

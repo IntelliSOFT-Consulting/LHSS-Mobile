@@ -70,7 +70,7 @@ class PatientDetailActivity : AppCompatActivity() {
         binding.btnScreening.setOnClickListener {
 
             formatterClass.saveSharedPref("patientId", patientId, this)
-            formatterClass.saveSharedPref("questionnaire", "screening.json", this)
+            formatterClass.saveSharedPref("questionnaire", "capture-vitals.json", this)
 
             val intent = Intent(this, Screening::class.java)
             startActivity(intent)
