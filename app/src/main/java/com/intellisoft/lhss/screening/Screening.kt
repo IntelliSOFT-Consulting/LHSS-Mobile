@@ -34,32 +34,22 @@ class Screening : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
         val questionnaire = formatterClass.getSharedPref("questionnaire", this)
+        val questionnaireJsonString = getStringFromAssets(questionnaire.toString())
 
-        // Perform the time-consuming operation in the background using lifecycleScope
-        lifecycleScope.launch(Dispatchers.IO) {
-            val questionnaireJsonString = getStringFromAssets(questionnaire.toString())
-
-            // Use lifecycleScope to execute the UI-related code on the main thread
-            launch(Dispatchers.Main) {
-                val questionnaireFragment = QuestionnaireFragment.builder()
-                    .setQuestionnaire(questionnaireJsonString!!)
-                    .build()
-
-                addQuestionnaireFragment(questionnaireFragment)
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                setReorderingAllowed(true)
+                add(
+                    R.id.fragment_container_view,
+                    QuestionnaireFragment.builder().setQuestionnaire(questionnaireJsonString!!).build()
+                )
             }
         }
 
 
+
     }
 
-    private fun addQuestionnaireFragment(questionnaireFragment: QuestionnaireFragment) {
-        if (!isFinishing) {
-            // Check if the activity is not finishing before making UI changes
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container_view, questionnaireFragment)
-                .commit()
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.submit_menu, menu)

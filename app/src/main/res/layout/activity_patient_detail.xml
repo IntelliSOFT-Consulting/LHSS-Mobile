@@ -137,16 +137,27 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
+            android:layout_weight="1"
+            android:id="@+id/btnCaptureVitals"
+            android:textAllCaps="true"
+            android:text="Capture Vitals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:id="@+id/btnScreening"
             android:textAllCaps="true"
             android:text="Cross border Screening"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 
