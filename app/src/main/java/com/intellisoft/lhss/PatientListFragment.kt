@@ -18,7 +18,6 @@ package com.intellisoft.lhss
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -39,7 +38,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 
@@ -99,7 +97,7 @@ class PatientListFragment : Fragment() {
     patientListViewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
       Timber.d("Submitting ${it.count()} patient records")
       val patientList = ArrayList(it)
-      val patientAdapter = PatientAdapter(patientList, requireContext())
+      val patientAdapter = PatientAdapter(patientList, this)
       recyclerView.adapter = patientAdapter
     }
 

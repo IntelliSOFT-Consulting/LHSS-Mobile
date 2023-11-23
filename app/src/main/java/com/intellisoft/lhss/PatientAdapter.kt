@@ -1,18 +1,15 @@
 package com.intellisoft.lhss
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.intellisoft.lhss.shared.DbPatient
 
 class PatientAdapter(
     private var dbPatientList: ArrayList<PatientListViewModel.PatientItem>,
-    private val context: Context
+    private val context: PatientListFragment
 ) : RecyclerView.Adapter<PatientAdapter.Pager2ViewHolder>() {
 
     inner class Pager2ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -29,6 +26,10 @@ class PatientAdapter(
         override fun onClick(p0: View) {
 
             val pos = adapterPosition
+            val id = dbPatientList[pos].resourceId
+            findNavController(context)
+                .navigate(PatientListFragmentDirections.navigateToProductDetail(
+                    dbPatientList[pos].resourceId))
 
         }
 
