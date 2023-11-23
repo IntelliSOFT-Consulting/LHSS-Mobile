@@ -82,6 +82,7 @@
 
       <com.google.android.material.button.MaterialButton
           android:layout_weight="1"
+          android:layout_gravity="center"
           android:id="@+id/captureVitals"
           android:layout_marginEnd="5dp"
           android:layout_width="0dp"

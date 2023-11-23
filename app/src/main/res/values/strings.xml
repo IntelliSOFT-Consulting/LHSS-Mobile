@@ -39,9 +39,9 @@
     <string name="header_conditions">Conditions</string>
     <string name="message_no_datetime">No effective DateTime</string>
     <string name="complete_survey">Complete Survey</string>
-    <string name="do_screening">Do Screening</string>
-    <string name="capture_vitals">Capture Vitals</string>
-    <string name="do_referral">Do Referral</string>
+    <string name="do_screening">CB Screening</string>
+    <string name="capture_vitals">Vitals</string>
+    <string name="do_referral">CB Referral</string>
     <string name="risk_status">Current status: </string>
     <string name="unknown">UNKNOWN</string>
     <string name="none">none</string>

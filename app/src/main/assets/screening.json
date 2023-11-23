@@ -26,21 +26,6 @@
       "text": "Demographics",
       "linkId": "2.0.0",
       "type": "group",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
       "item": [
         {
           "linkId": "2.1.0",
@@ -87,14 +72,21 @@
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "LA21588-1",
-                        "display": "Country & County / District"
+                        "display": "Kenya"
                       }
                     },
                     {
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "LA27-8",
-                        "display": "Village & Nearest Land mark"
+                        "display": "Ethiopia"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "LA27-8",
+                        "display": "Djibouti"
                       }
                     }
                   ]
@@ -253,7 +245,7 @@
               "item": [
                 {
                   "linkId": "2.3.1.1",
-                  "text": "Travelled 3Mnths ago ",
+                  "text": "Have you travelled to another country in the last 3 months",
                   "type": "choice",
                   "required": true,
                   "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
@@ -303,7 +295,7 @@
                 {
                   "valueCoding": {
                     "code": "8867-6",
-                    "display": "Travelled 3Mnths ago ",
+                    "display": "Have you travelled to another country in the last 3 months",
                     "system": "http://loinc.org"
                   }
                 }
@@ -332,7 +324,7 @@
               "item": [
                 {
                   "linkId": "2.4.1.1",
-                  "text": "Travelled 6Mnths ago ",
+                  "text": "Have you travelled to another country in the last 6 months",
                   "type": "choice",
                   "required": true,
                   "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
@@ -382,7 +374,7 @@
                 {
                   "valueCoding": {
                     "code": "8867-7",
-                    "display": "Travelled 4Mnths ago ",
+                    "display": "Have you travelled to another country in the last 12 months",
                     "system": "http://loinc.org"
                   }
                 }
@@ -411,7 +403,7 @@
               "item": [
                 {
                   "linkId": "2.5.1.1",
-                  "text": "Travelled 6Mnths ago ",
+                  "text": "Have you travelled to another country in the last 12 months",
                   "type": "choice",
                   "required": true,
                   "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
@@ -461,7 +453,7 @@
                 {
                   "valueCoding": {
                     "code": "8867-8",
-                    "display": "Travelled 12Mnths ago ",
+                    "display": "Have you travelled to another country in the last 12 months",
                     "system": "http://loinc.org"
                   }
                 }
@@ -528,21 +520,35 @@
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "Om",
-                        "display": "Once a month"
+                        "display": "Hourly"
                       }
                     },
                     {
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "N",
-                        "display": "Never"
+                        "display": "Weekly"
                       }
                     },
                     {
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "O",
-                        "display": "Other"
+                        "display": "Monthly"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Ye",
+                        "display": "Yearly"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Ne",
+                        "display": "Never"
                       }
                     }
                   ]
@@ -623,21 +629,21 @@
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "A",
-                        "display": "ART"
+                        "display": "ART Services "
                       }
                     },
                     {
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "T",
-                        "display": "TB"
+                        "display": "TB Services"
                       }
                     },
                     {
                       "valueCoding": {
                         "system": "http://loinc.org",
                         "code": "F",
-                        "display": "FP"
+                        "display": "Family Planning"
                       }
                     },
                     {
@@ -674,96 +680,6 @@
           ]
         }
 
-      ]
-    },
-    {
-      "text": "Stay Duration",
-      "type": "group",
-      "linkId": "7.0.0",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
-          "valueExpression": {
-            "language": "application/x-fhir-query",
-            "expression": "Observation",
-            "name": "duration"
-          }
-        },
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
-      "item": [
-        {
-          "text": "How long did you stay the last time you travelled to another country?",
-          "type": "display",
-          "linkId": "7.1.0"
-        },
-        {
-          "linkId": "7.2.0",
-          "type": "group",
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity",
-          "item": [
-            {
-              "text": "How long did you stay the last time you travelled to another country?",
-              "type": "decimal",
-              "linkId": "7.2.1",
-              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.value"
-            },
-            {
-              "linkId": "7.2.2",
-              "type": "string",
-              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.code",
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                  "valueBoolean": true
-                }
-              ]
-            },
-            {
-              "linkId": "7.2.3",
-              "type": "string",
-              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.system",
-              "extension": [
-                {
-                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-                  "valueBoolean": true
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "linkId": "7.3.0",
-          "type": "choice",
-          "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
-              "valueBoolean": true
-            }
-          ],
-          "initial": [
-            {
-              "valueCoding": {
-                "code": "8867-4",
-                "display": "How long did you stay the last time you travelled to another country?",
-                "system": "http://loinc.org"
-              }
-            }
-          ]
-        }
       ]
     }
   ]
