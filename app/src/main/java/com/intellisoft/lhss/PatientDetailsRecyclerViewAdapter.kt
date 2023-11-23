@@ -69,16 +69,16 @@ class PatientDetailsRecyclerViewAdapter(
     holder.bind(model)
     if (holder is PatientDetailsHeaderItemViewHolder) return
 
-    holder.itemView.background =
-      if (model.firstInGroup && model.lastInGroup) {
-        allCornersRounded()
-      } else if (model.firstInGroup) {
-        topCornersRounded()
-      } else if (model.lastInGroup) {
-        bottomCornersRounded()
-      } else {
-        noCornersRounded()
-      }
+//    holder.itemView.background =
+//      if (model.firstInGroup && model.lastInGroup) {
+//        allCornersRounded()
+//      } else if (model.firstInGroup) {
+//        topCornersRounded()
+//      } else if (model.lastInGroup) {
+//        bottomCornersRounded()
+//      } else {
+//        noCornersRounded()
+//      }
   }
 
   override fun getItemViewType(position: Int): Int {

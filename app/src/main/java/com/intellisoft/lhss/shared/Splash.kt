@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.fhir.data.FormatterClass
 
@@ -19,7 +20,7 @@ class Splash : AppCompatActivity() {
 
         Handler().postDelayed({
             if (FormatterClass().getSharedPref("isLoggedIn", this@Splash) == "true") {
-                val intent = Intent(this, Login::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

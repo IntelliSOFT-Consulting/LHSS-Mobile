@@ -82,22 +82,25 @@ class PatientListFragment : Fragment() {
     fhirEngine = FhirApplication.fhirEngine(requireContext())
     patientListViewModel =
       ViewModelProvider(
-          this,
-        PatientListViewModel.PatientListViewModelFactory(requireActivity().application, fhirEngine),
-        )
-        .get(PatientListViewModel::class.java)
+        this,
+          PatientListViewModel.PatientListViewModelFactory(requireActivity().application, fhirEngine),
+      )[PatientListViewModel::class.java]
+
     val recyclerView: RecyclerView = binding.patientListContainer.patientList
-    val adapter = PatientItemRecyclerViewAdapter(this::onPatientItemClicked)
-    recyclerView.adapter = adapter
-    recyclerView.addItemDecoration(
-      DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
-        setDrawable(ColorDrawable(Color.LTGRAY))
-      },
-    )
+
+//    val adapter = PatientItemRecyclerViewAdapter(this::onPatientItemClicked)
+
+//    recyclerView.addItemDecoration(
+//      DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL).apply {
+//        setDrawable(ColorDrawable(Color.LTGRAY))
+//      },
+//    )
 
     patientListViewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
       Timber.d("Submitting ${it.count()} patient records")
-      adapter.submitList(it)
+      val patientList = ArrayList(it)
+      val patientAdapter = PatientAdapter(patientList, requireContext())
+      recyclerView.adapter = patientAdapter
     }
 
     patientListViewModel.patientCount.observe(viewLifecycleOwner) {

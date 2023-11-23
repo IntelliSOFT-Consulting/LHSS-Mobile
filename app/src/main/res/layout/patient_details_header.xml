@@ -10,57 +10,58 @@
         android:id="@+id/patient_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/fab_margin"
-        android:background="@color/unknown_risk_background"
         android:orientation="vertical"
-        tools:ignore="UselessParent"
-    >
+        tools:ignore="UselessParent">
 
     <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Mary Odhiambo"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Mary Odhiambo"
         />
     <LinearLayout
         android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
       <TextView
-                android:id="@+id/status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current status:"
-            />
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current status:"/>
+
       <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/status_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text=""
-            />
+        android:id="@+id/status_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text=""/>
+
     </LinearLayout>
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
       <TextView
-          android:visibility="gone"
-          android:id="@+id/last_contact"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Last contacted:" />
+        android:visibility="gone"
+        android:id="@+id/last_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last contacted:" />
 
       <TextView
-                android:id="@+id/last_contact_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-            />
+        android:id="@+id/last_contact_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
     </LinearLayout>
 
 
@@ -73,28 +74,32 @@
       <com.google.android.material.button.MaterialButton
           android:layout_weight="1"
           android:id="@+id/screener"
-          android:layout_width="wrap_content"
+          android:layout_marginEnd="5dp"
+          android:layout_marginStart="5dp"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
           android:text="@string/do_screening" />
 
       <com.google.android.material.button.MaterialButton
           android:layout_weight="1"
           android:id="@+id/captureVitals"
-          android:layout_width="wrap_content"
+          android:layout_marginEnd="5dp"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_margin="5dp"
           android:text="@string/capture_vitals" />
+
+      <com.google.android.material.button.MaterialButton
+          android:layout_gravity="center"
+          android:layout_weight="1"
+          android:id="@+id/referral"
+          android:layout_marginEnd="5dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:text="@string/do_referral" />
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_weight="1"
-        android:id="@+id/referral"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/do_referral" />
+
 
   </LinearLayout>
 </FrameLayout>
