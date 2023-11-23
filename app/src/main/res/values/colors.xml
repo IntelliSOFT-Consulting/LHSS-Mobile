@@ -74,5 +74,7 @@
     <color name="outline_neutral_variant_60">#8E918F</color>
 
     <color name="colorPrimary">#175adf</color>
+    <color name="colorPrimaryDark">#072155</color>
+    <color name="colorAccent">#175adf</color>
     <color name="black">#000000</color>
 </resources>
