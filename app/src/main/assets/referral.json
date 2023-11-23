@@ -1,0 +1,411 @@
+{
+  "title": "Screener",
+  "status": "active",
+  "version": "0.0.1",
+  "publisher": "Fred Hersch (fredhersch@google.com)",
+  "resourceType": "Questionnaire",
+  "subjectType": [
+    "CarePlan"
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "CarePlan",
+        "name": "careplan"
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-entryMode",
+      "valueCode" : "prior-edit"
+    }
+  ],
+  "item": [
+    {
+      "text": "Cross Border Referral",
+      "linkId": "1786447104204",
+      "type": "group",
+      "item": [
+        {
+          "linkId": "2.1.0",
+          "type": "group",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "riskFactors"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "2.1.1",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Nationality",
+                  "linkId": "2.1.1.1",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "ke",
+                        "display": "Kenya"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Ug",
+                        "display": "Uganda"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Rw",
+                        "display": "Rwanda"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Tz",
+                        "display": "Tanzania"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Br",
+                        "display": "Burundi"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Ss",
+                        "display": "South Sudan"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "2.1.2",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "8867-4",
+                    "display": "nationality",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "2.2.0",
+          "type": "group",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "care"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "2.2.1",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "linkId": "2.2.1.1",
+                  "text": "Type of care",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Rs",
+                        "display": "Recurrent sex under influence of alcohol"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Tb",
+                        "display": "Tb treatment program"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Fp",
+                        "display": "Family Planning Services"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Mp",
+                        "display": "Maternal and child health program"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "STI",
+                        "display": "Sexually Transmitted infection program/clinic"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Hiv",
+                        "display": "Referred for HIV care and treatment"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "2.2.2",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "8867-5",
+                    "display": "Country of origin",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "date",
+          "linkId": "2951961639442",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "57202-4",
+              "display": "Date of Referral"
+            }
+          ],
+          "text": "Date of Referral",
+          "repeats": false
+        },
+        {
+          "type": "choice",
+          "linkId": "7445992029296",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "95715-9",
+              "display": "Population group"
+            }
+          ],
+          "text": "Target population",
+          "repeats": false,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31218-3",
+                "display": "Female Sex worker"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31219-1",
+                "display": "Long distance truck driver"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31220-9",
+                "display": "Clearing and forwarding agents"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31221-7",
+                "display": "Fisherfolk"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA29507-3",
+                "display": "Male who has sex with other men"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31223-3",
+                "display": "Vulnerable Women and girls"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31224-1",
+                "display": "Injecting drug user with shared needles or syringes"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA31225-8",
+                "display": "HIV Positive"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "linkId": "4422634188222",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "42349-1",
+              "display": "Reason for referral"
+            }
+          ],
+          "text": "Reason for referral"
+        },
+        {
+          "type": "string",
+          "linkId": "945393794431",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "45260-7",
+              "display": "HIV ART Rx"
+            }
+          ],
+          "text": "General comments if referred for ART"
+        },
+        {
+          "type": "string",
+          "linkId": "1466503181533",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "93341-6",
+              "display": "Referral recommendation"
+            }
+          ],
+          "text": "Referral recommendation"
+        },
+        {
+          "type": "string",
+          "linkId": "3752032450911",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "52458-7",
+              "display": "Provider's Name"
+            }
+          ],
+          "text": "Referring HC Full Names"
+        },
+        {
+          "type": "string",
+          "linkId": "6897573046881",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "74547-1",
+              "display": "Email Address:"
+            }
+          ],
+          "text": "Referring HC Full Names Email Address"
+        },
+        {
+          "type": "string",
+          "linkId": "7498176065221",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "74548-9",
+              "display": "Telephone Number:"
+            }
+          ],
+          "text": "Referring HC Provider (Telephone number with Country Code)",
+          "repeats": false
+        }
+
+
+
+      ]
+    }
+  ]
+}
