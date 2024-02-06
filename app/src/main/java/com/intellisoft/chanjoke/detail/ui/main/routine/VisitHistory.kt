@@ -1,22 +1,19 @@
 package com.intellisoft.chanjoke.detail.ui.main.routine
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.fhir.FhirEngine
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.intellisoft.chanjoke.databinding.FragmentRoutineBinding
-import com.intellisoft.chanjoke.detail.ui.main.adapters.VaccineScheduleAdapter
+import com.intellisoft.chanjoke.MainActivity
+import com.intellisoft.chanjoke.databinding.FragmentVisitHistoryBinding
 import com.intellisoft.chanjoke.fhir.FhirApplication
 import com.intellisoft.chanjoke.fhir.data.FormatterClass
-import com.intellisoft.chanjoke.vaccine.BottomSheetDialog
-import com.intellisoft.chanjoke.vaccine.validations.BasicVaccine
-import com.intellisoft.chanjoke.vaccine.validations.ImmunizationHandler
+import com.intellisoft.chanjoke.fhir.data.NavigationDetails
 import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModel
 import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModelFactory
 
@@ -28,14 +25,14 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RoutineFragment.newInstance] factory method to
+ * Use the [VisitHistory.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RoutineFragment : Fragment() {
+class VisitHistory : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentRoutineBinding
+    private lateinit var binding: FragmentVisitHistoryBinding
     private lateinit var patientDetailsViewModel: PatientDetailsViewModel
     private lateinit var patientId: String
     private lateinit var fhirEngine: FhirEngine
@@ -54,7 +51,7 @@ class RoutineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentRoutineBinding.inflate(inflater, container, false)
+        binding = FragmentVisitHistoryBinding.inflate(inflater, container, false)
 
         fhirEngine = FhirApplication.fhirEngine(requireContext())
 
@@ -64,31 +61,29 @@ class RoutineFragment : Fragment() {
             PatientDetailsViewModelFactory(requireContext().applicationContext as Application,fhirEngine, patientId)
         )[PatientDetailsViewModel::class.java]
 
-        getRoutine()
+        getVisitHistory()
+
+        binding.floatingActionButton.setOnClickListener {
+            FormatterClass().saveSharedPref(
+                "questionnaireJson",
+                "add_visit.json",
+                requireContext()
+            )
+
+            //Send to contraindications
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+            intent.putExtra("patientId", patientId)
+            startActivity(intent)
+        }
 
         return binding.root
 
     }
 
-    private fun getRoutine() {
-
-        val expandableListDetail = ImmunizationHandler().generateDbVaccineSchedule()
-        val expandableListTitle = ArrayList<String>(expandableListDetail.keys)
-
-        val vaccineScheduleAdapter = VaccineScheduleAdapter(requireContext(),
-            expandableListTitle,
-            expandableListDetail,
-            binding.tvAdministerVaccine)
-        binding.expandableListView.setAdapter(vaccineScheduleAdapter)
-
-        binding.tvAdministerVaccine.setOnClickListener {
-            val checkedStates = vaccineScheduleAdapter.getCheckedStates()
-
-            val bottomSheet = BottomSheetDialog()
-            fragmentManager?.let { it1 -> bottomSheet.show(it1, "ModalBottomSheet") }
+    private fun getVisitHistory() {
 
 
-        }
     }
 
     companion object {
@@ -98,12 +93,12 @@ class RoutineFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment RoutineFragment.
+         * @return A new instance of fragment VisitHistory.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RoutineFragment().apply {
+            VisitHistory().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

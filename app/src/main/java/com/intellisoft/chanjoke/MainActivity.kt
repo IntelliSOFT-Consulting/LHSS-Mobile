@@ -87,6 +87,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            NavigationDetails.VISIT_HISTORY.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    administerVaccine(patientId, R.id.administerVaccine)
+                }
+            }
+
             NavigationDetails.LIST_VACCINE_DETAILS.name -> {
                 val patientId = intent.getStringExtra("patientId")
                 if (patientId != null) {

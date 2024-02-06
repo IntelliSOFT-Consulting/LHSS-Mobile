@@ -1,0 +1,48 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "New Visit",
+  "status": "active",
+  "description": "New Visit",
+  "purpose": "New Visit",
+  "item": [
+    {
+      "type": "string",
+      "linkId": "7676295472922",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "92561-0",
+          "display": "Service provided"
+        }
+      ],
+      "text": "Service provided *",
+      "required": true
+    },
+    {
+      "type": "string",
+      "linkId": "9808050870522",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "96395-9",
+          "display": "Treatment Provided"
+        }
+      ],
+      "text": "Treatment Provided *",
+      "required": true
+    },
+    {
+      "type": "text",
+      "linkId": "9825275123857",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "55753-8",
+          "display": "Treatment Details"
+        }
+      ],
+      "text": "Treatment Details *",
+      "required": true
+    }
+  ]
+}

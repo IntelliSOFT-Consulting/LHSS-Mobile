@@ -15,24 +15,18 @@ import com.intellisoft.chanjoke.R
 import com.intellisoft.chanjoke.detail.ui.main.SectionsPagerAdapter
 import com.intellisoft.chanjoke.databinding.ActivityPatientDetailBinding
 import com.intellisoft.chanjoke.detail.ui.main.RecommendationFragment
-import com.intellisoft.chanjoke.detail.ui.main.VaccinesFragment
 import com.intellisoft.chanjoke.fhir.FhirApplication
 import com.intellisoft.chanjoke.utils.AppUtils
 import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModel
 import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModelFactory
 import com.google.android.fhir.FhirEngine
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.intellisoft.chanjoke.detail.ui.main.appointments.AppointmentsFragment
-import com.intellisoft.chanjoke.detail.ui.main.routine.RoutineFragment
-import com.intellisoft.chanjoke.fhir.data.DbVaccineData
+import com.intellisoft.chanjoke.detail.ui.main.routine.VisitHistory
 import com.intellisoft.chanjoke.fhir.data.FormatterClass
 import com.intellisoft.chanjoke.fhir.data.NavigationDetails
-import com.intellisoft.chanjoke.vaccine.validations.BasicVaccine
-import com.intellisoft.chanjoke.vaccine.validations.ImmunizationHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 class PatientDetailActivity : AppCompatActivity() {
     private lateinit var fhirEngine: FhirEngine
@@ -42,9 +36,6 @@ class PatientDetailActivity : AppCompatActivity() {
     //    private val args: PatientDetailActivityArgs by navArgs()
     private lateinit var binding: ActivityPatientDetailBinding
     private var formatterClass = FormatterClass()
-
-
-    private val immunizationHandler = ImmunizationHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +61,7 @@ class PatientDetailActivity : AppCompatActivity() {
 
         val adapter = SectionsPagerAdapter(supportFragmentManager)
 
-        val visitHistory = RoutineFragment()
+        val visitHistory = VisitHistory()
         visitHistory.arguments = bundle
 
         val referrals = RecommendationFragment()

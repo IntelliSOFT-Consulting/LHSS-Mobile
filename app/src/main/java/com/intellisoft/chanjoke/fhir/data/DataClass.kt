@@ -45,7 +45,9 @@ enum class NavigationDetails {
     UPDATE_CLIENT_HISTORY,
     LIST_VACCINE_DETAILS,
     CLIENT_LIST,
-    EDIT_CLIENT
+    EDIT_CLIENT,
+
+    VISIT_HISTORY,
 }
 data class DbAppointmentData(
     val id: String? = null,
