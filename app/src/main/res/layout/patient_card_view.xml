@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingVertical="@dimen/fab_margin">
+
+  <LinearLayout
+      android:background="@color/white"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <TextView
+        android:padding="20dp"
+        android:gravity="center"
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/small_text_margin"
+        android:layout_marginBottom="@dimen/small_text_margin"
+        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:textStyle="bold"
+        tools:text="Navya Patel" />
+
+    <LinearLayout
+        android:background="@color/bac_trans"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+      <LinearLayout
+          android:layout_margin="5dp"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <ImageButton
+              android:background="@drawable/administer"
+              android:layout_width="30dp"
+              android:layout_height="30dp"/>
+
+          <TextView
+              android:textColor="@color/black"
+              android:text="Vaccine"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+          <ImageButton
+              android:background="@drawable/ic_action_date"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+          <TextView
+              android:id="@+id/field_name"
+              android:textColor="@color/black"
+              android:text="Jan 01, 2001"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+
+  <com.google.android.material.textview.MaterialTextView
+      android:visibility="gone"
+        android:id="@+id/tasksCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:includeFontPadding="false"
+        android:layout_below="@id/field_name"
+        android:layout_alignStart="@id/name"
+        android:layout_marginTop="@dimen/small_text_margin"
+        android:layout_marginEnd="@dimen/small_text_margin"
+        android:textAppearance="?attr/textAppearanceBody2"
+    />
+</androidx.cardview.widget.CardView>

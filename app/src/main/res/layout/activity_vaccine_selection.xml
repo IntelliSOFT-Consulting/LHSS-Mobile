@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".vaccine.selections.VaccineSelection">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Zanzibar.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="Select Vaccine"
+            app:titleTextColor="@android:color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearRoutine"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvRoutineVaccine"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/unselectedTab"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:padding="10dp"
+                android:text="Routine Vaccine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ExpandableListView
+                android:visibility="gone"
+                android:layoutDirection="rtl"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/expandableListViewRoutine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearNonRoutine"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvNonRoutineVaccine"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/unselectedTab"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:padding="10dp"
+                android:text="Non-Routine Vaccine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ExpandableListView
+                android:visibility="gone"
+                android:layoutDirection="rtl"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/expandableListViewNonRoutine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearPregnancy"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvPregnancyVaccine"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/unselectedTab"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:padding="10dp"
+                android:text="Pregnancy Vaccines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ExpandableListView
+                android:visibility="gone"
+                android:layoutDirection="rtl"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/expandableListViewPregnancy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

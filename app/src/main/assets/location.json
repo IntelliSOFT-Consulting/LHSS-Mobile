@@ -1,0 +1,5620 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "client-registration-sample",
+  "language": "en",
+  "status": "active",
+  "date": "2020-11-18T07:24:47.111Z",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "Patient",
+        "name": "patient"
+      }
+    }
+  ],
+  "item": [
+    {
+      "text": "Administrative area",
+      "linkId": "PR-address",
+      "type": "group",
+      "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.address",
+      "item": [
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.city",
+                "name": "patientCity"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "linkId": "PR-address-city",
+          "type": "choice",
+          "required": true,
+          "item": [
+            {
+              "linkId": "county",
+              "text": "County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.address.city",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "1",
+                "display": "MOMBASA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "2",
+                "display": "KWALE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "3",
+                "display": "KILIFI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "4",
+                "display": "TANA RIVER",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "5",
+                "display": "LAMU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "6",
+                "display": "TAITA TAVETA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "7",
+                "display": "GARISSA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "8",
+                "display": "WAJIR",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "9",
+                "display": "MANDERA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "10",
+                "display": "MARSABIT",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "11",
+                "display": "ISIOLO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "12",
+                "display": "MERU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "13",
+                "display": "THARAKA-NITHI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "14",
+                "display": "EMBU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "15",
+                "display": "KITUI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "16",
+                "display": "MACHAKOS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "17",
+                "display": "MAKUENI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "18",
+                "display": "NYANDARUA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "19",
+                "display": "NYERI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "20",
+                "display": "KIRINYAGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "21",
+                "display": "MURANG'A",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "22",
+                "display": "KIAMBU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "23",
+                "display": "TURKANA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "24",
+                "display": "WEST POKOT",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "25",
+                "display": "SAMBURU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "26",
+                "display": "TRANS NZOIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "27",
+                "display": "UASIN GISHU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "28",
+                "display": "ELGEYO MARAKWET",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "29",
+                "display": "NANDI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "30",
+                "display": "BARINGO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "31",
+                "display": "LAIKIPIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "32",
+                "display": "NAKURU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "33",
+                "display": "NAROK",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "34",
+                "display": "KAJIADO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "35",
+                "display": "KERICHO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "36",
+                "display": "BOMET",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "37",
+                "display": "KAKAMEGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "38",
+                "display": "VIHIGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "39",
+                "display": "BUNGOMA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "40",
+                "display": "BUSIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "41",
+                "display": "SIAYA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "42",
+                "display": "KISUMU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "43",
+                "display": "HOMA BAY",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "44",
+                "display": "MIGORI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "45",
+                "display": "KISII",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "46",
+                "display": "NYAMIRA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "47",
+                "display": "NAIROBI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "1",
+                "display": "MOMBASA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-mombasa",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "CHANGAMWE",
+                "display": "CHANGAMWE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "JOMVU",
+                "display": "JOMVU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KISAUNI",
+                "display": "KISAUNI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYALI",
+                "display": "NYALI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LIKONI",
+                "display": "LIKONI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MVITA",
+                "display": "MVITA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "2",
+                "display": "KWALE",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kwale",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MSAMBWENI",
+                "display": "MSAMBWENI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LUNGALUNGA",
+                "display": "LUNGALUNGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATUGA",
+                "display": "MATUGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KINANGO",
+                "display": "KINANGO",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "3",
+                "display": "KILIFI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kilifi",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KILIFI NORTH",
+                "display": "KILIFI NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KILIFI SOUTH",
+                "display": "KILIFI SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KALOLENI",
+                "display": "KALOLENI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RABAI",
+                "display": "RABAI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GANZE",
+                "display": "GANZE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MALINDI",
+                "display": "MALINDI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MAGARINI",
+                "display": "MAGARINI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "4",
+                "display": "TANA RIVER",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-tana-river",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "GARSEN",
+                "display": "GARSEN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GAOLOLE",
+                "display": "GAOLOLE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BURA",
+                "display": "BURA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "5",
+                "display": "LAMU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-lamu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "LAMU EAST",
+                "display": "LAMU EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAMU WEST",
+                "display": "LAMU WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "6",
+                "display": "TAITA TAVETA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-taita-taveta",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TAVETA",
+                "display": "TAVETA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WUNDANYI",
+                "display": "WUNDANYI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MWATATE",
+                "display": "MWATATE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "VOI",
+                "display": "VOI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "7",
+                "display": "GARISSA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-garissa",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "GARISSA TOWNSHIP",
+                "display": "GARISSA TOWNSHIP",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BALAMBALA",
+                "display": "BALAMBALA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAGDERA",
+                "display": "LAGDERA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "DADAAB",
+                "display": "DADAAB",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "FAFI",
+                "display": "FAFI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "IJARA",
+                "display": "IJARA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "8",
+                "display": "WAJIR",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-wajir",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "WAJIR NORTH",
+                "display": "WAJIR NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WAJIR EAST",
+                "display": "WAJIR EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TARBAJ",
+                "display": "TARBAJ",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WAJIR WEST",
+                "display": "WAJIR WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ELDAS",
+                "display": "ELDAS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WAJIR SOUTH",
+                "display": "WAJIR SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "9",
+                "display": "MANDERA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-mandera",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MANDERA WEST",
+                "display": "MANDERA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BANISSA",
+                "display": "BANISSA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MANDERA NORTH",
+                "display": "MANDERA NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MANDERA SOUTH",
+                "display": "MANDERA SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MANDERA EAST",
+                "display": "MANDERA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAFEY",
+                "display": "LAFEY",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "10",
+                "display": "MARSABIT",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-marsabit",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MOYALE",
+                "display": "MOYALE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NORTH HORR",
+                "display": "NORTH HORR",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SAKU",
+                "display": "SAKU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAISAMIS",
+                "display": "LAISAMIS",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "11",
+                "display": "ISIOLO",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-isolo",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "ISIOLO NORTH",
+                "display": "ISIOLO NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ISIOLO SOUTH",
+                "display": "ISIOLO SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "12",
+                "display": "MERU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-meru",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "IGEMBE SOUTH",
+                "display": "IGEMBE SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "IGEMBE CENTRAL",
+                "display": "IGEMBE CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "IGEMBE NORTH",
+                "display": "IGEMBE NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TIGANIA WEST",
+                "display": "TIGANIA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TIGANIA EAST",
+                "display": "TIGANIA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NORTH IMENTI",
+                "display": "NORTH IMENTI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BUURI",
+                "display": "BUURI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "CENTRAL IMENTI",
+                "display": "CENTRAL IMENTI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SOUTH IMENTI",
+                "display": "SOUTH IMENTI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "13",
+                "display": "THARAKA-NITHI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-tharaka-nithi",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MAARA",
+                "display": "MAARA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "CHUKA IGAMBANG'OM",
+                "display": "CHUKA IGAMBANG'OM",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "THARAKA",
+                "display": "THARAKA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "14",
+                "display": "EMBU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-embu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MANYATTA",
+                "display": "MANYATTA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RUNYENJES",
+                "display": "RUNYENJES",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MBEERE SOUTH",
+                "display": "MBEERE SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MBEERE NORTH",
+                "display": "MBEERE NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "15",
+                "display": "KITUI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kitui",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MWINGI NORTH",
+                "display": "MWINGI NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MWINGI WEST",
+                "display": "MWINGI WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MWINGI CENTRAL",
+                "display": "MWINGI CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUI WEST",
+                "display": "KITUI WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUI RURAL",
+                "display": "KITUI RURAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUI CENTRAL",
+                "display": "KITUI CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUI EAST",
+                "display": "KITUI EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUI SOUTH",
+                "display": "KITUI SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "16",
+                "display": "MACHAKOS",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-machakos",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MASINGA",
+                "display": "MASINGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "YATTA",
+                "display": "YATTA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KANGUNDO",
+                "display": "KANGUNDO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATUNGULU",
+                "display": "MATUNGULU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KATHIANI",
+                "display": "KATHIANI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MAVOKO",
+                "display": "MAVOKO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MACHAKOS TOWN",
+                "display": "MACHAKOS TOWN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MWALA",
+                "display": "MWALA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "17",
+                "display": "MAKUENI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-makueni",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MBOONI",
+                "display": "MBOONI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KILOME",
+                "display": "KILOME",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAITI",
+                "display": "KAITI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MAKUENI",
+                "display": "MAKUENI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIBWEZI WEST",
+                "display": "KIBWEZI WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIBWEZI EAST",
+                "display": "KIBWEZI EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "18",
+                "display": "NYANDARUA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nyandarua",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KINANGOP",
+                "display": "KINANGOP",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIPIPIRI",
+                "display": "KIPIPIRI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "OL KALOU",
+                "display": "OL KALOU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "OL JOROK",
+                "display": "OL JOROK",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NDARAGWA",
+                "display": "NDARAGWA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "19",
+                "display": "NYERI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nyeri",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TETU",
+                "display": "TETU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIENI",
+                "display": "KIENI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATHIRA",
+                "display": "MATHIRA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "OTHAYA",
+                "display": "OTHAYA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MUKURWEINI",
+                "display": "MUKURWEINI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYERI TOWN",
+                "display": "NYERI TOWN",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "20",
+                "display": "KIRINYAGA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kirinyaga",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MWEA",
+                "display": "MWEA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GICHUGU",
+                "display": "GICHUGU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NDIA",
+                "display": "NDIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIRINYAGA CENTRAL",
+                "display": "KIRINYAGA CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "21",
+                "display": "MURANG'A",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-muranga",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KANGEMA",
+                "display": "KANGEMA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATHIOYA",
+                "display": "MATHIOYA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIHARU",
+                "display": "KIHARU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIGUMO",
+                "display": "KIGUMO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MARAGWA",
+                "display": "MARAGWA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KANDARA",
+                "display": "KANDARA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GATANGA",
+                "display": "GATANGA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "22",
+                "display": "KIAMBU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kiambu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "GATUNDU SOUTH",
+                "display": "GATUNDU SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GATUNDU NORTH",
+                "display": "GATUNDU NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "JUJA",
+                "display": "JUJA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "THIKA TOWN",
+                "display": "THIKA TOWN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RUIRU",
+                "display": "RUIRU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GITHUNGURI",
+                "display": "GITHUNGURI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIAMBU",
+                "display": "KIAMBU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIAMAA",
+                "display": "KIAMAA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KABETE",
+                "display": "KABETE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIKUYU",
+                "display": "KIKUYU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LIMURU",
+                "display": "LIMURU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LARI",
+                "display": "LARI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "23",
+                "display": "TURKANA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-turkana",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TURKANA NORTH",
+                "display": "TURKANA NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TURKANA WEST",
+                "display": "TURKANA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TURKANA CENTRAL",
+                "display": "TURKANA CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LOIMA",
+                "display": "LOIMA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TURKANA SOUTH",
+                "display": "TURKANA SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TURKANA EAST",
+                "display": "TURKANA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "24",
+                "display": "WEST POKOT",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-west-pokot",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KAPENGURIA",
+                "display": "KAPENGURIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SIGOR",
+                "display": "SIGOR",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KACHELIBA",
+                "display": "KACHELIBA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "POKOT SOUTH",
+                "display": "POKOT SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "35",
+                "display": "SAMBURU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-samburu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "SAMBURU WEST",
+                "display": "SAMBURU WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SAMBURU NORTH",
+                "display": "SAMBURU NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SAMBURU EAST",
+                "display": "SAMBURU EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "26",
+                "display": "TRANS NZOIA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-trans-nzoia",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KWANZA",
+                "display": "KWANZA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ENDEBESS",
+                "display": "ENDEBESS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SABOTI",
+                "display": "SABOTI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIMININI",
+                "display": "KIMININI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "CHERANGANY",
+                "display": "CHERANGANY",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "27",
+                "display": "UASIN GISHU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-uasin-gishu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "SOY",
+                "display": "SOY",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TURBO",
+                "display": "TURBO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MOIBEN",
+                "display": "MOIBEN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "AINABKOI",
+                "display": "AINABKOI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAPSERET",
+                "display": "KAPSERET",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KESSES",
+                "display": "KESSES",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "28",
+                "display": "ELGEYO MARAKWET",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-elgeyo-marakwet",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MARAKWET EAST",
+                "display": "MARAKWET EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MARAKWET WEST",
+                "display": "MARAKWET WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KEIYO NORTH",
+                "display": "KEIYO NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KEIYO SOUTH",
+                "display": "KEIYO SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "29",
+                "display": "NANDI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nandi",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TINDERET",
+                "display": "TINDERET",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ALDAI",
+                "display": "ALDAI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NANDI HILLS",
+                "display": "NANDI HILLS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "CHESUMEI",
+                "display": "CHESUMEI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMGWEN",
+                "display": "EMGWEN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MOSOP",
+                "display": "MOSOP",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "30",
+                "display": "BARINGO",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-baringo",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TIATY",
+                "display": "TIATY",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BARINGO NORTH",
+                "display": "BARINGO NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BARINGO CENTRAL",
+                "display": "BARINGO CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BARINGO SOUTH",
+                "display": "BARINGO SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MOGOTIO",
+                "display": "MOGOTIO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ELDAMA RAVINE",
+                "display": "ELDAMA RAVINE",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "31",
+                "display": "LAIKIPIA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-laikipia",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "LAIKIPIA WEST",
+                "display": "LAIKIPIA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAIKIPIA EAST",
+                "display": "LAIKIPIA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LAIKIPIA NORTH",
+                "display": "LAIKIPIA NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "32",
+                "display": "NAKURU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nakuru",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MOLO",
+                "display": "MOLO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NJORO",
+                "display": "NJORO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAIVASHA",
+                "display": "NAIVASHA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GILGIL",
+                "display": "GILGIL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KURESOI SOUTH",
+                "display": "KURESOI SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KURESOI NORTH",
+                "display": "KURESOI NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SUBUKIA",
+                "display": "SUBUKIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RONGAI",
+                "display": "RONGAI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BAHATI",
+                "display": "BAHATI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAKURU TOWN WEST",
+                "display": "NAKURU TOWN WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAKURU TOWN EAST",
+                "display": "NAKURU TOWN EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "33",
+                "display": "NAROK",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-narok",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KILGORIS",
+                "display": "KILGORIS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMURUA DIKIRR",
+                "display": "EMURUA DIKIRR",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAROK NORTH",
+                "display": "NAROK NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAROK EAST",
+                "display": "NAROK EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAROK SOUTH",
+                "display": "NAROK SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAROK WEST",
+                "display": "NAROK WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "34",
+                "display": "KAJIADO",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kajiado",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KAJIADO NORTH",
+                "display": "KAJIADO NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAJIADO CENTRAL",
+                "display": "KAJIADO CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAJIADO EAST",
+                "display": "KAJIADO EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAJIADO WEST",
+                "display": "KAJIADO WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAJIADO SOUTH",
+                "display": "KAJIADO SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "35",
+                "display": "KERICHO",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kericho",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KIPKELION EAST",
+                "display": "KIPKELION EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIPKELION WEST",
+                "display": "KIPKELION WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "AINAMOI",
+                "display": "AINAMOI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BURETI",
+                "display": "BURETI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BELGUT",
+                "display": "BELGUT",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SIGOWET SOIN",
+                "display": "SIGOWET SOIN",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "36",
+                "display": "BOMET",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-bomet",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "SOTIK",
+                "display": "SOTIK",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "CHEPALUNGU",
+                "display": "CHEPALUNGU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BOMET EAST",
+                "display": "BOMET EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BOMET CENTRAL",
+                "display": "BOMET CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KONOIN",
+                "display": "KONOIN",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "37",
+                "display": "KAKAMEGA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kakamega",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "LUGARI",
+                "display": "LUGARI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LIKUYANI",
+                "display": "LIKUYANI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MALAVA",
+                "display": "MALAVA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LURAMBI",
+                "display": "LURAMBI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAVAKH0LO",
+                "display": "NAVAKH0LO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MUMIAS WEST",
+                "display": "MUMIAS WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MUMIAS EAST",
+                "display": "MUMIAS EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATUNGU",
+                "display": "MATUNGU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BUTERE",
+                "display": "BUTERE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KHWISERO",
+                "display": "KHWISERO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SHINYALU",
+                "display": "SHINYALU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "IKOLOMANI",
+                "display": "IKOLOMANI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "38",
+                "display": "VIHIGA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-vihiga",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "VIHIGA",
+                "display": "VIHIGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SABATIA",
+                "display": "SABATIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "HAMISI",
+                "display": "HAMISI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LUANDA",
+                "display": "LUANDA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMUHAYA",
+                "display": "EMUHAYA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "39",
+                "display": "BUNGOMA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-bungoma",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "MT.ELGON",
+                "display": "MT.ELGON",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SIRISIA",
+                "display": "SIRISIA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KABUCHAI",
+                "display": "KABUCHAI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BUMULA",
+                "display": "BUMULA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KANDUYI",
+                "display": "KANDUYI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WEBUYE EAST",
+                "display": "WEBUYE EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WEBUYE WEST",
+                "display": "WEBUYE WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIMILILI",
+                "display": "KIMILILI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TONGAREN",
+                "display": "TONGAREN",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "40",
+                "display": "BUSIA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-busia",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "TESO NORTH",
+                "display": "TESO NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "TESO SOUTH",
+                "display": "TESO SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NAMBALE",
+                "display": "NAMBALE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATAYOS",
+                "display": "MATAYOS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BUTULA",
+                "display": "BUTULA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "FUNYULA",
+                "display": "FUNYULA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BUDALANGI",
+                "display": "BUDALANGI",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "41",
+                "display": "SIAYA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-siaya",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "UGENYA",
+                "display": "UGENYA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "UGUNJA",
+                "display": "UGUNJA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ALEGO USONGA",
+                "display": "ALEGO USONGA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "GEM",
+                "display": "GEM",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BONDO",
+                "display": "BONDO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RARIEDA",
+                "display": "RARIEDA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "42",
+                "display": "KISUMU",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kisumu",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KISUMU EAST",
+                "display": "KISUMU EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KISUMU WEST",
+                "display": "KISUMU WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KISUMU CENTRAL",
+                "display": "KISUMU CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SEME",
+                "display": "SEME",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYANDO",
+                "display": "NYANDO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MUHORONI",
+                "display": "MUHORONI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYAKACH",
+                "display": "NYAKACH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "43",
+                "display": "HOMA BAY",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-homa-bay",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KASIPUL",
+                "display": "KASIPUL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KABONDO KASIPUL",
+                "display": "KABONDO KASIPUL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KARACHUONYO",
+                "display": "KARACHUONYO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RANGWE",
+                "display": "RANGWE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "HOMA BAY TOWN",
+                "display": "HOMA BAY TOWN",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NDHIWA",
+                "display": "NDHIWA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MBITA",
+                "display": "MBITA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SUBA",
+                "display": "SUBA",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "44",
+                "display": "MIGORI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-migori",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "RONGO",
+                "display": "RONGO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "AWENDO",
+                "display": "AWENDO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SUNA EAST",
+                "display": "SUNA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SUNA WEST",
+                "display": "SUNA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "URIRI",
+                "display": "URIRI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYATIKE",
+                "display": "NYATIKE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KURIA WEST",
+                "display": "KURIA WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KURIA EAST",
+                "display": "KURIA EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "45",
+                "display": "KISII",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-kisii",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "BONCHARI",
+                "display": "BONCHARI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "SOUTH MUGIRANGO",
+                "display": "SOUTH MUGIRANGO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BOMACHOGE BORABU",
+                "display": "BOMACHOGE BORABU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BOBASI",
+                "display": "BOBASI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BOMACHOGE CHACHE",
+                "display": "BOMACHOGE CHACHE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYARIBARI MASABA",
+                "display": "NYARIBARI MASABA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NYARIBARI CHACHE",
+                "display": "NYARIBARI CHACHE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUTU CHACHE NORTH",
+                "display": "KITUTU CHACHE NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KITUTU CHACHE SOUTH",
+                "display": "KITUTU CHACHE SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "46",
+                "display": "NYAMIRA",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nyamira",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "KITUTU MASABA",
+                "display": "KITUTU MASABA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "WEST MUGIRANGO",
+                "display": "WEST MUGIRANGO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "NORTH MUGIRANGO",
+                "display": "NORTH MUGIRANGO",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "BORABU",
+                "display": "BORABU",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.district",
+                "name": "patientDistrict"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "enableWhen": [
+            {
+              "answerCoding": {
+                "code": "47",
+                "display": "NAIROBI",
+                "system": "https://locationlist.com/counties"
+              },
+              "question": "PR-address-city",
+              "operator": "="
+            }
+          ],
+          "linkId": "PR-address-sub-county-nairobi",
+          "type": "choice",
+          "required": true,
+          "text": "Sub County *",
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.district",
+          "item": [
+            {
+              "linkId": "sub-county",
+              "text": "Sub County *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "WESTLANDS",
+                "display": "WESTLANDS",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "DAGORETTI NORTH",
+                "display": "DAGORETTI NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "DAGORETTI SOUTH",
+                "display": "DAGORETTI SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "LANGATA",
+                "display": "LANGATA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KIBRA",
+                "display": "KIBRA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "ROYSAMBU",
+                "display": "ROYSAMBU",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KASARANI",
+                "display": "KASARANI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "RUARAKA",
+                "display": "RUARAKA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMBAKASI SOUTH",
+                "display": "EMBAKASI SOUTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMBAKASI NORTH",
+                "display": "EMBAKASI NORTH",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMBAKASI CENTRAL",
+                "display": "EMBAKASI CENTRAL",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMBAKASI EAST",
+                "display": "EMBAKASI EAST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "EMBAKASI WEST",
+                "display": "EMBAKASI WEST",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MAKADARA",
+                "display": "MAKADARA",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "KAMUKUNJI",
+                "display": "KAMUKUNJI",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "STAREHE",
+                "display": "STAREHE",
+                "system": "https://locationlist.com/counties"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "MATHARE",
+                "display": "MATHARE",
+                "system": "https://locationlist.com/counties"
+              }
+            }
+          ]
+        },
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.state",
+                "name": "patientCity"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ],
+                "text": "Drop down"
+              }
+            }
+          ],
+          "linkId": "PR-address-ward",
+          "type": "string",
+          "item": [
+            {
+              "linkId": "ward",
+              "text": "Ward *",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "PR-address-town",
+          "type": "string",
+          "item": [
+            {
+              "linkId": "trading-center",
+              "text": "Town/Trading centre",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.address.text",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.text",
+                "name": "patientAddressText"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "PR-address-estate",
+          "type": "string",
+          "item": [
+            {
+              "linkId": "estate",
+              "text": "Estate & House No./Village",
+              "type": "display",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/questionnaire-item-control",
+                        "code": "flyover",
+                        "display": "Fly-over"
+                      }
+                    ],
+                    "text": "Flyover"
+                  }
+                }
+              ]
+            }
+          ],
+          "definition": "http://hl7.org/fhir/StructureDefinition/Patient#Patient.address.line",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.address.line",
+                "name": "patientAddressLine"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

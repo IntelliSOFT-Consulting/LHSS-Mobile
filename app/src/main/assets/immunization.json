@@ -1,0 +1,73 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "client-registration-sample",
+  "language": "en",
+  "status": "active",
+  "date": "2023-10-04T09:54:47.111Z",
+  "title": "Immunization  Form",
+  "subjectType": [
+    "Immunization"
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "Patient",
+        "name": "patient"
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "PR",
+      "type": "group",
+      "text": "Immunization Details",
+      "_text": {
+        "extension": [
+          {
+            "extension": [
+              {
+                "url": "lang",
+                "valueCode": "sw"
+              },
+              {
+                "url": "content",
+                "valueString": "Maelezo ya Immunization"
+              }
+            ],
+            "url": "http://hl7.org/fhir/StructureDefinition/translation"
+          }
+        ]
+      },
+      "item": [
+        {
+          "type": "dateTime",
+          "linkId": "3309594411832",
+          "text": "Date of Immunization",
+          "required": true
+        },
+        {
+          "type": "choice",
+          "linkId": "5313755602712",
+          "text": "Vaccine Name",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "code": "398102009",
+                "display": "Polio"
+              }
+            },
+            {
+              "valueCoding": {
+                "code": "A00-B99",
+                "display": "Yellow Fever"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

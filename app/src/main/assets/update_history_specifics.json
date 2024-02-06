@@ -1,0 +1,1642 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "Update vaccine history",
+  "status": "active",
+  "description": "Update vaccine history",
+  "purpose": "Update vaccine history",
+  "subjectType": [
+    "Encounter"
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "Encounter",
+        "name": "encounter"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-entryMode",
+      "valueCode": "prior-edit"
+    }
+  ],
+  "item": [
+    {
+      "item": [
+        {
+          "linkId": "type-of-vaccine-group",
+          "type": "group",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "vaccineType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-vaccine",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of Vaccine *",
+                  "linkId": "type-of-vaccine-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "30956-71",
+                        "display": "Polio"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "30956-72",
+                        "display": "Yellow Fever"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "30956-BCG",
+                        "display": "BCG"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Hept-Hib",
+                        "display": "DPT-HepB+Hib"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "PCV-10",
+                        "display": "PCV10"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "30956-74",
+                        "display": "Measles"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Rota-Virus",
+                        "display": "Rota Virus"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "Vitamin-A",
+                        "display": "Vitamin A"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "RTS-AS01",
+                        "display": "RTS/AS01 (Malaria)"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "HPV",
+                        "display": "HPV"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "30956-73",
+                        "display": "Covid"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "2.1.2",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "882-22",
+                    "display": "Type of AEFI",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "type-of-last-Hept-Hib-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "Hept-Hib",
+                "display": "DPT-HepB+Hib"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-Hept-Hib-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of last DPT-HepB+Hib dose",
+                  "linkId": "type-of-Hept-Hib-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-9",
+                        "display": "DPT-HepB+HiB 1"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-10",
+                        "display": "DPT-HepB+HiB 2"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-11",
+                        "display": "DPT-HepB+HiB 3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-Hept-Hib-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "type-of-last-pcv10-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "PCV-10",
+                "display": "PCV10"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-pcv10-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of last PCV10 dose",
+                  "linkId": "type-of-pcv10-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-6",
+                        "display": "PCV10-1"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-7",
+                        "display": "PCV10-2"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-8",
+                        "display": "PCV10-3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-pcv10-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "type-of-last-rota-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "Rota-Virus",
+                "display": "Rota Virus"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-rota-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Rotavirus - Type of last vaccine",
+                  "linkId": "type-of-rota-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-1",
+                        "display": "Rotavirus-1"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-2",
+                        "display": "Rotavirus-2"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-3",
+                        "display": "Rotavirus-3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-rota-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "type-of-last-hpv-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "HPV",
+                "display": "HPV"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-hpv-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of last HPV dose",
+                  "linkId": "type-of-hpv-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-4",
+                        "display": "HPV-1"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "500-002-5",
+                        "display": "HPV-2"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-hpv-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "months-between-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "HPV",
+                "display": "HPV"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "cd4Percentage"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "months-between",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity",
+              "item": [
+                {
+                  "text": "Number of months between first and second HPV doses",
+                  "type": "decimal",
+                  "required": true,
+                  "linkId": "months-between-decimal",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.value",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                      "valueDecimal": 0
+                    },
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                      "valueDecimal": 10000
+                    }
+                  ]
+                },
+                {
+                  "linkId": "months-between-quantity-code",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "4721-522",
+                        "display": "Number of months between first and second HPV doses ",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "months-between-system",
+                  "type": "string",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.system",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueString": "http://unitsofmeasure.org"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "months-between-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "12121-5",
+                    "display": "Number of months between first and second HPV doses",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "unknown-product-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "Rota-Virus",
+                "display": "Rota Virus"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "unknownProduct"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "unknown-product",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Was any of the previous Rotavirus doses administered with an unknown product?",
+                  "linkId": "unknown-product-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                      "valueCode": "horizontal"
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22500-10-1",
+                        "display": "Yes"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22500-1302",
+                        "display": "No"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "unknown-product-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Previous Rotavirus doses administered with an unknown product",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "type-of-last-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "30956-71",
+                "display": "Polio"
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "type-of-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Polio - Type of last vaccine",
+                  "linkId": "type-of-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22446-9-1",
+                        "display": "bOPV"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22446-9-2",
+                        "display": "OPV I"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22446-9-3",
+                        "display": "OPV II"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22446-9-4",
+                        "display": "OPV III"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "measles-type-of-last-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "30956-74",
+                "display": "Measles "
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "measles-type-of-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of last dose",
+                  "linkId": "measles-type-of-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22500-3-1",
+                        "display": "Measles-Rubella 1st Dose"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "22500-3-2",
+                        "display": "Measles-Rubella 2nd Dose"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "covid-type-of-last-dose-group",
+          "type": "group",
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "30956-73",
+                "display": "Covid "
+              }
+            }
+          ],
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "lastDoseType"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "covid-type-of-last-dose",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Type of last dose",
+                  "linkId": "measles-type-of-last-dose-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "3333-3-1",
+                        "display": "Astrazeneca"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "3333-3-2",
+                        "display": "Moderna"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "34444-3-1",
+                        "display": "JohnsonAndJohnson"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "5353-3-21",
+                        "display": "PhizerBioNTech"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "9793-32-2",
+                        "display": "Sinopharm"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "type-of-last-dose-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "222-11",
+                    "display": "Type of last dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "place-of-service-group",
+          "type": "group",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "language": "application/x-fhir-query",
+                "expression": "Observation",
+                "name": "placeOfService"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "place-of-service",
+              "type": "group",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+              "item": [
+                {
+                  "text": "Place of Vaccination *",
+                  "linkId": "place-of-service-choice",
+                  "type": "choice",
+                  "required": true,
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                      "valueCodeableConcept": {
+                        "coding": [
+                          {
+                            "system": "http://hl7.org/fhir/questionnaire-item-control",
+                            "code": "drop-down",
+                            "display": "Drop down"
+                          }
+                        ],
+                        "text": "Drop down"
+                      }
+                    }
+                  ],
+                  "answerOption": [
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "52829-9-1",
+                        "display": "Facility"
+                      }
+                    },
+                    {
+                      "valueCoding": {
+                        "system": "http://loinc.org",
+                        "code": "52829-9-2",
+                        "display": "Outreach"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "place-of-service-code",
+              "type": "choice",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "312-22",
+                    "display": "Place of service",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "linkId": "date-of-last-dose-group",
+          "type": "group",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+              "valueExpression": {
+                "expression": "Observation"
+              }
+            }
+          ],
+          "item": [
+            {
+              "linkId": "date-of-last-dose",
+              "type": "dateTime",
+              "required": true,
+              "text": "Date of Last Dose *",
+              "definition": "https://hl7.org/fhir/R4/observation.html#Observation.valueDateTime"
+            },
+            {
+              "linkId": "date-of-last-dose-code",
+              "type": "string",
+              "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                  "valueBoolean": true
+                }
+              ],
+              "initial": [
+                {
+                  "valueCoding": {
+                    "code": "111-8",
+                    "display": "Date of Last Dose",
+                    "system": "http://loinc.org"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "item": [
+            {
+              "linkId": "tst-test-results-group",
+              "type": "group",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+                  "valueExpression": {
+                    "language": "application/x-fhir-query",
+                    "expression": "Observation",
+                    "name": "tstResults"
+                  }
+                }
+              ],
+              "item": [
+                {
+                  "linkId": "tst-test-results",
+                  "type": "group",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+                  "item": [
+                    {
+                      "text": "Maternal's TST Test Result *",
+                      "linkId": "tst-test-results-choice",
+                      "type": "choice",
+                      "required": true,
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                          "valueCodeableConcept": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                              }
+                            ],
+                            "text": "Drop down"
+                          }
+                        }
+                      ],
+                      "answerOption": [
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "TST-Positive",
+                            "display": "TST-Positive"
+                          }
+                        },
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "TST-Negative",
+                            "display": "TST-Negative"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "linkId": "tst-test-results-code",
+                  "type": "choice",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "001-001",
+                        "display": "Maternal's TST Test Result",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "exposed-group",
+              "type": "group",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+                  "valueExpression": {
+                    "language": "application/x-fhir-query",
+                    "expression": "Observation",
+                    "name": "exposed"
+                  }
+                }
+              ],
+              "item": [
+                {
+                  "linkId": "measles-type-of-last-dose",
+                  "type": "group",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+                  "item": [
+                    {
+                      "text": "Exposed to close contact with TB",
+                      "linkId": "measles-type-of-last-dose-choice",
+                      "type": "choice",
+                      "required": true,
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation",
+                          "valueCode": "horizontal"
+                        }
+                      ],
+                      "answerOption": [
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "22500-13-1",
+                            "display": "Yes"
+                          }
+                        },
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "22500-13-2",
+                            "display": "No"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "linkId": "type-of-last-dose-code",
+                  "type": "choice",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "222-00",
+                        "display": "Exposed to close contact with TB",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "tst-client-test-results-group",
+              "type": "group",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+                  "valueExpression": {
+                    "language": "application/x-fhir-query",
+                    "expression": "Observation",
+                    "name": "tstResults"
+                  }
+                }
+              ],
+              "item": [
+                {
+                  "linkId": "tst-client-test-results",
+                  "type": "group",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+                  "item": [
+                    {
+                      "text": "Client's TST Test Result *",
+                      "linkId": "tst-client-test-choice",
+                      "type": "choice",
+                      "required": true,
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                          "valueCodeableConcept": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                              }
+                            ],
+                            "text": "Drop down"
+                          }
+                        }
+                      ],
+                      "answerOption": [
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "TST-Positive",
+                            "display": "TST-Positive"
+                          }
+                        },
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "TST-Negative",
+                            "display": "TST-Negative"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "linkId": "tst-client-test-code",
+                  "type": "choice",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "002-002",
+                        "display": "Client's TST Test Result",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "cd4-percentage-group",
+              "type": "group",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+                  "valueExpression": {
+                    "language": "application/x-fhir-query",
+                    "expression": "Observation",
+                    "name": "cd4Percentage"
+                  }
+                }
+              ],
+              "item": [
+                {
+                  "linkId": "cd4-percentage",
+                  "type": "group",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity",
+                  "item": [
+                    {
+                      "text": "Client's CD4 percentage",
+                      "type": "decimal",
+                      "required": true,
+                      "linkId": "cd4-percentage-decimal",
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.value",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                          "valueDecimal": 1
+                        },
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                          "valueDecimal": 10000
+                        }
+                      ]
+                    },
+                    {
+                      "linkId": "cd4-percentage-quantity-code",
+                      "type": "choice",
+                      "required": true,
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.code",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                          "valueBoolean": true
+                        }
+                      ],
+                      "initial": [
+                        {
+                          "valueCoding": {
+                            "code": "43421-522",
+                            "display": "CD4 percentage",
+                            "system": "http://loinc.org"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "linkId": "current-body-weight-system",
+                      "type": "string",
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueQuantity.system",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                          "valueBoolean": true
+                        }
+                      ],
+                      "initial": [
+                        {
+                          "valueString": "http://unitsofmeasure.org"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "linkId": "cd4-percentage-code",
+                  "type": "choice",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "4321-5",
+                        "display": "Current Body Weight",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "maternal-hiv-status-group",
+              "type": "group",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+                  "valueExpression": {
+                    "language": "application/x-fhir-query",
+                    "expression": "Observation",
+                    "name": "maternalStatus"
+                  }
+                }
+              ],
+              "item": [
+                {
+                  "linkId": "maternal-hiv-status",
+                  "type": "group",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept",
+                  "item": [
+                    {
+                      "text": "Maternal HIV status *",
+                      "linkId": "maternal-hiv-status-choice",
+                      "type": "choice",
+                      "required": true,
+                      "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.valueCodeableConcept.coding",
+                      "extension": [
+                        {
+                          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                          "valueCodeableConcept": {
+                            "coding": [
+                              {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "drop-down",
+                                "display": "Drop down"
+                              }
+                            ],
+                            "text": "Drop down"
+                          }
+                        }
+                      ],
+                      "answerOption": [
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "Positive",
+                            "display": "Positive"
+                          }
+                        },
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "Negative",
+                            "display": "Negative"
+                          }
+                        },
+                        {
+                          "valueCoding": {
+                            "system": "http://loinc.org",
+                            "code": "Unknown",
+                            "display": "Unknown"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "linkId": "maternal-hiv-status-code",
+                  "type": "choice",
+                  "definition": "http://hl7.org/fhir/StructureDefinition/Observation#Observation.code",
+                  "extension": [
+                    {
+                      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+                      "valueBoolean": true
+                    }
+                  ],
+                  "initial": [
+                    {
+                      "valueCoding": {
+                        "code": "003-003",
+                        "display": "Maternal HIV status",
+                        "system": "http://loinc.org"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "enableWhen": [
+            {
+              "question": "type-of-vaccine-choice",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "30956-BCG",
+                "display": "BCG"
+              }
+            }
+          ],
+          "type": "group",
+          "linkId": "bcg-extended"
+        }
+      ],
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "page",
+                "display": "Page"
+              }
+            ],
+            "text": "Page"
+          }
+        }
+      ],
+      "type": "group",
+      "linkId": "9713588269744",
+      "text": "Update Vaccine History",
+      "required": false
+    }
+  ]
+}

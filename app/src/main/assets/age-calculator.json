@@ -1,0 +1,106 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "client-registration",
+  "language": "en",
+  "status": "active",
+  "date": "2023-12-19T07:44:47.111Z",
+  "subjectType": [
+    "Patient"
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-itemExtractionContext",
+      "valueExpression": {
+        "language": "application/x-fhir-query",
+        "expression": "Patient",
+        "name": "patient"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "page",
+            "display": "Page"
+          }
+        ],
+        "text": "Page"
+      }
+    }
+  ],
+  "item": [
+    {
+      "type": "group",
+      "linkId": "1.0.0",
+      "item": [
+        {
+          "linkId": "PR",
+          "type": "group",
+          "text": "Client Details",
+          "item": [
+            {
+              "linkId": "a-birthdate",
+              "text": "Birth Date",
+              "type": "date",
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "Patient.birthDate",
+                    "name": "patientBirthDate"
+                  }
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+                  "valueDate": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/StructureDefinition/cqf-calculatedValue",
+                        "valueExpression": {
+                          "language": "text/fhirpath",
+                          "expression": "today() - 26000 days"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+                  "valueDate": {
+                    "extension": [
+                      {
+                        "url": "http://hl7.org/fhir/StructureDefinition/cqf-calculatedValue",
+                        "valueExpression": {
+                          "language": "text/fhirpath",
+                          "expression": "today()"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "linkId": "a-selected-birthyear",
+              "text": "Age in Years",
+              "type": "integer",
+              "readOnly": true,
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "2024 - %resource.descendants().where(linkId='a-birthdate').answer.value.substring(0, 4).toInteger()"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

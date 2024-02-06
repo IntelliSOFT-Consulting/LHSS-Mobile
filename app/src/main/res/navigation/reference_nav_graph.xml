@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reference_nav_graph"
+    app:startDestination="@id/landing_page">
+
+    <fragment
+        android:id="@+id/landing_page"
+        android:name="com.intellisoft.chanjoke.shared.LandingPage"
+        android:label=""
+        tools:layout="@layout/fragment_landing_page">
+        <action
+            android:id="@+id/action_patient_list_to_addPatientFragment"
+            app:destination="@id/addPatientFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patient_list"
+        android:name="com.intellisoft.chanjoke.patient_list.PatientListFragment"
+        android:label=""
+        tools:layout="@layout/patient_list_view">
+
+        <action
+            android:id="@+id/action_patient_list_to_addPatientFragment"
+            app:destination="@id/addPatientFragment" />
+        <action
+            android:id="@+id/action_patient_list_to_patientDetailActivity"
+            app:destination="@id/patientDetailActivity" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/addPatientFragment"
+        android:name="com.intellisoft.chanjoke.add_patient.AddPatientFragment"
+        android:label="@string/add_patient"
+        tools:layout="@layout/add_patient_fragment" />
+
+
+    <!--  <activity
+          android:id="@+id/mainActivity"
+          android:name="com.intellisoft.chanjoke.MainActivity"
+          android:label="activity_patient_detail"
+          tools:layout="@layout/activity_main">
+          <action
+              android:id="@+id/action_to_editPatientFragment"
+              app:destination="@id/editPatientFragment" />
+      </activity>-->
+    <activity
+        android:id="@+id/patientDetailActivity"
+        android:name="com.intellisoft.chanjoke.detail.PatientDetailActivity"
+        android:label="activity_patient_detail"
+        tools:layout="@layout/activity_patient_detail">
+        <argument
+            android:name="patient_id"
+            app:argType="string" />
+
+    </activity>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.intellisoft.chanjoke.detail.ui.main.UpdateFragment"
+        android:label="Update Details"
+        tools:layout="@layout/fragment_update">
+
+    </fragment>
+    <fragment
+        android:id="@+id/careGiverFragment"
+        android:name="com.intellisoft.chanjoke.add_patient.CareGiverFragment"
+        android:label="Add Care Giver" />
+
+    <fragment
+        android:id="@+id/administerVaccine"
+        android:name="com.intellisoft.chanjoke.vaccine.AdministerVaccineFragment"
+        android:label="Administer Vaccine"
+        tools:layout="@layout/administer_vaccine">
+        <argument
+            android:name="patient_id"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/editPatientFragment"
+        android:name="com.intellisoft.chanjoke.add_patient.EditPatientFragment"
+        android:label="EditPatientFragment">
+        <argument
+            android:name="patient_id"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/vaccineDetailsFragment"
+        android:name="com.intellisoft.chanjoke.detail.ui.main.VaccineDetailsFragment"
+        android:label="Vaccine Details"
+        tools:layout="@layout/fragment_vaccine_details" />
+    <fragment
+        android:id="@+id/practionerDetails"
+        android:name="com.intellisoft.chanjoke.PractionerDetails"
+        android:label="fragment_practioner_details"
+        tools:layout="@layout/fragment_practioner_details" />
+
+
+</navigation>

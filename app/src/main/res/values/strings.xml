@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Chanjo-Ke</string>
+    <string name="base_url">https://chanjoke.intellisoftkenya.com/auth/</string>
+    <string name="add_patient">Register Client</string>
+    <string name="fab_content_desc">Register Client</string>
+    <string name="administer_vaccine_count">Administer Vaccine </string>
+
+    <string name="title_patient_list">Registered Clients</string>
+    <string name="syncing">Syncing</string>
+    <string name="sync">Sync</string>
+    <string name="query_hint_patient_search">Enter Client Name / ID</string>
+    <string name="description_status">Status</string>
+
+    <string name="title_activity_patient_detail">PatientDetailActivity</string>
+    <string name="tab_text_1">Vaccination  History</string>
+    <string name="tab_text_2">Upcoming Vaccines</string>
+    <string name="tab_text_4">Appointments</string>
+    <string name="tab_text_5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="none">Unknown</string>
+    <string name="message_no_datetime">None</string>
+    <string name="cancel_questionnaire_message">Are you sure you want to cancel?</string>
+    <string name="inputs_missing">Input missing</string>
+    <string name="resources_saved">Details Updated</string>
+    <string name="add_care_giver">Add Care Giver</string>
+    <string name="message_patient_updated">Client details updated</string>
+    <string name="edit_patient">Edit Client</string>
+    <string name="tab_text_3">Client Details</string>
+    <string name="register_client">Register Client</string>
+    <string name="doses_administered">Doses Administered</string>
+    <string name="type_of_aefi">Type of AEFI</string>
+    <string name="brief_details_on_aefi">Brief details on AEFI</string>
+    <string name="onset_of_event">Onset of Event:</string>
+    <string name="past_medical_history">Past Medical History:</string>
+    <string name="reaction_severity">Reaction Severity:</string>
+    <string name="action_taken">Action Taken:</string>
+    <string name="aefi_outcome">AEFI Outcome:</string>
+    <string name="adverse_event">Adverse Event Following Immunization</string>
+    <string name="action_aefi">AEFI</string>
+    <string name="home">Home</string>
+    <string name="clients">Clients</string>
+    <string name="vaccines">Vaccines</string>
+    <string name="profile">Profile</string>
+    <string name="add_vaccine">Add Vaccine</string>
+    <string name="administer_vaccine">Administer Vaccine</string>
+    <string name="info">Info</string>
+    <string name="this_is_the_information_field">Select record to update</string>
+    <string name="name_of_person_reporting">Name of Person Reporting:</string>
+    <string name="contact">Contact:</string>
+    <string name="healthcare_worker">Healthcare Worker:</string>
+    <string name="date_reported">Date Reported:</string>
+    <string name="facility">Facility:</string>
+    <string name="success">Success</string>
+    <string name="healthcare_worker_designation">Designation</string>
+    <string name="checkbox">Please click on the check box to select which vaccine to administer</string>
+    <string name="login_to_your_account">Login to  your account</string>
+
+
+</resources>

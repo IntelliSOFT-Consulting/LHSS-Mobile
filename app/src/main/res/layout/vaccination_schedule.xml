@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bac_trans_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginStart="25dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:id="@+id/tvScheduleTime"
+            android:textStyle="bold"
+            android:text="842 weeks"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_marginEnd="20dp"
+            android:layout_gravity="center"
+            android:id="@+id/imageViewSchedule"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/ic_action_schedule_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/tvAefi"
+            android:gravity="end"
+            android:text="AEFIs (0)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,459 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "CB-DHS Patient Registration",
+  "status": "active",
+  "description": "Patient Registration",
+  "purpose": "Patient Registration",
+  "item": [
+    {
+      "item": [
+        {
+          "type": "string",
+          "linkId": "7196281948590",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "54125-0",
+              "display": "Patient name"
+            }
+          ],
+          "text": "Patient names *"
+        },
+        {
+          "type": "decimal",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+              "valueCoding": {
+                "code": "[object Object]",
+                "display": "[object Object]"
+              }
+            }
+          ],
+          "linkId": "4725705580511",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "21112-8",
+              "display": "Birth date"
+            }
+          ],
+          "text": "Birth date *"
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "radio-button",
+                    "display": "Radio Button"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "3747594711636",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "76661-8",
+              "display": "Sex"
+            }
+          ],
+          "text": "Sex *",
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA3-6",
+                "display": "Female"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA2-8",
+                "display": "Male"
+              }
+            }
+          ]
+        }
+      ],
+      "type": "group",
+      "linkId": "6232789311602",
+      "code": [
+        {
+          "code": "52460-3",
+          "display": "Patient information"
+        }
+      ],
+      "text": "Patient information",
+      "required": false,
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "page",
+                "display": "Page"
+              }
+            ],
+            "text": "Page"
+          }
+        }
+      ]
+    },
+    {
+      "item": [
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "8503926458873",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "68329-2",
+              "display": "Country of origin"
+            }
+          ],
+          "text": "Country of origin",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "68329-2-1",
+                "display": "Djibouti"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "68329-2-2",
+                "display": "Ethiopia"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "2298053798366",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "66477-1",
+              "display": "Country of Current Residence"
+            }
+          ],
+          "text": "Country of Residence",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-1",
+                "display": "Djibouti"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-2",
+                "display": "Ethiopia"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "8945109187038",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "52868-7",
+              "display": "Djibouti Region"
+            }
+          ],
+          "text": "Djibouti Region",
+          "enableWhen": [
+            {
+              "question": "2298053798366",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-1",
+                "display": "Djibouti"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52868-7-1",
+                "display": "Dikhil region"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52868-7-2",
+                "display": "Tadjourah region"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52868-7-3",
+                "display": "Ali-Sabieh region"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "8410909280035",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "52868-7",
+              "display": "Ethiopia Region"
+            }
+          ],
+          "text": "Ethiopia Region",
+          "enableWhen": [
+            {
+              "question": "2298053798366",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-2",
+                "display": "Ethiopia"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52868-7-1",
+                "display": "Afar"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "7880710415088",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "52864-6",
+              "display": "Djibouti District"
+            }
+          ],
+          "text": "Djibouti District",
+          "enableWhen": [
+            {
+              "question": "2298053798366",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-1",
+                "display": "Djibouti"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-1",
+                "display": "Dorra"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-2",
+                "display": "Ali-Adde"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-3",
+                "display": "Guestir"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-4",
+                "display": "Assamo"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-5",
+                "display": "Yoboki"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-6",
+                "display": "Mouloud"
+              }
+            }
+          ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "2537189577976",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "52864-6",
+              "display": "Ethiopia District"
+            }
+          ],
+          "text": "Ethiopia District",
+          "enableWhen": [
+            {
+              "question": "2298053798366",
+              "operator": "=",
+              "answerCoding": {
+                "system": "http://loinc.org",
+                "code": "66477-1-2",
+                "display": "Ethiopia"
+              }
+            }
+          ],
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "52864-6-1",
+                "display": "Dubti"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "linkId": "8996436212198",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "21847-9",
+              "display": "Patient Occupation"
+            }
+          ],
+          "text": "Patient Occupation",
+          "required": true
+        }
+      ],
+      "type": "group",
+      "linkId": "8415896828334",
+      "code": [
+        {
+          "code": "85817-5",
+          "display": "Patient Demographic Information"
+        }
+      ],
+      "text": "Patient Demographic Information",
+      "required": false
+    }
+  ]
+}
