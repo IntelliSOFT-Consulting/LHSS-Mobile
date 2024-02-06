@@ -114,3 +114,51 @@ data class DbVaccineSchedule(
     val scheduleStatus: String?,
     val scheduleVaccinationList: List<BasicVaccine>
 )
+
+
+data class QuestionnaireResponse(
+    val item: List<Item>
+)
+
+
+data class Item(
+    val linkId: String,
+    val text: String,
+    val answer: List<Answer>,
+    val item: List<Item>?
+)
+
+
+sealed class Answer
+
+
+data class ValueString(val valueString: String) : Answer()
+
+
+data class ValueCoding(
+    val valueCoding: ValueCodingDetails
+) : Answer()
+
+
+data class ValueCodingDetails(
+    val system: String,
+    val code: String,
+    val display: String
+)
+
+data class DbPatientData(
+    val linkId: String,
+    val text: String,
+    val answer: DbPatientDataAnswer
+)
+
+data class DbPatientDataAnswer(
+    val valueString: String?,
+    val valueCoding: DbValueCoding?
+)
+
+data class DbValueCoding(
+    val system: String,
+    val code: String,
+    val display: String
+)

@@ -20,16 +20,7 @@
           "text": "Patient names *"
         },
         {
-          "type": "decimal",
-          "extension": [
-            {
-              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
-              "valueCoding": {
-                "code": "[object Object]",
-                "display": "[object Object]"
-              }
-            }
-          ],
+          "type": "date",
           "linkId": "4725705580511",
           "code": [
             {
@@ -449,10 +440,10 @@
       "code": [
         {
           "code": "85817-5",
-          "display": "Patient Demographic Information"
+          "display": "Patient Location"
         }
       ],
-      "text": "Patient Demographic Information",
+      "text": "Patient Location",
       "required": false
     }
   ]

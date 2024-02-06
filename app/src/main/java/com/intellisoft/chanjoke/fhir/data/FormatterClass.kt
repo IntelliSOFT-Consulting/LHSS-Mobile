@@ -10,6 +10,7 @@ import com.intellisoft.chanjoke.vaccine.validations.ImmunizationHandler
 import com.intellisoft.chanjoke.vaccine.validations.NonRoutineVaccine
 import com.intellisoft.chanjoke.vaccine.validations.PregnancyVaccine
 import com.intellisoft.chanjoke.vaccine.validations.RoutineVaccine
+import org.json.JSONObject
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -23,6 +24,58 @@ import kotlin.math.abs
 import kotlin.random.Random
 
 class FormatterClass {
+
+    fun parseJson(jsonString: String): List<DbPatientData> {
+        val resultList = mutableListOf<DbPatientData>()
+
+        fun processItem(item: JSONObject) {
+            val linkId = item.getString("linkId")
+            val text = item.getString("text")
+
+            val answer = if (item.has("answer")) {
+                val answerArray = item.getJSONArray("answer")
+                val firstAnswer = answerArray.getJSONObject(0)
+
+                if (firstAnswer.has("valueString")) {
+                    DbPatientDataAnswer(firstAnswer.getString("valueString"), null)
+                }else if(firstAnswer.has("valueDate")) {
+                    DbPatientDataAnswer(firstAnswer.getString("valueDate"), null)
+                }else if (firstAnswer.has("valueCoding")) {
+                    val valueCoding = firstAnswer.getJSONObject("valueCoding")
+                    DbPatientDataAnswer(
+                        null,
+                        DbValueCoding(
+                            valueCoding.getString("system"),
+                            valueCoding.getString("code"),
+                            valueCoding.getString("display")
+                        )
+                    )
+                }else{
+                    DbPatientDataAnswer(null, null)
+                }
+            } else {
+                DbPatientDataAnswer(null, null)
+            }
+
+            resultList.add(DbPatientData(linkId, text, answer))
+
+            if (item.has("item")) {
+                val subItems = item.getJSONArray("item")
+                for (i in 0 until subItems.length()) {
+                    processItem(subItems.getJSONObject(i))
+                }
+            }
+        }
+
+        val jsonObject = JSONObject(jsonString)
+        val items = jsonObject.getJSONArray("item")
+        for (i in 0 until items.length()) {
+            processItem(items.getJSONObject(i))
+        }
+
+        return resultList.filter { it.answer.valueString != null || it.answer.valueCoding != null }
+    }
+
     fun saveSharedPref(key: String, value: String, context: Context) {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences(context.getString(R.string.app_name), MODE_PRIVATE)

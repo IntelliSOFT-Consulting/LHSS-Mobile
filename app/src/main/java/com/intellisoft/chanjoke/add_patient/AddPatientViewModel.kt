@@ -18,6 +18,7 @@ package com.intellisoft.chanjoke.add_patient
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -30,8 +31,14 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.datacapture.mapping.ResourceMapper
 import com.google.android.fhir.datacapture.validation.Invalid
 import com.google.android.fhir.datacapture.validation.QuestionnaireResponseValidator
+import com.intellisoft.chanjoke.fhir.data.DbPatientData
+import com.intellisoft.chanjoke.fhir.data.DbPatientDataAnswer
+import com.intellisoft.chanjoke.fhir.data.DbValueCoding
 import com.intellisoft.chanjoke.fhir.data.FormatterClass
 import com.intellisoft.chanjoke.fhir.data.Identifiers
+import com.intellisoft.chanjoke.fhir.data.Item
+import com.intellisoft.chanjoke.fhir.data.ValueCoding
+import com.intellisoft.chanjoke.fhir.data.ValueString
 import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.CodeableConcept
@@ -48,6 +55,7 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
 
 /** ViewModel for patient registration screen {@link AddPatientFragment}. */
 class AddPatientViewModel(application: Application, private val state: SavedStateHandle) :
@@ -94,45 +102,27 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                     questionnaireResponse,
                 )
                     .entryFirstRep
-            if (entry.resource !is Patient) {
-                return@launch
-            }
+//            if (entry.resource !is Patient) {
+//                return@launch
+//            }
 
             val patientId = generateUuid()
-            val patient = entry.resource as Patient
+            val patient = entry.resource
             val cc = FhirContext.forR4()
-            val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse)
-            Timber.e("Data **** $questionnaire")
-            patient.addressFirstRep.city = generatePatientAddress(questionnaire, "PR-address-city")
-            patient.addressFirstRep.district = generateSubCounty(questionnaire, true)
-            patient.addressFirstRep.state = generateSubCounty(questionnaire, false)
-            patient.addressFirstRep.country = ""
+            val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
+
+            Log.e("---->","<-----")
+            Timber.e("questionnaire **** $questionnaire")
+
+            val questionnaireResponse1 = FormatterClass().parseJson(questionnaire)
+            Timber.e("Data **** $questionnaireResponse1")
+            Log.e("---->","<-----")
+
             patient.id = patientId
 
-            /**
-             * TODO: Add a system generated Identifier, the value should have the Facility's KMFL code
-             */
-            val identifier = Identifier()
 
-            val typeCodeableConcept = CodeableConcept()
 
-            val codingList = ArrayList<Coding>()
-            val coding = Coding()
-            coding.system = "http://hl7.org/fhir/administrative-identifier"
-            coding.code = Identifiers.SYSTEM_GENERATED.name.lowercase().replace("-", "")
-            coding.display =
-                Identifiers.SYSTEM_GENERATED.name.lowercase().replace("-", " ").uppercase()
-            codingList.add(coding)
-            typeCodeableConcept.coding = codingList
-            typeCodeableConcept.text = Identifiers.SYSTEM_GENERATED.name
-
-            identifier.value = FormatterClass().generateRandomCode()
-            identifier.system = "identification"
-            identifier.type = typeCodeableConcept
-
-            patient.identifier.add(identifier)
-
-            fhirEngine.create(patient)
+//            fhirEngine.create(patient)
 
             /**
              * Utilized patient's id for navigation
@@ -145,128 +135,9 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         }
     }
 
-    private fun generateSubCounty(questionnaire: String?, isSubCounty: Boolean): String? {
-        var city = ""
-        if (questionnaire != null) {
-            city = ""
-            val jsonObject = JSONObject(questionnaire)
-            // Retrieve County value dynamically using the linkId
-
-            val county =
-                if (isSubCounty) getValueFromJsonWithList(
-                    jsonObject,
-                    FormatterClass().generateSubCounties()
-                ) else getValueFromJsonWithList(
-                    jsonObject,
-                    FormatterClass().generateWardCounties()
-                )
 
 
-            println("County: $county")
-            if (county != null) {
-                city = county
-            }
-        }
 
-        return city
-    }
-
-    private fun getValueFromJsonWithList(
-        json: JSONObject,
-        generateSubCounties: List<String>
-    ): String? {
-        val stack = mutableListOf<JSONObject>()
-        stack.add(json)
-
-        while (stack.isNotEmpty()) {
-            val currentObject = stack.removeAt(stack.size - 1)
-
-            // Check if the "linkId" matches any item in the generateSubCounties list
-            val linkId = currentObject.optString("linkId", null)
-            if (linkId != null && generateSubCounties.contains(linkId)) {
-                Timber.e("Patient Resource is Here  Answer $currentObject")
-
-                // Extract relevant information from the current object
-                val answerArray = currentObject.optJSONArray("answer")
-                if (answerArray != null && answerArray.length() > 0) {
-                    val answerObject = answerArray.getJSONObject(0)
-                    val valueReferenceObject = answerObject.optJSONObject("valueCoding")
-                    if (valueReferenceObject != null) {
-                        // Extract the "display" value from the "valueCoding" object
-                        val answer = valueReferenceObject.optString("display", null)
-
-                        Timber.e("Patient Resource is Here  Answer Actual $answer")
-                        return answer
-                    }
-                }
-            }
-
-            // If the current object doesn't match the condition, explore its "item" array
-            val items = currentObject.optJSONArray("item")
-            if (items != null) {
-                for (i in 0 until items.length()) {
-                    val item = items.getJSONObject(i)
-                    stack.add(item)
-                }
-            }
-        }
-
-        // Return null if the target value is not found
-        return null
-    }
-
-
-    private fun generatePatientAddress(questionnaire: String?, linkId: String): String? {
-        var city = ""
-        if (questionnaire != null) {
-            city = ""
-            val jsonObject = JSONObject(questionnaire)
-            // Retrieve County value dynamically using the linkId
-            val county = getValueFromJson(jsonObject, linkId)
-
-            println("County: $county")
-            if (county != null) {
-                city = county
-            }
-        }
-
-        return city
-    }
-
-    private fun getValueFromJson(json: JSONObject, targetLinkId: String): String? {
-        val stack = mutableListOf<JSONObject>()
-        stack.add(json)
-
-        while (stack.isNotEmpty()) {
-            val currentObject = stack.removeAt(stack.size - 1)
-
-            if (currentObject.has("linkId") && currentObject.getString("linkId") == targetLinkId) {
-
-                Timber.e("Patient Resource is Here  Answer $currentObject")
-                val answerArray = currentObject.optJSONArray("answer")
-                if (answerArray != null && answerArray.length() > 0) {
-                    val answerObject = answerArray.getJSONObject(0)
-                    val valueReferenceObject = answerObject.optJSONObject("valueCoding")
-                    if (valueReferenceObject != null) {
-                        val answer = valueReferenceObject.optString("display", null)
-
-                        Timber.e("Patient Resource is Here  Answer Actual $answer")
-                        return answer
-                    }
-                }
-            }
-
-            val items = currentObject.optJSONArray("item")
-            if (items != null) {
-                for (i in 0 until items.length()) {
-                    val item = items.getJSONObject(i)
-                    stack.add(item)
-                }
-            }
-        }
-
-        return null
-    }
 
     private fun fetchQuestionnaireJson(): String {
         _questionnaireJson?.let {
@@ -287,55 +158,6 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         return UUID.randomUUID().toString()
     }
 
-    fun saveCareGiver(questionnaireResponse: QuestionnaireResponse, patientId: String) {
-        viewModelScope.launch {
-            if (
-                QuestionnaireResponseValidator.validateQuestionnaireResponse(
-                    questionnaire,
-                    questionnaireResponse,
-                    getApplication(),
-                )
-                    .values
-                    .flatten()
-                    .any { it is Invalid }
-            ) {
-                isPatientSaved.value = false
-                return@launch
-            }
-
-            val entry =
-                ResourceMapper.extract(
-                    questionnaire,
-                    questionnaireResponse,
-                )
-                    .entryFirstRep
-            if (entry.resource !is RelatedPerson) {
-                return@launch
-            }
-            val patient = entry.resource as RelatedPerson
-            patient.id = generateUuid()
-            patient.patient = Reference("Patient/$patientId")
-            fhirEngine.create(patient)
-            updateContactDetails(patientId, patient)
-            isPatientSaved.value = true
-
-
-        }
-    }
-
-    private suspend fun updateContactDetails(patientId: String, care: RelatedPerson) {
-        val pp = fhirEngine.get(ResourceType.Patient, patientId) as Patient
-        var lname = HumanName()
-        lname.family = care.name[0].family
-        lname.addGiven(care.name[0].givenAsSingleString)
-
-        pp.addContact().apply {
-            name = lname
-            gender = care.gender
-            telecom = care.telecom
-        }
-        fhirEngine.update(pp)
-    }
 
     internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientItem {
         // Show nothing if no values available for gender and date of birth.

@@ -71,12 +71,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            "careFunction" -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    careFunction(patientId)
-                }
-            }
+
 
             "editFunction" -> {
                 val patientId = intent.getStringExtra("patientId")
@@ -150,15 +145,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun careFunction(patientId: String) {
-        formatter.saveSharedPref("patientId", patientId, this)
-        val bundle = Bundle()
-        bundle.putString(UpdateFragment.QUESTIONNAIRE_FRAGMENT_TAG, "update.json")
-        bundle.putString("patientId", patientId)
-        findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
-            R.id.careGiverFragment, bundle
-        )
-    }
+
 
     private fun updateFunction(patientId: String) {
         val bundle = Bundle()

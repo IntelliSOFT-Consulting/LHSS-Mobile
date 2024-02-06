@@ -63,10 +63,7 @@
         tools:layout="@layout/fragment_update">
 
     </fragment>
-    <fragment
-        android:id="@+id/careGiverFragment"
-        android:name="com.intellisoft.chanjoke.add_patient.CareGiverFragment"
-        android:label="Add Care Giver" />
+
 
     <fragment
         android:id="@+id/administerVaccine"
