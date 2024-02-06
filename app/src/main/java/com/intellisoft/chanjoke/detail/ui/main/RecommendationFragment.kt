@@ -98,12 +98,12 @@ class RecommendationFragment : Fragment() {
 
     private fun getImmunisationRecommendations() {
  
-        val recommendationList = patientDetailsViewModel.recommendationList()
-
-        println(recommendationList)
-
-        val vaccineAdapter = RecommendationAdapter(recommendationList,requireContext())
-        binding.recyclerView.adapter = vaccineAdapter
+//        val recommendationList = patientDetailsViewModel.recommendationList()
+//
+//        println(recommendationList)
+//
+//        val vaccineAdapter = RecommendationAdapter(recommendationList,requireContext())
+//        binding.recyclerView.adapter = vaccineAdapter
  
     }
 

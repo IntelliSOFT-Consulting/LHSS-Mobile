@@ -83,10 +83,10 @@ class AppointmentsFragment : Fragment() {
 
     private fun getAppointments() {
 
-        val appointmentList = patientDetailsViewModel.getAppointmentList()
-//
-        val vaccineAdapter = AppointmentAdapter(appointmentList, requireContext())
-        binding.recyclerView.adapter = vaccineAdapter
+//        val appointmentList = patientDetailsViewModel.getAppointmentList()
+
+//        val vaccineAdapter = AppointmentAdapter(appointmentList, requireContext())
+//        binding.recyclerView.adapter = vaccineAdapter
     }
 
 

@@ -60,27 +60,27 @@ class AppointmentDetails : AppCompatActivity() {
     private fun getAppointments() {
 
         val appointmentId = formatterClass.getSharedPref("appointmentId", this)
-        val appointmentList = patientDetailsViewModel.getAppointmentList()
-        val recommendationList: ArrayList<DbAppointmentDetails>
+//        val appointmentList = patientDetailsViewModel.getAppointmentList()
+//        val recommendationList: ArrayList<DbAppointmentDetails>
+//
+//        val dbAppointmentData = appointmentList.find { it.id == appointmentId }
+//
+//        if (dbAppointmentData != null){
+//            recommendationList = dbAppointmentData.recommendationList!!
+//
+//            val title = dbAppointmentData.title
+//            val description = dbAppointmentData.description
+//            val dateScheduled = dbAppointmentData.dateScheduled
+//
+//            binding.tvTitle.text = title
+//            binding.tvDescription.text = description
+//            binding.tvDateScheduled.text = dateScheduled
+//
+//            val appointmentDetailsAdapter = AppointmentDetailsAdapter(recommendationList, this)
+//            binding.recyclerView.adapter = appointmentDetailsAdapter
+//
 
-        val dbAppointmentData = appointmentList.find { it.id == appointmentId }
-
-        if (dbAppointmentData != null){
-            recommendationList = dbAppointmentData.recommendationList!!
-
-            val title = dbAppointmentData.title
-            val description = dbAppointmentData.description
-            val dateScheduled = dbAppointmentData.dateScheduled
-
-            binding.tvTitle.text = title
-            binding.tvDescription.text = description
-            binding.tvDateScheduled.text = dateScheduled
-
-            val appointmentDetailsAdapter = AppointmentDetailsAdapter(recommendationList, this)
-            binding.recyclerView.adapter = appointmentDetailsAdapter
-
-
-        }
+//        }
 
 
 

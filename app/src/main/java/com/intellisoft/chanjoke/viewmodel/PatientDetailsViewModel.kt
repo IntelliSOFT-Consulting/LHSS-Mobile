@@ -80,7 +80,11 @@ class PatientDetailsViewModel(
         var contact_gender = ""
         var systemId = ""
         searchResult.first().let {
-            name = it.name[0].nameAsSingleString
+
+            name =if (it.hasName()){
+                it.name[0].family.toString()
+            }else ""
+
 
             phone = ""
             if (it.hasTelecom()) {
@@ -133,11 +137,6 @@ class PatientDetailsViewModel(
             }
         }
 
-        FormatterClass().saveSharedPref(
-            "patientDob",
-            dob,
-            getApplication<Application>().applicationContext
-        )
         FormatterClass().saveSharedPref(
             "patientId",
             patientId,
@@ -199,248 +198,8 @@ class PatientDetailsViewModel(
         return getString(R.string.none)
     }
 
-    fun recommendationList() = runBlocking {
-        getRecommendationList()
-    }
 
 
-    private suspend fun getRecommendationList(): ArrayList<DbAppointmentDetails> {
-        val recommendationList = ArrayList<DbAppointmentDetails>()
-
-
-        fhirEngine
-            .search<ImmunizationRecommendation> {
-                filter(ImmunizationRecommendation.PATIENT, { value = "Patient/$patientId" })
-                sort(Encounter.DATE, Order.DESCENDING)
-            }
-            .map { createRecommendation(it) }
-            .let { recommendationList.addAll(it) }
-
-
-
-
-        return recommendationList
-    }
-
-
-    private fun createRecommendation(it: ImmunizationRecommendation): DbAppointmentDetails {
-
-        var appointmentId = ""
-
-        if (it.hasId()) appointmentId = it.id.replace("ImmunizationRecommendation/", "")
-
-        var date = ""
-
-        if (it.hasRecommendation() && it.recommendation.isNotEmpty()) {
-            if (it.recommendation[0].hasDateCriterion() &&
-                it.recommendation[0].dateCriterion.isNotEmpty() &&
-                it.recommendation[0].dateCriterion[0].hasValue()
-            ) {
-                val dateCriterion = it.recommendation[0].dateCriterion[0].value.toString()
-                date = dateCriterion
-            }
-
-        }
-        var targetDisease = ""
-        var doseNumber: String? = ""
-        var appointmentStatus = ""
-        var vaccineName = ""
-
-
-        if (it.hasRecommendation()) {
-            val recommendation = it.recommendation
-            if (recommendation.isNotEmpty()) {
-                //targetDisease
-                val codeableConceptTargetDisease = recommendation[0].targetDisease
-                if (codeableConceptTargetDisease.hasText()) {
-                    targetDisease = codeableConceptTargetDisease.text
-                }
-
-                //appointment status
-                val codeableConceptTargetStatus = recommendation[0].forecastStatus
-                if (codeableConceptTargetStatus.hasText()) {
-                    appointmentStatus = codeableConceptTargetStatus.text
-                }
-
-                //Dose number
-                if (recommendation[0].hasDoseNumber()) {
-                    doseNumber = recommendation[0].doseNumber.asStringValue()
-                }
-
-                //Contraindicated vaccine code
-                if (recommendation[0].hasContraindicatedVaccineCode()) {
-                    vaccineName = recommendation[0].contraindicatedVaccineCode[0].text
-                }
-
-            }
-        }
-
-
-
-
-
-        return DbAppointmentDetails(
-            appointmentId,
-            date,
-            doseNumber,
-            targetDisease,
-            vaccineName,
-            appointmentStatus
-        )
-
-
-    }
-
-
-    fun getAppointmentList() = runBlocking {
-        getAppointmentDetails()
-    }
-
-    private suspend fun getAppointmentDetails(): ArrayList<DbAppointmentData> {
-
-        val appointmentList = ArrayList<DbAppointmentData>()
-
-        fhirEngine
-            .search<Appointment> {
-                filter(Appointment.SUPPORTING_INFO, { value = "Patient/$patientId" })
-                sort(Appointment.DATE, Order.DESCENDING)
-            }
-            .map { createAppointment(it) }
-            .let { appointmentList.addAll(it) }
-
-        return appointmentList
-    }
-
-    private suspend fun createAppointment(it: Appointment): DbAppointmentData {
-
-        val recommendationList = getRecommendationList()
-
-        val id = if (it.hasId()) it.id else ""
-        val status = if (it.hasStatus()) it.status else ""
-        val input = if (it.hasDescription()) it.description else ""
-        val start = if (it.hasStart()) it.start else ""
-        val basedOnImmunizationRecommendationList = if (it.hasBasedOn()) {
-            it.basedOn
-        } else {
-            emptyList()
-        }
-        var title = ""
-        var description = ""
-        var dateScheduled = ""
-        var recommendationSavedList = ArrayList<DbAppointmentDetails>()
-
-        val pattern = Regex("Title: (.*?) Description:(.*)")
-        // Match the pattern in the input text
-        val matchResult = pattern.find(input)
-        matchResult?.let {
-            title = it.groupValues[1].trim()
-            description = it.groupValues[2].trim()
-        }
-
-
-        val startDate = FormatterClass().convertDateFormat(start.toString())
-        if (startDate != null) {
-            dateScheduled = startDate
-        }
-
-        basedOnImmunizationRecommendationList.forEach { ref ->
-            val immunizationRecommendation = ref.reference
-            val recommendationId =
-                immunizationRecommendation.replace("ImmunizationRecommendation/", "")
-            val selectedRecommendation =
-                recommendationList.find { it.appointmentId == recommendationId }
-            if (selectedRecommendation != null) {
-                recommendationSavedList.add(selectedRecommendation)
-            }
-        }
-
-        return DbAppointmentData(
-            id,
-            title,
-            description,
-            null,
-            dateScheduled,
-            recommendationSavedList,
-            status.toString()
-        )
-
-
-    }
-
-    fun getVaccineList() = runBlocking {
-        getVaccineListDetails()
-    }
-
-    private suspend fun getVaccineListDetails(): ArrayList<DbVaccineData> {
-
-        val vaccineList = ArrayList<DbVaccineData>()
-
-        fhirEngine
-            .search<Immunization> {
-                filter(Immunization.PATIENT, { value = "Patient/$patientId" })
-                sort(Immunization.DATE, Order.DESCENDING)
-            }
-            .map { createVaccineItem(it) }
-            .let { vaccineList.addAll(it) }
-
-        val newVaccineList = vaccineList.filterNot {
-            it.status == "NOTDONE"
-        }
-
-        return ArrayList(newVaccineList)
-    }
-
-    private fun createVaccineItem(immunization: Immunization): DbVaccineData {
-
-        var vaccineName = ""
-        var doseNumberValue = ""
-        val logicalId = if (immunization.hasEncounter()) immunization.encounter.reference else ""
-        var dateScheduled = ""
-        var status = ""
-
-        val ref = logicalId.toString().replace("Encounter/", "")
-
-        if (immunization.hasVaccineCode()) {
-            if (immunization.vaccineCode.hasText()) vaccineName = immunization.vaccineCode.text
-        }
-
-        if (immunization.hasOccurrenceDateTimeType()) {
-            val fhirDate = immunization.occurrenceDateTimeType.valueAsString
-            val convertedDate = FormatterClass().convertDateFormat(fhirDate)
-            if (convertedDate != null) {
-                dateScheduled = convertedDate
-            }
-        }
-        if (immunization.hasProtocolApplied()) {
-            if (immunization.protocolApplied.isNotEmpty() && immunization.protocolApplied[0].hasSeriesDoses()) doseNumberValue =
-                immunization.protocolApplied[0].seriesDoses.asStringValue()
-        }
-        if (immunization.hasStatus()) {
-            status = immunization.statusElement.value.name
-        }
-
-        return DbVaccineData(
-            ref,
-            vaccineName,
-            doseNumberValue,
-            dateScheduled,
-            status
-        )
-    }
-
-    private suspend fun createEncounterAefiItem(
-        encounter: Encounter,
-        resources: Resources
-    ): AdverseEventData {
-
-        val type = generateObservationByCode(encounter.logicalId, AEFI_TYPE) ?: ""
-        val date = generateObservationByCode(encounter.logicalId, AEFI_DATE) ?: ""
-        return AdverseEventData(
-            encounter.logicalId,
-            type,
-            date,
-        )
-    }
 
     private suspend fun generateObservationByCode(encounterId: String, codeValue: String): String? {
         var data = ""
@@ -463,33 +222,6 @@ class PatientDetailsViewModel(
                 data = it.value
             }
         return data
-    }
-
-    fun loadImmunizationAefis(logicalId: String) = runBlocking {
-        loadInternalImmunizationAefis(logicalId)
-    }
-
-    private suspend fun loadInternalImmunizationAefis(logicalId: String): List<AdverseEventData> {
-
-        val encounterList = ArrayList<AdverseEventData>()
-        fhirEngine
-            .search<Encounter> {
-                filter(
-                    Encounter.SUBJECT,
-                    { value = "Patient/$patientId" })
-                filter(
-                    Encounter.PART_OF,
-                    { value = "Encounter/$logicalId" })
-                sort(Encounter.DATE, Order.DESCENDING)
-            }
-            .map {
-                createEncounterAefiItem(
-                    it,
-                    getApplication<Application>().resources
-                )
-            }
-            .let { encounterList.addAll(it) }
-        return encounterList.reversed()
     }
 
     fun getObservationByCode(

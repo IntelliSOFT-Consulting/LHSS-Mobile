@@ -70,18 +70,14 @@ class PatientDetailActivity : AppCompatActivity() {
 
         val adapter = SectionsPagerAdapter(supportFragmentManager)
 
-        val vaccine = RoutineFragment()
-        vaccine.arguments = bundle
+        val visitHistory = RoutineFragment()
+        visitHistory.arguments = bundle
 
-        val apn = RecommendationFragment()
-        apn.arguments = bundle
+        val referrals = RecommendationFragment()
+        referrals.arguments = bundle
 
-        val appointment = AppointmentsFragment()
-        appointment.arguments = bundle
-
-        adapter.addFragment(vaccine, getString(R.string.tab_text_1))
-        adapter.addFragment(apn, getString(R.string.tab_text_2))
-        adapter.addFragment(appointment, getString(R.string.tab_text_4))
+        adapter.addFragment(visitHistory, getString(R.string.tab_text_1))
+        adapter.addFragment(referrals, getString(R.string.tab_text_2))
 
         binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -129,17 +125,6 @@ class PatientDetailActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            formatterClass.clearVaccineShared(this@PatientDetailActivity)
-
-
-            formatterClass.saveSharedPref("isPaged","false", this@PatientDetailActivity)
-
-            val observationDateValue = patientDetailsViewModel.getObservationByCode(patientId, null, "861-122")
-            val isPaged = observationDateValue.value.replace(" ","")
-            if (isPaged != "" && isPaged == "Yes"){
-                formatterClass.saveSharedPref("isPaged","true", this@PatientDetailActivity)
-            }
-
             val patientDetail = patientDetailsViewModel.getPatientInfo()
             CoroutineScope(Dispatchers.Main).launch {
                 binding.apply {
@@ -149,7 +134,6 @@ class PatientDetailActivity : AppCompatActivity() {
 
                     val dob = formatterClass.convertDateFormat(patientDetail.dob)
                     val age = formatterClass.getFormattedAge(patientDetail.dob,tvAge.context.resources)
-//                    val dobAge = "$dob ($age old)"
 
                     tvDob.text = dob
                     tvAge.text = "$age old"
@@ -157,36 +141,9 @@ class PatientDetailActivity : AppCompatActivity() {
                 }
             }
 
-            val vaccineList = patientDetailsViewModel.getVaccineList()
-            generateMissedVaccines(vaccineList)
-
-        }
-    }
-    private fun generateMissedVaccines(vaccineList: ArrayList<DbVaccineData>) {
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val patientDob = formatterClass.getSharedPref("patientDob", this@PatientDetailActivity)
-            if (patientDob != null) {
-
-                val ageInWeeks = formatterClass.calculateWeeksFromDate(patientDob)
-                val basicVaccineList = ArrayList<BasicVaccine>()
-                vaccineList.forEach{
-                    val basicVaccine = immunizationHandler.getVaccineDetailsByBasicVaccineName(it.vaccineName)
-                    basicVaccine?.let { it1 -> basicVaccineList.add(it1) }
-                }
-
-                val missedVaccinesList =
-                    ageInWeeks?.let { immunizationHandler.getMissedRoutineVaccines(basicVaccineList, it) }
-
-
-
-            }
-
 
 
         }
-
     }
 
 

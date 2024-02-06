@@ -138,82 +138,82 @@ class AddAppointment : AppCompatActivity() {
     }
 
     private fun createSpinner() {
-        val recommendationList = ArrayList<BasicVaccine>()
+//        val recommendationList = ArrayList<BasicVaccine>()
+//
+//        val patientDob = formatterClass.getSharedPref("patientDob", this)
+//        if (patientDob != null){
+//
+//            val ageInWeeks = formatterClass.calculateWeeksFromDate(patientDob)
+//            if (ageInWeeks != null){
+//
+//                val administeredList = ArrayList<BasicVaccine>()
+//                val vaccineList = patientDetailsViewModel.getVaccineList()
+//                vaccineList.forEach {
+//                    val vaccineName = it.vaccineName
+//                    val basicVaccine = immunizationHandler.getVaccineDetailsByBasicVaccineName(vaccineName)
+//                    if (basicVaccine != null) {
+//                        administeredList.add(basicVaccine)
+//                    }
+//                }
+//
+//                val weeksList = ArrayList<Double>()
+//
+//                recommendationList.add(
+//                    BasicVaccine(
+//                        "",
+//                        "",
+//                        "",
+//                        0,
+//                        weeksList,
+//                        "",
+//                        "",
+//                        )
+//                )
+//                val (routineList, nonRoutineVaccineList,  pregnancyVaccineList) =
+//                    immunizationHandler.getAllVaccineList(administeredList, ageInWeeks, this)
+//
+//
+//
+//                routineList.forEach { routineVaccine ->
+//                    val basicVaccineList = routineVaccine.vaccineList
+//                    recommendationList += ArrayList(basicVaccineList)
+//                }
+//                nonRoutineVaccineList.forEach {nonRoutineVaccine ->
+//                    val routineVaccineList = nonRoutineVaccine.vaccineList
+//                    routineVaccineList.forEach {routineVaccine ->
+//                        val basicVaccineList = routineVaccine.vaccineList
+//                        recommendationList += ArrayList(basicVaccineList)
+//                    }
+//                }
+//                pregnancyVaccineList.forEach {pregnancyVaccine ->
+//                    val basicVaccineList = pregnancyVaccine.vaccineList
+//                    recommendationList += ArrayList(basicVaccineList)
+//                }
+//
+//            }
+//
+//        }
+//
+//
+//
+//        val itemList = ArrayList<String>()
+//        //Remove the vaccines in an appointment
+//        val givenRecommendationList = ArrayList<String>()
+//        val appointmentList = patientDetailsViewModel.getAppointmentList()
+//        appointmentList.forEach {
+//            it.recommendationList?.forEach {dbAppointmentDetails ->
+//                val vaccineName = dbAppointmentDetails.vaccineName
+//                givenRecommendationList.add(vaccineName)
+//            }
+//        }
 
-        val patientDob = formatterClass.getSharedPref("patientDob", this)
-        if (patientDob != null){
-
-            val ageInWeeks = formatterClass.calculateWeeksFromDate(patientDob)
-            if (ageInWeeks != null){
-
-                val administeredList = ArrayList<BasicVaccine>()
-                val vaccineList = patientDetailsViewModel.getVaccineList()
-                vaccineList.forEach {
-                    val vaccineName = it.vaccineName
-                    val basicVaccine = immunizationHandler.getVaccineDetailsByBasicVaccineName(vaccineName)
-                    if (basicVaccine != null) {
-                        administeredList.add(basicVaccine)
-                    }
-                }
-
-                val weeksList = ArrayList<Double>()
-
-                recommendationList.add(
-                    BasicVaccine(
-                        "",
-                        "",
-                        "",
-                        0,
-                        weeksList,
-                        "",
-                        "",
-                        )
-                )
-                val (routineList, nonRoutineVaccineList,  pregnancyVaccineList) =
-                    immunizationHandler.getAllVaccineList(administeredList, ageInWeeks, this)
-
-
-
-                routineList.forEach { routineVaccine ->
-                    val basicVaccineList = routineVaccine.vaccineList
-                    recommendationList += ArrayList(basicVaccineList)
-                }
-                nonRoutineVaccineList.forEach {nonRoutineVaccine ->
-                    val routineVaccineList = nonRoutineVaccine.vaccineList
-                    routineVaccineList.forEach {routineVaccine ->
-                        val basicVaccineList = routineVaccine.vaccineList
-                        recommendationList += ArrayList(basicVaccineList)
-                    }
-                }
-                pregnancyVaccineList.forEach {pregnancyVaccine ->
-                    val basicVaccineList = pregnancyVaccine.vaccineList
-                    recommendationList += ArrayList(basicVaccineList)
-                }
-
-            }
-
-        }
-
-
-
-        val itemList = ArrayList<String>()
-        //Remove the vaccines in an appointment
-        val givenRecommendationList = ArrayList<String>()
-        val appointmentList = patientDetailsViewModel.getAppointmentList()
-        appointmentList.forEach {
-            it.recommendationList?.forEach {dbAppointmentDetails ->
-                val vaccineName = dbAppointmentDetails.vaccineName
-                givenRecommendationList.add(vaccineName)
-            }
-        }
-
-        recommendationList.forEach {
-            itemList.add(it.vaccineName)
-        }
-
-        // Convert strings and remove extra whitespaces
-        val recommendationListLower = givenRecommendationList.map { it.trim() }
-        val itemListLower = itemList.map { it.trim() }
+//        recommendationList.forEach {
+//            itemList.add(it.vaccineName)
+//        }
+//
+//        // Convert strings and remove extra whitespaces
+//        val recommendationListLower = givenRecommendationList.map { it.trim() }
+//        val itemListLower = itemList.map { it.trim() }
 
         // Remove common elements
 //        val uniqueRecommendations = givenRecommendationList.filter { it.trim() !in itemListLower }
@@ -221,28 +221,28 @@ class AddAppointment : AppCompatActivity() {
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemListLower)
-
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        // Apply the adapter to the spinner
-        binding.spinner.adapter = adapter
-
-        // Set a listener to handle the item selection
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
-                // Get the selected item
-                val selectedItem = itemListLower[position]
-                val selectedVaccine = recommendationList.find { it.vaccineName == selectedItem }
-                if (selectedVaccine != null) selectedVaccineName = selectedVaccine.vaccineName
-
-            }
-
-            override fun onNothingSelected(parentView: AdapterView<*>) {
-                // Do nothing here
-            }
-        }
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemListLower)
+//
+//        // Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        // Apply the adapter to the spinner
+//        binding.spinner.adapter = adapter
+//
+//        // Set a listener to handle the item selection
+//        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View?, position: Int, id: Long) {
+//                // Get the selected item
+//                val selectedItem = itemListLower[position]
+//                val selectedVaccine = recommendationList.find { it.vaccineName == selectedItem }
+//                if (selectedVaccine != null) selectedVaccineName = selectedVaccine.vaccineName
+//
+//            }
+//
+//            override fun onNothingSelected(parentView: AdapterView<*>) {
+//                // Do nothing here
+//            }
+//        }
 
     }
 }

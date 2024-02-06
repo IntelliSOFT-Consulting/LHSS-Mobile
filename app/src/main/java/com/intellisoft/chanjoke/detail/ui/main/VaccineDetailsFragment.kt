@@ -161,14 +161,14 @@ class VaccineDetailsFragment : Fragment() {
     }
 
     private fun loadVaccineAdverseEvents() {
-        val logicalId = FormatterClass().getSharedPref("current_immunization", requireContext())
-
-        if (logicalId != null) {
-            val adverseEvents = patientDetailsViewModel.loadImmunizationAefis(logicalId)
-
-            val vaccineAdapter = EventsAdapter(adverseEvents, requireContext())
-            binding.recyclerView.adapter = vaccineAdapter
-        }
+//        val logicalId = FormatterClass().getSharedPref("current_immunization", requireContext())
+//
+//        if (logicalId != null) {
+//            val adverseEvents = patientDetailsViewModel.loadImmunizationAefis(logicalId)
+//
+//            val vaccineAdapter = EventsAdapter(adverseEvents, requireContext())
+//            binding.recyclerView.adapter = vaccineAdapter
+//        }
 
     }
 
