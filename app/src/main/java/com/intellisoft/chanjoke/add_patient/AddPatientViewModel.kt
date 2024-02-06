@@ -43,6 +43,7 @@ import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.CodeableConcept
 import org.hl7.fhir.r4.model.Coding
+import org.hl7.fhir.r4.model.Enumerations
 import org.hl7.fhir.r4.model.HumanName
 import org.hl7.fhir.r4.model.Identifier
 import org.hl7.fhir.r4.model.Patient
@@ -51,6 +52,7 @@ import org.hl7.fhir.r4.model.QuestionnaireResponse
 import org.hl7.fhir.r4.model.Reference
 import org.hl7.fhir.r4.model.RelatedPerson
 import org.hl7.fhir.r4.model.ResourceType
+import org.hl7.fhir.r4.model.codesystems.AdministrativeGender
 import org.json.JSONObject
 import timber.log.Timber
 import java.time.LocalDate
@@ -106,27 +108,67 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
 //                return@launch
 //            }
 
+            val formatterClass = FormatterClass()
             val patientId = generateUuid()
-            val patient = entry.resource
+
+            val patient = Patient()
             val cc = FhirContext.forR4()
             val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
 
-            Log.e("---->","<-----")
-            Timber.e("questionnaire **** $questionnaire")
+            val dbPatientDataList = FormatterClass().parseJson(questionnaire)
+            fun findCloseMatchAndGetAnswer(searchString: String): DbPatientDataAnswer? {
+                val matchingPatientData = dbPatientDataList.find { it.linkId.contains(searchString, ignoreCase = true) }
+                return matchingPatientData?.answer?.takeIf { it.valueString != null || it.valueCoding != null }
+            }
 
-            val questionnaireResponse1 = FormatterClass().parseJson(questionnaire)
-            Timber.e("Data **** $questionnaireResponse1")
-            Log.e("---->","<-----")
+            //Patient Name
+            val humanNameList = ArrayList<HumanName>()
+            val humanName = HumanName()
+            val dbPatientDataAnswerName = findCloseMatchAndGetAnswer("7196281948590")
+            if (dbPatientDataAnswerName != null){
+                val valueData = dbPatientDataAnswerName.valueString ?: dbPatientDataAnswerName.valueCoding?.display
+                humanName.family = valueData
+                humanNameList.add(humanName)
+                patient.name = humanNameList
+            }
+
+            //Birth Date
+            val dbPatientDataAnswerDob = findCloseMatchAndGetAnswer("4725705580511")
+            if (dbPatientDataAnswerDob != null){
+                val valueData = dbPatientDataAnswerDob.valueString ?: dbPatientDataAnswerDob.valueCoding?.display
+                if (valueData != null) {
+                    val dobValue = formatterClass.convertDateFormat(valueData)
+                    val date = dobValue?.let { FormatterClass().convertStringToDate(it, "MMM d yyyy") }
+                    patient.birthDate = date
+                }
+            }
+
+            //Gender
+            val dbPatientDataAnswerGender = findCloseMatchAndGetAnswer("3747594711636")
+            if (dbPatientDataAnswerGender != null){
+                val valueData = dbPatientDataAnswerGender.valueString ?: dbPatientDataAnswerGender.valueCoding?.display
+                if (valueData != null){
+                    val gender = if (valueData.contains("Male")){
+                        Enumerations.AdministrativeGender.MALE
+                    }else{
+                        Enumerations.AdministrativeGender.FEMALE
+                    }
+                    patient.setGender(gender)
+                }
+            }
+            /**
+             * Add the other Patient details
+             */
 
             patient.id = patientId
 
-
-
-//            fhirEngine.create(patient)
+            fhirEngine.create(patient)
 
             /**
              * Utilized patient's id for navigation
              * */
+
+
 
             FormatterClass().saveSharedPref("patientId", patientId, context)
             FormatterClass().saveSharedPref("isRegistration", "true", context)
@@ -134,6 +176,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             isPatientSaved.value = true
         }
     }
+
 
 
 

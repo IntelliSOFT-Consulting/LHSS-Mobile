@@ -58,7 +58,7 @@ class BlurBackgroundDialog(
             }
         }
         if (FormatterClass().getSharedPref("isRegistration", context) == "true") {
-            valueText = "The client has been registered successfully"
+            valueText = "Patient added successfully!"
         }
 
         findViewById<TextView>(R.id.info_textview).apply {
