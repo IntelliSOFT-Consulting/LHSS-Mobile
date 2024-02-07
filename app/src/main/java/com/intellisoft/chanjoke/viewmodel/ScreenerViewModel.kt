@@ -2,6 +2,7 @@ package com.intellisoft.chanjoke.viewmodel
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -12,6 +13,8 @@ import com.intellisoft.chanjoke.detail.ui.main.UpdateFragment
 import com.intellisoft.chanjoke.fhir.FhirApplication
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.datacapture.mapping.ResourceMapper
+import com.intellisoft.chanjoke.fhir.data.DbPatientDataAnswer
+import com.intellisoft.chanjoke.fhir.data.FormatterClass
 import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.Bundle
@@ -44,6 +47,34 @@ class ScreenerViewModel(application: Application, private val state: SavedStateH
      *
      * @param questionnaireResponse screener encounter questionnaire response
      */
+
+    fun manualExtraction(questionnaireResponse: QuestionnaireResponse, patientId: String) {
+        viewModelScope.launch {
+            val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
+            val subjectReference = Reference("Patient/$patientId")
+            val encounterId = generateUuid()
+            if (isRequiredFieldMissing(bundle)) {
+                isResourcesSaved.value = false
+                return@launch
+            }
+
+            val cc = FhirContext.forR4()
+            val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
+            val dbPatientDataList = FormatterClass().parseJson(questionnaire)
+            fun findCloseMatchAndGetAnswer(searchString: String): DbPatientDataAnswer? {
+                val matchingPatientData = dbPatientDataList.find { it.linkId.contains(searchString, ignoreCase = true) }
+                return matchingPatientData?.answer?.takeIf { it.valueString != null || it.valueCoding != null }
+            }
+
+            Log.e("---->","<----")
+            println(dbPatientDataList)
+            Log.e("---->","<----")
+
+
+            isResourcesSaved.value = true
+        }
+    }
+
     fun saveScreenerEncounter(questionnaireResponse: QuestionnaireResponse, patientId: String) {
         viewModelScope.launch {
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
@@ -54,6 +85,7 @@ class ScreenerViewModel(application: Application, private val state: SavedStateH
                 return@launch
             }
             saveResources(bundle, subjectReference, encounterId)
+
             isResourcesSaved.value = true
         }
     }

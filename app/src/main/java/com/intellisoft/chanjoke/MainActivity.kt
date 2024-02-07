@@ -64,28 +64,28 @@ class MainActivity : AppCompatActivity() {
             "registerFunction" -> {
                 registerFunction()
             }
-            "updateFunction" -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    updateFunction(patientId)
-                }
-            }
-
-
-
-            "editFunction" -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    editFunction(patientId)
-                }
-            }
-
-            NavigationDetails.ADMINISTER_VACCINE.name -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    administerVaccine(patientId, R.id.administerVaccine)
-                }
-            }
+//            "updateFunction" -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    updateFunction(patientId)
+//                }
+//            }
+//
+//
+//
+//            "editFunction" -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    editFunction(patientId)
+//                }
+//            }
+//
+//            NavigationDetails.ADMINISTER_VACCINE.name -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    administerVaccine(patientId, R.id.administerVaccine)
+//                }
+//            }
 
             NavigationDetails.VISIT_HISTORY.name -> {
                 val patientId = intent.getStringExtra("patientId")
@@ -94,32 +94,34 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            NavigationDetails.LIST_VACCINE_DETAILS.name -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    administerVaccine(patientId, R.id.vaccineDetailsFragment)
-                }
-            }
-
-            NavigationDetails.CLIENT_LIST.name -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    administerVaccine(patientId, R.id.patient_list)
-                }
-            }
-            NavigationDetails.EDIT_CLIENT.name -> {
-                val patientId = intent.getStringExtra("patientId")
-                if (patientId != null) {
-                    navController.navigate(R.id.editPatientFragment)
-                }
-            }
+//            NavigationDetails.LIST_VACCINE_DETAILS.name -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    administerVaccine(patientId, R.id.vaccineDetailsFragment)
+//                }
+//            }
+//
+//            NavigationDetails.CLIENT_LIST.name -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    administerVaccine(patientId, R.id.patient_list)
+//                }
+//            }
+//            NavigationDetails.EDIT_CLIENT.name -> {
+//                val patientId = intent.getStringExtra("patientId")
+//                if (patientId != null) {
+//                    navController.navigate(R.id.editPatientFragment)
+//                }
+//            }
         }
 
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.landing_page,
-                R.id.patient_list, R.id.updateFragment, R.id.editPatientFragment
+                R.id.patient_list,
+//                R.id.updateFragment,
+//                R.id.editPatientFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

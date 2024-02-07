@@ -19,7 +19,6 @@ package com.intellisoft.chanjoke.vaccine
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Paint.FontMetrics
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -35,6 +34,7 @@ import com.google.android.fhir.datacapture.mapping.ResourceMapper
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.search
 import com.intellisoft.chanjoke.fhir.data.DbAppointmentData
+import com.intellisoft.chanjoke.fhir.data.DbPatientDataAnswer
 import com.intellisoft.chanjoke.fhir.data.FormatterClass
 import com.intellisoft.chanjoke.vaccine.validations.ImmunizationHandler
 import kotlinx.coroutines.CoroutineScope
@@ -87,23 +87,131 @@ class AdministerVaccineViewModel(
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
             val subjectReference = Reference("Patient/$patientId")
             val encounterId = generateUuid()
-//      if (isRequiredFieldMissing(bundle)) {
-//        isResourcesSaved.value = false
-//        return@launch
-//      }
-
-            Log.e("-----", "hhhhhhhh")
+              if (isRequiredFieldMissing(bundle)) {
+                isResourcesSaved.value = false
+                return@launch
+              }
 
             val context = FhirContext.forR4()
             val questionnaire =
                 context.newJsonParser().encodeResourceToString(questionnaireResponse)
 
-            println(questionnaire)
+            manualExtraction(questionnaireResponse, patientId)
 
-            saveResources(bundle, subjectReference, encounterId, patientId)
+//            saveResources(bundle, subjectReference, encounterId, patientId)
 
             isResourcesSaved.value = true
         }
+    }
+
+    fun manualExtraction(questionnaireResponse: QuestionnaireResponse, patientId: String) {
+        viewModelScope.launch {
+            val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
+            val subjectReference = Reference("Patient/$patientId")
+            val encounterId = generateUuid()
+            val encounterReference = Reference("Encounter/$encounterId")
+
+            //Encounter
+            val encounter = Encounter()
+            encounter.subject = subjectReference
+            encounter.id = encounterId
+            saveResourceToDatabase(encounter, "Enc $encounterId")
+
+            val cc = FhirContext.forR4()
+            val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
+            val dbPatientDataList = FormatterClass().parseJson(questionnaire)
+            fun findCloseMatchAndGetAnswer(searchString: String): DbPatientDataAnswer? {
+                val matchingPatientData = dbPatientDataList.find { it.linkId.contains(searchString, ignoreCase = true) }
+                return matchingPatientData?.answer?.takeIf { it.valueString != null || it.valueCoding != null }
+            }
+
+            //Service Provider
+            val dbServiceProvider = findCloseMatchAndGetAnswer("7676295472922")
+            if (dbServiceProvider != null){
+
+                //Create observation
+                val observation = createObservationData(dbServiceProvider)
+                observation.subject = subjectReference
+                observation.encounter = encounterReference
+                saveResourceToDatabase(observation, "Obs $encounterId")
+
+            }
+
+            //Service Provider
+            val dbServiceTreatment = findCloseMatchAndGetAnswer("9808050870522")
+            if (dbServiceTreatment != null){
+
+                //Create observation
+                val observation = createObservationData(dbServiceTreatment)
+                observation.subject = subjectReference
+                observation.encounter = encounterReference
+                saveResourceToDatabase(observation, "Obs $encounterId")
+
+            }
+
+            //Service Provider
+            val dbServiceTreat = findCloseMatchAndGetAnswer("9825275123857")
+            if (dbServiceTreat != null){
+
+                //Create observation
+                val observation = createObservationData(dbServiceTreat)
+                observation.subject = subjectReference
+                observation.encounter = encounterReference
+                saveResourceToDatabase(observation, "Obs $encounterId")
+
+            }
+
+            isResourcesSaved.value = true
+        }
+    }
+
+    private fun createObservationData(dbServiceProvider: DbPatientDataAnswer):Observation {
+
+        val observation = Observation()
+        observation.issued = Date()
+        val codeableConcept = CodeableConcept()
+
+        if (dbServiceProvider.valueString != null){
+            val valueString = dbServiceProvider.valueString
+
+            //Coding
+            codeableConcept.id = generateUuid()
+            codeableConcept.text = valueString
+        }
+
+        val codingList = ArrayList<Coding>()
+        if (dbServiceProvider.valueCoding != null){
+            val system = dbServiceProvider.valueCoding.system
+            val code = dbServiceProvider.valueCoding.code
+            val display = dbServiceProvider.valueCoding.display
+
+            val coding = Coding()
+            coding.id = generateUuid()
+            coding.code = code
+            coding.display = display
+            coding.system = system
+            codingList.add(coding)
+        }
+
+        codeableConcept.coding = codingList
+        observation.code = codeableConcept
+
+        return observation
+    }
+
+    private fun isRequiredFieldMissing(bundle: Bundle): Boolean {
+        bundle.entry.forEach {
+            val resource = it.resource
+            when (resource) {
+                is Observation -> {
+                    if (resource.hasValueQuantity() && !resource.valueQuantity.hasValueElement()) {
+                        return true
+                    }
+                }
+                // TODO check other resources inputs
+            }
+        }
+        return false
     }
 
     private suspend fun saveResources(

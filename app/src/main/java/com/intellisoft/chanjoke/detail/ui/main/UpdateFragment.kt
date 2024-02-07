@@ -101,7 +101,11 @@ class UpdateFragment : Fragment() {
         val questionnaireFragment =
             childFragmentManager.findFragmentByTag(QUESTIONNAIRE_FRAGMENT_TAG) as QuestionnaireFragment
         if (patientId != null) {
-            viewModel.saveScreenerEncounter(
+//            viewModel.saveScreenerEncounter(
+//                questionnaireFragment.getQuestionnaireResponse(),
+//                patientId,
+//            )
+            viewModel.manualExtraction(
                 questionnaireFragment.getQuestionnaireResponse(),
                 patientId,
             )
