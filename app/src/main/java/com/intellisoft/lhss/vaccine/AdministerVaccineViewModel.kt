@@ -108,13 +108,27 @@ class AdministerVaccineViewModel(
 
     fun manualExtraction(questionnaireResponse: QuestionnaireResponse, patientId: String) {
         viewModelScope.launch {
+            val formatterClass = FormatterClass()
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
             val subjectReference = Reference("Patient/$patientId")
             val encounterId = generateUuid()
             val encounterReference = Reference("Encounter/$encounterId")
 
             //Encounter
+
+            //Check the type of flow
             val encounter = Encounter()
+            val lhssFlow = formatterClass.getSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+            if (lhssFlow != null){
+                val typeCodeableConceptList = ArrayList<CodeableConcept>()
+                val typeCodeableConcept = CodeableConcept()
+                typeCodeableConcept.text = lhssFlow
+                typeCodeableConceptList.add(typeCodeableConcept)
+                encounter.type = typeCodeableConceptList
+
+                formatterClass.deleteSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+            }
+
             encounter.subject = subjectReference
             encounter.id = encounterId
             saveResourceToDatabase(encounter, "Enc $encounterId")
