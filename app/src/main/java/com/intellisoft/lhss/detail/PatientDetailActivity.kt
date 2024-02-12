@@ -193,7 +193,28 @@ class PatientDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_item_refer_patient -> {
+                if (country != null){
+                    if (country == "Ethiopia"){
+                        FormatterClass().saveSharedPref(
+                            "questionnaireJson",
+                            "referral-form-ethiopia.json",
+                            this
+                        )
+                    }
+                    if (country == "Djibouti"){
+                        FormatterClass().saveSharedPref(
+                            "questionnaireJson",
+                            "referral-form-djibouti.json",
+                            this
+                        )
+                    }
 
+                    //Send to contraindications
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+                    intent.putExtra("patientId", patientId)
+                    startActivity(intent)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
