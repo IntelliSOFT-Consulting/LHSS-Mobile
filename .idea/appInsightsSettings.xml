@@ -28,10 +28,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.intellisoft.chanjoke" />
-                  <option name="mobileSdkAppId" value="1:134117203565:android:f8853aa7b87c05b2e1a964" />
-                  <option name="projectId" value="chanjo-ke-655ac" />
-                  <option name="projectNumber" value="134117203565" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

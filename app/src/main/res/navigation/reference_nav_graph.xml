@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/landing_page"
-        android:name="com.intellisoft.chanjoke.shared.LandingPage"
+        android:name="com.intellisoft.lhss.shared.LandingPage"
         android:label=""
         tools:layout="@layout/fragment_landing_page">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/patient_list"
-        android:name="com.intellisoft.chanjoke.patient_list.PatientListFragment"
+        android:name="com.intellisoft.lhss.patient_list.PatientListFragment"
         android:label=""
         tools:layout="@layout/patient_list_view">
 
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/addPatientFragment"
-        android:name="com.intellisoft.chanjoke.add_patient.AddPatientFragment"
+        android:name="com.intellisoft.lhss.add_patient.AddPatientFragment"
         android:label="@string/add_patient"
         tools:layout="@layout/add_patient_fragment" />
 
@@ -48,7 +48,7 @@
       </activity>-->
     <activity
         android:id="@+id/patientDetailActivity"
-        android:name="com.intellisoft.chanjoke.detail.PatientDetailActivity"
+        android:name="com.intellisoft.lhss.detail.PatientDetailActivity"
         android:label="activity_patient_detail"
         tools:layout="@layout/activity_patient_detail">
         <argument
@@ -58,7 +58,7 @@
     </activity>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.intellisoft.chanjoke.detail.ui.main.UpdateFragment"
+        android:name="com.intellisoft.lhss.detail.ui.main.UpdateFragment"
         android:label="Update Details"
         tools:layout="@layout/fragment_update">
 
@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/administerVaccine"
-        android:name="com.intellisoft.chanjoke.vaccine.AdministerVaccineFragment"
+        android:name="com.intellisoft.lhss.vaccine.AdministerVaccineFragment"
         android:label="Administer Vaccine"
         tools:layout="@layout/administer_vaccine">
         <argument
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/editPatientFragment"
-        android:name="com.intellisoft.chanjoke.add_patient.EditPatientFragment"
+        android:name="com.intellisoft.lhss.add_patient.EditPatientFragment"
         android:label="EditPatientFragment">
         <argument
             android:name="patient_id"
@@ -86,12 +86,12 @@
     </fragment>
     <fragment
         android:id="@+id/vaccineDetailsFragment"
-        android:name="com.intellisoft.chanjoke.detail.ui.main.VaccineDetailsFragment"
+        android:name="com.intellisoft.lhss.detail.ui.main.VaccineDetailsFragment"
         android:label="Vaccine Details"
         tools:layout="@layout/fragment_vaccine_details" />
     <fragment
         android:id="@+id/practionerDetails"
-        android:name="com.intellisoft.chanjoke.PractionerDetails"
+        android:name="com.intellisoft.lhss.PractionerDetails"
         android:label="fragment_practioner_details"
         tools:layout="@layout/fragment_practioner_details" />
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chanjo-Ke</string>
+    <string name="app_name">LHSS</string>
     <string name="base_url">https://chanjoke.intellisoftkenya.com/auth/</string>
     <string name="add_patient">Register Client</string>
     <string name="fab_content_desc">Register Client</string>

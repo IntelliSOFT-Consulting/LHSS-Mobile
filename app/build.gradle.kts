@@ -8,10 +8,10 @@ plugins {
 }
 
 android {
-    namespace = "com.intellisoft.chanjoke"
+    namespace = "com.intellisoft.lhss"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.intellisoft.chanjoke"
+        applicationId = "com.intellisoft.lhss"
         minSdk = 24
         targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
