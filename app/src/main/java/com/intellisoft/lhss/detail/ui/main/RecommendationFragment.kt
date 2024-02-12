@@ -71,41 +71,12 @@ class RecommendationFragment : Fragment() {
             PatientDetailsViewModelFactory(requireContext().applicationContext as Application,fhirEngine, patientId)
         )[PatientDetailsViewModel::class.java]
 
-        getImmunisationRecommendations()
 
-        binding.administerVaccine.setOnClickListener {
 
-            formatterClass.deleteSharedPref("title", requireContext())
-            formatterClass.saveSharedPref(
-                "questionnaireJson",
-                "contraindications.json",
-                requireContext()
-            )
-
-            formatterClass.saveSharedPref(
-                "vaccinationFlow",
-                "createVaccineDetails",
-                requireContext()
-            )
-
-            val intent = Intent(requireContext(), VaccineSelection::class.java)
-            startActivity(intent)
-
-        }
 
         return binding.root
     }
 
-    private fun getImmunisationRecommendations() {
- 
-//        val recommendationList = patientDetailsViewModel.recommendationList()
-//
-//        println(recommendationList)
-//
-//        val vaccineAdapter = RecommendationAdapter(recommendationList,requireContext())
-//        binding.recyclerView.adapter = vaccineAdapter
- 
-    }
 
     companion object {
         /**

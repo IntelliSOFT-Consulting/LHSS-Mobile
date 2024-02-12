@@ -63,19 +63,6 @@ class VisitHistory : Fragment() {
 
         getVisitHistory()
 
-        binding.floatingActionButton.setOnClickListener {
-            FormatterClass().saveSharedPref(
-                "questionnaireJson",
-                "add_visit.json",
-                requireContext()
-            )
-
-            //Send to contraindications
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
-            intent.putExtra("patientId", patientId)
-            startActivity(intent)
-        }
 
         return binding.root
 
