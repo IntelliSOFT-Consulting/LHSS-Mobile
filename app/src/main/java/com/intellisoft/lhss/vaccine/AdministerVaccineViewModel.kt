@@ -34,7 +34,7 @@ import com.google.android.fhir.datacapture.mapping.ResourceMapper
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.search
 import com.intellisoft.lhss.fhir.data.DbAppointmentData
-import com.intellisoft.lhss.fhir.data.DbPatientDataAnswer
+import com.intellisoft.lhss.fhir.data.DbPatientData
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.vaccine.validations.ImmunizationHandler
 import kotlinx.coroutines.CoroutineScope
@@ -59,6 +59,7 @@ import org.hl7.fhir.r4.model.Reference
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.SimpleQuantity
 import org.hl7.fhir.r4.model.StringType
+import org.hl7.fhir.r4.model.Type
 import java.math.BigDecimal
 import java.util.Date
 
@@ -87,6 +88,7 @@ class AdministerVaccineViewModel(
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
             val subjectReference = Reference("Patient/$patientId")
             val encounterId = generateUuid()
+
               if (isRequiredFieldMissing(bundle)) {
                 isResourcesSaved.value = false
                 return@launch
@@ -119,82 +121,82 @@ class AdministerVaccineViewModel(
 
             val cc = FhirContext.forR4()
             val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
-            val dbPatientDataList = FormatterClass().parseJson(questionnaire)
-            fun findCloseMatchAndGetAnswer(searchString: String): DbPatientDataAnswer? {
-                val matchingPatientData = dbPatientDataList.find { it.linkId.contains(searchString, ignoreCase = true) }
-                return matchingPatientData?.answer?.takeIf { it.valueString != null || it.valueCoding != null }
-            }
+            val dbQuestionnaireAnswer = FormatterClass().parseJson(questionnaire)
 
-            //Service Provider
-            val dbServiceProvider = findCloseMatchAndGetAnswer("7676295472922")
-            if (dbServiceProvider != null){
+            /**
+             * Create observations dynamically
+             */
 
-                //Create observation
-                val observation = createObservationData(dbServiceProvider)
-                observation.subject = subjectReference
+
+            dbQuestionnaireAnswer.forEach {
+
+                val observation = createObservationData(it)
                 observation.encounter = encounterReference
-                saveResourceToDatabase(observation, "Obs $encounterId")
-
-            }
-
-            //Service Provider
-            val dbServiceTreatment = findCloseMatchAndGetAnswer("9808050870522")
-            if (dbServiceTreatment != null){
-
-                //Create observation
-                val observation = createObservationData(dbServiceTreatment)
                 observation.subject = subjectReference
-                observation.encounter = encounterReference
-                saveResourceToDatabase(observation, "Obs $encounterId")
-
+                observation.id = generateUuid()
+                saveResourceToDatabase(observation, "Obs")
             }
 
-            //Service Provider
-            val dbServiceTreat = findCloseMatchAndGetAnswer("9825275123857")
-            if (dbServiceTreat != null){
-
-                //Create observation
-                val observation = createObservationData(dbServiceTreat)
-                observation.subject = subjectReference
-                observation.encounter = encounterReference
-                saveResourceToDatabase(observation, "Obs $encounterId")
-
-            }
 
             isResourcesSaved.value = true
         }
     }
 
-    private fun createObservationData(dbServiceProvider: DbPatientDataAnswer):Observation {
+    private fun createObservationData(dbPatientData: DbPatientData):Observation {
+
+        val linkId = dbPatientData.linkId
+        val text = dbPatientData.text
+        val answer = dbPatientData.answer
 
         val observation = Observation()
+
+        //Date Observation was created
         observation.issued = Date()
+
+        //Code for what the observation is about
         val codeableConcept = CodeableConcept()
-
-        if (dbServiceProvider.valueString != null){
-            val valueString = dbServiceProvider.valueString
-
-            //Coding
-            codeableConcept.id = generateUuid()
-            codeableConcept.text = valueString
-        }
+        codeableConcept.text = text
 
         val codingList = ArrayList<Coding>()
-        if (dbServiceProvider.valueCoding != null){
-            val system = dbServiceProvider.valueCoding.system
-            val code = dbServiceProvider.valueCoding.code
-            val display = dbServiceProvider.valueCoding.display
-
-            val coding = Coding()
-            coding.id = generateUuid()
-            coding.code = code
-            coding.display = display
-            coding.system = system
-            codingList.add(coding)
-        }
+        val coding = Coding()
+        coding.id = generateUuid()
+        coding.code = linkId
+        coding.system = "http://loinc.org"
+        codingList.add(coding)
 
         codeableConcept.coding = codingList
         observation.code = codeableConcept
+
+        //Add the value quantity
+        val valueString = answer.valueString
+        val valueCoding = answer.valueCoding
+
+        if (valueString != null){
+            val valueStringType = StringType()
+            valueStringType.value = valueString
+            observation.setValue(valueStringType)
+        }
+
+        if (valueCoding != null){
+            val system = valueCoding.system
+            val code = valueCoding.code
+            val display = valueCoding.display
+
+            val valueCodeableConcept = CodeableConcept()
+            valueCodeableConcept.text = display
+
+            val valueCodingList = ArrayList<Coding>()
+
+            val valueCodingData = Coding()
+            valueCodingData.code = code
+            valueCodingData.system = system
+            valueCodingList.add(valueCodingData)
+
+            valueCodeableConcept.coding = valueCodingList
+
+            observation.setValue(valueCodeableConcept)
+        }
+
 
         return observation
     }
