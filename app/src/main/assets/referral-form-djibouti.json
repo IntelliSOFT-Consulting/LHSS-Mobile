@@ -1,0 +1,238 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "Referral Form",
+  "status": "active",
+  "code": [
+    {
+      "system": "http://loinc.org",
+      "code": "123",
+      "display": "Djibouti Referral form"
+    }
+  ],
+  "item": [
+    {
+      "type": "string",
+      "linkId": "930683308981",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "52458-7",
+          "display": "Provider's Name"
+        }
+      ],
+      "text": "Provider's Name",
+      "required": true
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "3568283634646",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "71530-0",
+          "display": "Business name"
+        }
+      ],
+      "text": "Name of Health Facility Referred to",
+      "required": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-1",
+            "display": "Yoboki"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-2",
+            "display": "Mouloud"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-3",
+            "display": "Dikhil Regional hospital"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-4",
+            "display": "Tadjourah regional hospital"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-5",
+            "display": "Balho"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-6",
+            "display": "Dorra"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-7",
+            "display": "Ali-Adde"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-8",
+            "display": "Ali-Adde"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-9",
+            "display": "Assamo"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "71530-0-10",
+            "display": "Dr Ahmed Absieh Regional hospital"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "7493376202196",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "87217-6",
+          "display": "Reasons for Referral"
+        }
+      ],
+      "text": "Reasons for Referral",
+      "required": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA7512-2",
+            "display": "Admission (Inpatient services)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28176-8",
+            "display": "Specialized Care (Senior Doctor/Consultant)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28177-6",
+            "display": "Diagnostic Test (e.g Laboratory, Ultra sound, MRI etc)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28178-4",
+            "display": "Surgical Procedure "
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28179-2",
+            "display": "Chronic Disease Management"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0",
+            "display": "Pschosocial Support"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0-1",
+            "display": "Phsiotherapy"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0-2",
+            "display": "Drugs not available at HF"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0-3",
+            "display": "Closer to residence"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0-4",
+            "display": "Others"
+          }
+        }
+      ]
+    },
+    {
+      "type": "date",
+      "linkId": "6294776339188",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "57202-4",
+          "display": "Date of Referral"
+        }
+      ],
+      "text": "Date of Referral",
+      "required": true
+    }
+  ]
+}

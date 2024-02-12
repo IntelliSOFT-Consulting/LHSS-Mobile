@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.EditText
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.intellisoft.chanjoke.MainActivity
 import com.intellisoft.chanjoke.R
 import com.intellisoft.chanjoke.detail.ui.main.SectionsPagerAdapter
-import com.intellisoft.chanjoke.databinding.ActivityPatientDetailBinding
 import com.intellisoft.chanjoke.detail.ui.main.RecommendationFragment
 import com.intellisoft.chanjoke.fhir.FhirApplication
 import com.intellisoft.chanjoke.utils.AppUtils
@@ -21,6 +21,7 @@ import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModel
 import com.intellisoft.chanjoke.viewmodel.PatientDetailsViewModelFactory
 import com.google.android.fhir.FhirEngine
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.intellisoft.chanjoke.databinding.ActivityPatientDetailBinding
 import com.intellisoft.chanjoke.detail.ui.main.routine.VisitHistory
 import com.intellisoft.chanjoke.fhir.data.FormatterClass
 import com.intellisoft.chanjoke.fhir.data.NavigationDetails
@@ -39,6 +40,7 @@ class PatientDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         binding = ActivityPatientDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -165,6 +167,14 @@ class PatientDetailActivity : AppCompatActivity() {
                 intent.putExtra("functionToCall", NavigationDetails.EDIT_CLIENT.name)
                 intent.putExtra("patientId", patientId)
                 startActivity(intent)
+                true
+            }
+            R.id.menu_item_add_visit -> {
+
+                true
+            }
+            R.id.menu_item_refer_patient -> {
+
                 true
             }
             else -> super.onOptionsItemSelected(item)

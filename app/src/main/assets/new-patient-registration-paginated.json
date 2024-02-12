@@ -72,18 +72,164 @@
               }
             }
           ]
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "9218063457934",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "75626-2",
+              "display": "Total score"
+            }
+          ],
+          "text": "Identification Type",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "75626-2-1",
+                "display": "National ID"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "75626-2-2",
+                "display": "Birth Certificate Number"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "linkId": "2485233829669",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "18598-3",
+              "display": "Control number identification.claims attachment"
+            }
+          ],
+          "text": "Identification Number",
+          "enableWhen": [
+            {
+              "question": "9218063457934",
+              "operator": "exists",
+              "answerBoolean": true
+            }
+          ],
+          "required": true
+        },
+        {
+          "type": "choice",
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/questionnaire-item-control",
+                    "code": "drop-down",
+                    "display": "Drop down"
+                  }
+                ]
+              }
+            }
+          ],
+          "linkId": "3257046516350",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "85658-3",
+              "display": "Occupation Type"
+            }
+          ],
+          "text": "Occupation Type",
+          "required": true,
+          "answerOption": [
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20526-2",
+                "display": "Formal worker"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20530-4",
+                "display": "Farmer"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20531-2",
+                "display": "Long distance Driver"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20532-0",
+                "display": "Mobile / Daily laborers"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20533-8",
+                "display": "Commercial sex worker"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20534-6",
+                "display": "Illegal Immigrant"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20535-3",
+                "display": "Refugee"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20536-1",
+                "display": "General Occupation"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20536-1-2",
+                "display": "Others"
+              }
+            }
+          ]
         }
       ],
       "type": "group",
-      "linkId": "6232789311602",
-      "code": [
-        {
-          "code": "52460-3",
-          "display": "Patient information"
-        }
-      ],
-      "text": "Patient information",
-      "required": false,
       "extension": [
         {
           "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
@@ -98,7 +244,16 @@
             "text": "Page"
           }
         }
-      ]
+      ],
+      "linkId": "6232789311602",
+      "code": [
+        {
+          "code": "52460-3",
+          "display": "Patient information"
+        }
+      ],
+      "text": "Patient information",
+      "required": false
     },
     {
       "item": [
@@ -420,19 +575,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "string",
-          "linkId": "8996436212198",
-          "code": [
-            {
-              "system": "http://loinc.org",
-              "code": "21847-9",
-              "display": "Patient Occupation"
-            }
-          ],
-          "text": "Patient Occupation",
-          "required": true
         }
       ],
       "type": "group",

@@ -1,0 +1,286 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "New Visit Form",
+  "status": "active",
+  "item": [
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "5737318228315",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "68335-9",
+          "display": "Facility name"
+        }
+      ],
+      "text": "Facility name",
+      "required": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-1",
+            "display": "Dichioto Health Center"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-2",
+            "display": "Galafi Health Post"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-3",
+            "display": "Galafi point of entry surveillance office"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-4",
+            "display": "Dobi Health Post"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-5",
+            "display": "Wuhalimat Health Post"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-6",
+            "display": "Hayu primary clinic"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-7",
+            "display": "Tintsae drug vender"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "68335-9-8",
+            "display": "Dubti General Hospital"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "9249673047565",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "9998335-9",
+          "display": "Service provided"
+        }
+      ],
+      "text": "Service provided",
+      "required": true,
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-1",
+            "display": "HIV / AIDS"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-2",
+            "display": "TB"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-3",
+            "display": "Malaria"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-4",
+            "display": "Reproductive Health (FP)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-5",
+            "display": "MCH - ANC, PNC"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-6",
+            "display": "Immunisation"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-7",
+            "display": "Upper Tract Infections"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-8",
+            "display": "Skin Infections"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-9",
+            "display": "Sexually Transmitted Disease"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-10",
+            "display": "Chronic Illness(Cancer, Diabetes)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-11",
+            "display": "Accident (Road, Burns etc)"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-12",
+            "display": "Mental Health"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-13",
+            "display": "Others"
+          }
+        }
+      ]
+    },
+    {
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "drop-down",
+                "display": "Drop down"
+              }
+            ]
+          }
+        }
+      ],
+      "linkId": "1403287210295",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "96395-9",
+          "display": "Treatment provided"
+        }
+      ],
+      "text": "Treatment provided",
+      "answerOption": [
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA31433-8",
+            "display": "Admitted"
+          }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA31434-6",
+            "display": "Referred"
+          }
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "linkId": "6814781583912",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "55994-8",
+          "display": "Treatment details"
+        }
+      ],
+      "text": "Treatment details",
+      "enableWhen": [
+        {
+          "question": "1403287210295",
+          "operator": "exists",
+          "answerBoolean": true
+        }
+      ]
+    },
+    {
+      "type": "date",
+      "linkId": "5078826417232",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "57070-5",
+          "display": "Date next clinic visit"
+        }
+      ],
+      "text": "Date of visit",
+      "required": true
+    }
+  ]
+}

@@ -41,6 +41,7 @@ import com.intellisoft.chanjoke.fhir.data.ValueCoding
 import com.intellisoft.chanjoke.fhir.data.ValueString
 import java.util.UUID
 import kotlinx.coroutines.launch
+import org.hl7.fhir.r4.model.Address
 import org.hl7.fhir.r4.model.CodeableConcept
 import org.hl7.fhir.r4.model.Coding
 import org.hl7.fhir.r4.model.Enumerations
@@ -154,6 +155,23 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                         Enumerations.AdministrativeGender.FEMALE
                     }
                     patient.setGender(gender)
+                }
+            }
+
+            //Country of Residence
+            val dbPatientDataAnswerCountryResidence = findCloseMatchAndGetAnswer("2298053798366")
+            if (dbPatientDataAnswerCountryResidence != null){
+
+                val valueData = dbPatientDataAnswerCountryResidence.valueString ?: dbPatientDataAnswerCountryResidence.valueCoding?.display
+                if (valueData != null) {
+
+                    val addressList = ArrayList<Address>()
+
+                    val address = Address()
+                    address.country = valueData
+                    addressList.add(address)
+
+                    patient.address = addressList
                 }
             }
             /**
