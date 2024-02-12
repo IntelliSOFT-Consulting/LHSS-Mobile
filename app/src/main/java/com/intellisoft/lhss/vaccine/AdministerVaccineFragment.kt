@@ -52,7 +52,7 @@ class AdministerVaccineFragment : Fragment(R.layout.administer_vaccine) {
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             title = FormatterClass().getSharedPref("title", requireContext())
-                ?: getString(R.string.administer_vaccine)
+                ?: getString(R.string.app_name)
             setDisplayHomeAsUpEnabled(true)
         }
 

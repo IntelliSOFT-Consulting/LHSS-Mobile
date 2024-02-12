@@ -183,6 +183,11 @@ class PatientDetailActivity : AppCompatActivity() {
                         )
                     }
 
+                    FormatterClass().saveSharedPref(
+                        "title",
+                        "New Visit",
+                        this
+                    )
                     //Send to contraindications
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
@@ -208,7 +213,11 @@ class PatientDetailActivity : AppCompatActivity() {
                             this
                         )
                     }
-
+                    FormatterClass().saveSharedPref(
+                        "title",
+                        "Referrals",
+                        this
+                    )
                     //Send to contraindications
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)

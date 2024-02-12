@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/administerVaccine"
         android:name="com.intellisoft.lhss.vaccine.AdministerVaccineFragment"
-        android:label="Administer Vaccine"
+        android:label="Lhss"
         tools:layout="@layout/administer_vaccine">
         <argument
             android:name="patient_id"
