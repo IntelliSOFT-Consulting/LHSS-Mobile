@@ -1,9 +1,7 @@
 package com.intellisoft.lhss.detail.ui.main.routine
 
 import android.app.Application
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
-import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.databinding.FragmentVisitHistoryBinding
 import com.intellisoft.lhss.fhir.FhirApplication
-import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.FormatterClass
-import com.intellisoft.lhss.fhir.data.NavigationDetails
-import com.intellisoft.lhss.vaccine.stock_management.VaccineStockAdapter
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -88,17 +82,16 @@ class VisitHistory : Fragment() {
     private fun getVisitHistory() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val encounterList = patientDetailsViewModel.getWorkflowData("NEW_VISIT")
+            val encounterList = patientDetailsViewModel.getWorkflowData(
+                "NEW_VISIT",
+                "5737318228315"
+            )
             val listValue = ArrayList(encounterList.filterNotNull())
             val visitHistoryAdapter = VisitHistoryAdapter(listValue, requireContext())
             CoroutineScope(Dispatchers.Main).launch {
                 binding.recyclerView.adapter = visitHistoryAdapter
             }
         }
-
-
-
-
     }
 
     companion object {

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.detail.ui.main.SectionsPagerAdapter
-import com.intellisoft.lhss.detail.ui.main.RecommendationFragment
+import com.intellisoft.lhss.detail.ui.main.ReferralsFragment
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.utils.AppUtils
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
@@ -67,7 +66,7 @@ class PatientDetailActivity : AppCompatActivity() {
         val visitHistory = VisitHistory()
         visitHistory.arguments = bundle
 
-        val referrals = RecommendationFragment()
+        val referrals = ReferralsFragment()
         referrals.arguments = bundle
 
         adapter.addFragment(visitHistory, getString(R.string.tab_text_1))

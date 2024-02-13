@@ -1,7 +1,6 @@
 package com.intellisoft.lhss.detail.ui.main
 
 import android.app.Application
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.databinding.FragmentRecommendationBinding
+import com.intellisoft.lhss.detail.ui.main.routine.VisitHistoryAdapter
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
-import com.intellisoft.lhss.vaccine.selections.VaccineSelection
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,10 +27,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RecommendationFragment.newInstance] factory method to
+ * Use the [ReferralsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RecommendationFragment : Fragment() {
+class ReferralsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -71,12 +73,34 @@ class RecommendationFragment : Fragment() {
             PatientDetailsViewModelFactory(requireContext().applicationContext as Application,fhirEngine, patientId)
         )[PatientDetailsViewModel::class.java]
 
+        layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.setHasFixedSize(true)
 
+
+        getReferrals()
 
 
         return binding.root
     }
 
+    private fun getReferrals() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val encounterList = patientDetailsViewModel.getWorkflowData(
+                "REFERRALS",
+                "3568283634646")
+            val listValue = ArrayList(encounterList.filterNotNull())
+            val visitHistoryAdapter = VisitHistoryAdapter(listValue, requireContext())
+            CoroutineScope(Dispatchers.Main).launch {
+                binding.recyclerView.adapter = visitHistoryAdapter
+            }
+        }
+    }
 
     companion object {
         /**
@@ -85,12 +109,12 @@ class RecommendationFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment RecommendationFragment.
+         * @return A new instance of fragment ReferralsFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RecommendationFragment().apply {
+            ReferralsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

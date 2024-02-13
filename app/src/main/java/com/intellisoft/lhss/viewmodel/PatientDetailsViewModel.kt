@@ -4,6 +4,7 @@ package com.intellisoft.lhss.viewmodel
 import android.app.Application
 import android.content.res.Resources
 import android.icu.text.DateFormat
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -194,35 +195,33 @@ class PatientDetailsViewModel(
         return getString(R.string.none)
     }
 
-    fun getWorkflowData(workflowName: String) = runBlocking { getWorkflow(workflowName) }
+    fun getWorkflowData(workflowName: String, codeValue: String) = runBlocking { getWorkflow(workflowName, codeValue) }
 
-    private suspend fun getWorkflow(workflowName: String): ArrayList<DbObservation?>{
+    private suspend fun getWorkflow(workflowName: String, codeValue: String): ArrayList<DbObservation?>{
 
         val encounterList = ArrayList<DbObservation?>()
         fhirEngine
             .search<Encounter> {
                 filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
-//                filter(
-//                    Encounter.TYPE,{
-//                        CodeableConcept().text = workflowName
-//                    }
-//                )
                 sort(Observation.DATE, Order.ASCENDING)
             }
-            .map { createWorkflowItem(it, workflowName) }
+            .map { createWorkflowItem(it, workflowName, codeValue) }
             .let { encounterList.addAll(it) }
 
         return ArrayList(encounterList)
     }
 
-    private suspend fun createWorkflowItem(it: Encounter, workflowName: String):DbObservation? {
+    private suspend fun createWorkflowItem(it: Encounter, workflowName: String, codeValue: String):DbObservation? {
+
+
 
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
         if (type != null) {
             if (type.hasText()){
                 if (type.text == workflowName){
-                    val observation = getObservationList(id, "5737318228315")
+                    val observation = getObservationList(id, codeValue)
+
                     return observation.firstOrNull()
                 }
             }
