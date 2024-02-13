@@ -15,6 +15,7 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.Identifiers
 import com.intellisoft.lhss.fhir.data.ObservationDateValue
@@ -28,6 +29,7 @@ import java.util.Locale
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hl7.fhir.r4.model.Coding
+import org.hl7.fhir.r4.model.Encounter
 import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Resource
@@ -192,10 +194,112 @@ class PatientDetailsViewModel(
         return getString(R.string.none)
     }
 
+    fun getWorkflowData(workflowName: String) = runBlocking { getWorkflow(workflowName) }
+
+    private suspend fun getWorkflow(workflowName: String): ArrayList<DbObservation?>{
+
+        val encounterList = ArrayList<DbObservation?>()
+        fhirEngine
+            .search<Encounter> {
+                filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
+//                filter(
+//                    Encounter.TYPE,{
+//                        CodeableConcept().text = workflowName
+//                    }
+//                )
+                sort(Observation.DATE, Order.ASCENDING)
+            }
+            .map { createWorkflowItem(it, workflowName) }
+            .let { encounterList.addAll(it) }
+
+        return ArrayList(encounterList)
+    }
+
+    private suspend fun createWorkflowItem(it: Encounter, workflowName: String):DbObservation? {
+
+        val id = it.id.replace("Encounter/","")
+        val type = it.type.firstOrNull()
+        if (type != null) {
+            if (type.hasText()){
+                if (type.text == workflowName){
+                    val observation = getObservationList(id, "5737318228315")
+                    return observation.firstOrNull()
+                }
+            }
+        }
+        return null
+    }
+
+    suspend fun getObservationList(encounterId: String, codeValue: String): ArrayList<DbObservation>{
+
+        val observationList = ArrayList<DbObservation>()
+        fhirEngine
+            .search<Observation> {
+                filter(Observation.SUBJECT, { value = "Patient/$patientId" })
+                filter(Observation.ENCOUNTER, { value = "Encounter/$encounterId" })
+                filter(
+                    Observation.CODE,
+                    {
+                        value = of(Coding().apply {
+                            system = "http://loinc.org"
+                            code = codeValue
+                        })
+                    })
+                sort(Observation.DATE, Order.ASCENDING)
+            }
+            .map { createObservationDataItem(it) }
+            .let { observationList.addAll(it) }
+
+        return observationList
+    }
+
+    private fun createObservationDataItem(it: Observation): DbObservation {
+
+        var logicId = ""
+        var text = ""
+        var name = ""
+        var date = ""
+
+        if (it.hasId()){
+            val id = it.id
+            logicId = id
+        }
+
+        if (it.hasIssued()){
+            val issued = it.issued
+            date = issued.toString()
+        }
+        if (it.hasCode()){
+            val code = it.code
+            if (code.hasText()){
+                text = code.text
+            }
+        }
+        if (it.hasValueCodeableConcept()){
+            val valueCodeableConcept = it.valueCodeableConcept
+            val textValue = valueCodeableConcept.text
+            if (valueCodeableConcept.hasCoding()){
+                val coding = valueCodeableConcept.coding
+            }
+            name = textValue
+        }
+        if (it.hasValueStringType()){
+            val textValue = it.valueStringType.value
+            name = textValue
+        }
+        return DbObservation(
+            logicId,
+            text,
+            name,
+            date
+        )
 
 
+    }
 
-    private suspend fun generateObservationByCode(encounterId: String, codeValue: String): String? {
+    private suspend fun generateObservationByCode(
+        encounterId: String,
+        codeValue: String): String? {
         var data = ""
         fhirEngine
             .search<Observation> {

@@ -88,11 +88,10 @@ class AdministerVaccineViewModel(
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
             val subjectReference = Reference("Patient/$patientId")
             val encounterId = generateUuid()
-
-              if (isRequiredFieldMissing(bundle)) {
+            if (isRequiredFieldMissing(bundle)) {
                 isResourcesSaved.value = false
                 return@launch
-              }
+            }
 
             val context = FhirContext.forR4()
             val questionnaire =

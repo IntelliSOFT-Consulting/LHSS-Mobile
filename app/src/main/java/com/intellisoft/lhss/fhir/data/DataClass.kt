@@ -164,3 +164,15 @@ data class DbValueCoding(
     val code: String,
     val display: String
 )
+
+data class DbEncounter(
+    val id:String,
+    val name: String,
+    val date: String
+)
+data class DbObservation(
+    val id:String,
+    val text: String,
+    val name: String,
+    val date: String
+)

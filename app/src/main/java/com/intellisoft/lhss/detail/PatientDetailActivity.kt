@@ -165,8 +165,6 @@ class PatientDetailActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_item_add_visit -> {
 
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
-
                 if (country != null){
                     if (country == "Ethiopia"){
                         FormatterClass().saveSharedPref(
@@ -186,6 +184,11 @@ class PatientDetailActivity : AppCompatActivity() {
                     FormatterClass().saveSharedPref(
                         "title",
                         "New Visit",
+                        this
+                    )
+                    FormatterClass().saveSharedPref(
+                        "lhssFlow",
+                        "NEW_VISIT",
                         this
                     )
                     //Send to contraindications
@@ -216,6 +219,11 @@ class PatientDetailActivity : AppCompatActivity() {
                     FormatterClass().saveSharedPref(
                         "title",
                         "Referrals",
+                        this
+                    )
+                    FormatterClass().saveSharedPref(
+                        "lhssFlow",
+                        "REFERRALS",
                         this
                     )
                     //Send to contraindications
