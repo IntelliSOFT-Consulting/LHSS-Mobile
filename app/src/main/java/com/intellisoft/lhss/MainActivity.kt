@@ -86,19 +86,19 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 
+
             NavigationDetails.VISIT_HISTORY.name -> {
                 val patientId = intent.getStringExtra("patientId")
                 if (patientId != null) {
-                    administerVaccine(patientId, R.id.administerVaccine)
+                    manageCBD(patientId, R.id.visitHistory)
                 }
             }
-
-//            NavigationDetails.LIST_VACCINE_DETAILS.name -> {
-//                val patientId = intent.getStringExtra("patientId")
-//                if (patientId != null) {
-//                    administerVaccine(patientId, R.id.vaccineDetailsFragment)
-//                }
-//            }
+            NavigationDetails.REFERRAL_LIST.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    manageCBD(patientId, R.id.referralsFragment)
+                }
+            }
 //
 //            NavigationDetails.CLIENT_LIST.name -> {
 //                val patientId = intent.getStringExtra("patientId")
@@ -163,6 +163,26 @@ class MainActivity : AppCompatActivity() {
 
         findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
             R.id.updateFragment,
+            bundle
+        )
+    }
+
+    private fun manageCBD(patientId: String, navigationId:Int) {
+        val bundle = Bundle()
+        bundle.putString("patientId", patientId)
+        formatter.saveSharedPref("patientId", patientId, this)
+
+        findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
+            navigationId, bundle
+        )
+    }
+    private fun referralsFragment(patientId: String) {
+        val bundle = Bundle()
+        bundle.putString("patientId", patientId)
+        formatter.saveSharedPref("patientId", patientId, this)
+
+        findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
+            R.id.referralsFragment,
             bundle
         )
     }

@@ -94,6 +94,16 @@
         android:name="com.intellisoft.lhss.PractionerDetails"
         android:label="fragment_practioner_details"
         tools:layout="@layout/fragment_practioner_details" />
+    <fragment
+        android:id="@+id/visitHistory"
+        android:name="com.intellisoft.lhss.detail.ui.main.routine.VisitHistory"
+        android:label="fragment_visit_history"
+        tools:layout="@layout/fragment_visit_history" />
+    <fragment
+        android:id="@+id/referralsFragment"
+        android:name="com.intellisoft.lhss.detail.ui.main.ReferralsFragment"
+        tools:layout="@layout/fragment_recommendation"
+        android:label="ReferralsFragment" />
 
 
 </navigation>

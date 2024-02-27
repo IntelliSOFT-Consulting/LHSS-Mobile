@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".detail.PatientDetailActivity">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -53,6 +54,7 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:id="@+id/btnVisitHistory"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
                     android:text="Visit History"
@@ -60,6 +62,7 @@
                     android:layout_height="wrap_content"/>
 
                 <Button
+                    android:id="@+id/btnReferrals"
                     android:layout_marginStart="20dp"
                     android:layout_weight="1"
                     android:text="Referrals"

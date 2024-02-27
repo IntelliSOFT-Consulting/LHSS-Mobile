@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -121,9 +122,6 @@ class PatientDetailActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
-
-
-
                 else -> false
             }
         }
@@ -131,6 +129,20 @@ class PatientDetailActivity : AppCompatActivity() {
         binding.btnAddressDetails.setOnClickListener {
             val patientDataDetailsList = patientDetailsViewModel.getAddressDetails()
             showCustomDialog(patientDataDetailsList)
+        }
+
+        binding.btnVisitHistory.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+            intent.putExtra("patientId", patientId)
+            startActivity(intent)
+        }
+
+        binding.btnReferrals.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("functionToCall", NavigationDetails.REFERRAL_LIST.name)
+            intent.putExtra("patientId", patientId)
+            startActivity(intent)
         }
 
     }
@@ -177,6 +189,7 @@ class PatientDetailActivity : AppCompatActivity() {
             val patientDetail = patientDetailsViewModel.getPatientInfo()
             CoroutineScope(Dispatchers.Main).launch {
                 binding.apply {
+                    tvNameDetails.text = patientDetail.name
                     tvName.text = patientDetail.name
                     tvGender.text = AppUtils().capitalizeFirstLetter(patientDetail.gender)
                     tvSystemId.text = patientDetail.systemId

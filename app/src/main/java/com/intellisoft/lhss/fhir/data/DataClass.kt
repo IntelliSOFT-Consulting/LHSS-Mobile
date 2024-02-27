@@ -52,6 +52,7 @@ enum class NavigationDetails {
     EDIT_CLIENT,
 
     VISIT_HISTORY,
+    REFERRAL_LIST,
 }
 data class DbAppointmentData(
     val id: String? = null,
