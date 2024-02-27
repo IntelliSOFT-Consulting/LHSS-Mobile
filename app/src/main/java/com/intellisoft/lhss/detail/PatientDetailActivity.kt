@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -271,6 +272,8 @@ class PatientDetailActivity : AppCompatActivity() {
                     intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
                     intent.putExtra("patientId", patientId)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
                 }
 
                 true
@@ -306,6 +309,8 @@ class PatientDetailActivity : AppCompatActivity() {
                     intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
                     intent.putExtra("patientId", patientId)
                     startActivity(intent)
+                }else{
+                    Toast.makeText(this, "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
                 }
                 true
             }

@@ -1,16 +1,23 @@
 package com.intellisoft.lhss.detail.ui.main.routine
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
+import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentVisitHistoryBinding
+import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
@@ -72,11 +79,20 @@ class VisitHistory : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.setHasFixedSize(true)
 
+        binding.btnPrevious.setOnClickListener { onBackPressed() }
+
         getVisitHistory()
 
 
         return binding.root
 
+    }
+
+
+
+    private fun onBackPressed() {
+        val intent = Intent(requireContext() , PatientDetailActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getVisitHistory() {
