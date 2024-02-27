@@ -109,6 +109,13 @@ class PatientDetailsViewModel(
         var contact_phone = ""
         var contact_gender = ""
         var systemId = ""
+
+        var occupation = ""
+        var residenceCountry = ""
+        var originCountry = ""
+        var region = ""
+        var district = ""
+
         searchResult.first().let {
 
             name =if (it.hasName()){
@@ -167,11 +174,45 @@ class PatientDetailsViewModel(
             }
 
             if (it.hasAddress()){
-                val country = it.addressFirstRep.country
-                FormatterClass().saveSharedPref("country", country, getApplication<Application>().applicationContext)
+                val addressList = it.address
+                addressList.forEach {address ->
+                    if (address.hasText()){
+                        val text = address.text
+                        val country = address.country
+
+                        if (text == "Country of Residence"){
+                            val districtValue = address.district
+                            val city = address.city
+                            region = city
+                            district = districtValue
+                            residenceCountry = country
+                        }
+                        if (text == "Country of Origin"){
+                            originCountry = country
+                        }
+                    }
+
+                }
+
+//                FormatterClass().saveSharedPref("country", country, getApplication<Application>().applicationContext)
             }
 
+            if (it.hasIdentifier()){
+                val identifierList = it.identifier
+                identifierList.forEach { id ->
+                    if (id.hasType()){
+                        val typeText = id.type.text
+                        val valueData = id.value
+                        if (typeText == "Occupation"){
+                            occupation = valueData
+                        }
+                    }
+                }
+
+            }
         }
+
+
 
         FormatterClass().saveSharedPref(
             "patientId",
@@ -187,7 +228,9 @@ class PatientDetailsViewModel(
             contact_name = contact_name,
             contact_phone = contact_phone,
             contact_gender = contact_gender,
-            systemId
+            systemId,
+
+            occupation, residenceCountry, originCountry, region, district
         )
     }
 
@@ -200,6 +243,14 @@ class PatientDetailsViewModel(
         val contact_phone: String?,
         val contact_gender: String?,
         val systemId: String?,
+
+        val occupation: String?,
+        val residenceCountry: String?,
+        val originCountry: String?,
+        val region: String?,
+        val district: String?,
+
+
     ) {
         override fun toString(): String = name
     }

@@ -118,7 +118,7 @@
             {
               "system": "http://loinc.org",
               "code": "75626-2",
-              "display": "Total score"
+              "display": "Identification Type"
             }
           ],
           "text": "Identification Type",
@@ -462,7 +462,7 @@
               }
             }
           ],
-          "linkId": "8410909280035",
+          "linkId": "8945109187038",
           "code": [
             {
               "system": "http://loinc.org",
@@ -589,7 +589,7 @@
               }
             }
           ],
-          "linkId": "2537189577976",
+          "linkId": "7880710415088",
           "code": [
             {
               "system": "http://loinc.org",

@@ -36,6 +36,7 @@ import com.intellisoft.lhss.fhir.data.Identifiers
 import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.Address
+import org.hl7.fhir.r4.model.CodeableConcept
 import org.hl7.fhir.r4.model.ContactPoint
 import org.hl7.fhir.r4.model.Enumerations
 import org.hl7.fhir.r4.model.HumanName
@@ -125,27 +126,30 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             val dbPatientDataAnswerSurname = findCloseMatchAndGetAnswer("7196281948590")
             if (dbPatientDataAnswerSurname != null){
                 val valueData = dbPatientDataAnswerSurname.valueString ?: dbPatientDataAnswerSurname.valueCoding?.display
-                humanName.family = valueData + givenName
+                humanName.family = "$valueData $givenName"
                 humanNameList.add(humanName)
                 patient.name = humanNameList
             }
 
 
             //Identifier
+            val dbPatientDataType = findCloseMatchAndGetAnswer("9218063457934")
             val dbPatientDataAnswerId = findCloseMatchAndGetAnswer("2485233829669")
-            if (dbPatientDataAnswerId != null){
+            if (dbPatientDataAnswerId != null &&  dbPatientDataType != null){
                 val valueData = dbPatientDataAnswerId.valueString ?: dbPatientDataAnswerId.valueCoding?.display
-                if (valueData != null) {
+                val valueDataValue = dbPatientDataType.valueString ?: dbPatientDataType.valueCoding?.display
+                if (valueData != null && valueDataValue != null) {
                     val identifierList = ArrayList<Identifier>()
                     val identifier = Identifier()
                     identifierList.add(identifier)
 
+                    val codeableConcept = CodeableConcept()
+                    codeableConcept.text = valueDataValue
+                    identifier.type = codeableConcept
                     identifier.value = valueData
                    patient.identifier = identifierList
                 }
             }
-
-
 
             //Birth Date
             val dbPatientDataAnswerDob = findCloseMatchAndGetAnswer("4725705580511")
@@ -173,19 +177,40 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             }
 
             //Country of Residence
+            val dbPatientDataAnswerCountryOrigin = findCloseMatchAndGetAnswer("8503926458873")
             val dbPatientDataAnswerCountryResidence = findCloseMatchAndGetAnswer("2298053798366")
-            if (dbPatientDataAnswerCountryResidence != null){
+            val dbPatientDataDistrict = findCloseMatchAndGetAnswer("7880710415088")
+            val dbPatientDataRegion = findCloseMatchAndGetAnswer("8945109187038")
 
+            if (
+                dbPatientDataAnswerCountryResidence != null &&
+                dbPatientDataDistrict != null &&
+                dbPatientDataRegion != null &&
+                dbPatientDataAnswerCountryOrigin != null){
+
+                val valueDataDistrict = dbPatientDataDistrict.valueString ?: dbPatientDataDistrict.valueCoding?.display
                 val valueData = dbPatientDataAnswerCountryResidence.valueString ?: dbPatientDataAnswerCountryResidence.valueCoding?.display
-                if (valueData != null) {
+                val valueDataRegion = dbPatientDataRegion.valueString ?: dbPatientDataRegion.valueCoding?.display
+                val valueDataOrigin = dbPatientDataAnswerCountryOrigin.valueString ?: dbPatientDataAnswerCountryOrigin.valueCoding?.display
+
+                if (valueData != null && valueDataDistrict != null && valueDataRegion != null && valueDataOrigin != null) {
 
                     val addressList = ArrayList<Address>()
 
-                    val address = Address()
-                    address.country = valueData
-                    addressList.add(address)
+                    val addressResidence = Address()
+                    addressResidence.district = valueDataDistrict
+                    addressResidence.city = valueDataRegion
+                    addressResidence.country = valueData
+                    addressResidence.text = "Country of Residence"
+                    addressList.add(addressResidence)
+
+                    val addressOrigin = Address()
+                    addressOrigin.country = valueDataOrigin
+                    addressOrigin.text = "Country of Origin"
+                    addressList.add(addressOrigin)
 
                     patient.address = addressList
+
                 }
             }
 
@@ -198,7 +223,6 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                     val contactList = ArrayList<Patient.ContactComponent>()
                     val contactComponent = Patient.ContactComponent()
 
-//                    ------
                     val contactPointList = ArrayList<ContactPoint>()
 
                     val contactPoint = ContactPoint()
@@ -210,6 +234,26 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                     contactList.add(contactComponent)
 
                     patient.contact = contactList
+                }
+            }
+
+            //Occupation
+            val dbPatientDataOccupation = findCloseMatchAndGetAnswer("3257046516350")
+            if (dbPatientDataOccupation != null){
+                val valueData = dbPatientDataOccupation.valueString ?: dbPatientDataOccupation.valueCoding?.display
+                if (valueData != null) {
+
+                    val identifierList = ArrayList<Identifier>()
+                    val identifier = Identifier()
+                    identifierList.add(identifier)
+
+                    val codeableConcept = CodeableConcept()
+                    codeableConcept.text = "Occupation"
+                    identifier.type = codeableConcept
+                    identifier.value = valueData
+                    patient.identifier = identifierList
+
+
                 }
             }
 
