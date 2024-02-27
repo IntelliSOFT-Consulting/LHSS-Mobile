@@ -66,8 +66,8 @@ class PatientDetailsViewModel(
         val phone = DbPatientDataDetails("Phone", patientData.phone)
         val documentType = DbPatientDataDetails("Document Type", "")
         val documentId = DbPatientDataDetails("Document Id", "")
-        val age = DbPatientDataDetails("Age", "")
-        val occupation = DbPatientDataDetails("Occupation", "")
+        val age = DbPatientDataDetails("Age", patientData.dob)
+        val occupation = DbPatientDataDetails("Occupation", patientData.occupation)
         val crossBorderId = DbPatientDataDetails("CrossBorder Id", "")
 
         dbPatientDataDetailsList.addAll(listOf(
@@ -105,9 +105,6 @@ class PatientDetailsViewModel(
         var phone = ""
         var dob = ""
         var gender = ""
-        var contact_name = ""
-        var contact_phone = ""
-        var contact_gender = ""
         var systemId = ""
 
         var occupation = ""
@@ -124,13 +121,15 @@ class PatientDetailsViewModel(
 
 
             phone = ""
-            if (it.hasTelecom()) {
-                if (it.telecom.isNotEmpty()) {
-                    if (it.telecom.first().hasValue()) {
-                        phone = it.telecom.first().value
+
+            if (it.hasContact()){
+                if (it.contactFirstRep.hasTelecom()){
+                    if (it.contactFirstRep.telecomFirstRep.hasValue()){
+                        phone = it.contactFirstRep.telecomFirstRep.value
                     }
                 }
             }
+
 
             if (it.hasBirthDateElement()) {
                 if (it.birthDateElement.hasValue()) dob =
@@ -138,23 +137,8 @@ class PatientDetailsViewModel(
                         .toString()
             }
 
-            if (it.hasContact()) {
-                if (it.contactFirstRep.hasName()) contact_name =
-                    if (it.hasContact()) {
-                        if (it.contactFirstRep.hasName()) {
-                            it.contactFirstRep.name.nameAsSingleString
-                        } else ""
-                    } else ""
-                if (it.contactFirstRep.hasTelecom()) contact_phone =
-                    if (it.hasContact()) {
-                        if (it.contactFirstRep.hasTelecom()) {
-                            if (it.contactFirstRep.telecomFirstRep.hasValue()) {
-                                it.contactFirstRep.telecomFirstRep.value
-                            } else ""
-                        } else ""
-                    } else ""
-                if (it.contactFirstRep.hasGenderElement()) contact_gender =
-                    if (it.hasContact()) AppUtils().capitalizeFirstLetter(it.contactFirstRep.genderElement.valueAsString) else ""
+            if (it.hasGender()){
+                gender = it.genderElement.valueAsString
             }
 
             if (it.hasGenderElement()) gender = it.genderElement.valueAsString
@@ -207,6 +191,7 @@ class PatientDetailsViewModel(
                     if (id.hasType()){
                         val typeText = id.type.text
                         val valueData = id.value
+
                         if (typeText == "Occupation"){
                             occupation = valueData
                         }
@@ -229,9 +214,6 @@ class PatientDetailsViewModel(
             phone,
             dob,
             gender,
-            contact_name = contact_name,
-            contact_phone = contact_phone,
-            contact_gender = contact_gender,
             systemId,
 
             occupation, residenceCountry, originCountry, region, district
@@ -243,9 +225,6 @@ class PatientDetailsViewModel(
         val phone: String,
         val dob: String,
         val gender: String,
-        val contact_name: String?,
-        val contact_phone: String?,
-        val contact_gender: String?,
         val systemId: String?,
 
         val occupation: String,
