@@ -1,6 +1,7 @@
 package com.intellisoft.lhss.detail.ui.main
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.databinding.FragmentRecommendationBinding
+import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.detail.ui.main.routine.VisitHistoryAdapter
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -80,6 +82,7 @@ class ReferralsFragment : Fragment() {
         )
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.setHasFixedSize(true)
+        binding.btnPrevious.setOnClickListener { onBackPressed() }
 
 
         getReferrals()
@@ -87,6 +90,12 @@ class ReferralsFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun onBackPressed() {
+        val intent = Intent(requireContext() , PatientDetailActivity::class.java)
+        startActivity(intent)
+    }
+
 
     private fun getReferrals() {
 
