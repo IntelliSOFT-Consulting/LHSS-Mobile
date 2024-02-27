@@ -27,12 +27,16 @@ import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.StringFilterModifier
 import com.google.android.fhir.search.count
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.data.FormatterClass
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hl7.fhir.r4.model.Location
 import org.hl7.fhir.r4.model.Patient
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * The ViewModel helper class for PatientItemRecyclerViewAdapter, that is responsible for preparing
@@ -175,7 +179,7 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         val resourceId: String,
         val name: String,
         val gender: String,
-        val dob: LocalDate? = null,
+        val dob: Date? = null,
         val identification: String,
         val phone: String,
         val city: String,
@@ -237,12 +241,24 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
     val patientId = if (hasIdElement()) idElement.idPart else ""
     val name = if (hasName()) name[0].nameAsSingleString else ""
     val gender = if (hasGenderElement()) genderElement.valueAsString else ""
-    val dob = null
-//        if (hasBirthDateElement()) {
-//            LocalDate.parse(birthDateElement.valueAsString, DateTimeFormatter.ISO_DATE)
-//        } else {
-//            null
-//        }
+    val dob = if (hasBirthDate()) {
+            birthDateElement.valueAsString
+        } else {
+            ""
+        }
+
+    var parsedDate: Date? = null
+    if (dob != ""){
+        val dobFormat = FormatterClass().convertDateFormat(dob)
+        // Parse the input date
+        if (dobFormat != null) {
+            val dateFormat = SimpleDateFormat("MMM d yyyy", Locale.getDefault())
+            parsedDate = dateFormat.parse(dobFormat)
+
+        }
+
+    }
+
     val phone = if (hasTelecom()) telecom[0].value else ""
     val city = if (hasAddress()) address[0].city else ""
     val country = if (hasAddress()) address[0].country else ""
@@ -256,7 +272,7 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
         resourceId = patientId,
         name = name,
         gender = gender ?: "",
-        dob = dob,
+        dob = parsedDate,
         identification = identification,
         phone = phone ?: "",
         city = city ?: "",

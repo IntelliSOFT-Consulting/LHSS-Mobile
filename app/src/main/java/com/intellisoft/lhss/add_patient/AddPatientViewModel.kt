@@ -44,8 +44,11 @@ import org.hl7.fhir.r4.model.Identifier
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Questionnaire
 import org.hl7.fhir.r4.model.QuestionnaireResponse
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 
 /** ViewModel for patient registration screen {@link AddPatientFragment}. */
@@ -308,12 +311,23 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val patientId = if (hasIdElement()) idElement.idPart else ""
         val name = if (hasName()) name[0].nameAsSingleString else ""
         val gender = if (hasGenderElement()) genderElement.valueAsString else ""
-        val dob =
-            if (hasBirthDateElement()) {
-                LocalDate.parse(birthDateElement.valueAsString, DateTimeFormatter.ISO_DATE)
-            } else {
-                null
+        val dob = if (hasBirthDate()) {
+            birthDateElement.valueAsString
+        } else {
+            ""
+        }
+
+        var parsedDate: Date? = null
+        if (dob != ""){
+            val dobFormat = FormatterClass().convertDateFormat(dob)
+            // Parse the input date
+            if (dobFormat != null) {
+                val dateFormat = SimpleDateFormat("MMM d yyyy", Locale.getDefault())
+                parsedDate = dateFormat.parse(dobFormat)
+
             }
+
+        }
         val phone = if (hasTelecom()) telecom[0].value else ""
         val city = if (hasAddress()) address[0].city else ""
         val country = if (hasAddress()) address[0].country else ""
@@ -326,7 +340,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             resourceId = patientId,
             name = name,
             gender = gender ?: "",
-            dob = dob,
+            dob = parsedDate,
             identification = identification,
             phone = phone ?: "",
             city = city ?: "",

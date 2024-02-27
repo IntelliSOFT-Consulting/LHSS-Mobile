@@ -109,8 +109,6 @@ class PatientListFragment : Fragment() {
                 noPatientDialog.show()
             }
 
-
-
             val patientAdapter = PatientAdapter(patientList, requireContext())
             recyclerView.adapter = patientAdapter
 

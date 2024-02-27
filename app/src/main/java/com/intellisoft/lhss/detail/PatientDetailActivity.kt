@@ -269,7 +269,7 @@ class PatientDetailActivity : AppCompatActivity() {
                     )
                     //Send to contraindications
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+                    intent.putExtra("functionToCall", NavigationDetails.ADD_VISIT_HISTORY.name)
                     intent.putExtra("patientId", patientId)
                     startActivity(intent)
                 }else{
@@ -306,7 +306,7 @@ class PatientDetailActivity : AppCompatActivity() {
                     )
                     //Send to contraindications
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+                    intent.putExtra("functionToCall", NavigationDetails.ADD_REFERRAL_LIST.name)
                     intent.putExtra("patientId", patientId)
                     startActivity(intent)
                 }else{

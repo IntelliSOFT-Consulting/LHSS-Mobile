@@ -81,18 +81,24 @@ class PatientAdapter(
 
     override fun onBindViewHolder(holder: Pager2ViewHolder, position: Int) {
 
+        val id = dbPatientList[position].id
         val name = dbPatientList[position].name
-        val age = dbPatientList[position].dob
-        val idNumber = dbPatientList[position].identification
+        val dob = dbPatientList[position].dob
+        val idNumber = dbPatientList[position].dob
         val phoneNumber = dbPatientList[position].phone
 
-        holder.name.text = name
-        holder.idNumber.text = idNumber
-        holder.tvPhoneNumber.text = phoneNumber
+        var age = ""
+        if (dob != null){
+            age = FormatterClass().getFormattedAge(dob.toString(), holder.viewPhoneNumber.context.resources)
+        }
 
-        holder.viewPhoneNumber.text = "Phone Number"
-        holder.viewId.text = "Identification No"
-        holder.viewName.text = "Name"
+        holder.name.text = name
+        holder.idNumber.text = id
+        holder.tvPhoneNumber.text = age.toString()
+
+        holder.viewPhoneNumber.text = "Age: "
+        holder.viewId.text = "Cross Border ID: "
+        holder.viewName.text = "Name: "
 
     }
 

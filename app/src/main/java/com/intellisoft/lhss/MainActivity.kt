@@ -99,6 +99,19 @@ class MainActivity : AppCompatActivity() {
                     manageCBD(patientId, R.id.referralsFragment)
                 }
             }
+
+            NavigationDetails.ADD_VISIT_HISTORY.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    administerVaccine(patientId, R.id.administerVaccine)
+                }
+            }
+            NavigationDetails.ADD_REFERRAL_LIST.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    administerVaccine(patientId, R.id.administerVaccine)
+                }
+            }
 //
 //            NavigationDetails.CLIENT_LIST.name -> {
 //                val patientId = intent.getStringExtra("patientId")
@@ -136,9 +149,8 @@ class MainActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString(UpdateFragment.QUESTIONNAIRE_FRAGMENT_TAG, questionnaireJson)
         bundle.putString("patientId", patientId)
-        findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
-            administerVaccine, bundle
-        )
+        findNavController(R.id.nav_host_fragment_activity_bottem_navigation)
+            .navigate(administerVaccine, bundle)
 
     }
 
