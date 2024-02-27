@@ -80,13 +80,13 @@ class PatientDetailsViewModel(
         val dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
 
         val patientData = getPatientInfo()
-        val name = DbPatientDataDetails("Country of Origin", "Ethiopia")
-        val dob = DbPatientDataDetails("Country of Residence", "Ethiopia")
-        val gender = DbPatientDataDetails("Region", "Ethiopia")
-        val phone = DbPatientDataDetails("District", "Ethiopia")
+        val originCountry = DbPatientDataDetails("Country of Origin", patientData.originCountry)
+        val residenceCountry = DbPatientDataDetails("Country of Residence", patientData.residenceCountry)
+        val region = DbPatientDataDetails("Region", patientData.region)
+        val district = DbPatientDataDetails("District", patientData.district)
 
         dbPatientDataDetailsList.addAll(listOf(
-            name, dob, gender, phone, ))
+            originCountry, residenceCountry, region, district ))
         return dbPatientDataDetailsList
 
     }
@@ -186,6 +186,11 @@ class PatientDetailsViewModel(
                             region = city
                             district = districtValue
                             residenceCountry = country
+                            FormatterClass().saveSharedPref(
+                                "country",
+                                country,
+                                getApplication<Application>().applicationContext)
+
                         }
                         if (text == "Country of Origin"){
                             originCountry = country
@@ -194,7 +199,6 @@ class PatientDetailsViewModel(
 
                 }
 
-//                FormatterClass().saveSharedPref("country", country, getApplication<Application>().applicationContext)
             }
 
             if (it.hasIdentifier()){
@@ -244,11 +248,11 @@ class PatientDetailsViewModel(
         val contact_gender: String?,
         val systemId: String?,
 
-        val occupation: String?,
-        val residenceCountry: String?,
-        val originCountry: String?,
-        val region: String?,
-        val district: String?,
+        val occupation: String,
+        val residenceCountry: String,
+        val originCountry: String,
+        val region: String,
+        val district: String,
 
 
     ) {
