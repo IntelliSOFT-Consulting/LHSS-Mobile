@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">LHSS</string>
-    <string name="base_url">https://chanjoke.intellisoftkenya.com/auth/</string>
-    <string name="add_patient">Register Client</string>
-    <string name="fab_content_desc">Register Client</string>
+    <string name="app_name">CBDHS Mobile app</string>
+    <string name="base_url">https://hiedhs.intellisoftkenya.com/auth/</string>
+    <string name="add_patient">Register Patient</string>
+    <string name="fab_content_desc">Register Patient</string>
     <string name="administer_vaccine_count">Administer Vaccine </string>
 
     <string name="title_patient_list">Registered Clients</string>
@@ -28,7 +28,7 @@
     <string name="message_patient_updated">Client details updated</string>
     <string name="edit_patient">Edit Client</string>
     <string name="tab_text_3">Client Details</string>
-    <string name="register_client">Register Client</string>
+    <string name="register_client">Register Patient</string>
     <string name="doses_administered">Doses Administered</string>
     <string name="type_of_aefi">Type of AEFI</string>
     <string name="brief_details_on_aefi">Brief details on AEFI</string>

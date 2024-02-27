@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#163C94</color>
+    <color name="colorPrimary">#207724</color>
     <color name="colorGreen">#207724</color>
-    <color name="colorPrimaryDark">#163C94</color>
+    <color name="colorPrimaryDark">#115714</color>
     <color name="colorPrimaryTrans">#41163C94</color>
-    <color name="colorAccent">#163C94</color>
-    <color name="colorStatusBar">#163C94</color>
+    <color name="colorAccent">#50BC55</color>
+    <color name="colorStatusBar">#108816</color>
     <color name="bac_trans">#F8F8F8</color>
     <color name="bac_trans2">#45BCB9B9</color>
     <color name="black">#000000</color>
@@ -15,5 +15,5 @@
     <color name="unselectedTab">#899CC8</color>
     <color name="bac_trans_color">#34899CC8</color>
     <color name="darker_gray">#aaa</color>
-
+    <color name="menu_item_text_color">#000000</color>
 </resources>

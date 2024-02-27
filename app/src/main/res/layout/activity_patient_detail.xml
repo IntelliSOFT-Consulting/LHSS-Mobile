@@ -27,6 +27,75 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_below="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvNameDetails"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:text="Mr. David Maina Njau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:text="Visit History"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:text="Referrals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="20dp"
+                    tools:listitem="@layout/patient_detail_layout"
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <Button
+                    android:id="@+id/btnAddressDetails"
+                    android:layout_marginTop="20dp"
+                    android:text="Address Details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout"
@@ -141,7 +210,6 @@
 
                     </LinearLayout>
                     <LinearLayout
-                        android:visibility="gone"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">

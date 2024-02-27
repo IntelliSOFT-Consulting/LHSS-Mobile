@@ -1,32 +1,40 @@
 package com.intellisoft.lhss.detail
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
+import android.view.WindowManager
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.google.android.fhir.FhirEngine
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.intellisoft.lhss.MainActivity
-import com.intellisoft.lhss.detail.ui.main.SectionsPagerAdapter
+import com.intellisoft.lhss.R
+import com.intellisoft.lhss.databinding.ActivityPatientDetailBinding
 import com.intellisoft.lhss.detail.ui.main.ReferralsFragment
+import com.intellisoft.lhss.detail.ui.main.SectionsPagerAdapter
+import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
+import com.intellisoft.lhss.detail.ui.main.routine.VisitHistory
 import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
+import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.NavigationDetails
 import com.intellisoft.lhss.utils.AppUtils
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
-import com.google.android.fhir.FhirEngine
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.intellisoft.lhss.R
-import com.intellisoft.lhss.databinding.ActivityPatientDetailBinding
-import com.intellisoft.lhss.detail.ui.main.routine.VisitHistory
-import com.intellisoft.lhss.fhir.data.FormatterClass
-import com.intellisoft.lhss.fhir.data.NavigationDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 class PatientDetailActivity : AppCompatActivity() {
     private lateinit var fhirEngine: FhirEngine
@@ -37,6 +45,7 @@ class PatientDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPatientDetailBinding
     private var formatterClass = FormatterClass()
     private var country :String? = null
+    private lateinit var layoutManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +54,14 @@ class PatientDetailActivity : AppCompatActivity() {
         binding = ActivityPatientDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         patientId = FormatterClass().getSharedPref("patientId", this).toString()
+
+        layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.setHasFixedSize(true)
 
         val bundle =
             bundleOf("patient_id" to patientId)
@@ -111,6 +128,45 @@ class PatientDetailActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnAddressDetails.setOnClickListener {
+            val patientDataDetailsList = patientDetailsViewModel.getAddressDetails()
+            showCustomDialog(patientDataDetailsList)
+        }
+
+    }
+
+    private fun showCustomDialog(patientDataDetailsList: ArrayList<DbPatientDataDetails>) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.address_details_dialog)
+        dialog.setTitle("")
+
+        // Set dialog width to match parent (full width)
+        // Set dialog width to match parent (full width)
+        val layoutParams = WindowManager.LayoutParams()
+        layoutParams.copyFrom(dialog.window!!.attributes)
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        dialog.window!!.attributes = layoutParams
+
+        // Find views within the dialog layout
+        val closeButton = dialog.findViewById<Button>(R.id.btnClose)
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
+        val layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+
+        val visitHistoryAdapter = PatientDetailDataAdapter(patientDataDetailsList, this@PatientDetailActivity)
+        recyclerView.adapter = visitHistoryAdapter
+
+
+        // Set click listener for close button
+        closeButton.setOnClickListener { // Close the dialog when close button is clicked
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 
@@ -134,6 +190,13 @@ class PatientDetailActivity : AppCompatActivity() {
                 }
             }
             country = formatterClass.getSharedPref("country", this@PatientDetailActivity)
+
+            val patientDataDetailsList = patientDetailsViewModel.getUserDetails()
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val visitHistoryAdapter = PatientDetailDataAdapter(patientDataDetailsList, this@PatientDetailActivity)
+                binding.recyclerView.adapter = visitHistoryAdapter
+            }
 
 
 

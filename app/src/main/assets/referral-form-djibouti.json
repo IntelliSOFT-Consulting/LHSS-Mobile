@@ -17,10 +17,10 @@
         {
           "system": "http://loinc.org",
           "code": "52458-7",
-          "display": "Provider's Name"
+          "display": "Referring Health Provider Name"
         }
       ],
-      "text": "Provider's Name",
+      "text": "Referring Health Provider Name",
       "required": true
     },
     {

@@ -17,6 +17,7 @@ import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
 import com.intellisoft.lhss.fhir.data.DbObservation
+import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.Identifiers
 import com.intellisoft.lhss.fhir.data.ObservationDateValue
@@ -35,6 +36,7 @@ import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.RiskAssessment
+import java.util.Arrays
 
 /**
  * The ViewModel helper class for PatientItemRecyclerViewAdapter, that is responsible for preparing
@@ -50,6 +52,43 @@ class PatientDetailsViewModel(
     /** Emits list of [PatientDetailData]. */
     fun getPatientDetailData() {
         viewModelScope.launch { livePatientData.value = getPatientDetailDataModel() }
+    }
+
+    fun getUserDetails():ArrayList<DbPatientDataDetails>{
+
+        val dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
+
+
+        val patientData = getPatientInfo()
+        val name = DbPatientDataDetails("Name", patientData.name)
+        val dob = DbPatientDataDetails("Date Of Birth", patientData.dob)
+        val gender = DbPatientDataDetails("Gender", patientData.gender)
+        val phone = DbPatientDataDetails("Phone", patientData.phone)
+        val documentType = DbPatientDataDetails("Document Type", "")
+        val documentId = DbPatientDataDetails("Document Id", "")
+        val age = DbPatientDataDetails("Age", "")
+        val occupation = DbPatientDataDetails("Occupation", "")
+        val crossBorderId = DbPatientDataDetails("CrossBorder Id", "")
+
+        dbPatientDataDetailsList.addAll(listOf(
+            name, dob, gender, phone, documentType, documentId, crossBorderId, age, occupation))
+        return dbPatientDataDetailsList
+
+    }
+    fun getAddressDetails():ArrayList<DbPatientDataDetails>{
+
+        val dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
+
+        val patientData = getPatientInfo()
+        val name = DbPatientDataDetails("Country of Origin", "Ethiopia")
+        val dob = DbPatientDataDetails("Country of Residence", "Ethiopia")
+        val gender = DbPatientDataDetails("Region", "Ethiopia")
+        val phone = DbPatientDataDetails("District", "Ethiopia")
+
+        dbPatientDataDetailsList.addAll(listOf(
+            name, dob, gender, phone, ))
+        return dbPatientDataDetailsList
+
     }
 
 

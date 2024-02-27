@@ -19,7 +19,7 @@ class LayoutListViewModel(application: Application, private val state: SavedStat
         val textId: String,
     ) {
         SEARCH_PATIENT(R.drawable.search, "Search Patient"),
-        REGISTER_CLIENT(R.drawable.register, "Register Client"),
+        REGISTER_CLIENT(R.drawable.register, "Register Patient"),
         HEALTH_FACILITIES(R.drawable.ic_action_health, "Referrals"),
     }
 }

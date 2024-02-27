@@ -16,6 +16,7 @@
         android:title="Add Visit"
         android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
+        app:actionViewClass="androidx.appcompat.widget.ActionMenuView"
         app:showAsAction="never" />
 
     <item
@@ -23,6 +24,7 @@
         android:title="Refer Patient"
         android:icon="@android:drawable/ic_menu_edit"
         android:orderInCategory="100"
+        app:actionViewClass="androidx.appcompat.widget.ActionMenuView"
         app:showAsAction="never" />
 
 </menu>

@@ -9,6 +9,18 @@
       "item": [
         {
           "type": "string",
+          "linkId": "2015872619398",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "80909-5",
+              "display": "Surname"
+            }
+          ],
+          "text": "Surname *"
+        },
+        {
+          "type": "string",
           "linkId": "7196281948590",
           "code": [
             {
@@ -17,7 +29,19 @@
               "display": "Patient name"
             }
           ],
-          "text": "Patient names *"
+          "text": "First Name *"
+        },
+        {
+          "type": "string",
+          "linkId": "329414473867",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "45392-8",
+              "display": "Patient First Name"
+            }
+          ],
+          "text": "Other Name(s)"
         },
         {
           "type": "date",
@@ -111,7 +135,14 @@
               "valueCoding": {
                 "system": "http://loinc.org",
                 "code": "75626-2-2",
-                "display": "Birth Certificate Number"
+                "display": "Birth Notification Number"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "75626-2-3",
+                "display": "Passport"
               }
             }
           ]
@@ -227,6 +258,18 @@
               }
             }
           ]
+        },
+        {
+          "type": "string",
+          "linkId": "9997006999334",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "74548-9",
+              "display": "Telephone Number:"
+            }
+          ],
+          "text": "Phone Number *"
         }
       ],
       "type": "group",
@@ -278,10 +321,10 @@
             {
               "system": "http://loinc.org",
               "code": "68329-2",
-              "display": "Country of origin"
+              "display": "Country of Origin"
             }
           ],
-          "text": "Country of origin",
+          "text": "Country of Origin",
           "required": true,
           "answerOption": [
             {

@@ -52,11 +52,14 @@ class LandingPage : Fragment() {
     private fun onItemClick(layout: LayoutListViewModel.Layout) {
         Timber.e("***** ${layout.textId}")
         when (layout.textId) {
-            "Search Client" -> {
+            "Search Patient" -> {
+                findNavController().navigate(R.id.patient_list)
+            }
+            "Referrals" -> {
                 findNavController().navigate(R.id.patient_list)
             }
 
-            "Register Client" -> {
+            "Register Patient" -> {
                 val bundle = Bundle()
                 bundle.putString(
                     AddPatientFragment.QUESTIONNAIRE_FILE_PATH_KEY,

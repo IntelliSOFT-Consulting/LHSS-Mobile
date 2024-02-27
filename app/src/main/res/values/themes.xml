@@ -16,12 +16,18 @@
         <item name="windowNoTitle">false</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Other style attributes -->
+        <item name="android:textColor">@color/menu_item_text_color</item>
+    </style>
+
+
     <style name="Theme.Zanzibar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Zanzibar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>

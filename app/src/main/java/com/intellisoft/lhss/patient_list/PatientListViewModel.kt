@@ -67,6 +67,7 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         }
     }
 
+
     /**
      * Returns count of all the [Patient] who match the filter criteria unlike [getSearchResults]
      * which only returns a fixed range.
@@ -236,12 +237,12 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
     val patientId = if (hasIdElement()) idElement.idPart else ""
     val name = if (hasName()) name[0].nameAsSingleString else ""
     val gender = if (hasGenderElement()) genderElement.valueAsString else ""
-    val dob =
-        if (hasBirthDateElement()) {
-            LocalDate.parse(birthDateElement.valueAsString, DateTimeFormatter.ISO_DATE)
-        } else {
-            null
-        }
+    val dob = null
+//        if (hasBirthDateElement()) {
+//            LocalDate.parse(birthDateElement.valueAsString, DateTimeFormatter.ISO_DATE)
+//        } else {
+//            null
+//        }
     val phone = if (hasTelecom()) telecom[0].value else ""
     val city = if (hasAddress()) address[0].city else ""
     val country = if (hasAddress()) address[0].country else ""

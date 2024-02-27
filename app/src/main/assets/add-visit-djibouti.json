@@ -4,6 +4,19 @@
   "status": "active",
   "item": [
     {
+      "type": "date",
+      "linkId": "5078826417232",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "57070-5",
+          "display": "Date next clinic visit"
+        }
+      ],
+      "text": "Date of visit",
+      "required": true
+    },
+    {
       "type": "choice",
       "extension": [
         {
@@ -282,19 +295,6 @@
           "answerBoolean": true
         }
       ]
-    },
-    {
-      "type": "date",
-      "linkId": "5078826417232",
-      "code": [
-        {
-          "system": "http://loinc.org",
-          "code": "57070-5",
-          "display": "Date next clinic visit"
-        }
-      ],
-      "text": "Date of visit",
-      "required": true
     }
   ]
 }

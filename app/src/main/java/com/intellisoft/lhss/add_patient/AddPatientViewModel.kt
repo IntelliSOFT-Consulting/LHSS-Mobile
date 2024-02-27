@@ -32,11 +32,14 @@ import com.google.android.fhir.datacapture.validation.Invalid
 import com.google.android.fhir.datacapture.validation.QuestionnaireResponseValidator
 import com.intellisoft.lhss.fhir.data.DbPatientDataAnswer
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.Identifiers
 import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.Address
+import org.hl7.fhir.r4.model.ContactPoint
 import org.hl7.fhir.r4.model.Enumerations
 import org.hl7.fhir.r4.model.HumanName
+import org.hl7.fhir.r4.model.Identifier
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Questionnaire
 import org.hl7.fhir.r4.model.QuestionnaireResponse
@@ -109,13 +112,40 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             //Patient Name
             val humanNameList = ArrayList<HumanName>()
             val humanName = HumanName()
-            val dbPatientDataAnswerName = findCloseMatchAndGetAnswer("7196281948590")
-            if (dbPatientDataAnswerName != null){
-                val valueData = dbPatientDataAnswerName.valueString ?: dbPatientDataAnswerName.valueCoding?.display
-                humanName.family = valueData
+
+            //First name
+            var givenName = ""
+            val dbPatientDataAnswerFirst = findCloseMatchAndGetAnswer("7196281948590")
+            if (dbPatientDataAnswerFirst != null){
+                givenName = (dbPatientDataAnswerFirst.valueString ?: dbPatientDataAnswerFirst.valueCoding?.display).toString()
+
+            }
+
+            //Surname
+            val dbPatientDataAnswerSurname = findCloseMatchAndGetAnswer("7196281948590")
+            if (dbPatientDataAnswerSurname != null){
+                val valueData = dbPatientDataAnswerSurname.valueString ?: dbPatientDataAnswerSurname.valueCoding?.display
+                humanName.family = valueData + givenName
                 humanNameList.add(humanName)
                 patient.name = humanNameList
             }
+
+
+            //Identifier
+            val dbPatientDataAnswerId = findCloseMatchAndGetAnswer("2485233829669")
+            if (dbPatientDataAnswerId != null){
+                val valueData = dbPatientDataAnswerId.valueString ?: dbPatientDataAnswerId.valueCoding?.display
+                if (valueData != null) {
+                    val identifierList = ArrayList<Identifier>()
+                    val identifier = Identifier()
+                    identifierList.add(identifier)
+
+                    identifier.value = valueData
+                   patient.identifier = identifierList
+                }
+            }
+
+
 
             //Birth Date
             val dbPatientDataAnswerDob = findCloseMatchAndGetAnswer("4725705580511")
@@ -158,6 +188,31 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                     patient.address = addressList
                 }
             }
+
+
+            //Phone number
+            val dbPatientDataPhone = findCloseMatchAndGetAnswer("9997006999334")
+            if (dbPatientDataPhone != null){
+                val valueData = dbPatientDataPhone.valueString ?: dbPatientDataPhone.valueCoding?.display
+                if (valueData != null) {
+                    val contactList = ArrayList<Patient.ContactComponent>()
+                    val contactComponent = Patient.ContactComponent()
+
+//                    ------
+                    val contactPointList = ArrayList<ContactPoint>()
+
+                    val contactPoint = ContactPoint()
+                    contactPoint.value = valueData
+                    contactPointList.add(contactPoint)
+
+                    contactComponent.telecom = contactPointList
+
+                    contactList.add(contactComponent)
+
+                    patient.contact = contactList
+                }
+            }
+
             /**
              * Add the other Patient details
              */

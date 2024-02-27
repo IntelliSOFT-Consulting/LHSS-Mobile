@@ -7,6 +7,13 @@
     android:gravity="center"
     android:layout_height="match_parent"
     tools:context=".shared.Splash">
+    
+    <TextView
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/white"
+        android:text="CBDHS Mobile App"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 </RelativeLayout>

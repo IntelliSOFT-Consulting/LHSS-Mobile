@@ -28,10 +28,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.intellisoft.lhss" />
+                  <option name="mobileSdkAppId" value="1:221144585308:android:6d3ddaec6d72ad74150299" />
+                  <option name="projectId" value="lhss-134eb" />
+                  <option name="projectNumber" value="221144585308" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
