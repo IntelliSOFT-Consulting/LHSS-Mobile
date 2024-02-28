@@ -55,6 +55,8 @@ enum class NavigationDetails {
     REFERRAL_LIST,
     ADD_VISIT_HISTORY,
     ADD_REFERRAL_LIST,
+
+    DETAIL_VIEW,
 }
 data class DbAppointmentData(
     val id: String? = null,
@@ -179,6 +181,7 @@ data class DbEncounter(
 )
 data class DbObservation(
     val id:String,
+    val encounterId:String? = null,
     val text: String,
     val name: String,
     val date: String

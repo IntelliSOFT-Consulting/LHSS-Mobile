@@ -112,6 +112,12 @@ class MainActivity : AppCompatActivity() {
                     administerVaccine(patientId, R.id.administerVaccine)
                 }
             }
+            NavigationDetails.DETAIL_VIEW.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    manageCBD(patientId, R.id.detailFragment)
+                }
+            }
 //
 //            NavigationDetails.CLIENT_LIST.name -> {
 //                val patientId = intent.getStringExtra("patientId")

@@ -4,14 +4,12 @@ package com.intellisoft.lhss.viewmodel
 import android.app.Application
 import android.content.res.Resources
 import android.icu.text.DateFormat
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.intellisoft.lhss.R
-import com.intellisoft.lhss.utils.AppUtils
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
@@ -36,7 +34,6 @@ import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.RiskAssessment
-import java.util.Arrays
 
 /**
  * The ViewModel helper class for PatientItemRecyclerViewAdapter, that is responsible for preparing
@@ -284,9 +281,8 @@ class PatientDetailsViewModel(
         return ArrayList(encounterList)
     }
 
+
     private suspend fun createWorkflowItem(it: Encounter, workflowName: String, codeValue: String):DbObservation? {
-
-
 
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
@@ -294,7 +290,6 @@ class PatientDetailsViewModel(
             if (type.hasText()){
                 if (type.text == workflowName){
                     val observation = getObservationList(id, codeValue)
-
                     return observation.firstOrNull()
                 }
             }
@@ -319,13 +314,13 @@ class PatientDetailsViewModel(
                     })
                 sort(Observation.DATE, Order.ASCENDING)
             }
-            .map { createObservationDataItem(it) }
+            .map { createObservationDataItem(it, encounterId) }
             .let { observationList.addAll(it) }
 
         return observationList
     }
 
-    private fun createObservationDataItem(it: Observation): DbObservation {
+    private fun createObservationDataItem(it: Observation, encounterId: String): DbObservation {
 
         var logicId = ""
         var text = ""
@@ -361,6 +356,7 @@ class PatientDetailsViewModel(
         }
         return DbObservation(
             logicId,
+            encounterId,
             text,
             name,
             date
@@ -369,29 +365,26 @@ class PatientDetailsViewModel(
 
     }
 
-    private suspend fun generateObservationByCode(
-        encounterId: String,
-        codeValue: String): String? {
-        var data = ""
+    fun generateObservations(encounterId: String)= runBlocking {
+        generateObservationsByEncounter(encounterId)
+    }
+
+
+    private suspend fun generateObservationsByEncounter(encounterId: String): ArrayList<DbObservation> {
+
+        val observationList = ArrayList<DbObservation>()
         fhirEngine
             .search<Observation> {
                 filter(Observation.SUBJECT, { value = "Patient/$patientId" })
                 filter(Observation.ENCOUNTER, { value = "Encounter/$encounterId" })
-                filter(
-                    Observation.CODE,
-                    {
-                        value = of(Coding().apply {
-                            system = "http://loinc.org"
-                            code = codeValue
-                        })
-                    })
                 sort(Observation.DATE, Order.ASCENDING)
             }
-            .map { createObservationItem(it, getApplication<Application>().resources) }
-            .firstOrNull()?.let {
-                data = it.value
-            }
-        return data
+            .map { createObservationDataItem(it, encounterId) }
+            .let { observationList.addAll(it) }
+
+        return observationList
+
+
     }
 
     fun getObservationByCode(

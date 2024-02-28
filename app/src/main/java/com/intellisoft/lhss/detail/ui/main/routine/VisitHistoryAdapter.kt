@@ -1,15 +1,20 @@
 package com.intellisoft.lhss.detail.ui.main.routine
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
+import com.intellisoft.lhss.detail.ui.main.appointments.AppointmentDetails
 import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.DbVaccineStockDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.NavigationDetails
 
 class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
                           private val context: Context
@@ -29,7 +34,15 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
         override fun onClick(p0: View) {
 
             val pos = adapterPosition
+            val encounterId = encounterList[pos].encounterId
 
+            FormatterClass().saveSharedPref("encounterId",encounterId.toString(), context)
+            val patientId = FormatterClass().getSharedPref("patientId", context)
+
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("functionToCall", NavigationDetails.DETAIL_VIEW.name)
+            intent.putExtra("patientId", patientId)
+            context.startActivity(intent)
         }
 
 
