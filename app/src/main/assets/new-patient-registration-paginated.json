@@ -50,10 +50,10 @@
             {
               "system": "http://loinc.org",
               "code": "21112-8",
-              "display": "Birth date"
+              "display": "Date of Birth"
             }
           ],
-          "text": "Birth date *"
+          "text": "Date of Birth *"
         },
         {
           "type": "choice",
@@ -136,6 +136,13 @@
                 "system": "http://loinc.org",
                 "code": "75626-2-2",
                 "display": "Birth Notification Number"
+              }
+            },
+            {
+              "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "75626-2-4",
+                "display": "Birth Certificate Number"
               }
             },
             {
@@ -252,6 +259,29 @@
             },
             {
               "valueCoding": {
+                "system": "http://loinc.org",
+                "code": "LA20536-1-2",
+                "display": "Others"
+              }
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "linkId": "9579937720610",
+          "code": [
+            {
+              "system": "http://loinc.org",
+              "code": "21847-9",
+              "display": "Others occupation"
+            }
+          ],
+          "text": "Others occupation",
+          "enableWhen": [
+            {
+              "question": "3257046516350",
+              "operator": "=",
+              "answerCoding": {
                 "system": "http://loinc.org",
                 "code": "LA20536-1-2",
                 "display": "Others"
