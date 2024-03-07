@@ -32,6 +32,9 @@ import com.google.android.fhir.datacapture.QuestionnaireFragment
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.utils.BlurBackgroundDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.QuestionnaireResponse
 
 /** A fragment class to show patient registration screen. */
@@ -133,7 +136,9 @@ class AddPatientFragment : Fragment(R.layout.add_patient_fragment) {
     }
 
     private fun savePatient(questionnaireResponse: QuestionnaireResponse) {
-        viewModel.savePatient(questionnaireResponse, requireContext())
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.savePatient(questionnaireResponse, requireContext())
+        }
     }
 
     private fun observePatientSaveAction() {

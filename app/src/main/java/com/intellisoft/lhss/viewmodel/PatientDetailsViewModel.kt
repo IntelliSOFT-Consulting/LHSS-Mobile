@@ -2,6 +2,7 @@ package com.intellisoft.lhss.viewmodel
 
 
 import android.app.Application
+import android.content.Context
 import android.content.res.Resources
 import android.icu.text.DateFormat
 import androidx.lifecycle.AndroidViewModel
@@ -51,21 +52,28 @@ class PatientDetailsViewModel(
         viewModelScope.launch { livePatientData.value = getPatientDetailDataModel() }
     }
 
-    fun getUserDetails():ArrayList<DbPatientDataDetails>{
+    fun getUserDetails(context: Context):ArrayList<DbPatientDataDetails>{
 
+        val formatterClass = FormatterClass()
         val dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
 
 
         val patientData = getPatientInfo()
+
+        val ageValue = FormatterClass().getFormattedAge(patientData.dob, context.resources)
+        val dobValue = formatterClass.convertDateFormat(patientData.dob)
+
         val name = DbPatientDataDetails("Name", patientData.name)
-        val dob = DbPatientDataDetails("Date Of Birth", patientData.dob)
+        val dob = DbPatientDataDetails("Date Of Birth", dobValue.toString())
         val gender = DbPatientDataDetails("Gender", patientData.gender)
         val phone = DbPatientDataDetails("Phone", patientData.phone)
-        val documentType = DbPatientDataDetails("Document Type", "")
-        val documentId = DbPatientDataDetails("Document Id", "")
-        val age = DbPatientDataDetails("Age", patientData.dob)
+        val documentType = DbPatientDataDetails("Document Type", patientData.docType)
+        val documentId = DbPatientDataDetails("Document Id", patientData.docId)
+        val age = DbPatientDataDetails("Age", ageValue)
         val occupation = DbPatientDataDetails("Occupation", patientData.occupation)
-        val crossBorderId = DbPatientDataDetails("CrossBorder Id", "")
+
+        val id =  "${patientData.crossBorderId.toString().replace("Patient/", "").substring(0, 4)} ..."
+        val crossBorderId = DbPatientDataDetails("CrossBorder Id",id)
 
         dbPatientDataDetailsList.addAll(listOf(
             name, dob, gender, phone, documentType, documentId, crossBorderId, age, occupation))
@@ -103,6 +111,10 @@ class PatientDetailsViewModel(
         var dob = ""
         var gender = ""
         var systemId = ""
+
+        var docType = ""
+        var docId = ""
+        var crossBorderId = ""
 
         var occupation = ""
         var residenceCountry = ""
@@ -192,10 +204,19 @@ class PatientDetailsViewModel(
                         if (typeText == "Occupation"){
                             occupation = valueData
                         }
+
+                        if (typeText == "Identification Type"){
+                            docType = valueData
+                        }
+                        if (typeText == "Identification Number"){
+                            docId = valueData
+                        }
                     }
                 }
 
             }
+
+            crossBorderId = it.id
         }
 
 
@@ -213,6 +234,8 @@ class PatientDetailsViewModel(
             gender,
             systemId,
 
+            docType, docId, crossBorderId,
+
             occupation, residenceCountry, originCountry, region, district
         )
     }
@@ -223,6 +246,10 @@ class PatientDetailsViewModel(
         val dob: String,
         val gender: String,
         val systemId: String?,
+
+        val docType: String,
+        val docId: String,
+        val crossBorderId: String?,
 
         val occupation: String,
         val residenceCountry: String,

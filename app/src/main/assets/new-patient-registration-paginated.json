@@ -44,15 +44,51 @@
           "text": "Other Name(s)"
         },
         {
-          "type": "date",
-          "linkId": "4725705580511",
-          "code": [
+          "extension": [
             {
-              "system": "http://loinc.org",
-              "code": "21112-8",
-              "display": "Date of Birth"
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+              "valueExpression": {
+                "language": "text/fhirpath",
+                "expression": "Patient.birthDate",
+                "name": "patientBirthDate"
+              }
+            },
+            {
+              "url": "http://ehelse.no/fhir/StructureDefinition/validationtext",
+              "valueString": "Cannot be a date in the future"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/minValue",
+              "valueDate": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/cqf-calculatedValue",
+                    "valueExpression": {
+                      "language": "text/fhirpath",
+                      "expression": "today() - 26000 days"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
+              "valueDate": {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/cqf-calculatedValue",
+                    "valueExpression": {
+                      "language": "text/fhirpath",
+                      "expression": "today()"
+                    }
+                  }
+                ]
+              }
             }
           ],
+          "linkId": "4725705580511",
+          "type": "date",
+          "required": true,
           "text": "Date of Birth *"
         },
         {
@@ -161,7 +197,7 @@
             {
               "system": "http://loinc.org",
               "code": "18598-3",
-              "display": "Control number identification.claims attachment"
+              "display": "Identification Number"
             }
           ],
           "text": "Identification Number",
@@ -432,11 +468,11 @@
               }
             }
           ],
-          "linkId": "8945109187038",
+          "linkId": "89451091870381",
           "code": [
             {
               "system": "http://loinc.org",
-              "code": "52868-7",
+              "code": "52868-77-1",
               "display": "Djibouti Region"
             }
           ],
@@ -496,7 +532,7 @@
           "code": [
             {
               "system": "http://loinc.org",
-              "code": "52868-7",
+              "code": "52868-77-2",
               "display": "Ethiopia Region"
             }
           ],
@@ -538,11 +574,11 @@
               }
             }
           ],
-          "linkId": "7880710415088",
+          "linkId": "78807104150881",
           "code": [
             {
               "system": "http://loinc.org",
-              "code": "52864-6",
+              "code": "52864-66-1",
               "display": "Djibouti District"
             }
           ],
@@ -623,7 +659,7 @@
           "code": [
             {
               "system": "http://loinc.org",
-              "code": "52864-6",
+              "code": "52864-66-2",
               "display": "Ethiopia District"
             }
           ],

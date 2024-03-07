@@ -205,7 +205,7 @@ class PatientDetailActivity : AppCompatActivity() {
             }
             country = formatterClass.getSharedPref("country", this@PatientDetailActivity)
 
-            val patientDataDetailsList = patientDetailsViewModel.getUserDetails()
+            val patientDataDetailsList = patientDetailsViewModel.getUserDetails(this@PatientDetailActivity)
 
             CoroutineScope(Dispatchers.Main).launch {
                 val visitHistoryAdapter = PatientDetailDataAdapter(patientDataDetailsList, this@PatientDetailActivity)
