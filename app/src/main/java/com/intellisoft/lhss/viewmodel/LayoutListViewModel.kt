@@ -18,8 +18,8 @@ class LayoutListViewModel(application: Application, private val state: SavedStat
         @DrawableRes val iconId: Int,
         val textId: String,
     ) {
-        SEARCH_PATIENT(R.drawable.search, "Search Patient"),
-        REGISTER_CLIENT(R.drawable.register, "Register Patient"),
-        HEALTH_FACILITIES(R.drawable.ic_action_health, "Referrals"),
+        SEARCH_PATIENT(R.drawable.register_green, "Search Patient"),
+        REGISTER_CLIENT(R.drawable.ic_action_add_green, "Register Patient"),
+        HEALTH_FACILITIES(R.drawable.ic_action_health_green, "Referrals"),
     }
 }

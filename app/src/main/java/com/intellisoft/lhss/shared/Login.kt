@@ -3,11 +3,13 @@ package com.intellisoft.lhss.shared
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.EditText
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
+import com.intellisoft.lhss.fhir.data.DbSignIn
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.network_request.RetrofitCallsAuthentication
 
@@ -36,18 +38,15 @@ class Login : AppCompatActivity() {
             val username = etUsername.text.toString()
             val password = etPassword.text.toString()
 
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
 
-//            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-//
-//                val dbSignIn = DbSignIn(username, password)
-//                retrofitCallsAuthentication.loginUser(this, dbSignIn)
-//
-//            } else {
-//                etUsername.error = "Please Enter Username"
-//                etPassword.error = "Please Enter Password"
-//            }
+                val dbSignIn = DbSignIn(username, password)
+                retrofitCallsAuthentication.loginUser(this, dbSignIn)
+
+            } else {
+                etUsername.error = "Please Enter Username"
+                etPassword.error = "Please Enter Password"
+            }
 
 
         }

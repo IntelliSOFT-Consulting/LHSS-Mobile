@@ -94,9 +94,9 @@ class PatientAdapter(
 
         holder.name.text = name
         holder.idNumber.text = id
-        holder.tvPhoneNumber.text = age.toString()
+        holder.tvPhoneNumber.text = phoneNumber.toString()
 
-        holder.viewPhoneNumber.text = "Age: "
+        holder.viewPhoneNumber.text = "Phone: "
         holder.viewId.text = "Cross Border ID: "
         holder.viewName.text = "Name: "
 
