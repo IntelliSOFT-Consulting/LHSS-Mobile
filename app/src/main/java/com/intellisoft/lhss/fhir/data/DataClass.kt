@@ -108,6 +108,7 @@ data class DbUser(
     val email:String,
     val phone:String?,
     val id:String,
+    val facility:String,
 )
 
 data class DbVaccinationSchedule(

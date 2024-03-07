@@ -140,6 +140,13 @@ class AdministerVaccineViewModel(
 
             encounter.status = Encounter.EncounterStatus.INPROGRESS
 
+            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", getApplication<Application>().applicationContext)
+
+            if (practitionerFacility != null) {
+                val destinationReference = Reference(practitionerFacility)
+                encounter.hospitalization.setDestination(destinationReference)
+            }
+
             saveResourceToDatabase(encounter, "Enc $encounterId")
 
             val cc = FhirContext.forR4()
@@ -149,8 +156,6 @@ class AdministerVaccineViewModel(
             /**
              * Create observations dynamically
              */
-
-
             dbQuestionnaireAnswer.forEach {
 
                 val observation = createObservationData(it)
