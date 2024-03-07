@@ -107,6 +107,7 @@ class AdministerVaccineViewModel(
 
     fun manualExtraction(questionnaireResponse: QuestionnaireResponse, patientId: String) {
         viewModelScope.launch {
+
             val formatterClass = FormatterClass()
             val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
             val subjectReference = Reference("Patient/$patientId")
@@ -130,6 +131,15 @@ class AdministerVaccineViewModel(
 
             encounter.subject = subjectReference
             encounter.id = encounterId
+
+            /**
+             * This should handle the different statuses
+             *   in-progress => This should represent a referral that has been started
+             *   completed => This should represent a complete referral that has been accepted
+             */
+
+            encounter.status = Encounter.EncounterStatus.INPROGRESS
+
             saveResourceToDatabase(encounter, "Enc $encounterId")
 
             val cc = FhirContext.forR4()
