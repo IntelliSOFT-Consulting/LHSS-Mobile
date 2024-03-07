@@ -187,7 +187,8 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         val isActive: Boolean,
         val html: String,
         var risk: String? = "",
-    ) {
+        val createdAt: String,
+        ) {
         override fun toString(): String = name
     }
 
@@ -247,6 +248,8 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
             ""
         }
 
+    var createdAt = ""
+
     var parsedDate: Date? = null
     if (dob != ""){
         val dobFormat = FormatterClass().convertDateFormat(dob)
@@ -259,16 +262,45 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
 
     }
 
-    val phone = if (hasTelecom()) telecom[0].value else ""
+    if (hasIdentifier()){
+        val identifierList = identifier
+        identifierList.forEach { id ->
+
+            if (id.hasType()) {
+                val typeText = id.type.text
+                val valueData = id.value
+                if (typeText == "createdAt"){
+                    createdAt = valueData
+                }
+            }
+
+        }
+
+    }
+
+//    val phone = if (hasTelecom()) telecom[0].value else ""
+    var phone = ""
+    if (hasContact()) {
+        if (contact.isNotEmpty()){
+            if (contact[0].hasTelecom()){
+                if (contact[0].telecom[0].hasValue()){
+                    phone = contact[0].telecom[0].value
+                }
+            }
+        }
+    }
+
+    var identification = ""
+    if (hasId()) identification = "${id.replace("Patient/","").substring(0,4)}..."
+
     val city = if (hasAddress()) address[0].city else ""
     val country = if (hasAddress()) address[0].country else ""
     val isActive = active
     val html: String = if (hasText()) text.div.valueAsString else ""
 
-    val identification: String = if (hasIdentifier()) identifier[0].value else "N/A"
 
     return PatientListViewModel.PatientItem(
-        id = position.toString(),
+        id = identification,
         resourceId = patientId,
         name = name,
         gender = gender ?: "",
@@ -279,6 +311,7 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
         country = country ?: "",
         isActive = isActive,
         html = html,
+        createdAt = createdAt
     )
 }
 

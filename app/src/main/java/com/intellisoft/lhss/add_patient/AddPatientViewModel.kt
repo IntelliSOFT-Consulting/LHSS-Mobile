@@ -38,6 +38,7 @@ import java.util.UUID
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.Address
 import org.hl7.fhir.r4.model.CodeableConcept
+import org.hl7.fhir.r4.model.Coding
 import org.hl7.fhir.r4.model.ContactPoint
 import org.hl7.fhir.r4.model.Enumerations
 import org.hl7.fhir.r4.model.HumanName
@@ -136,39 +137,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             }
 
 
-            //Identifier
-            val identifierList = ArrayList<Identifier>()
 
-            val dbPatientDataType = findCloseMatchAndGetAnswer("9218063457934")
-            val dbPatientDataAnswerId = findCloseMatchAndGetAnswer("2485233829669")
-            if (dbPatientDataAnswerId != null &&  dbPatientDataType != null){
-                val valueData = dbPatientDataAnswerId.valueString ?: dbPatientDataAnswerId.valueCoding?.display
-                val valueDataValue = dbPatientDataType.valueString ?: dbPatientDataType.valueCoding?.display
-                if (valueData != null && valueDataValue != null) {
-                    val identifier = Identifier()
-
-                    val codeableConcept = CodeableConcept()
-                    codeableConcept.text = valueDataValue
-                    identifier.type = codeableConcept
-                    identifier.value = valueData
-                    identifierList.add(identifier)
-
-
-                }
-            }
-
-            //Add identifier
-
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val dateString = dateFormat.format(Date())
-
-            val identifier = Identifier()
-            val codeableConcept = CodeableConcept()
-            codeableConcept.text = "createdAt"
-            identifier.type = codeableConcept
-            identifier.value = dateString
-
-            identifierList.add(identifier)
 
 
             //Birth Date
@@ -273,6 +242,50 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                 }
             }
 
+            //Identifier
+            val identifierList = ArrayList<Identifier>()
+
+            // Document Type
+            val dbPatientDataType = findCloseMatchAndGetAnswer("9218063457934")
+            if (dbPatientDataType != null){
+                val valueDataValue = dbPatientDataType.valueString ?: dbPatientDataType.valueCoding?.display
+                if (valueDataValue != null) {
+                    val identifier = Identifier()
+
+                    val codeableConcept = CodeableConcept()
+                    codeableConcept.text = "Identification Type"
+                    identifier.type = codeableConcept
+                    identifier.value = valueDataValue
+                    identifierList.add(identifier)
+                }
+            }
+            // Document id
+            val dbPatientDataAnswerId = findCloseMatchAndGetAnswer("2485233829669")
+            if (dbPatientDataAnswerId != null){
+                val valueData = dbPatientDataAnswerId.valueString ?: dbPatientDataAnswerId.valueCoding?.display
+                if (valueData != null){
+                    val identifier = Identifier()
+
+                    val codeableConcept = CodeableConcept()
+                    codeableConcept.text = "Identification Number"
+                    identifier.type = codeableConcept
+                    identifier.value = valueData
+                    identifierList.add(identifier)
+                }
+            }
+
+            //Add Created at
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val dateString = dateFormat.format(Date())
+
+            val identifierCreatedAt = Identifier()
+            val codeableConcept = CodeableConcept()
+            codeableConcept.text = "createdAt"
+            identifierCreatedAt.type = codeableConcept
+            identifierCreatedAt.value = dateString
+
+            identifierList.add(identifierCreatedAt)
+
             //Occupation
             val dbPatientDataOccupation = findCloseMatchAndGetAnswer("3257046516350")
             if (dbPatientDataOccupation != null){
@@ -285,7 +298,8 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
                     codeableConceptOccupation.text = "Occupation"
                     identifierOccupation.type = codeableConceptOccupation
                     identifierOccupation.value = valueData
-                    identifierList.add(identifier)
+
+                    identifierList.add(identifierOccupation)
 
                 }
             }
@@ -367,6 +381,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val isActive = active
         val html: String = if (hasText()) text.div.valueAsString else ""
         val identification: String = if (hasIdentifier()) identifier[0].value else "N/A"
+        val createdAt: String = if (hasIdentifier()) identifier[0].value else "N/A"
 
         return PatientListViewModel.PatientItem(
             id = position.toString(),
@@ -380,6 +395,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             country = country ?: "",
             isActive = isActive,
             html = html,
+            createdAt = createdAt
         )
     }
 }

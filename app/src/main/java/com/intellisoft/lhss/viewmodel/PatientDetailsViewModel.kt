@@ -204,7 +204,6 @@ class PatientDetailsViewModel(
                         if (typeText == "Occupation"){
                             occupation = valueData
                         }
-
                         if (typeText == "Identification Type"){
                             docType = valueData
                         }
