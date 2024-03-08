@@ -123,6 +123,22 @@ class PatientDetailActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.navigation_patients -> {
+                    // Handle home item click
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("functionToCall", NavigationDetails.CLIENT_LIST.name)
+                    intent.putExtra("patientId", patientId)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    // Handle home item click
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("functionToCall", NavigationDetails.PRACTITIONER_VIEW.name)
+                    intent.putExtra("patientId", patientId)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }
@@ -233,7 +249,7 @@ class PatientDetailActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_details, menu)
+        menuInflater.inflate(R.menu.patient_actions, menu)
         return true
     }
 

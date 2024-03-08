@@ -133,18 +133,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 //
-//            NavigationDetails.CLIENT_LIST.name -> {
-//                val patientId = intent.getStringExtra("patientId")
-//                if (patientId != null) {
-//                    administerVaccine(patientId, R.id.patient_list)
-//                }
-//            }
-//            NavigationDetails.EDIT_CLIENT.name -> {
-//                val patientId = intent.getStringExtra("patientId")
-//                if (patientId != null) {
-//                    navController.navigate(R.id.editPatientFragment)
-//                }
-//            }
+            NavigationDetails.CLIENT_LIST.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    administerVaccine(patientId, R.id.patient_list)
+                }
+            }
+            NavigationDetails.PRACTITIONER_VIEW.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    navController.navigate(R.id.practionerDetails)
+                }
+            }
         }
 
 

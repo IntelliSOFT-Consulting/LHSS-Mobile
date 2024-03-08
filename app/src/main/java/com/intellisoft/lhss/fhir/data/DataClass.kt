@@ -58,6 +58,8 @@ enum class NavigationDetails {
 
     DETAIL_VIEW,
     REFERRAL_DETAIL_VIEW,
+
+    PRACTITIONER_VIEW,
 }
 data class DbAppointmentData(
     val id: String? = null,
