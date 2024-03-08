@@ -48,6 +48,7 @@ class PatientListFragment : Fragment() {
 
     private val mainActivityViewModel: MainActivityViewModel by activityViewModels()
     private var isSearched = false
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -111,6 +112,14 @@ class PatientListFragment : Fragment() {
 
             patientList.sortBy { list -> list.createdAt }
 
+            if (patientList.isEmpty()){
+                progressBar.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            }else{
+                progressBar.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
+
             val patientAdapter = PatientAdapter(patientList, requireContext())
             recyclerView.adapter = patientAdapter
 
@@ -133,6 +142,7 @@ class PatientListFragment : Fragment() {
             }
         }
 
+        progressBar = binding.patientListContainer.progressBar
 
         searchView = binding.patientListContainer.search
         topBanner = binding.syncStatusContainer.linearLayoutSyncStatus
