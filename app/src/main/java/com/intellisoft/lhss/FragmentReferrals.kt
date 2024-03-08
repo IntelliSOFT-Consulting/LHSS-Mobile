@@ -123,10 +123,23 @@ class FragmentReferrals : Fragment() {
 
     private fun getReferrals() {
 
+
         CoroutineScope(Dispatchers.IO).launch {
-            val patientReferredList = patientListViewModel.getReferralsBack(
-                "REFERRALS",
-                "INPROGRESS")
+
+            formatterClass.saveSharedPref("lhssFlow", "referralDetails", requireContext())
+
+            val patientReferredList = ArrayList<PatientListViewModel.PatientItem>()
+            val encounterList = patientListViewModel.getReferralsBack()
+            encounterList.forEach {
+
+                val patientId = it.patientId
+                val type = it.type
+                val status = it.status
+                if (status == "INPROGRESS" && type == "REFERRALS"){
+                    val patientItem = patientListViewModel.getPatientIdBac(patientId).first()
+                    patientReferredList.add(patientItem)
+                }
+            }
 
             patientReferredList.sortBy { list -> list.createdAt }
 
@@ -158,9 +171,6 @@ class FragmentReferrals : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        formatterClass.deleteSharedPref("selectedVaccinationVenue", requireContext())
-        formatterClass.deleteSharedPref("isSelectedVaccinationVenue", requireContext())
 
         _binding = null
     }

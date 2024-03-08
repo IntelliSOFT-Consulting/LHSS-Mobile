@@ -99,13 +99,11 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         }
     }
 
-    fun getReferralsBack(typeValue:String, statusValue:String) = runBlocking{
-        getReferrals(typeValue, statusValue)
+    fun getReferralsBack() = runBlocking{
+        getReferrals()
     }
 
-    private suspend fun getReferrals(typeValue:String, statusValue:String):ArrayList<PatientListViewModel.PatientItem> {
-
-        val patientReferredList = ArrayList<PatientListViewModel.PatientItem>()
+    private suspend fun getReferrals():ArrayList<DbEncounterReferrals> {
 
         val encounterList = ArrayList<DbEncounterReferrals>()
         fhirEngine
@@ -115,23 +113,10 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
             .map { createWorkflowItem(it) }
             .let { encounterList.addAll(it) }
 
-        encounterList.forEach {
-
-            val patientId = it.patientId
-            val type = it.type
-            val status = it.status
-
-            if (status == statusValue && type == typeValue){
-
-                val patientItem = getPatientId(patientId).first()
-                patientReferredList.add(patientItem)
-
-            }
-
-        }
-
-        return patientReferredList
+        return encounterList
     }
+
+    fun getPatientIdBac(patient: String)= runBlocking { getPatientId(patient) }
 
     private suspend fun getPatientId(patientId: String):MutableList<PatientItem>{
         val patients: MutableList<PatientItem> = mutableListOf()

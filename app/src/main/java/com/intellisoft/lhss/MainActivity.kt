@@ -87,6 +87,12 @@ class MainActivity : AppCompatActivity() {
 //            }
 
 
+            NavigationDetails.REFERRAL_DETAIL_VIEW.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    manageCBD(patientId, R.id.fragmentReferralDetails)
+                }
+            }
             NavigationDetails.VISIT_HISTORY.name -> {
                 val patientId = intent.getStringExtra("patientId")
                 if (patientId != null) {

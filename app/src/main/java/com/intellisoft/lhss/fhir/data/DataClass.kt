@@ -57,6 +57,7 @@ enum class NavigationDetails {
     ADD_REFERRAL_LIST,
 
     DETAIL_VIEW,
+    REFERRAL_DETAIL_VIEW,
 }
 data class DbAppointmentData(
     val id: String? = null,

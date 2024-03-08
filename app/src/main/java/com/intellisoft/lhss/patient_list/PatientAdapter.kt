@@ -9,9 +9,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.NavigationDetails
 
 class PatientAdapter(
     private var dbPatientList: ArrayList<PatientListViewModel.PatientItem>,
@@ -42,20 +44,22 @@ class PatientAdapter(
             val id = dbPatientList[pos].resourceId
 
             FormatterClass().saveSharedPref("patientId", id, context)
-            val selectedVaccinationVenue = FormatterClass().getSharedPref("selectedVaccinationVenue", context)
-            val isSelectedVaccinationVenue = FormatterClass().getSharedPref("isSelectedVaccinationVenue", context)
+            val lhssFlow = FormatterClass().getSharedPref("lhssFlow", context)
 
-            if (isSelectedVaccinationVenue == null){
+            if (lhssFlow == null){
                 val intent = Intent(context, PatientDetailActivity::class.java)
                 intent.putExtra("patientId", id)
                 context.startActivity(intent)
             }else{
-                if (selectedVaccinationVenue != null){
-                    val intent = Intent(context, PatientDetailActivity::class.java)
+                if (lhssFlow == "referralDetails"){
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.putExtra("functionToCall", NavigationDetails.REFERRAL_DETAIL_VIEW.name)
                     intent.putExtra("patientId", id)
                     context.startActivity(intent)
                 }else{
-                    Toast.makeText(context, "Please select a vaccination venue", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, PatientDetailActivity::class.java)
+                    intent.putExtra("patientId", id)
+                    context.startActivity(intent)
                 }
             }
 

@@ -114,6 +114,11 @@
         android:name="com.intellisoft.lhss.FragmentReferrals"
         android:label="fragment_referrals"
         tools:layout="@layout/fragment_referrals" />
+    <fragment
+        android:id="@+id/fragmentReferralDetails"
+        android:name="com.intellisoft.lhss.FragmentReferralDetails"
+        android:label="fragment_referral_details"
+        tools:layout="@layout/fragment_referral_details" />
 
 
 </navigation>

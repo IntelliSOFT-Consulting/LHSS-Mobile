@@ -187,6 +187,7 @@ class FormatterClass {
             "vaccinationSeriesDoses" ,
             "vaccinationManufacturer" ,
             "immunizationId" ,
+            "lhssFlow" ,
 //            "selectedVaccinationVenue" ,
 //            "isSelectedVaccinationVenue" ,
             "administeredProduct")
