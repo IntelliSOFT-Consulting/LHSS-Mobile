@@ -17,6 +17,7 @@
 package com.intellisoft.lhss.patient_list
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,13 +28,21 @@ import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.StringFilterModifier
 import com.google.android.fhir.search.count
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.data.DbEncounterReferrals
+import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.hl7.fhir.r4.model.CodeableConcept
+import org.hl7.fhir.r4.model.Coding
+import org.hl7.fhir.r4.model.Encounter
+import org.hl7.fhir.r4.model.Encounter.EncounterStatus
 import org.hl7.fhir.r4.model.Location
+import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Patient
+import org.hl7.fhir.r4.model.Resource
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -90,6 +99,71 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         }
     }
 
+    fun getReferralsBack(typeValue:String, statusValue:String) = runBlocking{
+        getReferrals(typeValue, statusValue)
+    }
+
+    private suspend fun getReferrals(typeValue:String, statusValue:String):ArrayList<PatientListViewModel.PatientItem> {
+
+        val patientReferredList = ArrayList<PatientListViewModel.PatientItem>()
+
+        val encounterList = ArrayList<DbEncounterReferrals>()
+        fhirEngine
+            .search<Encounter> {
+                sort(Observation.DATE, Order.ASCENDING)
+            }
+            .map { createWorkflowItem(it) }
+            .let { encounterList.addAll(it) }
+
+        encounterList.forEach {
+
+            val patientId = it.patientId
+            val type = it.type
+            val status = it.status
+
+            if (status == statusValue && type == typeValue){
+
+                val patientItem = getPatientId(patientId).first()
+                patientReferredList.add(patientItem)
+
+            }
+
+        }
+
+        return patientReferredList
+    }
+
+    private suspend fun getPatientId(patientId: String):MutableList<PatientItem>{
+        val patients: MutableList<PatientItem> = mutableListOf()
+        fhirEngine.search<Patient> {
+            filter(Resource.RES_ID, { value = of(patientId) })
+        }.mapIndexed { index, fhirPatient -> fhirPatient.toPatientItem(index + 1) }
+            .let { patients.addAll(it) }
+        return patients
+    }
+
+    private suspend fun createWorkflowItem(it: Encounter): DbEncounterReferrals {
+
+        var patientId = ""
+        var type = ""
+        var status = ""
+
+        if (it.hasSubject()){
+            patientId = it.subject.reference.toString().replace("Patient/", "")
+        }
+        if (it.hasType()){
+           type = it.type[0].text
+        }
+        if (it.hasStatus()){
+            status = it.status.name
+        }
+        return DbEncounterReferrals(
+            patientId, type, status
+        )
+
+
+    }
+
     private suspend fun getSearchResults(nameQuery: String = ""): List<PatientItem> {
         var patients: MutableList<PatientItem> = mutableListOf()
         fhirEngine
@@ -120,6 +194,8 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
 
         return patients
     }
+
+    fun searchPatientsByPhoneOrIdentificationBack(searchString: String)= runBlocking { searchPatientsByPhoneOrIdentification(searchString) }
 
     private suspend fun searchPatientsByPhoneOrIdentification(searchString: String): MutableList<PatientItem> {
         val matchingPatients = mutableListOf<PatientItem>()

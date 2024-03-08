@@ -2,6 +2,7 @@ package com.intellisoft.lhss
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,11 @@ import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.databinding.FragmentReferralsBinding
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.patient_list.PatientAdapter
 import com.intellisoft.lhss.patient_list.PatientListViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FragmentReferrals : Fragment() {
 
@@ -30,6 +35,9 @@ class FragmentReferrals : Fragment() {
     private val binding
         get() = _binding!!
     private var isSearched = false
+
+    private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +74,9 @@ class FragmentReferrals : Fragment() {
             )[PatientListViewModel::class.java]
         clearSharedPref()
 
-        val recyclerView: RecyclerView = binding.patientListContainer.patientList
+        getReferrals()
+
+        recyclerView = binding.patientListContainer.patientList
 
         searchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -107,6 +117,26 @@ class FragmentReferrals : Fragment() {
                 },
             )
     }
+
+    private fun getReferrals() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val patientReferredList = patientListViewModel.getReferralsBack(
+                "REFERRALS",
+                "INPROGRESS")
+
+            patientReferredList.sortBy { list -> list.createdAt }
+
+            val patientAdapter = PatientAdapter(patientReferredList, requireContext())
+            CoroutineScope(Dispatchers.Main).launch { recyclerView.adapter = patientAdapter }
+
+        }
+
+
+
+
+    }
+
     private fun clearSharedPref() {
         //Clear the vaccines
         formatterClass.clearVaccineShared(requireContext())

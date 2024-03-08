@@ -187,3 +187,9 @@ data class DbObservation(
     val name: String,
     val date: String
 )
+data class DbEncounterReferrals(
+    val patientId:String,
+    val type:String,
+    val status:String,
+
+)
