@@ -6,17 +6,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FragmentReferralDetails">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/patient_list"
-        android:name="com.google.fhirengine.example.PatientListFragment"
+    <LinearLayout
+        android:background="@color/white"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:paddingBottom="80dp"
-        android:scrollbars="vertical"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".PatientListActivity"
-        tools:listitem="@layout/patient_list_item_view" />
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:background="?attr/colorPrimary"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Zanzibar.AppBarOverlay">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_margin="5dp"
+                    android:padding="14dp"
+                    android:id="@+id/btnPrevious"
+                    android:background="@drawable/ic_action_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Back button" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="Referrals"
+                    app:titleTextColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </LinearLayout>
+
 
 </FrameLayout>

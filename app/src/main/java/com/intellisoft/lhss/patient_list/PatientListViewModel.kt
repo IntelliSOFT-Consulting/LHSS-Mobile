@@ -132,6 +132,11 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
         var patientId = ""
         var type = ""
         var status = ""
+        var encounterId = ""
+
+        if (it.hasId()){
+            encounterId = it.id
+        }
 
         if (it.hasSubject()){
             patientId = it.subject.reference.toString().replace("Patient/", "")
@@ -143,7 +148,7 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
             status = it.status.name
         }
         return DbEncounterReferrals(
-            patientId, type, status
+            encounterId, patientId, type, status
         )
 
 
@@ -236,7 +241,8 @@ class PatientListViewModel(application: Application, private val fhirEngine: Fhi
 
     /** The Patient's details for display purposes. */
     data class PatientItem(
-        val id: String,
+        var encounterId: String?,
+        var id: String,
         val resourceId: String,
         val name: String,
         val gender: String,
@@ -361,6 +367,7 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
 
 
     return PatientListViewModel.PatientItem(
+        encounterId = null,
         id = identification,
         resourceId = patientId,
         name = name,

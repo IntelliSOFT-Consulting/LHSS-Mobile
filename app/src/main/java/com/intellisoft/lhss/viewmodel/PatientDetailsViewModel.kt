@@ -15,6 +15,7 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.data.DbEncounterReferrals
 import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -50,6 +51,31 @@ class PatientDetailsViewModel(
     /** Emits list of [PatientDetailData]. */
     fun getPatientDetailData() {
         viewModelScope.launch { livePatientData.value = getPatientDetailDataModel() }
+    }
+
+    fun getReferralDetails(encounterId: String)= runBlocking{
+        generateObservationByCode(encounterId)
+    }
+
+    private fun createWorkflowItemIt(it: Encounter):Encounter {
+
+        val id = if (it.hasId()) it.id else ""
+        return it
+    }
+
+    private suspend fun generateObservationByCode(encounterId: String): ArrayList<DbObservation> {
+        val observationList = ArrayList<DbObservation>()
+        fhirEngine
+            .search<Observation> {
+                filter(Observation.SUBJECT, { value = "Patient/$patientId" })
+                filter(Observation.ENCOUNTER, { value = "Encounter/$encounterId" })
+
+                sort(Observation.DATE, Order.ASCENDING)
+            }
+            .map { createObservationDataItem(it, encounterId)}
+            .let { observationList.addAll(it) }
+
+        return observationList
     }
 
     fun getUserDetails(context: Context):ArrayList<DbPatientDataDetails>{
@@ -515,6 +541,10 @@ class PatientDetailsViewModel(
         return FormatterClass().convertDateFormat(date)
 
     }
+
+
+
+
 }
 
 class PatientDetailsViewModelFactory(

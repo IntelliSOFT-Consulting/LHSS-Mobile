@@ -52,6 +52,11 @@ class PatientAdapter(
                 context.startActivity(intent)
             }else{
                 if (lhssFlow == "referralDetails"){
+                    val encounterId = dbPatientList[pos].encounterId?.replace("Encounter/","")
+                    if (encounterId != null) {
+                        FormatterClass().saveSharedPref("encounterId", encounterId, context)
+                    }
+
                     val intent = Intent(context, MainActivity::class.java)
                     intent.putExtra("functionToCall", NavigationDetails.REFERRAL_DETAIL_VIEW.name)
                     intent.putExtra("patientId", id)

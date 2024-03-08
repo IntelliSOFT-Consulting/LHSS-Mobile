@@ -132,11 +132,14 @@ class FragmentReferrals : Fragment() {
             val encounterList = patientListViewModel.getReferralsBack()
             encounterList.forEach {
 
+                val encounterId = it.encounterId
                 val patientId = it.patientId
                 val type = it.type
                 val status = it.status
                 if (status == "INPROGRESS" && type == "REFERRALS"){
                     val patientItem = patientListViewModel.getPatientIdBac(patientId).first()
+                    if (encounterId != null)
+                        patientItem.encounterId = encounterId
                     patientReferredList.add(patientItem)
                 }
             }

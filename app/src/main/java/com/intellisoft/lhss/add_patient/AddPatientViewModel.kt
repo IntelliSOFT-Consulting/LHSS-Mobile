@@ -384,6 +384,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val createdAt: String = if (hasIdentifier()) identifier[0].value else "N/A"
 
         return PatientListViewModel.PatientItem(
+            encounterId = null,
             id = position.toString(),
             resourceId = patientId,
             name = name,
