@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -37,6 +38,7 @@ class FragmentReferrals : Fragment() {
     private var isSearched = false
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
 
     override fun onCreateView(
@@ -77,6 +79,7 @@ class FragmentReferrals : Fragment() {
         getReferrals()
 
         recyclerView = binding.patientListContainer.patientList
+        progressBar = binding.patientListContainer.progressBar
 
         searchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
@@ -128,7 +131,18 @@ class FragmentReferrals : Fragment() {
             patientReferredList.sortBy { list -> list.createdAt }
 
             val patientAdapter = PatientAdapter(patientReferredList, requireContext())
-            CoroutineScope(Dispatchers.Main).launch { recyclerView.adapter = patientAdapter }
+            CoroutineScope(Dispatchers.Main).launch {
+                recyclerView.adapter = patientAdapter
+
+                if (patientReferredList.isEmpty()){
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }else{
+                    progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                }
+
+            }
 
         }
 

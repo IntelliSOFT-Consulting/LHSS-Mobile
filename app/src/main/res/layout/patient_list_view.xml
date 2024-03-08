@@ -88,20 +88,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/patient_list"
-            android:name="com.google.fhirengine.example.PatientListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <RelativeLayout
             android:layout_below="@+id/patient_count"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:paddingBottom="80dp"
-            android:scrollbars="vertical"
-            app:layoutManager="LinearLayoutManager"
-            tools:context=".PatientListActivity"
-            tools:listitem="@layout/patient_card_view" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
+                android:id="@+id/patient_list"
+                android:name="com.google.fhirengine.example.PatientListFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingBottom="80dp"
+                android:scrollbars="vertical"
+                app:layoutManager="LinearLayoutManager"
+                tools:context=".PatientListActivity"
+                tools:listitem="@layout/patient_list_item_view" />
+
+        </RelativeLayout>
+
+
 
 
     </LinearLayout>
