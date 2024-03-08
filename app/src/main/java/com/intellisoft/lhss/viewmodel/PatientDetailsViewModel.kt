@@ -22,6 +22,8 @@ import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.Identifiers
 import com.intellisoft.lhss.fhir.data.ObservationDateValue
 import com.intellisoft.lhss.patient_list.PatientListViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
@@ -57,9 +59,27 @@ class PatientDetailsViewModel(
         generateObservationByCode(encounterId)
     }
 
+    fun updateEncounter(encounterId: String){
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val encounterList = ArrayList<Encounter>()
+            fhirEngine
+                .search<Encounter> {
+                    sort(Observation.DATE, Order.ASCENDING)
+                }
+                .map { createWorkflowItemIt(it) }
+                .let { encounterList.addAll(it) }
+
+            val encounter = encounterList.firstOrNull()
+            if (encounter != null) fhirEngine.update(encounter)
+        }
+
+    }
+
     private fun createWorkflowItemIt(it: Encounter):Encounter {
 
-        val id = if (it.hasId()) it.id else ""
+        it.status = Encounter.EncounterStatus.FINISHED
+
         return it
     }
 
@@ -406,6 +426,7 @@ class PatientDetailsViewModel(
             val textValue = it.valueStringType.value
             name = textValue
         }
+
         return DbObservation(
             logicId,
             encounterId,

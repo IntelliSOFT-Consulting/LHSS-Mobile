@@ -13,13 +13,17 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.databinding.FragmentReferralDetailsBinding
 import com.intellisoft.lhss.detail.PatientDetailActivity
+import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
 import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.patient_list.PatientListViewModel
+import com.intellisoft.lhss.shared.Splash
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
 import kotlinx.coroutines.CoroutineScope
@@ -42,6 +46,8 @@ class FragmentReferralDetails : Fragment() {
     private lateinit var progressBar: ProgressBar
 
     private lateinit var patientId: String
+    private var encounterId: String? = null
+    private lateinit var layoutManager: RecyclerView.LayoutManager
 
 
     override fun onCreateView(
@@ -59,6 +65,7 @@ class FragmentReferralDetails : Fragment() {
         isSearched = false
 
         patientId = formatterClass.getSharedPref("patientId", requireContext()).toString()
+        encounterId = formatterClass.getSharedPref("encounterId", requireContext())
 
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
             title = "Referrals"
@@ -66,7 +73,15 @@ class FragmentReferralDetails : Fragment() {
             setHomeButtonEnabled(false)
             setHomeAsUpIndicator(null)
         }
+
+        layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         recyclerView = binding.recyclerView
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
 
         fhirEngine = FhirApplication.fhirEngine(requireContext())
         patientDetailsViewModel = ViewModelProvider(this,
@@ -75,6 +90,17 @@ class FragmentReferralDetails : Fragment() {
 
         binding.btnPrevious.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnReceivePatient.setOnClickListener {
+
+            if (encounterId != null){
+                patientDetailsViewModel.updateEncounter(encounterId!!)
+
+                onBackPressed()
+            }
+
+
         }
 
         getReferralsDetails()
@@ -88,14 +114,38 @@ class FragmentReferralDetails : Fragment() {
     private fun getReferralsDetails() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val encounterId = formatterClass.getSharedPref("encounterId", requireContext())
+            val dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
+
             if (encounterId != null){
-                val observationList = patientDetailsViewModel.getReferralDetails(encounterId)
+                println(encounterId)
+
+                val observationList = patientDetailsViewModel.getReferralDetails(encounterId!!)
+
                 if (observationList.isNotEmpty()){
-                    Log.e("---->","<----")
-                    println(observationList)
-                    Log.e("---->","<----")
+                    observationList.forEach {
+
+                        val text = it.text
+                        val name = it.name
+                        val dbPatientDataDetails = DbPatientDataDetails(text, name)
+                        dbPatientDataDetailsList.add(dbPatientDataDetails)
+                    }
                 }
+            }
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                if (dbPatientDataDetailsList.isEmpty()){
+                    binding.progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                    binding.btnReceivePatient.visibility = View.GONE
+                }else{
+                    binding.progressBar.visibility = View.GONE
+                    recyclerView.visibility = View.VISIBLE
+                    binding.btnReceivePatient.visibility = View.VISIBLE
+                }
+
+                val visitHistoryAdapter = PatientDetailDataAdapter(dbPatientDataDetailsList, requireContext())
+               recyclerView.adapter = visitHistoryAdapter
             }
         }
 
