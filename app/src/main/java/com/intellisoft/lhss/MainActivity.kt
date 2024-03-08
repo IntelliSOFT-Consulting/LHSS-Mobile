@@ -46,6 +46,14 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.landing_page)
                     true
                 }
+                R.id.navigation_patients -> {
+                    navController.navigate(R.id.patient_list)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    navController.navigate(R.id.practionerDetails)
+                    true
+                }
 
 
 

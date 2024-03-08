@@ -22,7 +22,7 @@
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
-            android:text="Jane Doe"
+            android:text=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
