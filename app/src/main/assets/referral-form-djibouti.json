@@ -222,6 +222,29 @@
       ]
     },
     {
+      "type": "string",
+      "linkId": "2341213547862",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "65239-6111",
+          "display": "Other Reason for Referral"
+        }
+      ],
+      "text": "Other Reason for Referral",
+      "enableWhen": [
+        {
+          "question": "7493376202196",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://loinc.org",
+            "code": "LA28180-0-4",
+            "display": "Others"
+          }
+        }
+      ]
+    },
+    {
       "type": "date",
       "linkId": "6294776339188",
       "code": [
