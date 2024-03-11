@@ -236,6 +236,29 @@
       ]
     },
     {
+      "type": "string",
+      "linkId": "8029860738221",
+      "code": [
+        {
+          "system": "http://loinc.org",
+          "code": "65297-4",
+          "display": "Others Services Provided"
+        }
+      ],
+      "text": "Others Services Provided",
+      "enableWhen": [
+        {
+          "question": "9249673047565",
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://loinc.org",
+            "code": "9998335-9-13",
+            "display": "Others"
+          }
+        }
+      ]
+    },
+    {
       "type": "choice",
       "extension": [
         {
@@ -274,6 +297,13 @@
             "code": "LA31434-6",
             "display": "Referred"
           }
+        },
+        {
+          "valueCoding": {
+            "system": "http://loinc.org",
+            "code": "LA31434-7",
+            "display": "Treated"
+          }
         }
       ]
     },
@@ -291,8 +321,12 @@
       "enableWhen": [
         {
           "question": "1403287210295",
-          "operator": "exists",
-          "answerBoolean": true
+          "operator": "=",
+          "answerCoding": {
+            "system": "http://loinc.org",
+            "code": "LA31434-7",
+            "display": "Treated"
+          }
         }
       ]
     }

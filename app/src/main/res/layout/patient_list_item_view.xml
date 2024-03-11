@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textStyle="bold"
-                    tools:text="Cross Border Id:" />
+                    tools:text="CB Id:" />
 
                 <TextView
                     android:layout_weight="1"

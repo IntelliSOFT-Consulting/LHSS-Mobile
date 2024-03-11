@@ -54,7 +54,7 @@
         {
           "linkId": "PR",
           "type": "group",
-          "text": "Client Details",
+          "text": "Patient Details",
           "_text": {
             "extension": [
               {

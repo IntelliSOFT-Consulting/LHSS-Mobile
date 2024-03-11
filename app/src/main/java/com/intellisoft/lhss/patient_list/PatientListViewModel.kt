@@ -358,7 +358,7 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
     }
 
     var identification = ""
-    if (hasId()) identification = "${id.replace("Patient/","").substring(0,4)}..."
+    if (hasId()) identification = "${id.replace("Patient/","").substring(0,4)}"
 
     val city = if (hasAddress()) address[0].city else ""
     val country = if (hasAddress()) address[0].country else ""

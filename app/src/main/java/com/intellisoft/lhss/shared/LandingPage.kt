@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,6 +44,11 @@ class LandingPage : Fragment() {
 
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.patient_list)
+        }
+
+        val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
+        if (practitionerFacility != null){
+            binding.tvName.text = practitionerFacility
         }
 
         return _binding.root

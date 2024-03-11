@@ -127,6 +127,9 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
 
             }
 
+            //Other name
+
+
             //Surname
             val dbPatientDataAnswerSurname = findCloseMatchAndGetAnswer("7196281948590")
             if (dbPatientDataAnswerSurname != null){

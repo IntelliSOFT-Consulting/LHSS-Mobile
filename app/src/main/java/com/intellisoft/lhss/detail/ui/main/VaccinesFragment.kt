@@ -192,7 +192,7 @@ class VaccinesFragment : Fragment() {
             )
             FormatterClass().saveSharedPref(
                 "title",
-                "Update Client Details", requireContext()
+                "Update Patient Details", requireContext()
             )
             val intent = Intent(context, MainActivity::class.java)
             intent.putExtra("functionToCall", NavigationDetails.ADMINISTER_VACCINE.name)

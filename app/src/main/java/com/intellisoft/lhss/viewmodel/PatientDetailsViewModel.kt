@@ -118,7 +118,7 @@ class PatientDetailsViewModel(
         val age = DbPatientDataDetails("Age", ageValue)
         val occupation = DbPatientDataDetails("Occupation", patientData.occupation)
 
-        val id =  "${patientData.crossBorderId.toString().replace("Patient/", "").substring(0, 4)} ..."
+        val id =  "${patientData.crossBorderId.toString().replace("Patient/", "").substring(0, 4)}"
         val crossBorderId = DbPatientDataDetails("CrossBorder Id",id)
 
         dbPatientDataDetailsList.addAll(listOf(

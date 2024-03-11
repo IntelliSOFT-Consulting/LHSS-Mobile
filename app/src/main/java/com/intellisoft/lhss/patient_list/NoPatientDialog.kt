@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageButton
 import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
 
@@ -21,6 +22,10 @@ class NoPatientDialog(context: Context) : Dialog(context), View.OnClickListener 
 
         // Initialize and set up any buttons or other views in your custom layout
         val btnRegisterClient: Button = findViewById(R.id.btnRegisterClient)
+        val imgBtnCancel:ImageButton = findViewById(R.id.imgBtnCancel)
+        imgBtnCancel.setOnClickListener {
+            dismiss()
+        }
         btnRegisterClient.setOnClickListener(this)
     }
 

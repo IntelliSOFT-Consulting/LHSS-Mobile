@@ -38,7 +38,7 @@
         {
           "linkId": "PR",
           "type": "group",
-          "text": "Client Details",
+          "text": "Patient Details",
           "item": [
             {
               "linkId": "a-birthdate",

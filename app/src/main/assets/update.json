@@ -23,7 +23,7 @@
   ],
   "item": [
     {
-      "text": "Update Client Details",
+      "text": "Update Patient Details",
       "linkId": "1.0.0",
       "type": "group",
       "extension": [

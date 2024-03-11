@@ -8,7 +8,7 @@
     <string name="title_patient_list">Registered Clients</string>
     <string name="syncing">Syncing</string>
     <string name="sync">Sync</string>
-    <string name="query_hint_patient_search">Enter Client Name / ID</string>
+    <string name="query_hint_patient_search">Enter Patient Name / ID</string>
     <string name="description_status">Status</string>
 
     <string name="title_activity_patient_detail">PatientDetailActivity</string>
@@ -25,9 +25,9 @@
     <string name="inputs_missing">Input missing</string>
     <string name="resources_saved">Details Updated</string>
     <string name="add_care_giver">Add Care Giver</string>
-    <string name="message_patient_updated">Client details updated</string>
-    <string name="edit_patient">Edit Client</string>
-    <string name="tab_text_3">Client Details</string>
+    <string name="message_patient_updated">Patient details updated</string>
+    <string name="edit_patient">Edit Patient</string>
+    <string name="tab_text_3">Patient Details</string>
     <string name="register_client">Register Patient</string>
     <string name="doses_administered">Doses Administered</string>
     <string name="type_of_aefi">Type of AEFI</string>
