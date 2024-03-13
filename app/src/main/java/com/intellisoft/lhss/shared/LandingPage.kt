@@ -66,12 +66,7 @@ class LandingPage : Fragment() {
             }
 
             "Register Patient" -> {
-                val bundle = Bundle()
-                bundle.putString(
-                    AddPatientFragment.QUESTIONNAIRE_FILE_PATH_KEY,
-                    "new-patient-registration-paginated.json"
-                )
-                findNavController().navigate(R.id.addPatientFragment, bundle)
+                findNavController().navigate(R.id.patientDetailsFragment)
             }
 
         }

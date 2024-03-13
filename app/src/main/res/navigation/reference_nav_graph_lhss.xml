@@ -3,17 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reference_nav_graph"
-    app:startDestination="@id/landing_page">
+    app:startDestination="@id/patientRegistration">
 
-    <fragment
-        android:id="@+id/landing_page"
-        android:name="com.intellisoft.lhss.shared.LandingPage"
-        android:label=""
-        tools:layout="@layout/fragment_landing_page">
-        <action
-            android:id="@+id/action_patient_list_to_addPatientFragment"
-            app:destination="@id/addPatientFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/patient_list"
@@ -30,22 +21,6 @@
     </fragment>
 
 
-    <fragment
-        android:id="@+id/addPatientFragment"
-        android:name="com.intellisoft.lhss.add_patient.AddPatientFragment"
-        android:label="@string/add_patient"
-        tools:layout="@layout/add_patient_fragment" />
-
-
-    <!--  <activity
-          android:id="@+id/mainActivity"
-          android:name="com.intellisoft.chanjoke.MainActivity"
-          android:label="activity_patient_detail"
-          tools:layout="@layout/activity_main">
-          <action
-              android:id="@+id/action_to_editPatientFragment"
-              app:destination="@id/editPatientFragment" />
-      </activity>-->
     <activity
         android:id="@+id/patientDetailActivity"
         android:name="com.intellisoft.lhss.detail.PatientDetailActivity"
@@ -65,30 +40,6 @@
     </fragment>
 
 
-    <fragment
-        android:id="@+id/administerVaccine"
-        android:name="com.intellisoft.lhss.vaccine.AdministerVaccineFragment"
-        android:label="Lhss"
-        tools:layout="@layout/administer_vaccine">
-        <argument
-            android:name="patient_id"
-            app:argType="string" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/editPatientFragment"
-        android:name="com.intellisoft.lhss.add_patient.EditPatientFragment"
-        android:label="EditPatientFragment">
-        <argument
-            android:name="patient_id"
-            app:argType="string" />
-
-    </fragment>
-    <fragment
-        android:id="@+id/vaccineDetailsFragment"
-        android:name="com.intellisoft.lhss.detail.ui.main.VaccineDetailsFragment"
-        android:label="Vaccine Details"
-        tools:layout="@layout/fragment_vaccine_details" />
     <fragment
         android:id="@+id/practionerDetails"
         android:name="com.intellisoft.lhss.PractionerDetails"
