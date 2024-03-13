@@ -278,7 +278,7 @@ class PatientDetailsFragment : Fragment() {
             dateOfBirth = dateOfBirthString
         )
 
-        formatter.saveSharedPref("personal", Gson().toJson(payload), requireContext())
+        formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(payload), requireContext())
 
         findNavController().navigate(R.id.patientLocationFragment)
 

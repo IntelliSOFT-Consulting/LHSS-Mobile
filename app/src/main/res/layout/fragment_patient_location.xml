@@ -22,31 +22,20 @@
             android:textAlignment="center"
             android:textStyle="bold" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:background="@drawable/spinner_border"
+            android:id="@+id/identificationType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="Identification Type *"
-            app:boxBackgroundMode="outline">
+            android:entries="@array/identification_type" />
 
-            <AutoCompleteTextView
-                android:id="@+id/identificationType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tel_identification_number"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
             android:hint="Identification Number *"
             app:boxBackgroundMode="outline">
 
@@ -59,90 +48,46 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_county"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+
+        <Spinner
+            android:layout_marginTop="15dp"
+            android:background="@drawable/spinner_border"
+            android:id="@+id/occupationType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Patient Occupation *"
-            app:boxBackgroundMode="outline">
+            android:entries="@array/occupation_type" />
 
-            <AutoCompleteTextView
-                android:id="@+id/county"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_sub_county"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:layout_marginTop="15dp"
+            android:background="@drawable/spinner_border"
+            android:id="@+id/originCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Country of Origin *"
-            app:boxBackgroundMode="outline">
+            android:entries="@array/origin_country" />
 
-            <AutoCompleteTextView
-                android:id="@+id/sub_county"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_ward"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:id="@+id/residenceCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Country of Residence *"
-            app:boxBackgroundMode="outline">
+            android:layout_marginTop="15dp"
+            android:background="@drawable/spinner_border"
+            android:entries="@array/residence_country" />
 
-            <AutoCompleteTextView
-                android:id="@+id/ward"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_trading"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/spinner_border"
+            android:id="@+id/region"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="Region"
-            app:boxBackgroundMode="outline">
+            android:layout_height="wrap_content" />
 
-            <AutoCompleteTextView
-                android:id="@+id/region"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_estate"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/spinner_border"
+            android:id="@+id/district"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="District"
-            app:boxBackgroundMode="outline">
-
-            <AutoCompleteTextView
-                android:id="@+id/district"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:layout_width="match_parent"

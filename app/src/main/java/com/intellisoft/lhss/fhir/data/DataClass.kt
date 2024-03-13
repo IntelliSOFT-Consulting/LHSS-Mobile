@@ -15,6 +15,15 @@ data class CustomPatient(
     val dateOfBirth: String,
     val age: String
 )
+data class DbAdministrative(
+    val identificationType:String,
+    val identificationNumber:String,
+    val occupationType:String,
+    val originCountry:String,
+    val residenceCountry:String,
+    val region:String,
+    val district:String,
+)
 
 data class DbVaccineData(
     val logicalId: String,

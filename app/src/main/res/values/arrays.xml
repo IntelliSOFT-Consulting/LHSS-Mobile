@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="identification_type">
+        <item>Identification Type</item>
         <item>National ID</item>
         <item>Birth Notification Number</item>
         <item>Birth Certificate Number</item>
@@ -9,6 +10,7 @@
     </string-array>
 
     <string-array name="occupation_type">
+        <item>Patient Occupation</item>
         <item>Formal worker</item>
         <item>Farmer</item>
         <item>Long distance Driver</item>
@@ -21,23 +23,32 @@
     </string-array>
 
 <!--    Countries-->
-    <string-array name="country">
+    <string-array name="origin_country">
+        <item>Country of Origin *</item>
+        <item>Djibouti</item>
+        <item>Ethiopia</item>
+    </string-array>
+    <string-array name="residence_country">
+        <item>Country of Residence *</item>
         <item>Djibouti</item>
         <item>Ethiopia</item>
     </string-array>
 
 <!--    Regions-->
     <string-array name="djibouti_region">
+        <item>Region</item>
         <item>Dikhil region</item>
         <item>Tadjourah region</item>
         <item>Ali-Sabieh region</item>
     </string-array>
     <string-array name="ethiopia_region">
+        <item>Region</item>
         <item>Afar</item>
     </string-array>
 
 <!--    Districts-->
     <string-array name="djibouti_district">
+        <item>District</item>
         <item>Dorra</item>
         <item>Ali-Adde</item>
         <item>Guestir</item>
@@ -46,6 +57,7 @@
         <item>Mouloud</item>
     </string-array>
     <string-array name="ethiopia_district">
+        <item>District</item>
         <item>Dubti</item>
     </string-array>
 
