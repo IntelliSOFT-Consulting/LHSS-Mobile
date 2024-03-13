@@ -50,16 +50,16 @@ class PatientDetailsFragment : Fragment() {
         }
 
         binding.apply {
-            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-                if (checkedId != -1) {
-                    val dataValue = when (checkedId) {
-                        R.id.radioButtonYes -> "Male"
-                        R.id.radioButtonNo -> "Female"
-                        else -> null
-                    }
-
-                }
-            }
+//            radioGroup.setOnCheckedChangeListener { group, checkedId ->
+//                if (checkedId != -1) {
+//                    val dataValue = when (checkedId) {
+//                        R.id.radioButtonYes -> "Male"
+//                        R.id.radioButtonNo -> "Female"
+//                        else -> null
+//                    }
+//
+//                }
+//            }
             radioGroupDob.setOnCheckedChangeListener { group, checkedId ->
                 if (checkedId != -1) {
                     when (checkedId) {

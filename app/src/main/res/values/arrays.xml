@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="identification_type">
+        <item>National ID</item>
+        <item>Birth Notification Number</item>
+        <item>Birth Certificate Number</item>
+        <item>Passport</item>
+    </string-array>
+
+    <string-array name="occupation_type">
+        <item>Formal worker</item>
+        <item>Farmer</item>
+        <item>Long distance Driver</item>
+        <item>Mobile / Daily laborers</item>
+        <item>Commercial sex worker</item>
+        <item>Illegal Immigrant</item>
+        <item>Refugee</item>
+        <item>General Occupation</item>
+        <item>Others</item>
+    </string-array>
+
+<!--    Countries-->
+    <string-array name="country">
+        <item>Djibouti</item>
+        <item>Ethiopia</item>
+    </string-array>
+
+<!--    Regions-->
+    <string-array name="djibouti_region">
+        <item>Dikhil region</item>
+        <item>Tadjourah region</item>
+        <item>Ali-Sabieh region</item>
+    </string-array>
+    <string-array name="ethiopia_region">
+        <item>Afar</item>
+    </string-array>
+
+<!--    Districts-->
+    <string-array name="djibouti_district">
+        <item>Dorra</item>
+        <item>Ali-Adde</item>
+        <item>Guestir</item>
+        <item>Assamo</item>
+        <item>Yoboki</item>
+        <item>Mouloud</item>
+    </string-array>
+    <string-array name="ethiopia_district">
+        <item>Dubti</item>
+    </string-array>
+
+
+
+
+</resources>

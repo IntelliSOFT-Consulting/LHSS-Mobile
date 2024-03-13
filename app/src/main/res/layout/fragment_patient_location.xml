@@ -33,7 +33,7 @@
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
-                android:id="@+id/identification_type"
+                android:id="@+id/identificationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
