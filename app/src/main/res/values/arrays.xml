@@ -36,19 +36,19 @@
 
 <!--    Regions-->
     <string-array name="djibouti_region">
-        <item>Region</item>
+        <item>Region *</item>
         <item>Dikhil region</item>
         <item>Tadjourah region</item>
         <item>Ali-Sabieh region</item>
     </string-array>
     <string-array name="ethiopia_region">
-        <item>Region</item>
+        <item>Region *</item>
         <item>Afar</item>
     </string-array>
 
 <!--    Districts-->
     <string-array name="djibouti_district">
-        <item>District</item>
+        <item>District *</item>
         <item>Dorra</item>
         <item>Ali-Adde</item>
         <item>Guestir</item>
@@ -57,7 +57,7 @@
         <item>Mouloud</item>
     </string-array>
     <string-array name="ethiopia_district">
-        <item>District</item>
+        <item>District *</item>
         <item>Dubti</item>
     </string-array>
 

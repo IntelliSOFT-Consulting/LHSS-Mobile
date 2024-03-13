@@ -18,27 +18,26 @@ package com.intellisoft.lhss.add_patient
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import ca.uhn.fhir.context.FhirContext
 import ca.uhn.fhir.context.FhirVersionEnum
-import com.intellisoft.lhss.fhir.FhirApplication
-import com.intellisoft.lhss.patient_list.PatientListViewModel
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.datacapture.mapping.ResourceMapper
 import com.google.android.fhir.datacapture.validation.Invalid
 import com.google.android.fhir.datacapture.validation.QuestionnaireResponseValidator
+import com.google.gson.Gson
+import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.CustomPatient
+import com.intellisoft.lhss.fhir.data.DbAdministrative
 import com.intellisoft.lhss.fhir.data.DbPatientDataAnswer
 import com.intellisoft.lhss.fhir.data.FormatterClass
-import com.intellisoft.lhss.fhir.data.Identifiers
-import java.util.UUID
+import com.intellisoft.lhss.patient_list.PatientListViewModel
 import kotlinx.coroutines.launch
 import org.hl7.fhir.r4.model.Address
 import org.hl7.fhir.r4.model.CodeableConcept
-import org.hl7.fhir.r4.model.Coding
 import org.hl7.fhir.r4.model.ContactPoint
 import org.hl7.fhir.r4.model.Enumerations
 import org.hl7.fhir.r4.model.HumanName
@@ -46,11 +45,11 @@ import org.hl7.fhir.r4.model.Identifier
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Questionnaire
 import org.hl7.fhir.r4.model.QuestionnaireResponse
+import org.hl7.fhir.r4.model.StringType
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 
 
 /** ViewModel for patient registration screen {@link AddPatientFragment}. */
@@ -332,6 +331,133 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
     }
 
 
+    suspend fun createManualPatient(){
+
+        val gson = Gson()
+        val formatterClass = FormatterClass()
+
+        val registrationFlowPersonal = formatterClass.getSharedPref("registrationFlowPersonal", getApplication())
+        val registrationFlowAdministrative = formatterClass.getSharedPref("registrationFlowAdministrative", getApplication())
+
+        val customPatient = gson.fromJson(registrationFlowPersonal, CustomPatient::class.java)
+        val dbAdministrative = gson.fromJson(registrationFlowAdministrative, DbAdministrative::class.java)
+
+        val firstName = customPatient.firstname
+        val middlename = customPatient.middlename
+        val lastname = customPatient.lastname
+        val age = customPatient.age
+        val genderValue = customPatient.gender
+        val dateOfBirth = customPatient.dateOfBirth
+
+        val identificationType = dbAdministrative.identificationType
+        val identificationNumber = dbAdministrative.identificationNumber
+        val occupationType = dbAdministrative.occupationType
+        val originCountry = dbAdministrative.originCountry
+        val residenceCountry = dbAdministrative.residenceCountry
+        val region = dbAdministrative.identificationType
+        val district = dbAdministrative.district
+
+        val patient = Patient()
+
+        //Name
+        val humanNameList = ArrayList<HumanName>()
+
+        val humanName = HumanName()
+        humanName.family = lastname
+        val givenList = ArrayList<StringType>()
+        givenList.add(StringType(firstName))
+        givenList.add(StringType(middlename))
+        humanName.given = givenList
+        humanNameList.add(humanName)
+
+        patient.name = humanNameList
+
+        //Dob
+        val dobValue = formatterClass.convertDateFormat(dateOfBirth)
+        val date = dobValue?.let { FormatterClass().convertStringToDate(it, "MMM d yyyy") }
+        patient.birthDate = date
+
+        //Gender
+        val gender = if (genderValue.contains("Male")){
+            Enumerations.AdministrativeGender.MALE
+        }else{
+            Enumerations.AdministrativeGender.FEMALE
+        }
+        patient.setGender(gender)
+
+        //Address
+        val addressList = ArrayList<Address>()
+
+        val addressResidence = Address()
+        addressResidence.district = district
+        addressResidence.city = region
+        addressResidence.country = residenceCountry
+        addressResidence.text = "Country of Residence"
+        addressList.add(addressResidence)
+
+        val addressOrigin = Address()
+        addressOrigin.country = originCountry
+        addressOrigin.text = "Country of Origin"
+        addressList.add(addressOrigin)
+
+        patient.address = addressList
+
+        //Identifier
+        val identifierList = ArrayList<Identifier>()
+
+        val identifierOccupation = Identifier()
+        val codeableConceptOccupation = CodeableConcept()
+        codeableConceptOccupation.text = "Occupation"
+        identifierOccupation.type = codeableConceptOccupation
+        identifierOccupation.value = occupationType
+        identifierList.add(identifierOccupation)
+
+        //Add Created at
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val dateString = dateFormat.format(Date())
+        val identifierCreatedAt = Identifier()
+        val codeableConceptCreatedAt = CodeableConcept()
+        codeableConceptCreatedAt.text = "createdAt"
+        identifierCreatedAt.type = codeableConceptCreatedAt
+        identifierCreatedAt.value = dateString
+        identifierList.add(identifierCreatedAt)
+
+        val identifierId = Identifier()
+        val codeableConceptId = CodeableConcept()
+        codeableConceptId.text = "Identification Number"
+        identifierId.type = codeableConceptId
+        identifierId.value = identificationNumber
+        identifierList.add(identifierId)
+
+        val identifierIdType = Identifier()
+        val codeableConcept = CodeableConcept()
+        codeableConcept.text = "Identification Type"
+        identifierIdType.type = codeableConcept
+        identifierIdType.value = identificationType
+        identifierList.add(identifierIdType)
+
+        patient.identifier = identifierList
+
+        /**
+         * Add the other Patient details
+         */
+        val patientId = generateUuid()
+
+        patient.id = patientId
+
+        fhirEngine.create(patient)
+
+        /**
+         * Utilized patient's id for navigation
+         * */
+
+
+
+        FormatterClass().saveSharedPref("patientId", patientId, getApplication())
+        FormatterClass().saveSharedPref("isRegistration", "true", getApplication())
+
+
+    }
 
 
 
