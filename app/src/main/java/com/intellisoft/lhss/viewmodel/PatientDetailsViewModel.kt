@@ -112,7 +112,7 @@ class PatientDetailsViewModel(
         val name = DbPatientDataDetails("Name", patientData.name)
         val dob = DbPatientDataDetails("Date Of Birth", dobValue.toString())
         val gender = DbPatientDataDetails("Gender", patientData.gender)
-        val phone = DbPatientDataDetails("Phone", patientData.phone)
+//        val phone = DbPatientDataDetails("Phone", patientData.phone)
         val documentType = DbPatientDataDetails("Document Type", patientData.docType)
         val documentId = DbPatientDataDetails("Document Id", patientData.docId)
         val age = DbPatientDataDetails("Age", ageValue)
@@ -122,7 +122,7 @@ class PatientDetailsViewModel(
         val crossBorderId = DbPatientDataDetails("CrossBorder Id",id)
 
         dbPatientDataDetailsList.addAll(listOf(
-            name, dob, gender, phone, documentType, documentId, crossBorderId, age, occupation))
+            name, dob, gender, documentType, documentId, crossBorderId, age, occupation))
         return dbPatientDataDetailsList
 
     }
@@ -220,7 +220,9 @@ class PatientDetailsViewModel(
                         val country = address.country
 
                         if (text == "Country of Residence"){
-                            val districtValue = address.district
+                            var districtValue = ""
+                            if (address.hasDistrict())
+                                districtValue = address.district
                             val city = address.city
                             region = city
                             district = districtValue
@@ -244,8 +246,17 @@ class PatientDetailsViewModel(
                 val identifierList = it.identifier
                 identifierList.forEach { id ->
                     if (id.hasType()){
-                        val typeText = id.type.text
-                        val valueData = id.value
+
+                        var typeText = ""
+                        var valueData = ""
+                        if (id.hasType()){
+                            if (id.type.hasText()){
+                                typeText = id.type.text
+                            }
+                        }
+                        if (id.hasValue()){
+                            valueData = id.value
+                        }
 
                         if (typeText == "Occupation"){
                             occupation = valueData

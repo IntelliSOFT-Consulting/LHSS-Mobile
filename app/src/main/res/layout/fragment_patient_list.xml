@@ -36,6 +36,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="gone"
         android:id="@+id/add_patient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
