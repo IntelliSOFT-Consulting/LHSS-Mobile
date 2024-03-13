@@ -7,19 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.RadioButton
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentPatientDetailsBinding
 import com.intellisoft.lhss.databinding.FragmentPatientLocationBinding
+import com.intellisoft.lhss.fhir.data.CustomPatient
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.utils.AppUtils
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class PatientDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentPatientDetailsBinding
     private val formatter = FormatterClass()
+    private var mListener: OnButtonClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +40,14 @@ class PatientDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        AppUtils().disableEditing(binding.dateOfBirth)
+        AppUtils().disableEditing(binding.calculatedAge)
+
+
+        val isUpdate = FormatterClass().getSharedPref("isUpdate", requireContext())
+        if (isUpdate != null) {
+            displayInitialData()
+        }
 
         binding.apply {
             radioGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -68,7 +84,6 @@ class PatientDetailsFragment : Fragment() {
 
                 }
             }
-
             dateOfBirth.apply {
 
                 setOnClickListener {
@@ -88,13 +103,72 @@ class PatientDetailsFragment : Fragment() {
                     datePickerDialog.show()
                 }
             }
+            nextButton.apply {
+                setOnClickListener {
+                    validateData()
+                }
+            }
         }
 
+    }
+    private fun displayInitialData() {
+        try {
+            val personal = formatter.getSharedPref("personal", requireContext())
+
+            if (personal != null) {
+                val data = Gson().fromJson(personal, CustomPatient::class.java)
+                binding.apply {
+                    val parts = data.firstname.split(" ")
+                    when (parts.size) {
+                        2 -> {
+                            val (firstName, lastName) = parts
+                            firstname.setText(firstName)
+                            lastname.setText(lastName)
+                        }
+
+                        3 -> {
+                            val (firstName, middleName, lastName) = parts
+                            firstname.setText(firstName)
+                            lastname.setText(lastName)
+                            middlename.setText(middleName)
+                        }
+
+                        else -> {
+                            println("Invalid name format")
+                        }
+                    }
+                    val gender = data.gender
+                    if (gender == "Male") {
+                        radioButtonYes.isChecked = true
+                    } else {
+                        radioButtonNo.isChecked = true
+                    }
+                    radioButtonYesDob.isChecked = true
+                    telDateOfBirth.visibility = View.VISIBLE
+                    dateOfBirth.setText(data.dateOfBirth)
+                    calculateUserAge(data.dateOfBirth)
 
 
-        binding.nextButton.setOnClickListener{
-            findNavController().navigate(R.id.patientLocationFragment)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+    }
+
+
+    private fun calculateDateOfBirth(year: Int, months: Int, weeks: Int): String {
+        // Get current date
+        val currentDate = Calendar.getInstance()
+        // Subtract years from the current date
+        currentDate.add(Calendar.YEAR, -year)
+        // Subtract months
+        currentDate.add(Calendar.MONTH, -months)
+        // Subtract weeks
+        currentDate.add(Calendar.WEEK_OF_YEAR, -weeks)
+        // Format the date to yyyy-MM-dd
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(currentDate.time)
     }
 
     private fun calculateUserAge(valueCurrent: String) {
@@ -103,60 +177,112 @@ class PatientDetailsFragment : Fragment() {
 
         // check the year as well
         val year = formatter.calculateAgeYear(valueCurrent)
-        if (year >= 18) {
-            binding.telephone.visibility = View.VISIBLE
-            formatter.saveSharedPref("isAbove", "true", requireContext())
+    }
+
+
+
+    private fun validateData() {
+        var gender = ""
+        var dateType = ""
+        val firstName = binding.firstname.text.toString()
+        val lastName = binding.lastname.text.toString()
+        val middleName = binding.middlename.text.toString()
+        var dateOfBirthString = binding.dateOfBirth.text.toString()
+        val age = binding.calculatedAge.text.toString()
+
+
+        if (firstName.isEmpty()) {
+            binding.apply {
+                telFirstname.error = "Enter firstname"
+                firstname.requestFocus()
+                return
+            }
+        }
+        if (lastName.isEmpty()) {
+            binding.apply {
+                telLastName.error = "Enter lastname"
+                lastname.requestFocus()
+                return
+            }
+        }
+        val checkedRadioButtonId = binding.radioGroup.checkedRadioButtonId
+        if (checkedRadioButtonId != -1) {
+            // RadioButton is selected, find the selected RadioButton
+            val selectedRadioButton =
+                binding.root.findViewById<RadioButton>(checkedRadioButtonId)
+            gender = selectedRadioButton.text.toString()
 
         } else {
-            binding.telephone.visibility = View.GONE
-            formatter.saveSharedPref("isAbove", "false", requireContext())
-
-        }
-        updateIdentifications(year)
-    }
-
-    private fun updateIdentifications(age: Int) {
-        val identifications = when {
-            age < 3 -> {
-                arrayOf(
-                    "Birth Certificate",
-                    "Passport",
-                    "Birth Notification Number"
-                )
-            }
-
-            age in 3..17 -> {
-                arrayOf(
-                    "Birth Certificate",
-                    "Passport",
-                    "Nemis"
-                )
-            }
-
-            else -> {
-                arrayOf(
-                    "Birth Certificate",
-                    "ID Number",
-                    "Passport"
-                )
-            }
+            // No RadioButton is selected, handle it as needed
+            Toast.makeText(requireContext(), "Please select a gender", Toast.LENGTH_SHORT)
+                .show()
+            return
         }
 
-        val adapterType =
-            ArrayAdapter(
+
+        val estimatedID = binding.radioGroupDob.checkedRadioButtonId
+        if (estimatedID != -1) {
+            // RadioButton is selected, find the selected RadioButton
+            val selectedRadioButtonDob = binding.root.findViewById<RadioButton>(estimatedID)
+            dateType = selectedRadioButtonDob.text.toString()
+
+        } else {
+            // No RadioButton is selected, handle it as needed
+            Toast.makeText(
                 requireContext(),
-                android.R.layout.simple_dropdown_item_1line,
-                identifications
-            )
+                "Please select date of birth option",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+        if (dateType == "Actual") {
 
-        binding.apply {
-            identificationType.apply {
-                setAdapter(adapterType)
+            if (dateOfBirthString.isEmpty()) {
+                binding.apply {
+                    telDateOfBirth.error = "Enter date of birth"
+                    dateOfBirth.requestFocus()
+                    return
+                }
             }
+        } else {
+            // check all the fields
+            val year = binding.editTextOne.text.toString()
+            val months = binding.editTextTwo.text.toString()
+            val weeks = binding.editTextThree.text.toString()
+
+            if (year.isEmpty() && months.isEmpty() && weeks.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter estimate age",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                return
+            }
+
+            val enteredYear = binding.editTextOne.text.toString().toIntOrNull() ?: 0
+            val enteredMonths = binding.editTextTwo.text.toString().toIntOrNull() ?: 0
+            val enteredWeeks = binding.editTextThree.text.toString().toIntOrNull() ?: 0
+            val dateOfBirth = calculateDateOfBirth(enteredYear, enteredMonths, enteredWeeks)
+
+            dateOfBirthString = dateOfBirth
+
         }
 
-    }
+        val payload = CustomPatient(
+            firstname = firstName,
+            middlename = middleName,
+            lastname = lastName,
+            gender = gender,
+            age = age,
+            dateOfBirth = dateOfBirthString
+        )
 
+        formatter.saveSharedPref("personal", Gson().toJson(payload), requireContext())
+
+        findNavController().navigate(R.id.patientLocationFragment)
+
+    }
 
 
 

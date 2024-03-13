@@ -6,6 +6,16 @@ import com.intellisoft.lhss.vaccine.validations.BasicVaccine
 enum class UrlData(var message: Int) {
     BASE_URL(R.string.base_url),
 }
+
+data class CustomPatient(
+    val firstname: String,
+    val middlename: String,
+    val lastname: String,
+    val gender: String,
+    val dateOfBirth: String,
+    val age: String
+)
+
 data class DbVaccineData(
     val logicalId: String,
     val vaccineName: String,
