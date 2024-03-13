@@ -354,7 +354,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val occupationType = dbAdministrative.occupationType
         val originCountry = dbAdministrative.originCountry
         val residenceCountry = dbAdministrative.residenceCountry
-        val region = dbAdministrative.identificationType
+        val region = dbAdministrative.region
         val district = dbAdministrative.district
 
         val patient = Patient()
