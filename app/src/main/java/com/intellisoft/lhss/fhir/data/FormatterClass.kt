@@ -15,6 +15,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.Date
@@ -23,7 +24,51 @@ import kotlin.math.abs
 import kotlin.random.Random
 
 class FormatterClass {
+    private val dateInverseFormat: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 
+    fun calculateAge(dateString: String): String {
+        return try {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+            // Parse the string into a LocalDate
+            val date1 = LocalDate.parse(dateString, formatter)
+            val date2 = LocalDate.now() // Use the current date
+            // Calculate the period between the two dates
+            val period = Period.between(date1, date2)
+            when {
+                period.years > 1 -> "${period.years} years ${period.months} months ${period.days} days"
+                period.years == 1 -> "${period.years} year ${period.months} months ${period.days} days"
+                period.months > 1 -> "${period.months} months ${period.days} days"
+                else -> "${period.days} days"
+            }
+        } catch (e: Exception) {
+            "0 day(s)"
+        }
+    }
+
+    fun calculateAgeYear(dateString: String): Int {
+        return try {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+            // Parse the string into a LocalDate
+            val date1 = LocalDate.parse(dateString, formatter)
+            val date2 = LocalDate.now() // Use the current date
+            // Calculate the period between the two dates
+            val period = Period.between(date1, date2)
+            return period.years
+        } catch (e: Exception) {
+            0
+        }
+    }
+    fun getDate(year: Int, month: Int, day: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar[year, month] = day
+        val date: Date = calendar.time
+        return formatCurrentDate(date)
+    }
+    private fun formatCurrentDate(date: Date): String {
+        return dateInverseFormat.format(date)
+    }
     fun parseJson(jsonString: String): List<DbPatientData> {
         val resultList = mutableListOf<DbPatientData>()
 
