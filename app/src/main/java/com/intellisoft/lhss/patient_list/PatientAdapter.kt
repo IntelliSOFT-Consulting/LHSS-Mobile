@@ -46,27 +46,31 @@ class PatientAdapter(
             FormatterClass().saveSharedPref("patientId", id, context)
             val lhssFlow = FormatterClass().getSharedPref("lhssFlow", context)
 
-            if (lhssFlow == null){
-                val intent = Intent(context, PatientDetailActivity::class.java)
-                intent.putExtra("patientId", id)
-                context.startActivity(intent)
-            }else{
-                if (lhssFlow == "referralDetails"){
-                    val encounterId = dbPatientList[pos].encounterId?.replace("Encounter/","")
-                    if (encounterId != null) {
-                        FormatterClass().saveSharedPref("encounterId", encounterId, context)
-                    }
+            val intent = Intent(context, PatientDetailActivity::class.java)
+            intent.putExtra("patientId", id)
+            context.startActivity(intent)
 
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.putExtra("functionToCall", NavigationDetails.REFERRAL_DETAIL_VIEW.name)
-                    intent.putExtra("patientId", id)
-                    context.startActivity(intent)
-                }else{
-                    val intent = Intent(context, PatientDetailActivity::class.java)
-                    intent.putExtra("patientId", id)
-                    context.startActivity(intent)
-                }
-            }
+//            if (lhssFlow == null){
+//                val intent = Intent(context, PatientDetailActivity::class.java)
+//                intent.putExtra("patientId", id)
+//                context.startActivity(intent)
+//            }else{
+//                if (lhssFlow == "referralDetails"){
+//                    val encounterId = dbPatientList[pos].encounterId?.replace("Encounter/","")
+//                    if (encounterId != null) {
+//                        FormatterClass().saveSharedPref("encounterId", encounterId, context)
+//                    }
+//
+//                    val intent = Intent(context, MainActivity::class.java)
+//                    intent.putExtra("functionToCall", NavigationDetails.REFERRAL_DETAIL_VIEW.name)
+//                    intent.putExtra("patientId", id)
+//                    context.startActivity(intent)
+//                }else{
+//                    val intent = Intent(context, PatientDetailActivity::class.java)
+//                    intent.putExtra("patientId", id)
+//                    context.startActivity(intent)
+//                }
+//            }
 
 
 
