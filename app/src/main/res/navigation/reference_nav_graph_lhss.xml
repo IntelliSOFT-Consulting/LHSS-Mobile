@@ -80,7 +80,7 @@
     <fragment
         android:id="@+id/patientDetailsFragment"
         android:name="com.intellisoft.lhss.patient_registration.PatientDetailsFragment"
-        android:label="fragment_patient_details"
+        android:label="Register Patient"
         tools:layout="@layout/fragment_patient_details" >
         <action
             android:id="@+id/action_patientDetailsFragment_to_patientLocationFragment"
@@ -90,7 +90,7 @@
     <fragment
         android:id="@+id/patientLocationFragment"
         android:name="com.intellisoft.lhss.patient_registration.PatientLocationFragment"
-        android:label="fragment_patient_location"
+        android:label="Register Patient"
         tools:layout="@layout/fragment_patient_location" >
         <action
             android:id="@+id/action_patientLocationFragment_to_regPreviewFragment"

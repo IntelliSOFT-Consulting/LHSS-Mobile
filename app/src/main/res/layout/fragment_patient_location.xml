@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,117 +7,165 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".patient_registration.PatientLocationFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextAppearance.MaterialComponents.Body1"
+        <LinearLayout
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@string/client_info"
-            android:textAlignment="center"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <Spinner
-            android:background="@drawable/spinner_border"
-            android:id="@+id/identificationType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/identification_type" />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tel_identification_number"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:hint="Identification Number *"
-            app:boxBackgroundMode="outline">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/identification_number"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:textSize="12sp" />
+                android:theme="@style/Theme.Zanzibar.AppBarOverlay">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:background="?attr/colorPrimary"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <ImageButton
+                        android:id="@+id/imgBtnBack"
+                        android:layout_margin="10dp"
+                        android:padding="15dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_action_backs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
-        <Spinner
-            android:layout_marginTop="15dp"
-            android:background="@drawable/spinner_border"
-            android:id="@+id/occupationType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/occupation_type" />
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:title=""
+                        app:titleTextColor="@android:color/white" />
 
-        <Spinner
-            android:layout_marginTop="15dp"
-            android:background="@drawable/spinner_border"
-            android:id="@+id/originCountry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/origin_country" />
+                </LinearLayout>
 
-        <Spinner
-            android:id="@+id/residenceCountry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/spinner_border"
-            android:entries="@array/residence_country" />
+            </com.google.android.material.appbar.AppBarLayout>
 
-        <Spinner
-            android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/spinner_border"
-            android:id="@+id/region"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Spinner
-            android:visibility="gone"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/spinner_border"
-            android:id="@+id/district"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/previous_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:orientation="vertical"
+                android:padding="15dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/next_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/next"
-                android:textAllCaps="false"
-                android:textColor="@color/white" />
-        </RelativeLayout>
+                <TextView
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/client_info"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <Spinner
+                    android:background="@drawable/spinner_border"
+                    android:id="@+id/identificationType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/identification_type" />
 
 
-</ScrollView>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tel_identification_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:hint="Identification Number *"
+                    app:boxBackgroundMode="outline">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/identification_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <Spinner
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/spinner_border"
+                    android:id="@+id/occupationType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/occupation_type" />
+
+                <Spinner
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/spinner_border"
+                    android:id="@+id/originCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/origin_country" />
+
+                <Spinner
+                    android:id="@+id/residenceCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/spinner_border"
+                    android:entries="@array/residence_country" />
+
+                <Spinner
+                    android:visibility="gone"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/spinner_border"
+                    android:id="@+id/region"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:visibility="gone"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/spinner_border"
+                    android:id="@+id/district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/previous_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/next_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="@string/next"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>

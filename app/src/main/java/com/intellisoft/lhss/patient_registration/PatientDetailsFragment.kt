@@ -1,6 +1,7 @@
 package com.intellisoft.lhss.patient_registration
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,19 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
+import com.intellisoft.lhss.MainActivity
 
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentPatientDetailsBinding
 import com.intellisoft.lhss.databinding.FragmentPatientLocationBinding
 import com.intellisoft.lhss.fhir.data.CustomPatient
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.NavigationDetails
 import com.intellisoft.lhss.utils.AppUtils
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -42,6 +47,13 @@ class PatientDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AppUtils().disableEditing(binding.dateOfBirth)
         AppUtils().disableEditing(binding.calculatedAge)
+
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = "Register Patient"
+        }
+        binding.imgBtnBack.setOnClickListener { onBackPressed() }
 
 
         val isUpdate = FormatterClass().getSharedPref("isPatientUpdate", requireContext())
@@ -111,6 +123,12 @@ class PatientDetailsFragment : Fragment() {
         }
 
     }
+
+    private fun onBackPressed() {
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun displayInitialData() {
         try {
             val personal = formatter.getSharedPref("registrationFlowPersonal", requireContext())
