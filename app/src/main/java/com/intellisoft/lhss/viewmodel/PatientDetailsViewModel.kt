@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import android.icu.text.DateFormat
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -60,16 +61,22 @@ class PatientDetailsViewModel(
 
     fun updateEncounter(encounterId: String){
 
+
         CoroutineScope(Dispatchers.IO).launch {
             val encounterList = ArrayList<Encounter>()
             fhirEngine
                 .search<Encounter> {
                     sort(Observation.DATE, Order.ASCENDING)
+                    filter(Resource.RES_ID, { value = of(encounterId) })
                 }
                 .map { createWorkflowItemIt(it) }
                 .let { encounterList.addAll(it) }
 
             val encounter = encounterList.firstOrNull()
+            Log.e("----->","<------")
+            println(encounter)
+            Log.e("----->","<------")
+
             if (encounter != null) fhirEngine.update(encounter)
         }
 

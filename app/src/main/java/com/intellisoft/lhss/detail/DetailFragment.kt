@@ -88,7 +88,9 @@ class DetailFragment : Fragment() {
         binding.btnReceivePatient.setOnClickListener {
             if (encounterId != null) {
                 patientDetailsViewModel.updateEncounter(encounterId!!)
+                formatterClass.deleteSharedPref("workflowName", requireContext())
             }
+            onBackPressed()
         }
 
         return binding.root
