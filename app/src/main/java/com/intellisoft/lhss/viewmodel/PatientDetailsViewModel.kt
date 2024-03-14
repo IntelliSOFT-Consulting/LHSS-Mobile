@@ -356,6 +356,27 @@ class PatientDetailsViewModel(
         return getString(R.string.none)
     }
 
+    fun getReferralList(workflowName: String) = runBlocking { getReferralDetailsList(workflowName) }
+    private suspend fun getReferralDetailsList(workflowName: String): ArrayList<DbObservation?>{
+
+        val encounterList = ArrayList<DbObservation?>()
+        fhirEngine
+            .search<Encounter> {
+                filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
+                sort(Encounter.DATE, Order.ASCENDING)
+            }
+            .map { createWorkflowDetailsItem(it, workflowName) }
+            .let { encounterList.addAll(it) }
+
+        return ArrayList(encounterList)
+    }
+    private suspend fun createWorkflowDetailsItem(it: Encounter, workflowName: String):DbObservation? {
+
+        val id = it.id.replace("Encounter/","")
+
+
+        return null
+    }
     fun getWorkflowData(workflowName: String, codeValue: String) = runBlocking { getWorkflow(workflowName, codeValue) }
 
     private suspend fun getWorkflow(workflowName: String, codeValue: String): ArrayList<DbObservation?>{

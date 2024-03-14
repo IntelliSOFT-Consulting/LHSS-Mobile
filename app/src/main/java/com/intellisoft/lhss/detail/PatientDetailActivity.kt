@@ -241,22 +241,25 @@ class PatientDetailActivity : AppCompatActivity() {
             }
 
             val parts = fullName.split(" ")
-            val firstName = parts.getOrNull(0) ?: ""
-            val middleNameParts = parts.subList(1, parts.size - 1)
-            val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
-            val lastName = parts.last()
+            if (parts.isNotEmpty()){
+                val firstName = parts.getOrNull(0) ?: ""
+                val middleNameParts = parts.subList(1, parts.size - 1)
+                val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
+                val lastName = parts.last()
 
-            customPatient = CustomPatient(
-                firstName,
-                middleName,
-                lastName,
-                gender,
-                dateBirth,
-                "")
+                customPatient = CustomPatient(
+                    firstName,
+                    middleName,
+                    lastName,
+                    gender,
+                    dateBirth,
+                    "")
 
-            dbAdministrative = DbAdministrative(
-                identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
-            )
+                dbAdministrative = DbAdministrative(
+                    identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
+                )
+            }
+
 
 
             country = formatterClass.getSharedPref("country", this@PatientDetailActivity)

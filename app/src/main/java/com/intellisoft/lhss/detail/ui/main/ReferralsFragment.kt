@@ -100,9 +100,7 @@ class ReferralsFragment : Fragment() {
     private fun getReferrals() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val encounterList = patientDetailsViewModel.getWorkflowData(
-                "REFERRALS",
-                "3568283634646")
+            val encounterList = patientDetailsViewModel.getReferralList("REFERRALS")
             val listValue = ArrayList(encounterList.filterNotNull())
             val visitHistoryAdapter = VisitHistoryAdapter(listValue, requireContext())
             CoroutineScope(Dispatchers.Main).launch {

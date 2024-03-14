@@ -86,23 +86,28 @@ class AdministerVaccineViewModel(
 
     fun saveScreenerEncounter(questionnaireResponse: QuestionnaireResponse, patientId: String) {
         viewModelScope.launch {
-            val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
-            val subjectReference = Reference("Patient/$patientId")
-            val encounterId = generateUuid()
-            if (isRequiredFieldMissing(bundle)) {
-                isResourcesSaved.value = false
-                return@launch
-            }
 
-            val context = FhirContext.forR4()
-            val questionnaire =
-                context.newJsonParser().encodeResourceToString(questionnaireResponse)
+            CoroutineScope(Dispatchers.IO).launch {
+                val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
+                val subjectReference = Reference("Patient/$patientId")
+                val encounterId = generateUuid()
+                if (isRequiredFieldMissing(bundle)) {
+                    isResourcesSaved.value = false
+                    return@launch
+                }
 
-            manualExtraction(questionnaireResponse, patientId)
+                val context = FhirContext.forR4()
+                val questionnaire =
+                    context.newJsonParser().encodeResourceToString(questionnaireResponse)
+
+                manualExtraction(questionnaireResponse, patientId)
 
 //            saveResources(bundle, subjectReference, encounterId, patientId)
 
-            isResourcesSaved.value = true
+//                isResourcesSaved.value = true
+            }
+
+
         }
     }
 
