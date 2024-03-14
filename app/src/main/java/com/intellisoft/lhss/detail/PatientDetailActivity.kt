@@ -13,6 +13,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -53,8 +55,6 @@ class PatientDetailActivity : AppCompatActivity() {
     private var formatterClass = FormatterClass()
     private var country :String? = null
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private var customPatient = CustomPatient("","","","","","")
-    private var dbAdministrative = DbAdministrative("","","","","", "","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,57 +69,11 @@ class PatientDetailActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.setHasFixedSize(true)
 
-        val bundle =
-            bundleOf("patient_id" to patientId)
-        val toolbar =
-            findViewById<Toolbar>(R.id.toolbar) // Assuming you have a Toolbar with id 'toolbar' in your layout
+        val toolbar = findViewById<Toolbar>(R.id.toolbar) // Assuming you have a Toolbar with id 'toolbar' in your layout
         setSupportActionBar(toolbar)
 
-        fhirEngine = FhirApplication.fhirEngine(this)
-        patientDetailsViewModel =
-            ViewModelProvider(
-                this,
-                PatientDetailsViewModelFactory(this.application, fhirEngine, patientId),
-            )
-                .get(PatientDetailsViewModel::class.java)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val adapter = SectionsPagerAdapter(supportFragmentManager)
-
-        val visitHistory = VisitHistory()
-        visitHistory.arguments = bundle
-
-        val referrals = ReferralsFragment()
-        referrals.arguments = bundle
-
-        adapter.addFragment(visitHistory, getString(R.string.tab_text_1))
-        adapter.addFragment(referrals, getString(R.string.tab_text_2))
-
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                // Set the background color of the selected tab dynamically
-                tab?.view?.setBackgroundResource(R.color.colorPrimary)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // Handle tab unselection if needed
-                tab?.view?.setBackgroundResource(R.color.unselectedTab)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Handle tab reselection if needed
-            }
-        })
-
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = adapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
-
-        getPatientDetails()
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -150,131 +104,25 @@ class PatientDetailActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnAddressDetails.setOnClickListener {
-            val patientDataDetailsList = patientDetailsViewModel.getAddressDetails()
-            showCustomDialog(patientDataDetailsList)
-        }
+        val navController = findNavController(R.id.nav_host_fragment_activity_bottem_navigation)
 
-        binding.btnVisitHistory.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
-            intent.putExtra("patientId", patientId)
-            startActivity(intent)
-        }
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.patientDataDetailFragment,
+                R.id.administerVaccine,
+                R.id.patientDetailsFragment,
 
-        binding.btnReferrals.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("functionToCall", NavigationDetails.REFERRAL_LIST.name)
-            intent.putExtra("patientId", patientId)
-            startActivity(intent)
-        }
-
-    }
-
-    private fun showCustomDialog(patientDataDetailsList: ArrayList<DbPatientDataDetails>) {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.address_details_dialog)
-        dialog.setTitle("")
-
-        // Set dialog width to match parent (full width)
-        // Set dialog width to match parent (full width)
-        val layoutParams = WindowManager.LayoutParams()
-        layoutParams.copyFrom(dialog.window!!.attributes)
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-        dialog.window!!.attributes = layoutParams
-
-        // Find views within the dialog layout
-        val closeButton = dialog.findViewById<Button>(R.id.btnClose)
-        val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
-        val layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL,
-            false
+                R.id.visitHistory,
+                R.id.referralsFragment,
+            )
         )
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        val visitHistoryAdapter = PatientDetailDataAdapter(patientDataDetailsList, this@PatientDetailActivity)
-        recyclerView.adapter = visitHistoryAdapter
+        navController.navigate(R.id.patientDataDetailFragment)
 
-
-        // Set click listener for close button
-        closeButton.setOnClickListener { // Close the dialog when close button is clicked
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
 
-    private fun getPatientDetails() {
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val patientDetail = patientDetailsViewModel.getPatientInfo()
-            val fullName = patientDetail.name
-            val gender = patientDetail.gender
-            val dateBirth = patientDetail.dob
-
-            val identificationType = patientDetail.docType
-            val identificationNumber = patientDetail.docId
-            val occupationType = patientDetail.occupation
-            val originCountry = patientDetail.originCountry
-            val residenceCountry = patientDetail.residenceCountry
-            val region = patientDetail.region
-            val district = patientDetail.district
-
-            CoroutineScope(Dispatchers.Main).launch {
-
-                binding.apply {
-                    tvNameDetails.text = fullName
-                    tvName.text = fullName
-                    tvGender.text = AppUtils().capitalizeFirstLetter(gender)
-                    tvSystemId.text = patientDetail.systemId
-
-                    val dob = formatterClass.convertDateFormat(dateBirth)
-                    val age = formatterClass.getFormattedAge(dateBirth,tvAge.context.resources)
-
-                    tvDob.text = dob
-                    tvAge.text = "$age old"
-
-                }
-            }
-
-            val parts = fullName.split(" ")
-            if (parts.isNotEmpty()){
-                val firstName = parts.getOrNull(0) ?: ""
-                val middleNameParts = parts.subList(1, parts.size - 1)
-                val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
-                val lastName = parts.last()
-
-                customPatient = CustomPatient(
-                    firstName,
-                    middleName,
-                    lastName,
-                    gender,
-                    dateBirth,
-                    "")
-
-                dbAdministrative = DbAdministrative(
-                    identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
-                )
-            }
-
-
-
-            country = formatterClass.getSharedPref("country", this@PatientDetailActivity)
-
-            val patientDataDetailsList = patientDetailsViewModel.getUserDetails(this@PatientDetailActivity)
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val visitHistoryAdapter = PatientDetailDataAdapter(patientDataDetailsList, this@PatientDetailActivity)
-                binding.recyclerView.adapter = visitHistoryAdapter
-            }
-
-
-
-        }
-    }
 
 
     override fun onSupportNavigateUp(): Boolean {
@@ -377,9 +225,7 @@ class PatientDetailActivity : AppCompatActivity() {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     formatter.saveSharedPref("isPatientUpdate","true", this@PatientDetailActivity)
-                    formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), this@PatientDetailActivity)
-                    formatter.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), this@PatientDetailActivity)
-                }
+               }
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("functionToCall", NavigationDetails.REGISTER_VACCINE.name)

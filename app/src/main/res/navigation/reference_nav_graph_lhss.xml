@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reference_nav_graph"
-    app:startDestination="@id/patientRegistration">
+    app:startDestination="@id/patientDataDetailFragment">
 
 
     <fragment
@@ -102,6 +102,16 @@
         android:name="com.intellisoft.lhss.patient_registration.RegPreviewFragment"
         android:label="fragment_reg_preview"
         tools:layout="@layout/fragment_reg_preview" />
+    <fragment
+        android:id="@+id/patientDataDetailFragment"
+        android:name="com.intellisoft.lhss.PatientDataDetailFragment"
+        android:label="fragment_patient_data_detail"
+        tools:layout="@layout/fragment_patient_data_detail" >
+        <action
+            android:id="@+id/action_patient_patient"
+            app:destination="@id/patientDataDetailFragment" />
+    </fragment>
+
 
 
 </navigation>
