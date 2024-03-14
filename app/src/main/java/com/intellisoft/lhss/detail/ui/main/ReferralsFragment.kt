@@ -101,9 +101,12 @@ class ReferralsFragment : Fragment() {
     private fun getReferrals() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val encounterList = patientDetailsViewModel.getReferralList("REFERRALS")
-            val listValue = ArrayList(encounterList.filterNotNull())
-            val visitHistoryAdapter = VisitHistoryAdapter(listValue, requireContext())
+            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
+
+            val encounterList = patientDetailsViewModel.getWorkflowData("REFERRALS")
+            val listValue = encounterList.filterNotNull().filter { it.name == practitionerFacility }
+
+            val visitHistoryAdapter = VisitHistoryAdapter(ArrayList(listValue), requireContext())
             CoroutineScope(Dispatchers.Main).launch {
                 binding.recyclerView.adapter = visitHistoryAdapter
             }

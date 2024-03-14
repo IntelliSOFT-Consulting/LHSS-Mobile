@@ -16,4 +16,5 @@
     <color name="bac_trans_color">#34899CC8</color>
     <color name="darker_gray">#aaa</color>
     <color name="menu_item_text_color">#000000</color>
+    <color name="amber">#FFC107</color>
 </resources>

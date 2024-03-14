@@ -15,7 +15,6 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
-import com.intellisoft.lhss.fhir.data.DbEncounterReferrals
 import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -399,28 +398,33 @@ class PatientDetailsViewModel(
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
         if (type != null){
-            if (type.hasText() && type.text == workflowName){
+            if (type.hasText() && type.text == workflowName) {
                 var destination = ""
-                if (it.hospitalization.hasDestination() &&  it.hospitalization.destination.hasReference()){
-                    destination = it.hospitalization.destination.reference.toString().replace("Location/","")
+                if (it.hospitalization.hasDestination() && it.hospitalization.destination.hasReference()) {
+                    destination =
+                        it.hospitalization.destination.reference.toString().replace("Location/", "")
                 }
                 var origin = ""
-                if (it.hospitalization.hasOrigin() &&  it.hospitalization.origin.hasReference()){
-                    origin = it.hospitalization.origin.reference.toString().replace("Location/","")
+                if (it.hospitalization.hasOrigin() && it.hospitalization.origin.hasReference()) {
+                    origin = it.hospitalization.origin.reference.toString().replace("Location/", "")
                 }
                 var period = ""
-                if (it.hasPeriod() ){
-                    period = it.period.toString()
+                if (it.hasPeriod()) {
+                    period = it.period.start.toString()
+                }
+                var status = ""
+                if (it.hasStatus()){
+                    status = it.status.toString()
                 }
 
-                val dbObservation = DbObservation(
+                return DbObservation(
                     id,
                     id,
                     destination,
                     destination,
-                    period
+                    period,
+                    status
                 )
-                return dbObservation
 
             }
 

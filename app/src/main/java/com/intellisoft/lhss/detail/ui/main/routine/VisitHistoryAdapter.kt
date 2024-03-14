@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.intellisoft.lhss.MainActivity
@@ -15,6 +16,7 @@ import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.DbVaccineStockDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.NavigationDetails
+import org.hl7.fhir.r4.model.Encounter
 
 class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
                           private val context: Context
@@ -25,6 +27,7 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
 
         val tvHospital: TextView = itemView.findViewById(R.id.tvHospital)
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
+        val linear: LinearLayout = itemView.findViewById(R.id.linear)
 
         init {
             itemView.setOnClickListener(this)
@@ -66,11 +69,21 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
 
         val name = encounterList[position].name
         val date = encounterList[position].date
+        val status = encounterList[position].status
+
+        Log.e("---->","<-----")
+        println(status)
+        Log.e("---->","<-----")
+
+        if (status != null){
+            if (status == "INPROGRESS"){
+                holder.linear.setBackgroundColor(context.resources.getColor(R.color.amber))
+            }
+        }
 
         if (date != ""){
             val dateStr = FormatterClass().convertDateFormat(date)
             holder.tvDate.text = dateStr
-
         }
 
         holder.tvHospital.text = name

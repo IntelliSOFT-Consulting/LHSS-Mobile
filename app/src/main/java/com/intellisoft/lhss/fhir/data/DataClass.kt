@@ -209,7 +209,8 @@ data class DbObservation(
     val encounterId:String? = null,
     val text: String,
     val name: String,
-    val date: String
+    val date: String,
+    val status: String? = null,
 )
 data class DbEncounterReferrals(
     val encounterId: String? = null,
