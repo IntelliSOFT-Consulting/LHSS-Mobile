@@ -4,18 +4,24 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
 import com.intellisoft.lhss.databinding.FragmentPatientDataDetailBinding
+import com.intellisoft.lhss.detail.ui.main.UpdateFragment
 import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.CustomPatient
@@ -29,6 +35,7 @@ import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -93,25 +100,145 @@ class PatientDataDetailFragment : Fragment() {
         }
 
         binding.btnVisitHistory.setOnClickListener {
+//            val intent = Intent(requireContext(), MainActivity::class.java)
+//            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+//            intent.putExtra("patientId", patientId)
+//            startActivity(intent)
+
+            findNavController().navigate(R.id.visitHistory)
+        }
+
+        binding.btnReferrals.setOnClickListener {
+//            val intent = Intent(requireContext(), MainActivity::class.java)
+//            intent.putExtra("functionToCall", NavigationDetails.REFERRAL_LIST.name)
+//            intent.putExtra("patientId", patientId)
+//            startActivity(intent)
+
+            findNavController().navigate(R.id.referralsFragment)
+        }
+
+        binding.imgBtnBack.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra("functionToCall", NavigationDetails.VISIT_HISTORY.name)
+            intent.putExtra("functionToCall", NavigationDetails.CLIENT_LIST.name)
             intent.putExtra("patientId", patientId)
             startActivity(intent)
         }
 
-        binding.btnReferrals.setOnClickListener {
-            val intent = Intent(requireContext(), MainActivity::class.java)
-            intent.putExtra("functionToCall", NavigationDetails.REFERRAL_LIST.name)
-            intent.putExtra("patientId", patientId)
-            startActivity(intent)
+        binding.imgBtnOptions.setOnClickListener {
+            showPopupMenu(it)
         }
 
         getPatientDetails()
 
-
         return binding.root
 
     }
+    private fun showPopupMenu(view: View) {
+        val popupMenu = PopupMenu(requireContext(), view)
+        popupMenu.menuInflater.inflate(R.menu.patient_actions, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.menu_item_edit_person -> {
+                    // Action for menu item 1
+                    CoroutineScope(Dispatchers.IO).launch {
+                        formatterClass.saveSharedPref("isPatientUpdate","true", requireContext())
+                    }
+
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.putExtra("functionToCall", NavigationDetails.REGISTER_VACCINE.name)
+                    intent.putExtra("patientId", patientId)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_item_add_visit -> {
+                    // Action for menu item 2
+                    if (country != null){
+                        if (country == "Ethiopia"){
+                            FormatterClass().saveSharedPref(
+                                "questionnaireJson",
+                                "add-visit-ethiopia.json",
+                                requireContext()
+                            )
+                        }
+                        if (country == "Djibouti"){
+                            FormatterClass().saveSharedPref(
+                                "questionnaireJson",
+                                "add-visit-djibouti.json",
+                                requireContext()
+                            )
+                        }
+
+                        FormatterClass().saveSharedPref(
+                            "title",
+                            "New Visit",
+                            requireContext()
+                        )
+                        FormatterClass().saveSharedPref(
+                            "lhssFlow",
+                            "NEW_VISIT",
+                            requireContext()
+                        )
+                        //Send to contraindications
+                        administerVaccine()
+                    }else{
+                        Toast.makeText(requireContext(), "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
+                R.id.menu_item_refer_patient -> {
+                    // Action for menu item 2
+                    if (country != null){
+                        if (country == "Ethiopia"){
+                            FormatterClass().saveSharedPref(
+                                "questionnaireJson",
+                                "referral-form-ethiopia.json",
+                                requireContext()
+                            )
+                        }
+                        if (country == "Djibouti"){
+                            FormatterClass().saveSharedPref(
+                                "questionnaireJson",
+                                "referral-form-djibouti.json",
+                                requireContext()
+                            )
+                        }
+                        FormatterClass().saveSharedPref(
+                            "title",
+                            "Referrals",
+                            requireContext()
+                        )
+                        FormatterClass().saveSharedPref(
+                            "lhssFlow",
+                            "REFERRALS",
+                            requireContext()
+                        )
+                        //Send to contraindications
+                        administerVaccine()
+                    }else{
+                        Toast.makeText(requireContext(), "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
+                // Add more cases for other menu items if needed
+                else -> false
+            }
+        }
+
+        popupMenu.show()
+    }
+
+    private fun administerVaccine() {
+        val questionnaireJson = formatterClass.getSharedPref("questionnaireJson", requireContext())
+        formatterClass.saveSharedPref("patientId", patientId, requireContext())
+
+        val bundle = Bundle()
+        bundle.putString(UpdateFragment.QUESTIONNAIRE_FRAGMENT_TAG, questionnaireJson)
+        bundle.putString("patientId", patientId)
+        findNavController().navigate(R.id.administerVaccine, bundle)
+
+    }
+
 
     private fun showCustomDialog(patientDataDetailsList: ArrayList<DbPatientDataDetails>) {
         val dialog = Dialog(requireContext())

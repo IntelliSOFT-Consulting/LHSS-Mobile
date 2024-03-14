@@ -16,14 +16,41 @@
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Zanzibar.AppBarOverlay">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+            <LinearLayout
                 android:background="?attr/colorPrimary"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="Patient Details"
-                app:titleTextColor="@android:color/white" />
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/imgBtnBack"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:padding="15dp"
+                    android:background="@drawable/ic_action_backs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_weight="1"
+                    android:id="@+id/toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="Patient Details"
+                    app:titleTextColor="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/imgBtnOptions"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:padding="15dp"
+                    android:background="@drawable/ic_action_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
@@ -43,7 +70,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="Mr. David Maina Njau"
+                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

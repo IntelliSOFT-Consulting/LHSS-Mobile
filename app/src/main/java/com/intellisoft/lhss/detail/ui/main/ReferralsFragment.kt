@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
+import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentRecommendationBinding
 import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.detail.ui.main.routine.VisitHistoryAdapter
@@ -92,8 +94,7 @@ class ReferralsFragment : Fragment() {
     }
 
     private fun onBackPressed() {
-        val intent = Intent(requireContext() , PatientDetailActivity::class.java)
-        startActivity(intent)
+        findNavController().navigate(R.id.patientDataDetailFragment)
     }
 
 

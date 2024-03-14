@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
@@ -91,8 +92,7 @@ class VisitHistory : Fragment() {
 
 
     private fun onBackPressed() {
-        val intent = Intent(requireContext() , PatientDetailActivity::class.java)
-        startActivity(intent)
+        findNavController().navigate(R.id.patientDataDetailFragment)
     }
 
     private fun getVisitHistory() {

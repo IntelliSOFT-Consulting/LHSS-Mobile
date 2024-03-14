@@ -19,6 +19,16 @@
             android:id="@+id/action_patient_list_to_patientDetailActivity"
             app:destination="@id/patientDetailActivity" />
     </fragment>
+    <fragment
+        android:id="@+id/administerVaccine"
+        android:name="com.intellisoft.lhss.vaccine.AdministerVaccineFragment"
+        android:label="Lhss"
+        tools:layout="@layout/administer_vaccine">
+        <argument
+            android:name="patient_id"
+            app:argType="string" />
+
+    </fragment>
 
 
     <activity

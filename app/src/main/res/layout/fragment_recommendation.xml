@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageButton
+                    android:layout_margin="10dp"
                     android:padding="15dp"
                     android:id="@+id/btnPrevious"
                     android:background="@drawable/ic_action_back"
@@ -36,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:title="Visit History"
+                    app:title="Referrals"
                     app:titleTextColor="@android:color/white" />
 
             </LinearLayout>

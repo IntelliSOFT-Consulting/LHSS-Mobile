@@ -100,28 +100,22 @@ class AdministerVaccineFragment : Fragment(R.layout.administer_vaccine) {
 
     private fun observeResourcesSaveAction() {
 
-        CoroutineScope(Dispatchers.IO).launch {
-
-            CoroutineScope(Dispatchers.Main).launch {
-                viewModel.isResourcesSaved.observe(viewLifecycleOwner) {
-                    if (progressDialogFragment.isVisible) {
-                        progressDialogFragment.dismiss()
-                    }
-                    if (!it) {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.inputs_missing),
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        return@observe
-                    }
-                    val blurBackgroundDialog =
-                        BlurBackgroundDialog(this@AdministerVaccineFragment, requireContext())
-                    blurBackgroundDialog.show()
-
-                }
+        viewModel.isResourcesSaved.observe(viewLifecycleOwner) {
+            if (progressDialogFragment.isVisible) {
+                progressDialogFragment.dismiss()
             }
+            if (!it) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.inputs_missing),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                return@observe
+            }
+            val blurBackgroundDialog =
+                BlurBackgroundDialog(this@AdministerVaccineFragment, requireContext())
+            blurBackgroundDialog.show()
 
         }
 
