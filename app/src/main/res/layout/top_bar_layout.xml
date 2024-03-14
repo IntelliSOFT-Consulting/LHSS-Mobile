@@ -14,7 +14,7 @@
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/white"
-            android:text="Hi,"
+            android:text="Welcome to, Dorra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

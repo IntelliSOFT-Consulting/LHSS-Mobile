@@ -35,6 +35,7 @@ import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.search
 import com.intellisoft.lhss.fhir.data.DbAppointmentData
 import com.intellisoft.lhss.fhir.data.DbPatientData
+import com.intellisoft.lhss.fhir.data.DbPatientDataAnswer
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.vaccine.validations.ImmunizationHandler
 import kotlinx.coroutines.CoroutineScope
@@ -108,63 +109,87 @@ class AdministerVaccineViewModel(
     fun manualExtraction(questionnaireResponse: QuestionnaireResponse, patientId: String) {
         viewModelScope.launch {
 
-            val formatterClass = FormatterClass()
-            val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
-            val subjectReference = Reference("Patient/$patientId")
-            val encounterId = generateUuid()
-            val encounterReference = Reference("Encounter/$encounterId")
+            CoroutineScope(Dispatchers.IO).launch {
 
-            //Encounter
+                val formatterClass = FormatterClass()
+                val bundle = ResourceMapper.extract(questionnaireResource, questionnaireResponse)
+                val subjectReference = Reference("Patient/$patientId")
+                val encounterId = generateUuid()
+                val encounterReference = Reference("Encounter/$encounterId")
 
-            //Check the type of flow
-            val encounter = Encounter()
-            val lhssFlow = formatterClass.getSharedPref("lhssFlow", getApplication<Application>().applicationContext)
-            if (lhssFlow != null){
-                val typeCodeableConceptList = ArrayList<CodeableConcept>()
-                val typeCodeableConcept = CodeableConcept()
-                typeCodeableConcept.text = lhssFlow
-                typeCodeableConceptList.add(typeCodeableConcept)
-                encounter.type = typeCodeableConceptList
+                //Encounter
 
-                formatterClass.deleteSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+                //Check the type of flow
+                val encounter = Encounter()
+                val lhssFlow = formatterClass.getSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+                if (lhssFlow != null){
+                    val typeCodeableConceptList = ArrayList<CodeableConcept>()
+                    val typeCodeableConcept = CodeableConcept()
+                    typeCodeableConcept.text = lhssFlow
+                    typeCodeableConceptList.add(typeCodeableConcept)
+                    encounter.type = typeCodeableConceptList
+
+                    formatterClass.deleteSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+                }
+
+                encounter.subject = subjectReference
+                encounter.id = encounterId
+
+                /**
+                 * This should handle the different statuses
+                 *   in-progress => This should represent a referral that has been started
+                 *   completed => This should represent a complete referral that has been accepted
+                 */
+
+                encounter.status = Encounter.EncounterStatus.INPROGRESS
+
+                val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", getApplication<Application>().applicationContext)
+
+                if (practitionerFacility != null) {
+                    val originRef = "Location/$practitionerFacility"
+                    val originReference = Reference(originRef)
+                    encounter.hospitalization.origin = originReference
+                }
+
+                val cc = FhirContext.forR4()
+                val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
+                val dbQuestionnaireAnswer = FormatterClass().parseJson(questionnaire)
+
+                fun findCloseMatchAndGetAnswer(searchString: String): DbPatientDataAnswer? {
+                    val matchingPatientData = dbQuestionnaireAnswer.find { it.linkId.contains(searchString, ignoreCase = true) }
+                    return matchingPatientData?.answer?.takeIf { it.valueString != null || it.valueCoding != null }
+                }
+
+                val dbPatientDataAnswerFirst = findCloseMatchAndGetAnswer("3568283634646")
+                if (dbPatientDataAnswerFirst != null){
+                    val valueData = dbPatientDataAnswerFirst.valueString ?: dbPatientDataAnswerFirst.valueCoding?.display
+                    if (valueData != null){
+                        val destinationRef = "Location/$valueData"
+                        val destinationReference = Reference(destinationRef)
+                        encounter.hospitalization.destination = destinationReference
+                    }
+
+                }
+
+
+
+                saveResourceToDatabase(encounter, "Enc $encounterId")
+
+
+
+                /**
+                 * Create observations dynamically
+                 */
+                dbQuestionnaireAnswer.forEach {
+
+                    val observation = createObservationData(it)
+                    observation.encounter = encounterReference
+                    observation.subject = subjectReference
+                    observation.id = generateUuid()
+                    saveResourceToDatabase(observation, "Obs")
+                }
+
             }
-
-            encounter.subject = subjectReference
-            encounter.id = encounterId
-
-            /**
-             * This should handle the different statuses
-             *   in-progress => This should represent a referral that has been started
-             *   completed => This should represent a complete referral that has been accepted
-             */
-
-            encounter.status = Encounter.EncounterStatus.INPROGRESS
-
-            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", getApplication<Application>().applicationContext)
-
-            if (practitionerFacility != null) {
-                val destinationReference = Reference(practitionerFacility)
-                encounter.hospitalization.setDestination(destinationReference)
-            }
-
-            saveResourceToDatabase(encounter, "Enc $encounterId")
-
-            val cc = FhirContext.forR4()
-            val questionnaire = cc.newJsonParser().encodeResourceToString(questionnaireResponse).trimIndent()
-            val dbQuestionnaireAnswer = FormatterClass().parseJson(questionnaire)
-
-            /**
-             * Create observations dynamically
-             */
-            dbQuestionnaireAnswer.forEach {
-
-                val observation = createObservationData(it)
-                observation.encounter = encounterReference
-                observation.subject = subjectReference
-                observation.id = generateUuid()
-                saveResourceToDatabase(observation, "Obs")
-            }
-
 
             isResourcesSaved.value = true
         }

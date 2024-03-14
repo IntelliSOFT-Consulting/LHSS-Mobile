@@ -163,7 +163,7 @@ class RetrofitCallsAuthentication {
                                     val email = user.email
                                     val phone = user.phone
                                     val id = user.id
-                                    val facility = user.facility
+                                    val facility = user.facility.replace("Location/", "")
 
                                     formatter.saveSharedPref("practitionerFullNames", fullNames, context)
                                     formatter.saveSharedPref("practitionerIdNumber", idNumber, context)

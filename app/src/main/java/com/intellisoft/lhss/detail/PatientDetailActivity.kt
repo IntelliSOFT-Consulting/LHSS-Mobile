@@ -53,6 +53,8 @@ class PatientDetailActivity : AppCompatActivity() {
     private var formatterClass = FormatterClass()
     private var country :String? = null
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private var customPatient = CustomPatient("","","","","","")
+    private var dbAdministrative = DbAdministrative("","","","","", "","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -238,15 +240,13 @@ class PatientDetailActivity : AppCompatActivity() {
                 }
             }
 
-
-
             val parts = fullName.split(" ")
             val firstName = parts.getOrNull(0) ?: ""
             val middleNameParts = parts.subList(1, parts.size - 1)
             val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
             val lastName = parts.last()
 
-            val customPatient = CustomPatient(
+            customPatient = CustomPatient(
                 firstName,
                 middleName,
                 lastName,
@@ -254,17 +254,9 @@ class PatientDetailActivity : AppCompatActivity() {
                 dateBirth,
                 "")
 
-            val dbAdministrative = DbAdministrative(
+            dbAdministrative = DbAdministrative(
                 identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
             )
-
-            CoroutineScope(Dispatchers.IO).launch {
-                formatter.saveSharedPref("isPatientUpdate","true", this@PatientDetailActivity)
-                formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), this@PatientDetailActivity)
-                formatter.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), this@PatientDetailActivity)
-
-            }
-
 
 
             country = formatterClass.getSharedPref("country", this@PatientDetailActivity)
@@ -379,6 +371,12 @@ class PatientDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_item_edit_person -> {
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    formatter.saveSharedPref("isPatientUpdate","true", this@PatientDetailActivity)
+                    formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), this@PatientDetailActivity)
+                    formatter.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), this@PatientDetailActivity)
+                }
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("functionToCall", NavigationDetails.REGISTER_VACCINE.name)
