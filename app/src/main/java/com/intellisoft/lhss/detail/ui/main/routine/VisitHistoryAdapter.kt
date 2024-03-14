@@ -38,7 +38,13 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
 
             val pos = adapterPosition
             val encounterId = encounterList[pos].encounterId
-
+            val workflowName = encounterList[pos].type
+            val status = encounterList[position].status
+            if (status != null){
+                if (status == "INPROGRESS"){
+                    FormatterClass().saveSharedPref("workflowName",workflowName.toString(), context)
+                }
+            }
             FormatterClass().saveSharedPref("encounterId",encounterId.toString(), context)
             val patientId = FormatterClass().getSharedPref("patientId", context)
 
@@ -70,10 +76,6 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
         val name = encounterList[position].name
         val date = encounterList[position].date
         val status = encounterList[position].status
-
-        Log.e("---->","<-----")
-        println(status)
-        Log.e("---->","<-----")
 
         if (status != null){
             if (status == "INPROGRESS"){

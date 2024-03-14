@@ -423,7 +423,8 @@ class PatientDetailsViewModel(
                     destination,
                     destination,
                     period,
-                    status
+                    status,
+                    workflowName
                 )
 
             }
@@ -491,6 +492,7 @@ class PatientDetailsViewModel(
             val textValue = it.valueStringType.value
             name = textValue
         }
+
 
         return DbObservation(
             logicId,

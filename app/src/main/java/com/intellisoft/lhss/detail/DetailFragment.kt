@@ -40,6 +40,7 @@ class DetailFragment : Fragment() {
     private val formatterClass = FormatterClass()
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var binding: FragmentDetailBinding
+    private var encounterId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +84,13 @@ class DetailFragment : Fragment() {
 
         getDetails()
 
+
+        binding.btnReceivePatient.setOnClickListener {
+            if (encounterId != null) {
+                patientDetailsViewModel.updateEncounter(encounterId!!)
+            }
+        }
+
         return binding.root
     }
     private fun onBackPressed() {
@@ -92,10 +100,17 @@ class DetailFragment : Fragment() {
 
     private fun getDetails() {
 
-        val encounterId = formatterClass.getSharedPref("encounterId", requireContext())
+        val workflowName = formatterClass.getSharedPref("workflowName", requireContext())
+        if (workflowName != null){
+            if (workflowName == "REFERRALS"){
+                binding.btnReceivePatient.visibility = View.VISIBLE
+            }
+        }
+
+        encounterId = formatterClass.getSharedPref("encounterId", requireContext())
         if (encounterId != null){
             val patientDataList = ArrayList<DbPatientDataDetails>()
-            val observations = patientDetailsViewModel.generateObservations(encounterId)
+            val observations = patientDetailsViewModel.generateObservations(encounterId!!)
             observations.forEach {
                 val key = it.text
                 val name = it.name

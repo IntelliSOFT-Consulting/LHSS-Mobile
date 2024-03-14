@@ -233,6 +233,7 @@ class FormatterClass {
             "vaccinationManufacturer" ,
             "immunizationId" ,
             "lhssFlow" ,
+            "workflowName" ,
 //            "selectedVaccinationVenue" ,
 //            "isSelectedVaccinationVenue" ,
             "administeredProduct")
