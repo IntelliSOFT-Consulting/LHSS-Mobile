@@ -44,7 +44,7 @@ class PatientDetailsFragment : Fragment() {
         AppUtils().disableEditing(binding.calculatedAge)
 
 
-        val isUpdate = FormatterClass().getSharedPref("isUpdate", requireContext())
+        val isUpdate = FormatterClass().getSharedPref("isPatientUpdate", requireContext())
         if (isUpdate != null) {
             displayInitialData()
         }
@@ -113,30 +113,19 @@ class PatientDetailsFragment : Fragment() {
     }
     private fun displayInitialData() {
         try {
-            val personal = formatter.getSharedPref("personal", requireContext())
+            val personal = formatter.getSharedPref("registrationFlowPersonal", requireContext())
 
             if (personal != null) {
                 val data = Gson().fromJson(personal, CustomPatient::class.java)
                 binding.apply {
-                    val parts = data.firstname.split(" ")
-                    when (parts.size) {
-                        2 -> {
-                            val (firstName, lastName) = parts
-                            firstname.setText(firstName)
-                            lastname.setText(lastName)
-                        }
+                    val firstnameValue = data.firstname
+                    val lastNameValue = data.lastname
+                    val middleNameValue = data.middlename
 
-                        3 -> {
-                            val (firstName, middleName, lastName) = parts
-                            firstname.setText(firstName)
-                            lastname.setText(lastName)
-                            middlename.setText(middleName)
-                        }
+                    firstname.setText(firstnameValue)
+                    lastname.setText(lastNameValue)
+                    middlename.setText(middleNameValue)
 
-                        else -> {
-                            println("Invalid name format")
-                        }
-                    }
                     val gender = data.gender
                     if (gender == "Male") {
                         radioButtonYes.isChecked = true

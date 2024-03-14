@@ -170,10 +170,18 @@ class PatientDetailsViewModel(
 
         searchResult.first().let {
 
-            name =if (it.hasName()){
-                it.name[0].family.toString()
+            if (it.hasName()){
+                if (it.name[0].hasText()){
+                    name = it.name[0].text
+                }else{
+                    if (it.name[0].hasFamily()){
+                        name = it.name[0].family
+                    }else ""
+                    if (it.name[0].hasGiven()){
+                        name += it.name[0].given
+                    }else ""
+                }
             }else ""
-
 
             phone = ""
 
@@ -356,7 +364,7 @@ class PatientDetailsViewModel(
         fhirEngine
             .search<Encounter> {
                 filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
-                sort(Observation.DATE, Order.ASCENDING)
+                sort(Encounter.DATE, Order.ASCENDING)
             }
             .map { createWorkflowItem(it, workflowName, codeValue) }
             .let { encounterList.addAll(it) }

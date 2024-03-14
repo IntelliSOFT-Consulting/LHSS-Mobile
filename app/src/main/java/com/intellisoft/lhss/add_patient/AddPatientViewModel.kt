@@ -363,12 +363,16 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val humanNameList = ArrayList<HumanName>()
 
         val humanName = HumanName()
+        val fullName = "$firstName $middlename $lastname"
         humanName.family = lastname
         val givenList = ArrayList<StringType>()
         givenList.add(StringType(firstName))
         givenList.add(StringType(middlename))
         humanName.given = givenList
+        humanName.text = fullName
         humanNameList.add(humanName)
+
+
 
         patient.name = humanNameList
 
@@ -441,21 +445,35 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         /**
          * Add the other Patient details
          */
-        val patientId = generateUuid()
+        var patientId:String? = ""
+        val isPatientUpdate = formatterClass.getSharedPref("isPatientUpdate", getApplication())
+        if(isPatientUpdate != null){
+            patientId = formatterClass.getSharedPref("patientId", getApplication())
+            if (patientId != null){
+                patient.id = patientId
+                fhirEngine.update(patient)
 
-        patient.id = patientId
 
-        fhirEngine.create(patient)
+            }
+
+        }else{
+            patientId = generateUuid()
+            patient.id = patientId
+            fhirEngine.create(patient)
+        }
+
 
         /**
          * Utilized patient's id for navigation
          * */
 
 
+        formatterClass.saveSharedPref("patientId", patientId.toString(), getApplication())
+        formatterClass.saveSharedPref("isRegistration", "true", getApplication())
 
-        FormatterClass().saveSharedPref("patientId", patientId, getApplication())
-        FormatterClass().saveSharedPref("isRegistration", "true", getApplication())
-
+        formatterClass.deleteSharedPref("registrationFlowPersonal", getApplication())
+        formatterClass.deleteSharedPref("registrationFlowAdministrative", getApplication())
+        formatterClass.deleteSharedPref("isPatientUpdate", getApplication())
 
     }
 

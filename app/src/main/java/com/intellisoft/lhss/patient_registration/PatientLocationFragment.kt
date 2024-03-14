@@ -53,7 +53,7 @@ class PatientLocationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val isUpdate = formatterClass.getSharedPref("isUpdate", requireContext())
+        val isUpdate = formatterClass.getSharedPref("isPatientUpdate", requireContext())
 
         if (isUpdate != null) {
 //            displayInitialData()

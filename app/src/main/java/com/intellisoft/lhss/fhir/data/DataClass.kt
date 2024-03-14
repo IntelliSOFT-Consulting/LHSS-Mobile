@@ -75,6 +75,8 @@ enum class NavigationDetails {
     ADD_VISIT_HISTORY,
     ADD_REFERRAL_LIST,
 
+    REGISTER_VACCINE,
+
     DETAIL_VIEW,
     REFERRAL_DETAIL_VIEW,
 

@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.fhir.FhirEngine
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.gson.Gson
 import com.intellisoft.lhss.MainActivity
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.ActivityPatientDetailBinding
@@ -27,9 +28,12 @@ import com.intellisoft.lhss.detail.ui.main.SectionsPagerAdapter
 import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
 import com.intellisoft.lhss.detail.ui.main.routine.VisitHistory
 import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.CustomPatient
+import com.intellisoft.lhss.fhir.data.DbAdministrative
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.NavigationDetails
+import com.intellisoft.lhss.patient_registration.PatientRegistration
 import com.intellisoft.lhss.utils.AppUtils
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
@@ -42,6 +46,7 @@ class PatientDetailActivity : AppCompatActivity() {
     private lateinit var fhirEngine: FhirEngine
     private lateinit var patientDetailsViewModel: PatientDetailsViewModel
     private lateinit var patientId: String
+    private val formatter = FormatterClass()
 
     //    private val args: PatientDetailActivityArgs by navArgs()
     private lateinit var binding: ActivityPatientDetailBinding
@@ -204,21 +209,64 @@ class PatientDetailActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
 
             val patientDetail = patientDetailsViewModel.getPatientInfo()
+            val fullName = patientDetail.name
+            val gender = patientDetail.gender
+            val dateBirth = patientDetail.dob
+
+            val identificationType = patientDetail.docType
+            val identificationNumber = patientDetail.docId
+            val occupationType = patientDetail.occupation
+            val originCountry = patientDetail.originCountry
+            val residenceCountry = patientDetail.residenceCountry
+            val region = patientDetail.region
+            val district = patientDetail.district
+
             CoroutineScope(Dispatchers.Main).launch {
+
                 binding.apply {
-                    tvNameDetails.text = patientDetail.name
-                    tvName.text = patientDetail.name
-                    tvGender.text = AppUtils().capitalizeFirstLetter(patientDetail.gender)
+                    tvNameDetails.text = fullName
+                    tvName.text = fullName
+                    tvGender.text = AppUtils().capitalizeFirstLetter(gender)
                     tvSystemId.text = patientDetail.systemId
 
-                    val dob = formatterClass.convertDateFormat(patientDetail.dob)
-                    val age = formatterClass.getFormattedAge(patientDetail.dob,tvAge.context.resources)
+                    val dob = formatterClass.convertDateFormat(dateBirth)
+                    val age = formatterClass.getFormattedAge(dateBirth,tvAge.context.resources)
 
                     tvDob.text = dob
                     tvAge.text = "$age old"
 
                 }
             }
+
+
+
+            val parts = fullName.split(" ")
+            val firstName = parts.getOrNull(0) ?: ""
+            val middleNameParts = parts.subList(1, parts.size - 1)
+            val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
+            val lastName = parts.last()
+
+            val customPatient = CustomPatient(
+                firstName,
+                middleName,
+                lastName,
+                gender,
+                dateBirth,
+                "")
+
+            val dbAdministrative = DbAdministrative(
+                identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
+            )
+
+            CoroutineScope(Dispatchers.IO).launch {
+                formatter.saveSharedPref("isPatientUpdate","true", this@PatientDetailActivity)
+                formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), this@PatientDetailActivity)
+                formatter.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), this@PatientDetailActivity)
+
+            }
+
+
+
             country = formatterClass.getSharedPref("country", this@PatientDetailActivity)
 
             val patientDataDetailsList = patientDetailsViewModel.getUserDetails(this@PatientDetailActivity)
@@ -328,6 +376,14 @@ class PatientDetailActivity : AppCompatActivity() {
                 }else{
                     Toast.makeText(this, "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
                 }
+                true
+            }
+            R.id.menu_item_edit_person -> {
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("functionToCall", NavigationDetails.REGISTER_VACCINE.name)
+                intent.putExtra("patientId", patientId)
+                startActivity(intent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

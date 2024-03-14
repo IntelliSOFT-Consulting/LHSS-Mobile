@@ -147,6 +147,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.practionerDetails)
                 }
             }
+            NavigationDetails.REGISTER_VACCINE.name -> {
+                val patientId = intent.getStringExtra("patientId")
+                if (patientId != null) {
+                    navController.navigate(R.id.patientDetailsFragment)
+                }
+            }
         }
 
 

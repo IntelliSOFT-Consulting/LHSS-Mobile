@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:icon="@drawable/ic_action_edit"
+        android:id="@+id/menu_item_edit_person"
+        android:title="Edit"
+        app:showAsAction="always"
+        />
+    <item
         android:id="@+id/menu_item_add_visit"
         android:title="Add Visit"
         app:showAsAction="never"

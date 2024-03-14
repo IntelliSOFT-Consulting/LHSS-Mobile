@@ -60,6 +60,9 @@ class LandingPage : Fragment() {
         when (layout.textId) {
             "Search Patient" -> {
                 findNavController().navigate(R.id.patient_list)
+                formatterClass.deleteSharedPref("registrationFlowPersonal", requireContext())
+                formatterClass.deleteSharedPref("registrationFlowAdministrative", requireContext())
+                formatterClass.deleteSharedPref("isPatientUpdate", requireContext())
             }
             "Referrals" -> {
                 findNavController().navigate(R.id.fragmentReferrals)

@@ -29,6 +29,7 @@ class PatientRegistration : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_bottem_navigation)
+
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.patientDetailsFragment, R.id.patientLocationFragment, R.id.regPreviewFragment))
         findViewById<Toolbar>(R.id.toolbar)
