@@ -377,9 +377,9 @@ class PatientDetailsViewModel(
 
         return null
     }
-    fun getWorkflowData() = runBlocking { getWorkflow() }
+    fun getWorkflowData(workflowName: String) = runBlocking { getWorkflow(workflowName) }
 
-    private suspend fun getWorkflow(): ArrayList<DbObservation?>{
+    private suspend fun getWorkflow(workflowName:String): ArrayList<DbObservation?>{
 
         val encounterList = ArrayList<DbObservation?>()
         fhirEngine
@@ -387,39 +387,47 @@ class PatientDetailsViewModel(
                 filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
                 sort(Encounter.DATE, Order.ASCENDING)
             }
-            .map { createWorkflowItem(it) }
+            .map { createWorkflowItem(it,workflowName) }
             .let { encounterList.addAll(it) }
 
         return ArrayList(encounterList)
     }
 
 
-    private suspend fun createWorkflowItem(it: Encounter):DbObservation? {
+    private suspend fun createWorkflowItem(it: Encounter, workflowName: String):DbObservation? {
 
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
-        var destination = ""
-        if (it.hospitalization.hasDestination() &&  it.hospitalization.destination.hasReference()){
-            destination = it.hospitalization.destination.reference.toString().replace("Location/","")
-        }
-        var origin = ""
-        if (it.hospitalization.hasOrigin() &&  it.hospitalization.origin.hasReference()){
-            origin = it.hospitalization.origin.reference.toString().replace("Location/","")
-        }
-        var period = ""
-        if (it.hasPeriod() ){
-            period = it.period.toString()
+        if (type != null){
+            if (type.hasText() && type.text == workflowName){
+                var destination = ""
+                if (it.hospitalization.hasDestination() &&  it.hospitalization.destination.hasReference()){
+                    destination = it.hospitalization.destination.reference.toString().replace("Location/","")
+                }
+                var origin = ""
+                if (it.hospitalization.hasOrigin() &&  it.hospitalization.origin.hasReference()){
+                    origin = it.hospitalization.origin.reference.toString().replace("Location/","")
+                }
+                var period = ""
+                if (it.hasPeriod() ){
+                    period = it.period.toString()
+                }
+
+                val dbObservation = DbObservation(
+                    id,
+                    id,
+                    destination,
+                    destination,
+                    period
+                )
+                return dbObservation
+
+            }
+
         }
 
-        val dbObservation = DbObservation(
-            id,
-            id,
-            destination,
-            destination,
-            period
-        )
 
-        return dbObservation
+        return null
     }
 
     suspend fun getObservationList(encounterId: String, codeValue: String): ArrayList<DbObservation>{

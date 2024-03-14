@@ -99,7 +99,7 @@ class VisitHistory : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
-            val encounterList = patientDetailsViewModel.getWorkflowData()
+            val encounterList = patientDetailsViewModel.getWorkflowData("NEW_VISIT")
 
             val listValue = encounterList.filterNotNull().filter { it.name == practitionerFacility }
 
