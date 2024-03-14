@@ -377,9 +377,9 @@ class PatientDetailsViewModel(
 
         return null
     }
-    fun getWorkflowData(workflowName: String, codeValue: String) = runBlocking { getWorkflow(workflowName, codeValue) }
+    fun getWorkflowData() = runBlocking { getWorkflow() }
 
-    private suspend fun getWorkflow(workflowName: String, codeValue: String): ArrayList<DbObservation?>{
+    private suspend fun getWorkflow(): ArrayList<DbObservation?>{
 
         val encounterList = ArrayList<DbObservation?>()
         fhirEngine
@@ -387,26 +387,39 @@ class PatientDetailsViewModel(
                 filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
                 sort(Encounter.DATE, Order.ASCENDING)
             }
-            .map { createWorkflowItem(it, workflowName, codeValue) }
+            .map { createWorkflowItem(it) }
             .let { encounterList.addAll(it) }
 
         return ArrayList(encounterList)
     }
 
 
-    private suspend fun createWorkflowItem(it: Encounter, workflowName: String, codeValue: String):DbObservation? {
+    private suspend fun createWorkflowItem(it: Encounter):DbObservation? {
 
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
-        if (type != null) {
-            if (type.hasText()){
-                if (type.text == workflowName){
-                    val observation = getObservationList(id, codeValue)
-                    return observation.firstOrNull()
-                }
-            }
+        var destination = ""
+        if (it.hospitalization.hasDestination() &&  it.hospitalization.destination.hasReference()){
+            destination = it.hospitalization.destination.reference.toString().replace("Location/","")
         }
-        return null
+        var origin = ""
+        if (it.hospitalization.hasOrigin() &&  it.hospitalization.origin.hasReference()){
+            origin = it.hospitalization.origin.reference.toString().replace("Location/","")
+        }
+        var period = ""
+        if (it.hasPeriod() ){
+            period = it.period.toString()
+        }
+
+        val dbObservation = DbObservation(
+            id,
+            id,
+            destination,
+            destination,
+            period
+        )
+
+        return dbObservation
     }
 
     suspend fun getObservationList(encounterId: String, codeValue: String): ArrayList<DbObservation>{

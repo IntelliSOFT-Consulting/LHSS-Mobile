@@ -140,6 +140,8 @@ class AdministerVaccineViewModel(
                 encounter.subject = subjectReference
                 encounter.id = encounterId
 
+                encounter.period.start = Date()
+
                 /**
                  * This should handle the different statuses
                  *   in-progress => This should represent a referral that has been started

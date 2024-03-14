@@ -67,10 +67,13 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbObservation>,
         val name = encounterList[position].name
         val date = encounterList[position].date
 
-        val dateStr = FormatterClass().convertDateFormat(date)
+        if (date != ""){
+            val dateStr = FormatterClass().convertDateFormat(date)
+            holder.tvDate.text = dateStr
+
+        }
 
         holder.tvHospital.text = name
-        holder.tvDate.text = dateStr
 
 
     }

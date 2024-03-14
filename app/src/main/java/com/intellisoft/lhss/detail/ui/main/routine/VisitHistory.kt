@@ -98,12 +98,13 @@ class VisitHistory : Fragment() {
     private fun getVisitHistory() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            val encounterList = patientDetailsViewModel.getWorkflowData(
-                "NEW_VISIT",
-                "5737318228315"
-            )
-            val listValue = ArrayList(encounterList.filterNotNull())
-            val visitHistoryAdapter = VisitHistoryAdapter(listValue, requireContext())
+            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
+            val encounterList = patientDetailsViewModel.getWorkflowData()
+
+            val listValue = encounterList.filterNotNull().filter { it.name == practitionerFacility }
+
+//            val listValue = ArrayList(encounterList)
+            val visitHistoryAdapter = VisitHistoryAdapter(ArrayList(listValue), requireContext())
             CoroutineScope(Dispatchers.Main).launch {
                 binding.recyclerView.adapter = visitHistoryAdapter
             }
