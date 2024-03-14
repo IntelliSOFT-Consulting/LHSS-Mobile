@@ -56,11 +56,82 @@ class PatientLocationFragment : Fragment() {
         val isUpdate = formatterClass.getSharedPref("isPatientUpdate", requireContext())
 
         if (isUpdate != null) {
-//            displayInitialData()
+            displayInitialData()
         }
 
         getData()
 
+    }
+
+    private fun displayInitialData() {
+
+        val gson = Gson()
+
+        val identificationTypeList = resources.getStringArray(R.array.identification_type)
+        val occupationList = resources.getStringArray(R.array.occupation_type)
+        val originCountryList = resources.getStringArray(R.array.origin_country)
+        val residenceCountryList = resources.getStringArray(R.array.residence_country)
+
+        val djiboutiRegionList = resources.getStringArray(R.array.djibouti_region)
+        val ethiopiaRegionList = resources.getStringArray(R.array.ethiopia_region)
+
+        val djiboutiDistrictList = resources.getStringArray(R.array.djibouti_district)
+        val ethiopiaDistrictList = resources.getStringArray(R.array.ethiopia_district)
+
+        val registrationFlowAdministrative = formatterClass.getSharedPref("registrationFlowAdministrative", requireContext())
+        val dbAdministrative = gson.fromJson(registrationFlowAdministrative, DbAdministrative::class.java)
+
+        val identificationType = dbAdministrative.identificationType
+        val identificationNumber = dbAdministrative.identificationNumber
+        val occupationType = dbAdministrative.occupationType
+        val originCountry = dbAdministrative.originCountry
+        val residenceCountry = dbAdministrative.residenceCountry
+        val region = dbAdministrative.region
+        val district = dbAdministrative.district
+
+        createSpinner(ArrayList(identificationTypeList.toMutableList()), binding.identificationType, identificationType)
+        createSpinner(ArrayList(occupationList.toMutableList()), binding.occupationType, occupationType)
+        createSpinner(ArrayList(originCountryList.toMutableList()), binding.originCountry, originCountry)
+        createSpinner(ArrayList(residenceCountryList.toMutableList()), binding.residenceCountry, residenceCountry)
+
+        val regionList: ArrayList<String>
+        val districtList: ArrayList<String>
+
+        if (residenceCountry.contains("Djibouti")){
+            regionList = ArrayList(djiboutiRegionList.toMutableList())
+            districtList = ArrayList(djiboutiDistrictList.toMutableList())
+        }else{
+            regionList = ArrayList(ethiopiaRegionList.toMutableList())
+            districtList = ArrayList(ethiopiaDistrictList.toMutableList())
+        }
+
+        createSpinner(ArrayList(regionList.toMutableList()), binding.region, region)
+        createSpinner(ArrayList(districtList.toMutableList()), binding.district, district)
+
+        if (identificationNumber != ""){
+            binding.identificationNumber.setText(identificationNumber)
+        }
+
+    }
+
+    private fun createSpinner(spinnerList: ArrayList<String>, spinner: Spinner, valueName:String){
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            spinnerList)
+
+        var preselectedIndex = 0
+        for (index in spinnerList.indices ){
+            if (valueName == spinnerList[index]){
+                preselectedIndex = index
+                break
+            }
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.setSelection(preselectedIndex)
     }
 
     private fun getData() {
