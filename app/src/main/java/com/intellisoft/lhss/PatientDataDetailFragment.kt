@@ -52,7 +52,7 @@ class PatientDataDetailFragment : Fragment() {
     private lateinit var fhirEngine: FhirEngine
     private val formatterClass = FormatterClass()
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private var customPatient = CustomPatient("","","","","","")
+    private var customPatient = CustomPatient("","","","","","", "")
     private var dbAdministrative = DbAdministrative("","","","","", "","")
     private var country :String? = null
 
@@ -322,6 +322,7 @@ class PatientDataDetailFragment : Fragment() {
                     lastName,
                     gender,
                     dateBirth,
+                    "",
                     "")
 
                 dbAdministrative = DbAdministrative(

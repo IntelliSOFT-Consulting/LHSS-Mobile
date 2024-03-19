@@ -139,10 +139,12 @@ class PatientDetailsFragment : Fragment() {
                     val firstnameValue = data.firstname
                     val lastNameValue = data.lastname
                     val middleNameValue = data.middlename
+                    val phoneNumberValue = data.phoneNumber
 
                     firstname.setText(firstnameValue)
                     lastname.setText(lastNameValue)
                     middlename.setText(middleNameValue)
+                    etPhoneNumber.setText(phoneNumberValue)
 
                     val gender = data.gender
                     if (gender == "Male") {
@@ -196,7 +198,15 @@ class PatientDetailsFragment : Fragment() {
         val middleName = binding.middlename.text.toString()
         var dateOfBirthString = binding.dateOfBirth.text.toString()
         val age = binding.calculatedAge.text.toString()
+        val phoneNumber = binding.etPhoneNumber.text.toString()
 
+        if (phoneNumber.isEmpty()){
+            binding.apply {
+                etPhoneNumber.error = "Enter Phone number"
+                etPhoneNumber.requestFocus()
+                return
+            }
+        }
 
         if (firstName.isEmpty()) {
             binding.apply {
@@ -282,7 +292,8 @@ class PatientDetailsFragment : Fragment() {
             lastname = lastName,
             gender = gender,
             age = age,
-            dateOfBirth = dateOfBirthString
+            dateOfBirth = dateOfBirthString,
+            phoneNumber = phoneNumber
         )
 
         formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(payload), requireContext())

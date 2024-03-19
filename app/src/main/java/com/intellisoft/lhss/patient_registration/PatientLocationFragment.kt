@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.add_patient.AddPatientViewModel
-import com.intellisoft.lhss.databinding.ActivityPatientRegistrationBinding
 import com.intellisoft.lhss.databinding.FragmentPatientLocationBinding
 import com.intellisoft.lhss.fhir.data.DbAdministrative
 import com.intellisoft.lhss.fhir.data.FormatterClass

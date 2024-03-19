@@ -348,6 +348,7 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
         val age = customPatient.age
         val genderValue = customPatient.gender
         val dateOfBirth = customPatient.dateOfBirth
+        val phoneNumber = customPatient.phoneNumber
 
         val identificationType = dbAdministrative.identificationType
         val identificationNumber = dbAdministrative.identificationNumber
@@ -442,6 +443,14 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
 
         patient.identifier = identifierList
 
+        //Phone number
+        val telecomList = ArrayList<ContactPoint>()
+        val contactPoint = ContactPoint()
+        contactPoint.value = phoneNumber
+        telecomList.add(contactPoint)
+
+        patient.telecom = telecomList
+
         /**
          * Add the other Patient details
          */
@@ -452,8 +461,6 @@ class AddPatientViewModel(application: Application, private val state: SavedStat
             if (patientId != null){
                 patient.id = patientId
                 fhirEngine.update(patient)
-
-
             }
 
         }else{
