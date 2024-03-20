@@ -41,6 +41,7 @@ class LandingPage : Fragment() {
         }
 
         formatterClass.deleteSharedPref("patientListAction", requireContext())
+        formatterClass.deleteSharedPref("isPatientUpdateBack", requireContext())
 
         binding.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.patient_list)

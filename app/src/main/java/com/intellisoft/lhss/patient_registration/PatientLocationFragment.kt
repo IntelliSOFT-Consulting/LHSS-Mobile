@@ -55,6 +55,7 @@ class PatientLocationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val isUpdate = formatterClass.getSharedPref("isPatientUpdate", requireContext())
+        val isUpdateBack = FormatterClass().getSharedPref("isPatientUpdateBack", requireContext())
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -63,7 +64,7 @@ class PatientLocationFragment : Fragment() {
         }
         binding.imgBtnBack.setOnClickListener { findNavController().navigate(R.id.patientDetailsFragment) }
 
-        if (isUpdate != null) {
+        if (isUpdate != null || isUpdateBack != null) {
             displayInitialData()
         }
 
@@ -227,7 +228,9 @@ class PatientLocationFragment : Fragment() {
             }
 
             previousButton.setOnClickListener {
+                formatter.saveSharedPref("isUpdateBack","true", requireContext())
                 findNavController().navigate(R.id.patientDetailsFragment)
+
             }
             nextButton.setOnClickListener {
 
@@ -248,24 +251,8 @@ class PatientLocationFragment : Fragment() {
 
                     formatter.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), requireContext())
 
-                    val progressBar = ProgressDialog(requireContext())
-                    progressBar.setCanceledOnTouchOutside(false)
-                    progressBar.setTitle("Saving Patient")
-                    progressBar.setMessage("Please wait as the patient is being saved")
-                    progressBar.show()
+                    findNavController().navigate(R.id.regPreviewFragment)
 
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.createManualPatient()
-
-                        CoroutineScope(Dispatchers.Main).launch {
-                            progressBar.dismiss()
-                            val blurBackgroundDialog =
-                                BlurBackgroundDialog(this@PatientLocationFragment, requireContext())
-                            blurBackgroundDialog.show()
-
-                        }
-
-                    }
 
                 }
 

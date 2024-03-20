@@ -5,6 +5,7 @@
     <string name="fab_content_desc">Register Patient</string>
     <string name="administer_vaccine_count">Administer Vaccine </string>
     <string name="client_info">Register Patient </string>
+    <string name="patient_info">Patient Details</string>
     <string name="years">Years </string>
     <string name="months">Months </string>
     <string name="weeks">Weeks </string>

@@ -125,6 +125,7 @@ class PatientListFragment : Fragment() {
 
 
         }
+        formatterClass.deleteSharedPref("isUpdateBack", requireContext())
 
         patientListViewModel.patientCount.observe(viewLifecycleOwner) {
             binding.patientListContainer.patientCount.text = "$it Patient(s)"

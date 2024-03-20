@@ -19,7 +19,6 @@ import com.intellisoft.lhss.MainActivity
 
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentPatientDetailsBinding
-import com.intellisoft.lhss.databinding.FragmentPatientLocationBinding
 import com.intellisoft.lhss.fhir.data.CustomPatient
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.NavigationDetails
@@ -57,9 +56,11 @@ class PatientDetailsFragment : Fragment() {
 
 
         val isUpdate = FormatterClass().getSharedPref("isPatientUpdate", requireContext())
-        if (isUpdate != null) {
+        val isUpdateBack = FormatterClass().getSharedPref("isPatientUpdateBack", requireContext())
+        if (isUpdate != null || isUpdateBack != null) {
             displayInitialData()
         }
+
 
         binding.apply {
 //            radioGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -131,6 +132,7 @@ class PatientDetailsFragment : Fragment() {
 
     private fun displayInitialData() {
         try {
+
             val personal = formatter.getSharedPref("registrationFlowPersonal", requireContext())
 
             if (personal != null) {
@@ -144,7 +146,7 @@ class PatientDetailsFragment : Fragment() {
                     firstname.setText(firstnameValue)
                     lastname.setText(lastNameValue)
                     middlename.setText(middleNameValue)
-                    etPhoneNumber.setText(phoneNumberValue)
+                    etPhone.setText(phoneNumberValue)
 
                     val gender = data.gender
                     if (gender == "Male") {
@@ -198,12 +200,12 @@ class PatientDetailsFragment : Fragment() {
         val middleName = binding.middlename.text.toString()
         var dateOfBirthString = binding.dateOfBirth.text.toString()
         val age = binding.calculatedAge.text.toString()
-        val phoneNumber = binding.etPhoneNumber.text.toString()
+        val phoneNumber = binding.etPhone.text.toString()
 
         if (phoneNumber.isEmpty()){
             binding.apply {
-                etPhoneNumber.error = "Enter Phone number"
-                etPhoneNumber.requestFocus()
+                etPhone.error = "Enter Phone number"
+                etPhone.requestFocus()
                 return
             }
         }
