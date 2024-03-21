@@ -180,7 +180,8 @@ class PatientDataDetailFragment : Fragment() {
                             requireContext()
                         )
                         //Send to contraindications
-                        administerVaccine()
+//                        administerVaccine()
+                        findNavController().navigate(R.id.addVisitFragment)
                     }else{
                         Toast.makeText(requireContext(), "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
                     }
@@ -214,7 +215,8 @@ class PatientDataDetailFragment : Fragment() {
                             requireContext()
                         )
                         //Send to contraindications
-                        administerVaccine()
+//                        administerVaccine()
+                        findNavController().navigate(R.id.doReferralFragment)
                     }else{
                         Toast.makeText(requireContext(), "The client does not have a country associated with him/her", Toast.LENGTH_SHORT).show()
                     }
@@ -312,7 +314,12 @@ class PatientDataDetailFragment : Fragment() {
             val parts = fullName.split(" ")
             if (parts.isNotEmpty()){
                 val firstName = parts.getOrNull(0) ?: ""
-                val middleNameParts = parts.subList(1, parts.size - 1)
+                val middleNameParts = if (parts.size > 1){
+                    parts.subList(1, parts.size - 1)
+                }else{
+                    parts.subList(1, parts.size)
+                }
+
                 val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
                 val lastName = parts.last()
 

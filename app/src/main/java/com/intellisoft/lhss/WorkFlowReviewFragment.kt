@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.intellisoft.lhss.databinding.FragmentRegPreviewBinding
 import com.intellisoft.lhss.databinding.FragmentWorkFlowReviewBinding
 import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
@@ -25,6 +26,7 @@ import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 
 class WorkFlowReviewFragment : Fragment() {
 
@@ -51,8 +53,6 @@ class WorkFlowReviewFragment : Fragment() {
         )
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.setHasFixedSize(true)
-
-        formatterClass.deleteSharedPref("isUpdateBack", requireContext())
 
         layoutManager = LinearLayoutManager(
             requireContext(),
@@ -103,9 +103,18 @@ class WorkFlowReviewFragment : Fragment() {
 
         val personal = formatterClass.getSharedPref("workFlowPersonal", requireContext())
         if (personal != null){
-            val detailsList = gson.fromJson(personal, DbWorkFlowData::class.java)
 
-            dbPatientDataDetailsList = detailsList.details
+            val jsonArray = JSONArray(personal)
+            // Iterate through the JSON array and extract key-value pairs
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val key = jsonObject.getString("key")
+                val value = jsonObject.getString("value")
+
+                // Create a WorkflowItem object and add it to the list
+                val workflowItem = DbPatientDataDetails(key, value)
+                dbPatientDataDetailsList.add(workflowItem)
+            }
 
         }
 

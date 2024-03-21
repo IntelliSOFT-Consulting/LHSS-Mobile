@@ -2,6 +2,7 @@ package com.intellisoft.lhss
 
 import android.app.Application
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -12,16 +13,21 @@ import android.widget.AdapterView
 import android.widget.DatePicker
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
+import com.google.gson.Gson
 import com.intellisoft.lhss.databinding.FragmentAddVisitBinding
 import com.intellisoft.lhss.databinding.FragmentDoReferralBinding
+import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.fhir.data.NavigationDetails
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
 import java.util.Calendar
@@ -126,13 +132,24 @@ class DoReferralFragment : Fragment() {
             )
         )
 
-        formatterClass.saveSharedPref("workFlowPersonal","dbPatientDataDetailsList",requireContext())
+        formatterClass.saveSharedPref("workFlowPersonal",
+            Gson().toJson(dbPatientDataDetailsList),requireContext())
 
-        findNavController().navigate(R.id.workFlowReviewFragment)
-
+        val intent = Intent(requireContext(), PatientDetailActivity::class.java)
+        intent.putExtra("functionToCall", NavigationDetails.ADD_REFERRAL_LIST.name)
+        intent.putExtra("patientId", patientId)
+        startActivity(intent)
     }
 
     private fun loadClass() {
+
+        val titleValue = formatterClass.getSharedPref("title", requireContext())
+
+        val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = titleValue
+        }
 
         val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
         if (practitionerFacility != null){
@@ -213,7 +230,7 @@ class DoReferralFragment : Fragment() {
             month,
             day
         )
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis() // Set the limit for the last date
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis() // Set the limit for the last date
 
         // Show the DatePickerDialog
         datePickerDialog.show()

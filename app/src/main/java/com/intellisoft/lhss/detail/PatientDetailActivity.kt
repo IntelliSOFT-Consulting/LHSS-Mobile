@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -103,8 +104,18 @@ class PatientDetailActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
         val navController = findNavController(R.id.nav_host_fragment_activity_bottem_navigation)
+        navController.navigate(R.id.patientDataDetailFragment)
+
+        when (intent.getStringExtra("functionToCall")) {
+            NavigationDetails.ADD_VISIT_HISTORY.name -> {
+                navController.navigate(R.id.workFlowReviewFragment)
+            }
+            NavigationDetails.ADD_REFERRAL_LIST.name -> {
+                navController.navigate(R.id.workFlowReviewFragment)
+            }
+        }
+
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -114,11 +125,14 @@ class PatientDetailActivity : AppCompatActivity() {
 
                 R.id.visitHistory,
                 R.id.referralsFragment,
+
+                R.id.addVisitFragment,
+                R.id.doReferralFragment,
+                R.id.workFlowReviewFragment,
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        navController.navigate(R.id.patientDataDetailFragment)
 
     }
 

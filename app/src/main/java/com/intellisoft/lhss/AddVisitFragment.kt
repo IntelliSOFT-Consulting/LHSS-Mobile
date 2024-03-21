@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
 import com.intellisoft.lhss.databinding.FragmentAddVisitBinding
+import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -124,9 +127,12 @@ class AddVisitFragment : Fragment() {
             )
         )
 
-        formatterClass.saveSharedPref("workFlowPersonal","dbPatientDataDetailsList",requireContext())
+        formatterClass.saveSharedPref("workFlowPersonal",Gson().toJson(dbPatientDataDetailsList),requireContext())
 
-        findNavController().navigate(R.id.workFlowReviewFragment)
+        val intent = Intent(requireContext(), PatientDetailActivity::class.java)
+        intent.putExtra("functionToCall", NavigationDetails.ADD_VISIT_HISTORY.name)
+        intent.putExtra("patientId", patientId)
+        startActivity(intent)
 
     }
 
@@ -157,6 +163,14 @@ class AddVisitFragment : Fragment() {
     }
 
     private fun loadClass() {
+
+        val titleValue = formatterClass.getSharedPref("title", requireContext())
+
+        val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = titleValue
+        }
 
         val country = formatterClass.getSharedPref("country", requireContext())
         if (country == null){
