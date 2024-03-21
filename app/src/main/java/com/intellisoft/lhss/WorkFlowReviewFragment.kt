@@ -128,9 +128,13 @@ class WorkFlowReviewFragment : Fragment() {
                 val key = jsonObject.getString("key")
                 val value = jsonObject.getString("value")
 
-                // Create a WorkflowItem object and add it to the list
-                val workflowItem = DbPatientDataDetails(key, value)
-                dbPatientDataDetailsList.add(workflowItem)
+                if (value != ""){
+                    // Create a WorkflowItem object and add it to the list
+                    val workflowItem = DbPatientDataDetails(key, value)
+                    dbPatientDataDetailsList.add(workflowItem)
+                }
+
+
             }
 
         }

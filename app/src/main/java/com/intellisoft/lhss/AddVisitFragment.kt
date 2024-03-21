@@ -85,8 +85,8 @@ class AddVisitFragment : Fragment() {
 
     private fun validateData() {
         val treatmentValue = binding.treatmentDetails.text.toString()
-        val otherServices = binding.etOthers.text.toString()
         val selectedDate = binding.tvDatePicker.text.toString()
+        var otherServicesValue = ""
 
         if (serviceProvided == ""){
             binding.serviceProvided.requestFocus()
@@ -106,10 +106,14 @@ class AddVisitFragment : Fragment() {
             }
         }
         if (binding.tvOthers.visibility == View.VISIBLE){
+            val otherServices = binding.etOthers.text.toString()
+
             if (TextUtils.isEmpty(otherServices)){
                 binding.tvOthers.setError("Field cannot be empty")
                 binding.tvOthers.requestFocus()
                 return
+            }else{
+                otherServicesValue = otherServices
             }
         }
         if (selectedDate == "Date of Visit *"){
@@ -122,7 +126,8 @@ class AddVisitFragment : Fragment() {
 
         val dbPatientDataDetails1 = DbPatientDataDetails("Facility Name",facilityName)
         val dbPatientDataDetails2 = DbPatientDataDetails("Service Provided",serviceProvided)
-        val dbPatientDataDetails6 = DbPatientDataDetails("Other Service Provided",otherServices)
+
+        val dbPatientDataDetails6 = DbPatientDataDetails("Other Service Provided",otherServicesValue)
         val dbPatientDataDetails3 = DbPatientDataDetails("Treatment Provided",treatmentProvided)
         val dbPatientDataDetails4 = DbPatientDataDetails("Treatment Details",treatmentValue)
         val dbPatientDataDetails5 = DbPatientDataDetails("Date of visit",selectedDate)
