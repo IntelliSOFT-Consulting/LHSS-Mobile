@@ -39,6 +39,10 @@ class PractionerDetails : Fragment() {
         binding.btnSignOut.setOnClickListener {
 
             formatterClass.saveSharedPref("isLoggedIn", "false", requireContext())
+
+            val list = mutableListOf("practitionerFullNames","practitionerFacility")
+            formatterClass.deleteUserDetails(requireContext(), ArrayList(list))
+
             val intent = Intent(requireContext(),  Login::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)

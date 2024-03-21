@@ -135,6 +135,12 @@ class FormatterClass {
 
     }
 
+    fun deleteUserDetails(context: Context, list: ArrayList<String>){
+        list.forEach {
+            deleteSharedPref(it, context)
+        }
+    }
+
     fun deleteSharedPref(key: String, context: Context) {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences(context.getString(R.string.app_name), MODE_PRIVATE)

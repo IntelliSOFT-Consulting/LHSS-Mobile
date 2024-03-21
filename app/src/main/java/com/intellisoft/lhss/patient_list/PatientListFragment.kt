@@ -110,7 +110,7 @@ class PatientListFragment : Fragment() {
                 noPatientDialog.show()
             }
 
-            patientList.sortBy { list -> list.createdAt }
+            patientList.sortByDescending { sort -> sort.createdAt }
 
             if (patientList.isEmpty()){
                 progressBar.visibility = View.VISIBLE

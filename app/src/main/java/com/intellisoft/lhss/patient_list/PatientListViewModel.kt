@@ -345,17 +345,11 @@ internal fun Patient.toPatientItem(position: Int): PatientListViewModel.PatientI
 
     }
 
-//    val phone = if (hasTelecom()) telecom[0].value else ""
-    var phone = ""
-    if (hasContact()) {
-        if (contact.isNotEmpty()){
-            if (contact[0].hasTelecom()){
-                if (contact[0].telecom[0].hasValue()){
-                    phone = contact[0].telecom[0].value
-                }
-            }
-        }
-    }
+    val phone = if (hasTelecom()) {
+        if (telecomFirstRep.hasValue()){
+            telecom[0].value
+        }else ""
+    } else ""
 
     var identification = ""
     if (hasId()) identification = "${id.replace("Patient/","").substring(0,4)}"
