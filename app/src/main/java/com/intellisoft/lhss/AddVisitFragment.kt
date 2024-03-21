@@ -84,6 +84,7 @@ class AddVisitFragment : Fragment() {
 
     private fun validateData() {
         val treatmentValue = binding.treatmentDetails.text.toString()
+        val otherServices = binding.etOthers.text.toString()
         val selectedDate = binding.tvDatePicker.text.toString()
 
         if (serviceProvided == ""){
@@ -103,6 +104,13 @@ class AddVisitFragment : Fragment() {
                 return
             }
         }
+        if (binding.tvOthers.visibility == View.VISIBLE){
+            if (TextUtils.isEmpty(otherServices)){
+                binding.tvOthers.setError("Field cannot be empty")
+                binding.tvOthers.requestFocus()
+                return
+            }
+        }
         if (selectedDate == "Date of Visit *"){
             binding.tvDatePicker.error = "Select a date"
             binding.tvDatePicker.requestFocus()
@@ -113,6 +121,7 @@ class AddVisitFragment : Fragment() {
 
         val dbPatientDataDetails1 = DbPatientDataDetails("Facility Name",facilityName)
         val dbPatientDataDetails2 = DbPatientDataDetails("Service Provided",serviceProvided)
+        val dbPatientDataDetails6 = DbPatientDataDetails("Other Service Provided",otherServices)
         val dbPatientDataDetails3 = DbPatientDataDetails("Treatment Provided",treatmentProvided)
         val dbPatientDataDetails4 = DbPatientDataDetails("Treatment Details",treatmentValue)
         val dbPatientDataDetails5 = DbPatientDataDetails("Date of visit",selectedDate)
@@ -121,6 +130,7 @@ class AddVisitFragment : Fragment() {
             listOf(
                 dbPatientDataDetails1,
                 dbPatientDataDetails2,
+                dbPatientDataDetails6,
                 dbPatientDataDetails3,
                 dbPatientDataDetails4,
                 dbPatientDataDetails5,
@@ -215,6 +225,11 @@ class AddVisitFragment : Fragment() {
                     }
                     if (valueType == "SERVICE"){
                         this@AddVisitFragment.serviceProvided = selectedItem
+                        if (selectedItem == spinnerList.last()){
+                            binding.tvOthers.visibility = View.VISIBLE
+                        }else{
+                            binding.tvOthers.visibility = View.GONE
+                        }
                     }
                     if (valueType == "TREATMENT"){
                         this@AddVisitFragment.treatmentProvided = selectedItem

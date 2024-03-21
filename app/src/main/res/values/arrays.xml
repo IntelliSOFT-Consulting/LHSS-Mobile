@@ -64,17 +64,45 @@
 <!--    Facilities-->
     <string-array name="djibouti_facilities">
         <item>Facility Name *</item>
-        <item>Dubti</item>
+        <item>Yoboki</item>
+        <item>Moloud</item>
+        <item>Dikhil Regional hospital</item>
+        <item>Tadjourah regional hospital</item>
+        <item>Balho</item>
+        <item>Dorra</item>
+        <item>Ali-Adde</item>
+        <item>Guestir</item>
+        <item>Assamo</item>
+        <item>Dr Ahmed Absieh Regional hospital</item>
     </string-array>
     <string-array name="ethiopia_facilities">
         <item>Facility Name *</item>
-        <item>Dubti</item>
+        <item>Dichioto Health Center</item>
+        <item>Galafi Health Post</item>
+        <item>Galafi point of entry surveillance office</item>
+        <item>Dobi Health Post</item>
+        <item>Wuhalimat Health Post</item>
+        <item>Hayu primary clinic</item>
+        <item>Tintsae drug vender</item>
+        <item>Dubti General Hospital</item>
     </string-array>
 
 <!--    Services Provided-->
     <string-array name="services_provided">
         <item>Service Provided *</item>
-        <item>Dubti</item>
+        <item>HIV / AIDS</item>
+        <item>TB</item>
+        <item>Malaria</item>
+        <item>Reproductive Health (FP)</item>
+        <item>MCH - ANC, PNC</item>
+        <item>Immunisation</item>
+        <item>Upper Tract Infections</item>
+        <item>Skin Infections</item>
+        <item>Sexually Transmitted Disease</item>
+        <item>Chronic Illness(Cancer, Diabetes)</item>
+        <item>Accident (Road, Burns etc)</item>
+        <item>Mental Health</item>
+        <item>Others</item>
     </string-array>
 
 <!--    Treatment Provided-->
@@ -88,7 +116,16 @@
 <!--    Referral Reason-->
     <string-array name="referral_reason">
         <item>Referral Reason *</item>
-        <item>Admitted</item>
+        <item>Admission (Inpatient services)</item>
+        <item>Specialized Care (Senior Doctor/Consultant)</item>
+        <item>Diagnostic Test (e.g Laboratory, Ultra sound, MRI etc)</item>
+        <item>Surgical Procedure </item>
+        <item>Chronic Disease Management</item>
+        <item>Pschosocial Support</item>
+        <item>Phsiotherapy</item>
+        <item>Drugs not available at HF</item>
+        <item>Closer to residence</item>
+        <item>Others</item>
     </string-array>
 
 
