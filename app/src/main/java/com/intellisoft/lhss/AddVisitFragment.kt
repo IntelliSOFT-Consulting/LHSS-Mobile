@@ -158,6 +158,12 @@ class AddVisitFragment : Fragment() {
 
     private fun loadClass() {
 
+        val country = formatterClass.getSharedPref("country", requireContext())
+        if (country == null){
+            Toast.makeText(requireContext(), "Updae the patient to have a country associated with them.", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.patientDataDetailFragment)
+        }
+
         val gson = Gson()
         val services_provided = resources.getStringArray(R.array.services_provided)
         val treatment_provided = resources.getStringArray(R.array.treatment_provided)
@@ -166,12 +172,6 @@ class AddVisitFragment : Fragment() {
         val ethiopia_facilities = resources.getStringArray(R.array.ethiopia_facilities)
 
         var facilityList = ArrayList<String>()
-
-        val country = formatterClass.getSharedPref("country", requireContext())
-        if (country == null){
-            Toast.makeText(requireContext(), "Updae the patient to have a country associated with them.", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.patientDataDetailFragment)
-        }
 
         facilityList = if (country == "Ethiopia") ArrayList(ethiopia_facilities.toMutableList()) else ArrayList(djibouti_facilities.toMutableList())
         val serviceList = ArrayList(services_provided.toMutableList())
