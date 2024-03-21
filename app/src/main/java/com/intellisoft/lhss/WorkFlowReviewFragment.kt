@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +25,7 @@ import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.DbWorkFlowData
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.utils.BlurBackgroundDialog
+import com.intellisoft.lhss.vaccine.AdministerVaccineViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +39,9 @@ class WorkFlowReviewFragment : Fragment() {
     private lateinit var fhirEngine: FhirEngine
     private val formatterClass = FormatterClass()
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private val viewModel: AdministerVaccineViewModel by viewModels()
+    private var dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
+    private lateinit var patientId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +50,7 @@ class WorkFlowReviewFragment : Fragment() {
 
         // Inflate the layout for this fragment
         binding = FragmentWorkFlowReviewBinding.inflate(layoutInflater)
+        patientId = formatterClass.getSharedPref("patientId", requireContext()).toString()
 
         fhirEngine = FhirApplication.fhirEngine(requireContext())
 
@@ -71,10 +79,11 @@ class WorkFlowReviewFragment : Fragment() {
             progressBar.show()
 
             CoroutineScope(Dispatchers.IO).launch {
-//                viewModel.createManualPatient()
+                viewModel.performManualExtraction(dbPatientDataDetailsList, patientId)
 
                 CoroutineScope(Dispatchers.Main).launch {
                     progressBar.dismiss()
+
                     val blurBackgroundDialog =
                         BlurBackgroundDialog(this@WorkFlowReviewFragment, requireContext())
                     blurBackgroundDialog.show()
@@ -86,7 +95,7 @@ class WorkFlowReviewFragment : Fragment() {
 
         binding.imgBtnBack.setOnClickListener {
             formatterClass.saveSharedPref("isWorkflowUpdateBack","true", requireContext())
-            findNavController().navigate(R.id.patientLocationFragment)
+
         }
 
         getData()
@@ -96,10 +105,18 @@ class WorkFlowReviewFragment : Fragment() {
     }
 
     private fun getData() {
+
+        val titleValue = formatterClass.getSharedPref("title", requireContext())
+
+        val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            title = titleValue
+        }
+
         formatterClass.deleteSharedPref("isWorkflowUpdateBack", requireContext())
 
         val gson = Gson()
-        var dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
 
         val personal = formatterClass.getSharedPref("workFlowPersonal", requireContext())
         if (personal != null){

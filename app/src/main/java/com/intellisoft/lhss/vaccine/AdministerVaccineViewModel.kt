@@ -36,6 +36,8 @@ import com.google.android.fhir.search.search
 import com.intellisoft.lhss.fhir.data.DbAppointmentData
 import com.intellisoft.lhss.fhir.data.DbPatientData
 import com.intellisoft.lhss.fhir.data.DbPatientDataAnswer
+import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
+import com.intellisoft.lhss.fhir.data.DbValueCoding
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.vaccine.validations.ImmunizationHandler
 import kotlinx.coroutines.CoroutineScope
@@ -200,6 +202,89 @@ class AdministerVaccineViewModel(
 
             isResourcesSaved.value = true
         }
+    }
+
+    fun performManualExtraction(dbPatientDataDetailsList: ArrayList<DbPatientDataDetails>, patientId: String){
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val formatterClass = FormatterClass()
+            val subjectReference = Reference("Patient/$patientId")
+            val encounterId = generateUuid()
+            val encounterReference = Reference("Encounter/$encounterId")
+
+            //Encounter
+
+            //Check the type of flow
+            val encounter = Encounter()
+            val lhssFlow = formatterClass.getSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+            if (lhssFlow != null){
+                val typeCodeableConceptList = ArrayList<CodeableConcept>()
+                val typeCodeableConcept = CodeableConcept()
+                typeCodeableConcept.text = lhssFlow
+                typeCodeableConceptList.add(typeCodeableConcept)
+                encounter.type = typeCodeableConceptList
+
+                if (lhssFlow == "REFERRALS"){
+
+                    val valueData = dbPatientDataDetailsList.find { it.key == "Health Facility Referred to" }
+                    if (valueData != null){
+                        val destinationRef = "Location/${valueData.value}"
+                        val destinationReference = Reference(destinationRef)
+                        encounter.hospitalization.destination = destinationReference
+                    }
+                }
+
+
+                formatterClass.deleteSharedPref("lhssFlow", getApplication<Application>().applicationContext)
+            }
+
+            encounter.subject = subjectReference
+            encounter.id = encounterId
+
+            encounter.period.start = Date()
+
+            /**
+             * This should handle the different statuses
+             *   in-progress => This should represent a referral that has been started
+             *   completed => This should represent a complete referral that has been accepted
+             */
+
+            encounter.status = Encounter.EncounterStatus.INPROGRESS
+
+            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", getApplication<Application>().applicationContext)
+
+            if (practitionerFacility != null) {
+                val originRef = "Location/$practitionerFacility"
+                val originReference = Reference(originRef)
+                encounter.hospitalization.origin = originReference
+            }
+
+
+            saveResourceToDatabase(encounter, "Enc $encounterId")
+
+
+            dbPatientDataDetailsList.forEach {
+
+                val key = it.key
+                val value = it.value
+
+                val dbValueCoding = DbValueCoding("http://loinc.org","123",value)
+                val dbPatientDataAnswer = DbPatientDataAnswer(value, dbValueCoding)
+
+                val dbPatientData = DbPatientData("456", key, dbPatientDataAnswer)
+
+                val observation = createObservationData(dbPatientData)
+                observation.encounter = encounterReference
+                observation.subject = subjectReference
+                observation.id = generateUuid()
+                saveResourceToDatabase(observation, "Obs")
+            }
+
+        }
+
+
+
     }
 
     private fun createObservationData(dbPatientData: DbPatientData):Observation {
