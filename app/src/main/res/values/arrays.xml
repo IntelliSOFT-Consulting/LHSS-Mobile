@@ -61,7 +61,35 @@
         <item>Dubti</item>
     </string-array>
 
+<!--    Facilities-->
+    <string-array name="djibouti_facilities">
+        <item>Facility Name *</item>
+        <item>Dubti</item>
+    </string-array>
+    <string-array name="ethiopia_facilities">
+        <item>Facility Name *</item>
+        <item>Dubti</item>
+    </string-array>
 
+<!--    Services Provided-->
+    <string-array name="services_provided">
+        <item>Service Provided *</item>
+        <item>Dubti</item>
+    </string-array>
+
+<!--    Treatment Provided-->
+    <string-array name="treatment_provided">
+        <item>Treatment Provided *</item>
+        <item>Admitted</item>
+        <item>Referred</item>
+        <item>Treated</item>
+    </string-array>
+
+<!--    Referral Reason-->
+    <string-array name="referral_reason">
+        <item>Referral Reason *</item>
+        <item>Admitted</item>
+    </string-array>
 
 
 </resources>
