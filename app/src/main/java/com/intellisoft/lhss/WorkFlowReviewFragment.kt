@@ -1,59 +1,121 @@
 package com.intellisoft.lhss
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.fhir.FhirEngine
+import com.google.gson.Gson
+import com.intellisoft.lhss.databinding.FragmentRegPreviewBinding
+import com.intellisoft.lhss.databinding.FragmentWorkFlowReviewBinding
+import com.intellisoft.lhss.detail.ui.main.adapters.PatientDetailDataAdapter
+import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.CustomPatient
+import com.intellisoft.lhss.fhir.data.DbAdministrative
+import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
+import com.intellisoft.lhss.fhir.data.DbWorkFlowData
+import com.intellisoft.lhss.fhir.data.FormatterClass
+import com.intellisoft.lhss.utils.BlurBackgroundDialog
+import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [WorkFlowReviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class WorkFlowReviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentWorkFlowReviewBinding
+    private lateinit var patientDetailsViewModel: PatientDetailsViewModel
+    private lateinit var fhirEngine: FhirEngine
+    private val formatterClass = FormatterClass()
+    private lateinit var layoutManager: RecyclerView.LayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_work_flow_review, container, false)
+        binding = FragmentWorkFlowReviewBinding.inflate(layoutInflater)
+
+        fhirEngine = FhirApplication.fhirEngine(requireContext())
+
+        layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.setHasFixedSize(true)
+
+        formatterClass.deleteSharedPref("isUpdateBack", requireContext())
+
+        layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.recyclerView.layoutManager = layoutManager
+        binding.recyclerView.setHasFixedSize(true)
+
+        binding.nextSubmit.setOnClickListener {
+
+            val progressBar = ProgressDialog(requireContext())
+            progressBar.setCanceledOnTouchOutside(false)
+            progressBar.setTitle("Saving Details")
+            progressBar.setMessage("Please wait as the records are being saved")
+            progressBar.show()
+
+            CoroutineScope(Dispatchers.IO).launch {
+//                viewModel.createManualPatient()
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    progressBar.dismiss()
+                    val blurBackgroundDialog =
+                        BlurBackgroundDialog(this@WorkFlowReviewFragment, requireContext())
+                    blurBackgroundDialog.show()
+
+                }
+
+            }
+        }
+
+        binding.imgBtnBack.setOnClickListener {
+            formatterClass.saveSharedPref("isWorkflowUpdateBack","true", requireContext())
+            findNavController().navigate(R.id.patientLocationFragment)
+        }
+
+        getData()
+
+        return binding.root
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WorkFlowReviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WorkFlowReviewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun getData() {
+        formatterClass.deleteSharedPref("isWorkflowUpdateBack", requireContext())
+
+        val gson = Gson()
+        var dbPatientDataDetailsList = ArrayList<DbPatientDataDetails>()
+
+        val personal = formatterClass.getSharedPref("workFlowPersonal", requireContext())
+        if (personal != null){
+            val detailsList = gson.fromJson(personal, DbWorkFlowData::class.java)
+
+            dbPatientDataDetailsList = detailsList.details
+
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val visitHistoryAdapter = PatientDetailDataAdapter(dbPatientDataDetailsList, requireContext())
+            binding.recyclerView.adapter = visitHistoryAdapter
+        }
+
     }
+
+
+
 }

@@ -36,7 +36,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="match_parent"
                     android:background="?attr/colorPrimary"
                     app:layout_constraintTop_toTopOf="parent"
                     app:title=""
@@ -49,22 +49,21 @@
         <LinearLayout
             android:gravity="center"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:id="@+id/tvTitleDetails"
                 style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/patient_info"
+                android:text="Details"
                 android:textStyle="bold" />
 
             <ImageButton
-                android:visibility="gone"
+                android:layout_marginStart="10dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:background="@drawable/ic_action_edit"
                 android:layout_width="wrap_content"

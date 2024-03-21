@@ -7,6 +7,10 @@ enum class UrlData(var message: Int) {
     BASE_URL(R.string.base_url),
 }
 
+data class DbWorkFlowData(
+    val details: ArrayList<DbPatientDataDetails>
+)
+
 data class CustomPatient(
     val firstname: String,
     val middlename: String,
