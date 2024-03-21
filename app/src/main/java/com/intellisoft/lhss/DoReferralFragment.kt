@@ -63,7 +63,8 @@ class DoReferralFragment : Fragment() {
             false
         )
         binding.imgBtnBack.setOnClickListener {
-            findNavController().navigate(R.id.patientDataDetailFragment)
+            val intent = Intent(requireContext(), PatientDetailActivity::class.java)
+            startActivity(intent)
         }
 
         patientDetailsViewModel = ViewModelProvider(this,
