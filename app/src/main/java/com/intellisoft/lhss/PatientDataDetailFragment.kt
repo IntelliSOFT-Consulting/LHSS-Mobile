@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -285,6 +286,12 @@ class PatientDataDetailFragment : Fragment() {
             val fullName = patientDetail.name
             val gender = patientDetail.gender
             val dateBirth = patientDetail.dob
+            val phone = patientDetail.phone
+
+            Log.e("-----","-----")
+            println(patientDetail)
+            println(phone)
+            Log.e("-----","-----")
 
             val identificationType = patientDetail.docType
             val identificationNumber = patientDetail.docId
@@ -311,34 +318,36 @@ class PatientDataDetailFragment : Fragment() {
                 }
             }
 
+            var firstName = ""
+            var middleName = ""
+            var lastName = ""
             val parts = fullName.split(" ")
             if (parts.isNotEmpty()){
-                val firstName = parts.getOrNull(0) ?: ""
+                firstName = parts.getOrNull(0) ?: ""
                 val middleNameParts = if (parts.size > 1){
                     parts.subList(1, parts.size - 1)
                 }else{
                     parts.subList(1, parts.size)
                 }
 
-                val middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
-                val lastName = parts.last()
-
-                customPatient = CustomPatient(
-                    firstName,
-                    middleName,
-                    lastName,
-                    gender,
-                    dateBirth,
-                    "",
-                    "")
-
-                dbAdministrative = DbAdministrative(
-                    identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
-                )
-                formatterClass.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), requireContext())
-                formatterClass.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), requireContext())
-
+                middleName = if (middleNameParts.isNotEmpty()) middleNameParts.joinToString(" ") else ""
+                lastName = parts.last()
             }
+            customPatient = CustomPatient(
+                firstName,
+                middleName,
+                lastName,
+                gender,
+                dateBirth,
+                "",
+                phone)
+
+            dbAdministrative = DbAdministrative(
+                identificationType, identificationNumber, occupationType, originCountry, residenceCountry, region, district
+            )
+            formatterClass.saveSharedPref("registrationFlowPersonal", Gson().toJson(customPatient), requireContext())
+            formatterClass.saveSharedPref("registrationFlowAdministrative", Gson().toJson(dbAdministrative), requireContext())
+
 
 
 

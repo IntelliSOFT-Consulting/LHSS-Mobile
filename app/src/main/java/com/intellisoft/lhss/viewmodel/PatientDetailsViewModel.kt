@@ -119,7 +119,7 @@ class PatientDetailsViewModel(
         val name = DbPatientDataDetails("Name", patientData.name)
         val dob = DbPatientDataDetails("Date Of Birth", dobValue.toString())
         val gender = DbPatientDataDetails("Gender", patientData.gender)
-//        val phone = DbPatientDataDetails("Phone", patientData.phone)
+        val phone = DbPatientDataDetails("Phone", patientData.phone)
         val documentType = DbPatientDataDetails("Document Type", patientData.docType)
         val documentId = DbPatientDataDetails("Document Id", patientData.docId)
         val age = DbPatientDataDetails("Age", ageValue)
@@ -129,7 +129,7 @@ class PatientDetailsViewModel(
         val crossBorderId = DbPatientDataDetails("CrossBorder Id",id)
 
         dbPatientDataDetailsList.addAll(listOf(
-            name, dob, gender, documentType, documentId, crossBorderId, age, occupation))
+            name, dob, gender, documentType,phone, documentId, crossBorderId, age, occupation))
         return dbPatientDataDetailsList
 
     }
@@ -192,12 +192,8 @@ class PatientDetailsViewModel(
 
             phone = ""
 
-            if (it.hasContact()){
-                if (it.contactFirstRep.hasTelecom()){
-                    if (it.contactFirstRep.telecomFirstRep.hasValue()){
-                        phone = it.contactFirstRep.telecomFirstRep.value
-                    }
-                }
+            if (it.hasTelecom()){
+                phone = it.telecomFirstRep.value
             }
 
 
