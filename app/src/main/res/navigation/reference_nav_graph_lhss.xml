@@ -121,7 +121,21 @@
             android:id="@+id/action_patient_patient"
             app:destination="@id/patientDataDetailFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/addVisitFragment"
+        android:name="com.intellisoft.lhss.AddVisitFragment"
+        android:label="fragment_add_visit"
+        tools:layout="@layout/fragment_add_visit" />
+    <fragment
+        android:id="@+id/doReferralFragment"
+        android:name="com.intellisoft.lhss.DoReferralFragment"
+        android:label="fragment_do_referral"
+        tools:layout="@layout/fragment_do_referral" />
+    <fragment
+        android:id="@+id/workFlowReviewFragment"
+        android:name="com.intellisoft.lhss.WorkFlowReviewFragment"
+        android:label="fragment_work_flow_review"
+        tools:layout="@layout/fragment_work_flow_review" />
 
 
 </navigation>

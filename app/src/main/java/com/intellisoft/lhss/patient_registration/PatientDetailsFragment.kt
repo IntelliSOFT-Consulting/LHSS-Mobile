@@ -23,6 +23,7 @@ import com.intellisoft.lhss.fhir.data.CustomPatient
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.fhir.data.NavigationDetails
 import com.intellisoft.lhss.utils.AppUtils
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -200,6 +201,8 @@ class PatientDetailsFragment : Fragment() {
         val middleName = binding.middlename.text.toString()
         var dateOfBirthString = binding.dateOfBirth.text.toString()
         val age = binding.calculatedAge.text.toString()
+        binding.ccp.registerPhoneNumberTextView(binding.etPhone);
+
         val phoneNumber = binding.etPhone.text.toString()
 
         if (phoneNumber.isEmpty()){
