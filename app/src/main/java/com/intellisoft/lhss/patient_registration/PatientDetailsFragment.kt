@@ -189,6 +189,12 @@ class PatientDetailsFragment : Fragment() {
 
         // check the year as well
         val year = formatter.calculateAgeYear(valueCurrent)
+
+        if (year < 18){
+            binding.linearPhone.visibility = View.GONE
+        }else{
+            binding.linearPhone.visibility = View.VISIBLE
+        }
     }
 
 
@@ -203,13 +209,18 @@ class PatientDetailsFragment : Fragment() {
         val age = binding.calculatedAge.text.toString()
         binding.ccp.registerPhoneNumberTextView(binding.etPhone);
 
+        var phoneValue = ""
         val phoneNumber = binding.etPhone.text.toString()
 
-        if (phoneNumber.isEmpty()){
-            binding.apply {
-                etPhone.error = "Enter Phone number"
-                etPhone.requestFocus()
-                return
+        if (binding.linearPhone.visibility == View.VISIBLE){
+            if (phoneNumber.isEmpty()){
+                binding.apply {
+                    etPhone.error = "Enter Phone number"
+                    etPhone.requestFocus()
+                    return
+                }
+            } else{
+                phoneValue = phoneNumber
             }
         }
 
@@ -298,7 +309,7 @@ class PatientDetailsFragment : Fragment() {
             gender = gender,
             age = age,
             dateOfBirth = dateOfBirthString,
-            phoneNumber = phoneNumber
+            phoneNumber = phoneValue
         )
 
         formatter.saveSharedPref("registrationFlowPersonal", Gson().toJson(payload), requireContext())

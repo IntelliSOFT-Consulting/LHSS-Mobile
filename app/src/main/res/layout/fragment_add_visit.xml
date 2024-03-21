@@ -80,7 +80,7 @@
                         android:id="@+id/facilityName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/identification_type" />
+                        android:entries="@array/djibouti_facilities" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,7 +96,7 @@
                         android:id="@+id/serviceProvided"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/identification_type" />
+                        android:entries="@array/services_provided" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +131,7 @@
                         android:id="@+id/treatmentProvided"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:entries="@array/identification_type" />
+                        android:entries="@array/treatment_provided" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

@@ -492,11 +492,13 @@ class PatientDetailsViewModel(
         }
         if (it.hasValueCodeableConcept()){
             val valueCodeableConcept = it.valueCodeableConcept
-            val textValue = valueCodeableConcept.text
+            if (valueCodeableConcept.hasText()){
+                val textValue = valueCodeableConcept.text
+                name = textValue
+            }
             if (valueCodeableConcept.hasCoding()){
                 val coding = valueCodeableConcept.coding
             }
-            name = textValue
         }
         if (it.hasValueStringType()){
             val textValue = it.valueStringType.value
