@@ -120,6 +120,9 @@
         <action
             android:id="@+id/action_patient_patient"
             app:destination="@id/patientDataDetailFragment" />
+        <action
+            android:id="@+id/action_patientDataDetailFragment_to_patient_list"
+            app:destination="@id/patient_list" />
     </fragment>
     <fragment
         android:id="@+id/addVisitFragment"

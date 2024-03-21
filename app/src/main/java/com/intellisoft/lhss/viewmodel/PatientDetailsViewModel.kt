@@ -16,6 +16,7 @@ import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.logicalId
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.data.DbEncounterDetails
 import com.intellisoft.lhss.fhir.data.DbObservation
 import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
@@ -385,9 +386,9 @@ class PatientDetailsViewModel(
     }
     fun getWorkflowData(workflowName: String) = runBlocking { getWorkflow(workflowName) }
 
-    private suspend fun getWorkflow(workflowName:String): ArrayList<DbObservation?>{
+    private suspend fun getWorkflow(workflowName:String): ArrayList<DbEncounterDetails?>{
 
-        val encounterList = ArrayList<DbObservation?>()
+        val encounterList = ArrayList<DbEncounterDetails?>()
         fhirEngine
             .search<Encounter> {
                 filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
@@ -400,12 +401,14 @@ class PatientDetailsViewModel(
     }
 
 
-    private suspend fun createWorkflowItem(it: Encounter, workflowName: String):DbObservation? {
+    private suspend fun createWorkflowItem(it: Encounter, workflowName: String):DbEncounterDetails? {
 
         val id = it.id.replace("Encounter/","")
         val type = it.type.firstOrNull()
+        var typeWorkFlowData = ""
         if (type != null){
             if (type.hasText() && type.text == workflowName) {
+                typeWorkFlowData = type.text.toString()
                 var destination = ""
                 if (it.hospitalization.hasDestination() && it.hospitalization.destination.hasReference()) {
                     destination =
@@ -424,13 +427,13 @@ class PatientDetailsViewModel(
                     status = it.status.toString()
                 }
 
-                return DbObservation(
+                return DbEncounterDetails(
                     id,
-                    id,
-                    destination,
-                    destination,
-                    period,
                     status,
+                    typeWorkFlowData,
+                    period,
+                    origin,
+                    destination,
                     workflowName
                 )
 

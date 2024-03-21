@@ -21,6 +21,9 @@ import com.intellisoft.lhss.fhir.data.DbPatientDataDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -95,6 +98,7 @@ class DetailFragment : Fragment() {
 
         return binding.root
     }
+
     private fun onBackPressed() {
         val intent = Intent(requireContext() , PatientDetailActivity::class.java)
         startActivity(intent)
@@ -102,31 +106,40 @@ class DetailFragment : Fragment() {
 
     private fun getDetails() {
 
-        val workflowName = formatterClass.getSharedPref("workflowName", requireContext())
-        if (workflowName != null){
-            if (workflowName == "REFERRALS"){
-                binding.btnReceivePatient.visibility = View.VISIBLE
+        CoroutineScope(Dispatchers.IO).launch {
+            val workflowName = formatterClass.getSharedPref("workflowName", requireContext())
+            if (workflowName != null){
+                if (workflowName == "REFERRALS"){
+                    CoroutineScope(Dispatchers.Main).launch {
+                        binding.btnReceivePatient.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            encounterId = formatterClass.getSharedPref("encounterId", requireContext())
+            if (encounterId != null){
+                val patientDataList = ArrayList<DbPatientDataDetails>()
+                val observations = patientDetailsViewModel.generateObservations(encounterId!!)
+                observations.forEach {
+                    val key = it.text
+                    val name = it.name
+
+                    val dbPatientDataDetails = DbPatientDataDetails(key, name)
+                    patientDataList.add(dbPatientDataDetails)
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    val visitHistoryAdapter = PatientDetailDataAdapter(patientDataList, requireContext())
+                    binding.recyclerView.adapter = visitHistoryAdapter
+                }
             }
         }
 
-        encounterId = formatterClass.getSharedPref("encounterId", requireContext())
-        if (encounterId != null){
-            val patientDataList = ArrayList<DbPatientDataDetails>()
-            val observations = patientDetailsViewModel.generateObservations(encounterId!!)
-            observations.forEach {
-                val key = it.text
-                val name = it.name
 
-                val dbPatientDataDetails = DbPatientDataDetails(key, name)
-                patientDataList.add(dbPatientDataDetails)
-            }
-            val visitHistoryAdapter = PatientDetailDataAdapter(patientDataList, requireContext())
-            binding.recyclerView.adapter = visitHistoryAdapter
-
-        }
 
 
     }
+
 
 
 }

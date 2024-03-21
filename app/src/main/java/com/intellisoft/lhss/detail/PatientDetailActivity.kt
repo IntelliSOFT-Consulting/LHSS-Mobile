@@ -114,6 +114,9 @@ class PatientDetailActivity : AppCompatActivity() {
             NavigationDetails.ADD_REFERRAL_LIST.name -> {
                 navController.navigate(R.id.workFlowReviewFragment)
             }
+            NavigationDetails.DETAIL_VIEW.name -> {
+                navController.navigate(R.id.detailFragment)
+            }
         }
 
 
@@ -146,6 +149,9 @@ class PatientDetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
 
     }
 

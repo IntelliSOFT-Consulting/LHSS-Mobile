@@ -225,6 +225,11 @@ class AdministerVaccineViewModel(
                 typeCodeableConceptList.add(typeCodeableConcept)
                 encounter.type = typeCodeableConceptList
 
+                /**
+                 * This should handle the different statuses
+                 *   in-progress => This should represent a referral that has been started
+                 *   completed => This should represent a complete referral that has been accepted
+                 */
                 if (lhssFlow == "REFERRALS"){
 
                     val valueData = dbPatientDataDetailsList.find { it.key == "Health Facility Referred to" }
@@ -233,8 +238,12 @@ class AdministerVaccineViewModel(
                         val destinationReference = Reference(destinationRef)
                         encounter.hospitalization.destination = destinationReference
                     }
-                }
+                    encounter.status = Encounter.EncounterStatus.INPROGRESS
 
+                }else{
+                    encounter.status = Encounter.EncounterStatus.FINISHED
+
+                }
 
                 formatterClass.deleteSharedPref("lhssFlow", getApplication<Application>().applicationContext)
             }
@@ -244,13 +253,7 @@ class AdministerVaccineViewModel(
 
             encounter.period.start = Date()
 
-            /**
-             * This should handle the different statuses
-             *   in-progress => This should represent a referral that has been started
-             *   completed => This should represent a complete referral that has been accepted
-             */
 
-            encounter.status = Encounter.EncounterStatus.INPROGRESS
 
             val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", getApplication<Application>().applicationContext)
 
@@ -270,6 +273,7 @@ class AdministerVaccineViewModel(
                 val value = it.value
 
                 val dbValueCoding = DbValueCoding("http://loinc.org","123",value)
+
                 val dbPatientDataAnswer = DbPatientDataAnswer(value, dbValueCoding)
 
                 val dbPatientData = DbPatientData("456", key, dbPatientDataAnswer)
