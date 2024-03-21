@@ -303,6 +303,7 @@
                     </RadioGroup>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/linearPhone"
                         android:layout_marginTop="10dp"
                         android:orientation="vertical"

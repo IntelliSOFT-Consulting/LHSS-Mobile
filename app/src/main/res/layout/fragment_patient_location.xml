@@ -175,7 +175,6 @@
                     app:boxBackgroundMode="outline">
 
                 <Spinner
-                    android:visibility="gone"
                     android:layout_marginTop="15dp"
                     android:id="@+id/region"
                     android:layout_width="match_parent"

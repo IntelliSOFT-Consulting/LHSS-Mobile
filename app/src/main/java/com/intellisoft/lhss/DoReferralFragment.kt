@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Spinner
 import android.widget.Toast
@@ -179,6 +180,41 @@ class DoReferralFragment : Fragment() {
         createSpinner(facilityList, binding.facilityReferredTo, "FACILITY")
         createSpinner(referralList, binding.referralReason, "REFERRAL")
 
+        createSpinnerValue(facilityList)
+
+    }
+
+    private fun createSpinnerValue(facilityList:ArrayList<String>) {
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, facilityList)
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Apply the adapter to the spinner
+        binding.facilityReferredTo.adapter = adapter
+
+        // Set a listener to handle the item selection
+        binding.facilityReferredTo.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>,
+                    selectedItemView: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    // Get the selected item
+                    val selectedItem = parentView.getItemAtPosition(position).toString()
+                    this@DoReferralFragment.referredTofacilityName = selectedItem
+
+
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>) {
+                    // Do nothing here
+                }
+            }
 
     }
 

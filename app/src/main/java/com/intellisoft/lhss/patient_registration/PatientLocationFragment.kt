@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,9 @@ class PatientLocationFragment : Fragment() {
     private val formatter = FormatterClass()
     private val viewModel: AddPatientViewModel by viewModels()
 
+    private var isPatientUpdate:String? = null
+    private var isPatientUpdateBack:String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,8 +58,9 @@ class PatientLocationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val isUpdate = formatterClass.getSharedPref("isPatientUpdate", requireContext())
-        val isUpdateBack = FormatterClass().getSharedPref("isPatientUpdateBack", requireContext())
+
+        isPatientUpdate = formatterClass.getSharedPref("isPatientUpdate", requireContext())
+        isPatientUpdateBack = FormatterClass().getSharedPref("isPatientUpdateBack", requireContext())
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -64,7 +69,7 @@ class PatientLocationFragment : Fragment() {
         }
         binding.imgBtnBack.setOnClickListener { findNavController().navigate(R.id.patientDetailsFragment) }
 
-        if (isUpdate != null || isUpdateBack != null) {
+        if (isPatientUpdate != null || isPatientUpdateBack != null) {
             displayInitialData()
         }
 
@@ -95,11 +100,12 @@ class PatientLocationFragment : Fragment() {
         val occupationType = dbAdministrative.occupationType
         val originCountry = dbAdministrative.originCountry
         val residenceCountry = dbAdministrative.residenceCountry
-        val region = dbAdministrative.region
-        val district = dbAdministrative.district
+        regionValue = dbAdministrative.region
+        districtValue = dbAdministrative.district
 
         createSpinner(ArrayList(identificationTypeList.toMutableList()), binding.identificationType, identificationType)
         createSpinner(ArrayList(occupationList.toMutableList()), binding.occupationType, occupationType)
+
         createSpinner(ArrayList(originCountryList.toMutableList()), binding.originCountry, originCountry)
         createSpinner(ArrayList(residenceCountryList.toMutableList()), binding.residenceCountry, residenceCountry)
 
@@ -114,8 +120,9 @@ class PatientLocationFragment : Fragment() {
             districtList = ArrayList(ethiopiaDistrictList.toMutableList())
         }
 
-        createSpinner(ArrayList(regionList.toMutableList()), binding.region, region)
-        createSpinner(ArrayList(districtList.toMutableList()), binding.district, district)
+//        createSpinner(ArrayList(regionList.toMutableList()), binding.region, region)
+//        createSpinner(ArrayList(districtList.toMutableList()), binding.district, district)
+
 
         if (identificationNumber != ""){
             binding.identificationNumber.setText(identificationNumber)
@@ -124,10 +131,13 @@ class PatientLocationFragment : Fragment() {
     }
 
     private fun createSpinner(spinnerList: ArrayList<String>, spinner: Spinner, valueName:String){
+
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             spinnerList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
 
         var preselectedIndex = 0
         for (index in spinnerList.indices ){
@@ -136,9 +146,6 @@ class PatientLocationFragment : Fragment() {
                 break
             }
         }
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
 
         spinner.setSelection(preselectedIndex)
     }
@@ -201,6 +208,7 @@ class PatientLocationFragment : Fragment() {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     val selectedItem = parent?.getItemAtPosition(position).toString()
                     if (selectedItem != residenceCountryList.first()){
+
                         region.visibility = View.VISIBLE
                         district.visibility = View.VISIBLE
 
@@ -215,8 +223,9 @@ class PatientLocationFragment : Fragment() {
                             districtList = ArrayList(ethiopiaDistrictList.toMutableList())
                         }
 
-                        createRegionSpinner(regionList, region)
-                        createRegionSpinner(districtList, district)
+                        createRegionSpinner(regionList, region, regionValue)
+                        createRegionSpinner(districtList, district, districtValue)
+
 
                         this@PatientLocationFragment.residenceCountryValue = selectedItem
                     }
@@ -263,7 +272,7 @@ class PatientLocationFragment : Fragment() {
     }
 
 
-    private fun createRegionSpinner(regionList: ArrayList<String>, spinner: Spinner) {
+    private fun createRegionSpinner(regionList: ArrayList<String>, spinner: Spinner, valueName: String) {
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -272,6 +281,16 @@ class PatientLocationFragment : Fragment() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
+
+        var preselectedIndex = 0
+        for (index in regionList.indices ){
+            if (valueName == regionList[index]){
+                preselectedIndex = index
+                break
+            }
+        }
+
+        spinner.setSelection(preselectedIndex)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
