@@ -64,16 +64,7 @@ class PatientDetailsFragment : Fragment() {
 
 
         binding.apply {
-//            radioGroup.setOnCheckedChangeListener { group, checkedId ->
-//                if (checkedId != -1) {
-//                    val dataValue = when (checkedId) {
-//                        R.id.radioButtonYes -> "Male"
-//                        R.id.radioButtonNo -> "Female"
-//                        else -> null
-//                    }
-//
-//                }
-//            }
+
             radioGroupDob.setOnCheckedChangeListener { group, checkedId ->
                 if (checkedId != -1) {
                     when (checkedId) {
@@ -84,14 +75,12 @@ class PatientDetailsFragment : Fragment() {
 
                         R.id.radioButtonNoDob -> {
                             lnEstimated.visibility = View.VISIBLE
-
                             telDateOfBirth.visibility = View.GONE
                         }
 
                         else -> {
 
                             lnEstimated.visibility = View.GONE
-
                             telDateOfBirth.visibility = View.GONE
                         }
                     }
@@ -150,7 +139,7 @@ class PatientDetailsFragment : Fragment() {
                     etPhone.setText(phoneNumberValue)
 
                     val gender = data.gender
-                    if (gender == "Male") {
+                    if (gender.contains("male")) {
                         radioButtonYes.isChecked = true
                     } else {
                         radioButtonNo.isChecked = true
