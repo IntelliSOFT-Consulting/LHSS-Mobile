@@ -65,7 +65,7 @@ class PatientLocationFragment : Fragment() {
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         (requireActivity() as AppCompatActivity).supportActionBar?.apply {
-            title = "Register Patient"
+            title = "Patient Details"
         }
         binding.imgBtnBack.setOnClickListener { findNavController().navigate(R.id.patientDetailsFragment) }
 
