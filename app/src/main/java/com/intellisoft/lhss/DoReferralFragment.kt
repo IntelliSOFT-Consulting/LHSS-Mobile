@@ -172,9 +172,13 @@ class DoReferralFragment : Fragment() {
         val djibouti_facilities = resources.getStringArray(R.array.djibouti_facilities)
         val ethiopia_facilities = resources.getStringArray(R.array.ethiopia_facilities)
 
-        var facilityList = ArrayList<String>()
+        val facilityList = ArrayList(
+            djibouti_facilities.toMutableList() +
+                    ethiopia_facilities.toMutableList().removeAt(0)
+        )
 
-        facilityList = if (country == "Ethiopia") ArrayList(ethiopia_facilities.toMutableList()) else ArrayList(djibouti_facilities.toMutableList())
+
+//        facilityList = if (country == "Ethiopia") ArrayList(ethiopia_facilities.toMutableList()) else ArrayList(djibouti_facilities.toMutableList())
 
         val referral_reason = resources.getStringArray(R.array.referral_reason)
         val referralList = ArrayList(referral_reason.toMutableList())

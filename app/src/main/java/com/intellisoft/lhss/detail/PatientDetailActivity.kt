@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -60,6 +61,7 @@ class PatientDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         binding = ActivityPatientDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -139,6 +141,11 @@ class PatientDetailActivity : AppCompatActivity() {
 
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+
+        }
+    }
 
 
 

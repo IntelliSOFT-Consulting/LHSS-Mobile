@@ -111,13 +111,13 @@ class DetailFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
 
             var loggedInFacility = ""
-            var referralOriginFacility = ""
+//            var referralOriginFacility = ""
             var referralDestinationFacility = ""
 
-            val referralOrigin = formatterClass.getSharedPref("referralOrigin", requireContext())
-            if (referralOrigin != null){
-                referralOriginFacility = referralOrigin.replace("-", " ")
-            }
+//            val referralOrigin = formatterClass.getSharedPref("referralOrigin", requireContext())
+//            if (referralOrigin != null){
+//                referralOriginFacility = referralOrigin.replace("-", " ")
+//            }
             val referralDestination = formatterClass.getSharedPref("referralDestination", requireContext())
             if (referralDestination != null){
                 referralDestinationFacility = referralDestination.replace("-", " ")
@@ -128,20 +128,17 @@ class DetailFragment : Fragment() {
                 loggedInFacility = practitionerFacility.replace("-", " ")
             }
 
-            if (loggedInFacility == referralDestinationFacility){
-                binding.btnReceivePatient.visibility = View.VISIBLE
-            }
 
-            if (loggedInFacility == referralOriginFacility){
-                binding.btnReceivePatient.visibility = View.GONE
-            }
+
 
 
             val workflowName = formatterClass.getSharedPref("workflowName", requireContext())
             if (workflowName != null){
                 if (workflowName == "REFERRALS"){
-                    CoroutineScope(Dispatchers.Main).launch {
-                        binding.btnReceivePatient.visibility = View.VISIBLE
+                    if (loggedInFacility == referralDestinationFacility){
+                        CoroutineScope(Dispatchers.Main).launch {
+                            binding.btnReceivePatient.visibility = View.VISIBLE
+                        }
                     }
                 }
             }

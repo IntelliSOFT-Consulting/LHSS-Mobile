@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.fhir.FhirEngine
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.intellisoft.lhss.databinding.FragmentPatientDataDetailBinding
 import com.intellisoft.lhss.detail.ui.main.UpdateFragment
@@ -128,6 +129,7 @@ class PatientDataDetailFragment : Fragment() {
         binding.imgBtnOptions.setOnClickListener {
             showPopupMenu(it)
         }
+
 
         getPatientDetails()
 
