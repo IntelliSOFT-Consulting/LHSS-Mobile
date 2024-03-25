@@ -3,6 +3,9 @@ package com.intellisoft.lhss.patient_registration
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +67,27 @@ class PatientDetailsFragment : Fragment() {
 
 
         binding.apply {
+
+            editTextOne.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    if (s!!.isNotEmpty()){
+                        val yearString = s.toString().toIntOrNull()
+                        if (yearString != null){
+                            if (yearString < 18){
+                                binding.linearPhone.visibility = View.GONE
+                            }else{
+                                binding.linearPhone.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+            })
 
             radioGroupDob.setOnCheckedChangeListener { group, checkedId ->
                 if (checkedId != -1) {
