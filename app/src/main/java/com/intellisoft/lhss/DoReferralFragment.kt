@@ -103,11 +103,7 @@ class DoReferralFragment : Fragment() {
             Toast.makeText(requireContext(), "Select a referral reason", Toast.LENGTH_SHORT).show()
             return
         }
-        if (TextUtils.isEmpty(providerName)){
-            binding.etProviderName.setError("Field cannot be empty")
-            binding.etProviderName.requestFocus()
-            return
-        }
+
         if (binding.tvDetails.visibility == View.VISIBLE){
             if (TextUtils.isEmpty(referralDetails)){
                 binding.etDetails.setError("Field cannot be empty")
@@ -121,15 +117,24 @@ class DoReferralFragment : Fragment() {
         val dbPatientDataDetails1 = DbPatientDataDetails("Referring Health Facility",referredFromfacilityName)
         val dbPatientDataDetails2 = DbPatientDataDetails("Health Facility Referred to",referredTofacilityName)
         val dbPatientDataDetails3 = DbPatientDataDetails("Reason for Referral",referralReason)
-        val dbPatientDataDetails4 = DbPatientDataDetails("Details",referralDetails)
         val dbPatientDataDetails5 = DbPatientDataDetails("Date of referral",selectedDate)
+
+        if(!TextUtils.isEmpty(providerName)){
+            val dbPatientDataDetails6 = DbPatientDataDetails("Details",providerName)
+            dbPatientDataDetailsList.add(dbPatientDataDetails6)
+        }
+        if (!TextUtils.isEmpty(referralDetails)){
+            val dbPatientDataDetails4 = DbPatientDataDetails("Details",referralDetails)
+            dbPatientDataDetailsList.add(dbPatientDataDetails4)
+
+        }
+
 
         dbPatientDataDetailsList.addAll(
             listOf(
                 dbPatientDataDetails1,
                 dbPatientDataDetails2,
                 dbPatientDataDetails3,
-                dbPatientDataDetails4,
                 dbPatientDataDetails5,
             )
         )

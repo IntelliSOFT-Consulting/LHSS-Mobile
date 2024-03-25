@@ -63,7 +63,7 @@
                     android:id="@+id/tvDatePicker"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/spinner_border"
-                    android:text="Date of Visit *"
+                    android:text="Date of Referral *"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:drawableEndCompat="@drawable/ic_action_date" />
