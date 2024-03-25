@@ -88,6 +88,7 @@ class DetailFragment : Fragment() {
         getDetails()
 
 
+
         binding.btnReceivePatient.setOnClickListener {
             if (encounterId != null) {
                 patientDetailsViewModel.updateEncounter(encounterId!!)
@@ -106,7 +107,36 @@ class DetailFragment : Fragment() {
 
     private fun getDetails() {
 
+        //Origin Should not have ability to receive
         CoroutineScope(Dispatchers.IO).launch {
+
+            var loggedInFacility = ""
+            var referralOriginFacility = ""
+            var referralDestinationFacility = ""
+
+            val referralOrigin = formatterClass.getSharedPref("referralOrigin", requireContext())
+            if (referralOrigin != null){
+                referralOriginFacility = referralOrigin.replace("-", " ")
+            }
+            val referralDestination = formatterClass.getSharedPref("referralDestination", requireContext())
+            if (referralDestination != null){
+                referralDestinationFacility = referralDestination.replace("-", " ")
+            }
+
+            val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
+            if (practitionerFacility != null){
+                loggedInFacility = practitionerFacility.replace("-", " ")
+            }
+
+            if (loggedInFacility == referralDestinationFacility){
+                binding.btnReceivePatient.visibility = View.VISIBLE
+            }
+
+            if (loggedInFacility == referralOriginFacility){
+                binding.btnReceivePatient.visibility = View.GONE
+            }
+
+
             val workflowName = formatterClass.getSharedPref("workflowName", requireContext())
             if (workflowName != null){
                 if (workflowName == "REFERRALS"){

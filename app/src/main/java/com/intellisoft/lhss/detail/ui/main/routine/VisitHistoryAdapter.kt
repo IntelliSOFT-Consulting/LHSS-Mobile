@@ -42,11 +42,18 @@ class VisitHistoryAdapter(private var encounterList: ArrayList<DbEncounterDetail
             val encounterId = encounterList[pos].id
             val workflowName = encounterList[pos].type
             val status = encounterList[position].status
+            val origin = encounterList[position].origin
+            val destination = encounterList[position].destination
             if (status != null){
                 if (status == "INPROGRESS"){
                     FormatterClass().saveSharedPref("workflowName",workflowName.toString(), context)
                 }
             }
+            //Add origin and destination
+            FormatterClass().saveSharedPref("referralOrigin",origin.toString(), context)
+            FormatterClass().saveSharedPref("referralDestination",destination.toString(), context)
+
+
             FormatterClass().saveSharedPref("encounterId",encounterId.toString(), context)
             val patientId = FormatterClass().getSharedPref("patientId", context)
 

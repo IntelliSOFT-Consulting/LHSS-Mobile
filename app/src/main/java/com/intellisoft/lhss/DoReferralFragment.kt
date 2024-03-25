@@ -120,7 +120,7 @@ class DoReferralFragment : Fragment() {
         val dbPatientDataDetails5 = DbPatientDataDetails("Date of referral",selectedDate)
 
         if(!TextUtils.isEmpty(providerName)){
-            val dbPatientDataDetails6 = DbPatientDataDetails("Details",providerName)
+            val dbPatientDataDetails6 = DbPatientDataDetails("Referring Provider name",providerName)
             dbPatientDataDetailsList.add(dbPatientDataDetails6)
         }
         if (!TextUtils.isEmpty(referralDetails)){

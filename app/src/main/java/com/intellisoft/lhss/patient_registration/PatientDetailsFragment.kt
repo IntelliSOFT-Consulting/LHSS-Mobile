@@ -163,11 +163,9 @@ class PatientDetailsFragment : Fragment() {
                     etPhone.setText(phoneNumberValue)
 
                     val gender = data.gender
-                    if (gender.contains("male")) {
-                        radioButtonYes.isChecked = true
-                    } else {
-                        radioButtonNo.isChecked = true
-                    }
+                    if (gender == "male") radioButtonYes.isChecked = true
+                    if (gender == "female") radioButtonNo.isChecked = true
+
                     radioButtonYesDob.isChecked = true
                     telDateOfBirth.visibility = View.VISIBLE
                     dateOfBirth.setText(data.dateOfBirth)

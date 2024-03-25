@@ -240,6 +240,8 @@ class FormatterClass {
             "immunizationId" ,
             "lhssFlow" ,
             "workflowName" ,
+            "referralOrigin" ,
+            "referralDestination" ,
 //            "selectedVaccinationVenue" ,
 //            "isSelectedVaccinationVenue" ,
             "administeredProduct")

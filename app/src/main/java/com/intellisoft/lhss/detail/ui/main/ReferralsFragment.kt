@@ -18,6 +18,7 @@ import com.intellisoft.lhss.databinding.FragmentRecommendationBinding
 import com.intellisoft.lhss.detail.PatientDetailActivity
 import com.intellisoft.lhss.detail.ui.main.routine.VisitHistoryAdapter
 import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.fhir.data.DbEncounterDetails
 import com.intellisoft.lhss.fhir.data.FormatterClass
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModel
 import com.intellisoft.lhss.viewmodel.PatientDetailsViewModelFactory
@@ -102,15 +103,18 @@ class ReferralsFragment : Fragment() {
     private fun getReferrals() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            var destinationFacility = ""
+            var loggedInFacility = ""
             val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
             if (practitionerFacility != null){
-                destinationFacility = practitionerFacility.replace("-", " ")
+                loggedInFacility = practitionerFacility.replace("-", " ")
             }
 
             val encounterList = patientDetailsViewModel.getWorkflowData("REFERRALS")
 
-            val listValue = encounterList.filterNotNull().filter { it.destination == destinationFacility }
+            val listValue = encounterList.filterNotNull().filter {
+                it.destination.replace("-"," ") == loggedInFacility ||
+                        it.origin.replace("-"," ") == loggedInFacility
+            }
 
             val visitHistoryAdapter = VisitHistoryAdapter(ArrayList(listValue), requireContext())
             CoroutineScope(Dispatchers.Main).launch {
