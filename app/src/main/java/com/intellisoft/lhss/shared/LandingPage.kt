@@ -40,6 +40,8 @@ class LandingPage : Fragment() {
             setHomeAsUpIndicator(null)
         }
 
+        formatterClass.deleteSharedPref("lhssFlow", requireContext())
+
         formatterClass.deleteSharedPref("patientListAction", requireContext())
         formatterClass.deleteSharedPref("isPatientUpdateBack", requireContext())
 
@@ -67,6 +69,7 @@ class LandingPage : Fragment() {
             }
             "Referrals" -> {
                 findNavController().navigate(R.id.fragmentReferrals)
+                formatterClass.saveSharedPref("lhssFlow", "referralFlow", requireContext())
             }
 
             "Register Patient" -> {

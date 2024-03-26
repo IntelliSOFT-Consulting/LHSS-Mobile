@@ -45,10 +45,18 @@ class PatientAdapter(
 
             FormatterClass().saveSharedPref("patientId", id, context)
             val lhssFlow = FormatterClass().getSharedPref("lhssFlow", context)
+            if (lhssFlow != null){
+                val intent = Intent(context, PatientDetailActivity::class.java)
+                intent.putExtra("patientId", id)
+                intent.putExtra("functionToCall", NavigationDetails.REFERRAL_LIST.name)
+                context.startActivity(intent)
+            }else{
+                val intent = Intent(context, PatientDetailActivity::class.java)
+                intent.putExtra("patientId", id)
+                context.startActivity(intent)
+            }
 
-            val intent = Intent(context, PatientDetailActivity::class.java)
-            intent.putExtra("patientId", id)
-            context.startActivity(intent)
+
 
 //            if (lhssFlow == null){
 //                val intent = Intent(context, PatientDetailActivity::class.java)

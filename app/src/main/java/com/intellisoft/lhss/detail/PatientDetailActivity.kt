@@ -119,6 +119,9 @@ class PatientDetailActivity : AppCompatActivity() {
             NavigationDetails.DETAIL_VIEW.name -> {
                 navController.navigate(R.id.detailFragment)
             }
+            NavigationDetails.REFERRAL_LIST.name -> {
+                navController.navigate(R.id.referralsFragment)
+            }
         }
 
 
