@@ -303,7 +303,6 @@
                     </RadioGroup>
 
                     <LinearLayout
-                        android:visibility="gone"
                         android:id="@+id/linearPhone"
                         android:layout_marginTop="10dp"
                         android:orientation="vertical"
@@ -312,7 +311,7 @@
 
                         <TextView
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:text="Phone Number *"
+                            android:text="Phone Number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -323,10 +322,11 @@
                             android:layout_height="wrap_content">
 
                             <com.rilixtech.widget.countrycodepicker.CountryCodePicker
-                                android:id="@+id/ccp"
-                                android:gravity="center"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent" />
+                                android:id="@+id/ccp"
+                                android:layout_gravity="center"
+                                app:ccp_defaultNameCode="@string/country_ethiopia_code"
+                                android:layout_height="wrap_content"/>
 
 
 

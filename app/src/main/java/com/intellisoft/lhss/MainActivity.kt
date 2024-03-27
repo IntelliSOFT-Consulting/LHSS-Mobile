@@ -227,13 +227,9 @@ class MainActivity : AppCompatActivity() {
         )
     }
     private fun registerFunction() {
-        val bundle = Bundle()
-        bundle.putString(
-            AddPatientFragment.QUESTIONNAIRE_FILE_PATH_KEY,
-            "new-patient-registration-paginated.json")
+
         findNavController(R.id.nav_host_fragment_activity_bottem_navigation).navigate(
-            R.id.addPatientFragment,
-            bundle
+            R.id.patientDetailsFragment
         )
     }
 

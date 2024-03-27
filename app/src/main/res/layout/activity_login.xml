@@ -71,7 +71,7 @@
                         android:background="@drawable/edittext_border"
                         android:drawableStart="@drawable/ic_action_email"
                         android:drawablePadding="15dp"
-                        android:hint="Username"
+                        android:hint="Hospital ID"
                         android:singleLine="true"
                         android:textColor="@color/black" />
 

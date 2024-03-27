@@ -101,7 +101,7 @@ class VisitHistory : Fragment() {
             val practitionerFacility = formatterClass.getSharedPref("practitionerFacility", requireContext())
             val encounterList = patientDetailsViewModel.getWorkflowData("NEW_VISIT")
 
-            val listValue = encounterList.filterNotNull().filter { it.origin == practitionerFacility }
+            val listValue = encounterList.filterNotNull()
 
 //            val listValue = ArrayList(encounterList)
             val visitHistoryAdapter = VisitHistoryAdapter(ArrayList(listValue), requireContext())

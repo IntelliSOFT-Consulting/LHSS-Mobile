@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,11 +74,11 @@ class PatientDetailsFragment : Fragment() {
                     if (s!!.isNotEmpty()){
                         val yearString = s.toString().toIntOrNull()
                         if (yearString != null){
-                            if (yearString < 18){
-                                binding.linearPhone.visibility = View.GONE
-                            }else{
-                                binding.linearPhone.visibility = View.VISIBLE
-                            }
+//                            if (yearString < 18){
+//                                binding.linearPhone.visibility = View.GONE
+//                            }else{
+//                                binding.linearPhone.visibility = View.VISIBLE
+//                            }
                         }
                     }
                 }
@@ -201,11 +202,11 @@ class PatientDetailsFragment : Fragment() {
         // check the year as well
         val year = formatter.calculateAgeYear(valueCurrent)
 
-        if (year < 18){
-            binding.linearPhone.visibility = View.GONE
-        }else{
-            binding.linearPhone.visibility = View.VISIBLE
-        }
+//        if (year < 18){
+//            binding.linearPhone.visibility = View.GONE
+//        }else{
+//            binding.linearPhone.visibility = View.VISIBLE
+//        }
     }
 
 
@@ -213,9 +214,9 @@ class PatientDetailsFragment : Fragment() {
     private fun validateData() {
         var gender = ""
         var dateType = ""
-        val firstName = binding.firstname.text.toString()
-        val lastName = binding.lastname.text.toString()
-        val middleName = binding.middlename.text.toString()
+        val firstName = binding.firstname.text.toString().trim()
+        val lastName = binding.lastname.text.toString().trim()
+        val middleName = binding.middlename.text.toString().trim()
         var dateOfBirthString = binding.dateOfBirth.text.toString()
         val age = binding.calculatedAge.text.toString()
         binding.ccp.registerPhoneNumberTextView(binding.etPhone);
@@ -224,15 +225,19 @@ class PatientDetailsFragment : Fragment() {
         val phoneNumber = binding.etPhone.text.toString()
 
         if (binding.linearPhone.visibility == View.VISIBLE){
-            if (phoneNumber.isEmpty()){
-                binding.apply {
-                    etPhone.error = "Enter Phone number"
-                    etPhone.requestFocus()
-                    return
-                }
-            } else{
+            if (!TextUtils.isEmpty(phoneNumber)){
                 phoneValue = phoneNumber
+
             }
+//            if (phoneNumber.isEmpty()){
+//                binding.apply {
+//                    etPhone.error = "Enter Phone number"
+//                    etPhone.requestFocus()
+//                    return
+//                }
+//            } else{
+//                phoneValue = phoneNumber
+//            }
         }
 
         if (firstName.isEmpty()) {

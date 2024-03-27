@@ -290,11 +290,6 @@ class PatientDataDetailFragment : Fragment() {
             val dateBirth = patientDetail.dob
             val phone = patientDetail.phone
 
-            Log.e("-----","-----")
-            println(patientDetail)
-            println(phone)
-            Log.e("-----","-----")
-
             val identificationType = patientDetail.docType
             val identificationNumber = patientDetail.docId
             val occupationType = patientDetail.occupation
@@ -323,7 +318,7 @@ class PatientDataDetailFragment : Fragment() {
             var firstName = ""
             var middleName = ""
             var lastName = ""
-            val parts = fullName.split(" ")
+            val parts = fullName.trim().split(" ")
             if (parts.isNotEmpty()){
                 firstName = parts.getOrNull(0) ?: ""
                 val middleNameParts = if (parts.size > 1){
