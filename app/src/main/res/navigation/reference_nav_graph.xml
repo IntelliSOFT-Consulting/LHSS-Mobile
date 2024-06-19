@@ -3,13 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reference_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/dashboardFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.intellisoft.lhss.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_referralFragment"
+            app:destination="@id/referralFragment"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addVisitFragment"
+            app:destination="@id/addVisitFragment"
+            app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_hospitalListReferralVisitFragment2"
+            app:destination="@id/hospitalListReferralVisitFragment"
+            app:popUpTo="@id/homeFragment" />
+    </fragment>
 
     <activity
         android:id="@+id/mainActivity"
@@ -27,21 +40,99 @@
             app:destination="@id/clientListFragment"
             app:popUpTo="@id/dashboardFragment" />
         <action
-            android:id="@+id/action_dashboardFragment_to_registerClientFragment"
-            app:destination="@id/registerClientFragment"
+            android:id="@+id/action_dashboardFragment_to_registerPatientAFragment"
+            app:destination="@id/registerPatientAFragment"
             app:popUpTo="@id/dashboardFragment" />
+
     </fragment>
 
-    <fragment
-        android:id="@+id/registerClientFragment"
-        android:name="com.intellisoft.lhss.RegisterClientFragment"
-        android:label="fragment_register_client"
-        tools:layout="@layout/fragment_register_client" />
     <fragment
         android:id="@+id/clientListFragment"
         android:name="com.intellisoft.lhss.ClientListFragment"
         android:label="fragment_client_list"
         tools:layout="@layout/fragment_client_list" />
+    <fragment
+        android:id="@+id/registerPatientAFragment"
+        android:name="com.intellisoft.lhss.RegisterPatientAFragment"
+        android:label="fragment_register_patient_a"
+        tools:layout="@layout/fragment_register_patient_a" >
+        <action
+            android:id="@+id/action_registerPatientAFragment_to_registerPatientBFragment"
+            app:destination="@id/registerPatientBFragment"
+            app:popUpTo="@id/registerPatientAFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPatientBFragment"
+        android:name="com.intellisoft.lhss.RegisterPatientBFragment"
+        android:label="fragment_register_patient_b"
+        tools:layout="@layout/fragment_register_patient_b" >
+        <action
+            android:id="@+id/action_registerPatientBFragment_to_registerPatientCFragment"
+            app:destination="@id/registerPatientCFragment"
+            app:popUpTo="@id/registerPatientBFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPatientCFragment"
+        android:name="com.intellisoft.lhss.RegisterPatientCFragment"
+        android:label="fragment_register_patient_c"
+        tools:layout="@layout/fragment_register_patient_c" >
+        <action
+            android:id="@+id/action_registerPatientCFragment_to_registerPatientPreviewFragment"
+            app:destination="@id/registerPatientPreviewFragment"
+            app:popUpTo="@id/registerPatientCFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerPatientPreviewFragment"
+        android:name="com.intellisoft.lhss.RegisterPatientPreviewFragment"
+        android:label="fragment_register_patient_preview"
+        tools:layout="@layout/fragment_register_patient_preview" >
+        <action
+            android:id="@+id/action_registerPatientPreviewFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addVisitFragment"
+        android:name="com.intellisoft.lhss.AddVisitFragment"
+        android:label="fragment_add_visit"
+        tools:layout="@layout/fragment_add_visit" >
+        <action
+            android:id="@+id/action_addVisitFragment_to_previewEnteredDataFragment"
+            app:destination="@id/previewEnteredDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewEnteredDataFragment"
+        android:name="com.intellisoft.lhss.PreviewEnteredDataFragment"
+        android:label="fragment_preview_entered_data"
+        tools:layout="@layout/fragment_preview_entered_data" >
+        <action
+            android:id="@+id/action_previewEnteredDataFragment_pop"
+            app:popUpTo="@id/previewEnteredDataFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/referralFragment"
+        android:name="com.intellisoft.lhss.ReferralFragment"
+        android:label="fragment_referral"
+        tools:layout="@layout/fragment_referral" >
+        <action
+            android:id="@+id/action_referralFragment_to_previewEnteredDataFragment"
+            app:destination="@id/previewEnteredDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hospitalListReferralVisitFragment"
+        android:name="com.intellisoft.lhss.HospitalListReferralVisitFragment"
+        android:label="fragment_hospital_list_referral_visit"
+        tools:layout="@layout/fragment_hospital_list_referral_visit" >
+        <action
+            android:id="@+id/action_hospitalListReferralVisitFragment_to_previewEnteredDataFragment"
+            app:destination="@id/previewEnteredDataFragment"
+            app:popUpTo="@id/hospitalListReferralVisitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.intellisoft.lhss.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 
 
 </navigation>
