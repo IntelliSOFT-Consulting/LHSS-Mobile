@@ -9,4 +9,6 @@
     <string name="sync">Sync</string>
     <string name="query_hint_patient_search">Find by Patient Name</string>
     <string name="description_status">Status</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

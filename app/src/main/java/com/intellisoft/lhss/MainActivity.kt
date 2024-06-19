@@ -13,27 +13,20 @@ import com.intellisoft.lhss.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_main)
 
-//        val toolbar = findViewById<Toolbar>(R.id.toolbar) // Assuming you have a Toolbar with id 'toolbar' in your layout
-//        setSupportActionBar(toolbar)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        findViewById<Toolbar>(R.id.toolbar)
-//            .setupWithNavController(navController, appBarConfiguration)
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            val id = destination.id
-//            when (id) {
-//                R.id.firstFragment -> findViewById<Toolbar>(R.id.toolbar).visibility = View.GONE
-//                else -> findViewById<Toolbar>(R.id.toolbar).visibility = View.VISIBLE
-//            }
-        }
+        findViewById<Toolbar>(R.id.toolbar)
+                .setupWithNavController(navController, appBarConfiguration)
 
 
     }

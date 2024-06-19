@@ -17,4 +17,31 @@
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.intellisoft.lhss.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_dashboardFragment_to_clientListFragment"
+            app:destination="@id/clientListFragment"
+            app:popUpTo="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_registerClientFragment"
+            app:destination="@id/registerClientFragment"
+            app:popUpTo="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerClientFragment"
+        android:name="com.intellisoft.lhss.RegisterClientFragment"
+        android:label="fragment_register_client"
+        tools:layout="@layout/fragment_register_client" />
+    <fragment
+        android:id="@+id/clientListFragment"
+        android:name="com.intellisoft.lhss.ClientListFragment"
+        android:label="fragment_client_list"
+        tools:layout="@layout/fragment_client_list" />
+
+
 </navigation>
