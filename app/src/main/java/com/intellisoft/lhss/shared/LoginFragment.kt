@@ -1,15 +1,17 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.shared
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.intellisoft.lhss.databinding.FragmentPasswordRecoveryBinding
+import com.intellisoft.lhss.databinding.FragmentDashboardBinding
+import com.intellisoft.lhss.databinding.FragmentLoginBinding
 
-class PasswordRecoveryFragment : Fragment() {
 
-    private lateinit var binding: FragmentPasswordRecoveryBinding
+class LoginFragment : Fragment() {
+
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +23,7 @@ class PasswordRecoveryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentPasswordRecoveryBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -1,4 +1,4 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.dashboard
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.intellisoft.lhss.viewmodels.HospitalListReferralVisitViewModel
+import com.intellisoft.lhss.R
 
 class HospitalListReferralVisitFragment : Fragment() {
 

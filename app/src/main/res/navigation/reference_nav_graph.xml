@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.intellisoft.lhss.HomeFragment"
+        android:name="com.intellisoft.lhss.dashboard.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.intellisoft.lhss.DashboardFragment"
+        android:name="com.intellisoft.lhss.dashboard.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" >
         <action
@@ -48,12 +48,12 @@
 
     <fragment
         android:id="@+id/clientListFragment"
-        android:name="com.intellisoft.lhss.ClientListFragment"
+        android:name="com.intellisoft.lhss.dashboard.ClientListFragment"
         android:label="fragment_client_list"
         tools:layout="@layout/fragment_client_list" />
     <fragment
         android:id="@+id/registerPatientAFragment"
-        android:name="com.intellisoft.lhss.RegisterPatientAFragment"
+        android:name="com.intellisoft.lhss.registration.RegisterPatientAFragment"
         android:label="fragment_register_patient_a"
         tools:layout="@layout/fragment_register_patient_a" >
         <action
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerPatientBFragment"
-        android:name="com.intellisoft.lhss.RegisterPatientBFragment"
+        android:name="com.intellisoft.lhss.registration.RegisterPatientBFragment"
         android:label="fragment_register_patient_b"
         tools:layout="@layout/fragment_register_patient_b" >
         <action
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerPatientCFragment"
-        android:name="com.intellisoft.lhss.RegisterPatientCFragment"
+        android:name="com.intellisoft.lhss.registration.RegisterPatientCFragment"
         android:label="fragment_register_patient_c"
         tools:layout="@layout/fragment_register_patient_c" >
         <action
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerPatientPreviewFragment"
-        android:name="com.intellisoft.lhss.RegisterPatientPreviewFragment"
+        android:name="com.intellisoft.lhss.registration.RegisterPatientPreviewFragment"
         android:label="fragment_register_patient_preview"
         tools:layout="@layout/fragment_register_patient_preview" >
         <action
@@ -92,7 +92,7 @@
     </fragment>
     <fragment
         android:id="@+id/addVisitFragment"
-        android:name="com.intellisoft.lhss.AddVisitFragment"
+        android:name="com.intellisoft.lhss.dashboard.AddVisitFragment"
         android:label="fragment_add_visit"
         tools:layout="@layout/fragment_add_visit" >
         <action
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/previewEnteredDataFragment"
-        android:name="com.intellisoft.lhss.PreviewEnteredDataFragment"
+        android:name="com.intellisoft.lhss.dashboard.PreviewEnteredDataFragment"
         android:label="fragment_preview_entered_data"
         tools:layout="@layout/fragment_preview_entered_data" >
         <action
@@ -111,7 +111,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralFragment"
-        android:name="com.intellisoft.lhss.ReferralFragment"
+        android:name="com.intellisoft.lhss.dashboard.ReferralFragment"
         android:label="fragment_referral"
         tools:layout="@layout/fragment_referral" >
         <action
@@ -120,7 +120,7 @@
     </fragment>
     <fragment
         android:id="@+id/hospitalListReferralVisitFragment"
-        android:name="com.intellisoft.lhss.HospitalListReferralVisitFragment"
+        android:name="com.intellisoft.lhss.dashboard.HospitalListReferralVisitFragment"
         android:label="fragment_hospital_list_referral_visit"
         tools:layout="@layout/fragment_hospital_list_referral_visit" >
         <action
@@ -130,12 +130,12 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.intellisoft.lhss.ProfileFragment"
+        android:name="com.intellisoft.lhss.shared.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.intellisoft.lhss.LoginFragment"
+        android:name="com.intellisoft.lhss.shared.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -148,7 +148,7 @@
     </fragment>
     <fragment
         android:id="@+id/passwordRecoveryFragment"
-        android:name="com.intellisoft.lhss.PasswordRecoveryFragment"
+        android:name="com.intellisoft.lhss.shared.PasswordRecoveryFragment"
         android:label="fragment_password_recovery"
         tools:layout="@layout/fragment_password_recovery" >
         <action
@@ -158,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="com.intellisoft.lhss.NewPasswordFragment"
+        android:name="com.intellisoft.lhss.shared.NewPasswordFragment"
         android:label="fragment_new_password"
         tools:layout="@layout/fragment_new_password" >
         <action

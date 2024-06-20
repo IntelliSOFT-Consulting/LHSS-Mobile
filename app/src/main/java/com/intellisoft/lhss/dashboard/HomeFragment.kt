@@ -1,4 +1,4 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.dashboard
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.intellisoft.lhss.viewmodels.HomeViewModel
+import com.intellisoft.lhss.R
 
-class AddVisitFragment : Fragment() {
+class HomeFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AddVisitFragment()
+        fun newInstance() = HomeFragment()
     }
 
-    private val viewModel: AddVisitViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,6 @@ class AddVisitFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_add_visit, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 }

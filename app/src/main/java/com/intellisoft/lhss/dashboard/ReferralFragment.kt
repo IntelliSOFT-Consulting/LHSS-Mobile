@@ -1,4 +1,4 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.dashboard
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.intellisoft.lhss.R
+import com.intellisoft.lhss.viewmodels.ReferralViewModel
 
-class RegisterPatientBFragment : Fragment() {
+class ReferralFragment : Fragment() {
 
     companion object {
-        fun newInstance() = RegisterPatientBFragment()
+        fun newInstance() = ReferralFragment()
     }
 
-    private val viewModel: RegisterPatientBViewModel by viewModels()
+    private val viewModel: ReferralViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,6 @@ class RegisterPatientBFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_register_patient_b, container, false)
+        return inflater.inflate(R.layout.fragment_referral, container, false)
     }
 }

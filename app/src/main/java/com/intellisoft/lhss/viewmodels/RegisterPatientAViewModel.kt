@@ -1,4 +1,4 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.viewmodels
 
 import androidx.lifecycle.ViewModel
 

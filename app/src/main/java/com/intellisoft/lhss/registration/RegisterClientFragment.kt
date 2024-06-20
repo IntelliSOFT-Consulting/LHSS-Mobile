@@ -1,4 +1,4 @@
-package com.intellisoft.lhss
+package com.intellisoft.lhss.registration
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.intellisoft.lhss.R
+import com.intellisoft.lhss.viewmodels.RegisterClientViewModel
 
-class RegisterPatientPreviewFragment : Fragment() {
+class RegisterClientFragment : Fragment() {
 
     companion object {
-        fun newInstance() = RegisterPatientPreviewFragment()
+        fun newInstance() = RegisterClientFragment()
     }
 
-    private val viewModel: RegisterPatientPreviewViewModel by viewModels()
+    private val viewModel: RegisterClientViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,6 @@ class RegisterPatientPreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_register_patient_preview, container, false)
+        return inflater.inflate(R.layout.fragment_register_client, container, false)
     }
 }
