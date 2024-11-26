@@ -191,7 +191,7 @@ class DatePickerFieldCreator(private val context: Context) : FieldCreator {
             hint = if (isMandatory) "$label *" else label
 
             // Set drawable to the right (use 0 for other positions if no drawable is needed)
-            val rightIcon = ContextCompat.getDrawable(context, R.drawable.ic_action_date) // Your drawable resource
+            val rightIcon = ContextCompat.getDrawable(context, R.drawable.ic_date_picker) // Your drawable resource
             setCompoundDrawablesWithIntrinsicBounds(null, null, rightIcon, null)
 
             setOnClickListener {

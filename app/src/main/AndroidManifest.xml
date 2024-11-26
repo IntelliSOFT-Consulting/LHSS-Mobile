@@ -9,24 +9,12 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_new_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_new_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.LHSS"
         tools:targetApi="31">
-        <activity
-            android:name=".screening.Screening"
-            android:exported="false" />
-        <activity
-            android:name=".screening.ReferralScreen"
-            android:exported="false" />
-        <activity
-            android:name=".patient_list.PatientDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Splash"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
