@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/landingPageFragment"
-        android:name="com.intellisoftkenya.a24cblhss.LandingPageFragment"
+        android:name="com.intellisoft.lhss.LandingPageFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_landing_page" >
         <action
@@ -296,7 +296,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.intellisoftkenya.a24cblhss.ProfileFragment"
+        android:name="com.intellisoft.lhss.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
@@ -382,7 +382,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalViewEncountersFragment"
-        android:name="com.intellisoftkenya.a24cblhss.ClinicalViewEncountersFragment"
+        android:name="com.intellisoft.lhss.ClinicalViewEncountersFragment"
         android:label="@string/clinical_details"
         tools:layout="@layout/fragment_clinical_view_encounters" />
     <fragment
@@ -408,7 +408,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.intellisoftkenya.a24cblhss.NotificationFragment"
+        android:name="com.intellisoft.lhss.NotificationFragment"
         android:label="Notification"
         tools:layout="@layout/fragment_notification" >
         <action
@@ -422,7 +422,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewFormFragment"
-        android:name="com.intellisoftkenya.a24cblhss.ViewFormFragment"
+        android:name="com.intellisoft.lhss.ViewFormFragment"
         android:label="@string/form_details"
         tools:layout="@layout/fragment_view_form" />
 

@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
-import com.intellisoftkenya.a24cblhss.databinding.FragmentNotificationBinding
-import com.intellisoftkenya.a24cblhss.fhir.FhirApplication
-import com.intellisoftkenya.a24cblhss.shared.DbCommunicationData
-import com.intellisoftkenya.a24cblhss.shared.FormatterClass
-import com.intellisoftkenya.a24cblhss.shared.NotificationAdapter
-import com.intellisoftkenya.a24cblhss.shared.NotificationServiceViewModel
+import com.intellisoft.lhss.databinding.FragmentNotificationBinding
+import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.shared.DbCommunicationData
+import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.NotificationAdapter
+import com.intellisoft.lhss.shared.NotificationServiceViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.intellisoft.lhss"
-        minSdk = 24
+        minSdk = 26
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appAuthRedirectScheme"] = applicationId!!
         buildFeatures.buildConfig = true

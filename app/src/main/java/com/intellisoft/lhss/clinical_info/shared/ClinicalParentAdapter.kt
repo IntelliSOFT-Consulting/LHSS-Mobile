@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.shared.FormData
-import com.intellisoftkenya.a24cblhss.R
 
 
 class ClinicalParentAdapter(

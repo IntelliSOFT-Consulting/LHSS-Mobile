@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import androidx.lifecycle.ViewModel
 

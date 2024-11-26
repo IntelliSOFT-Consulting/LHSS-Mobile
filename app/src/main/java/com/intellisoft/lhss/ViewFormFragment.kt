@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.clinical_info.shared.ClinicalChildAdapter
-import com.intellisoftkenya.a24cblhss.databinding.FragmentViewFormBinding
-import com.intellisoftkenya.a24cblhss.fhir.FhirApplication
-import com.intellisoftkenya.a24cblhss.shared.FormatterClass
-import com.intellisoftkenya.a24cblhss.shared.NotificationServiceViewModel
+import com.intellisoft.lhss.databinding.FragmentViewFormBinding
+import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.NotificationServiceViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

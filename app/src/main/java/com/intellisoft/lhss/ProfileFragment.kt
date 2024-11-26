@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.intellisoftkenya.a24cblhss.databinding.FragmentPatientCardBinding
-import com.intellisoftkenya.a24cblhss.databinding.FragmentProfileBinding
-import com.intellisoftkenya.a24cblhss.shared.FormatterClass
-import com.intellisoftkenya.a24cblhss.shared.Item
-import com.intellisoftkenya.a24cblhss.shared.ItemAdapter
+import com.intellisoft.lhss.ProfileViewModel
+import com.intellisoft.lhss.databinding.FragmentProfileBinding
+import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.Item
+import com.intellisoft.lhss.shared.ItemAdapter
 
 class ProfileFragment : Fragment() {
 

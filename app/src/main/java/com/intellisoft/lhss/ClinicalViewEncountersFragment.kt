@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import android.app.Application
 import android.os.Bundle
@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.clinical_info.shared.ClinicalChildAdapter
-import com.intellisoftkenya.a24cblhss.databinding.FragmentClinicalViewEncountersBinding
-import com.intellisoftkenya.a24cblhss.fhir.FhirApplication
-import com.intellisoftkenya.a24cblhss.referrals.viewmodels.ReferralDetailsViewModel
-import com.intellisoftkenya.a24cblhss.referrals.viewmodels.ReferralDetailsViewModelFactory
-import com.intellisoftkenya.a24cblhss.shared.DbNavigationDetails
-import com.intellisoftkenya.a24cblhss.shared.FormatterClass
+import com.intellisoft.lhss.databinding.FragmentClinicalViewEncountersBinding
+import com.intellisoft.lhss.fhir.FhirApplication
+import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModel
+import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModelFactory
+import com.intellisoft.lhss.shared.DbNavigationDetails
+import com.intellisoft.lhss.shared.FormatterClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

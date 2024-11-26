@@ -1,4 +1,4 @@
-package com.intellisoftkenya.a24cblhss
+package com.intellisoft.lhss
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,11 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.intellisoftkenya.a24cblhss.databinding.FragmentLandingPageBinding
-import com.intellisoftkenya.a24cblhss.shared.DbNavigationDetails
-import com.intellisoftkenya.a24cblhss.shared.FormatterClass
-import com.intellisoftkenya.a24cblhss.shared.LayoutListViewModel
-import com.intellisoftkenya.a24cblhss.shared.LayoutsRecyclerViewAdapter
+import com.intellisoft.lhss.databinding.FragmentLandingPageBinding
+import com.intellisoft.lhss.shared.DbNavigationDetails
+import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.LayoutListViewModel
+import com.intellisoft.lhss.shared.LayoutsRecyclerViewAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
