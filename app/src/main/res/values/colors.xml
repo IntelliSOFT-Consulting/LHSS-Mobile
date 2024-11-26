@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#F44336</color>
+    <color name="colorPrimary">#207724</color>
+    <color name="colorGreen">#026031</color>
+    <color name="colorPrimaryDark">#115714</color>
+    <color name="colorPrimaryTrans">#41163C94</color>
+    <color name="colorAccent">#50BC55</color>
+    <color name="colorAccentTrans">#D2E0D9</color>
+    <color name="colorStatusBar">#108816</color>
+    <color name="darker_gray">#867F807F</color>
+    <color name="darker_gray2">#289C9F9C</color>
+    <color name="background">#F7F7F8</color>
 </resources>

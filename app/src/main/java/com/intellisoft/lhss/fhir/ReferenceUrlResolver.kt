@@ -17,7 +17,6 @@ class ReferenceUrlResolver(val context: Context) : UrlResolver {
   }
 }
 
-
 /**
  * Returns the logical id of a FHIR Resource URL e.g
  * 1. "https://hapi.fhir.org/baseR4/Binary/1234" returns "1234".

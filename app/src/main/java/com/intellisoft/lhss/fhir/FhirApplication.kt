@@ -2,8 +2,6 @@ package com.intellisoft.lhss.fhir
 
 import android.app.Application
 import android.content.Context
-import com.intellisoft.lhss.fhir.external.ValueSetResolver
-
 import com.google.android.fhir.DatabaseErrorStrategy
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.FhirEngineConfiguration
@@ -12,12 +10,12 @@ import com.google.android.fhir.ServerConfiguration
 import com.google.android.fhir.datacapture.DataCaptureConfig
 import com.google.android.fhir.datacapture.XFhirQueryResolver
 import com.google.android.fhir.search.search
-//import com.intellisoft.lhss.fhir.data.FhirSyncWorker //Import the local fhir
-import com.google.android.fhir.datacapture.BuildConfig
 import com.google.android.fhir.sync.Sync
 import com.google.android.fhir.sync.remote.HttpLogger
-import com.intellisoft.lhss.fhir.data.FhirSyncWorker
+import com.intellisoft.lhss.fhir.Constants.BASE_FHIR_URL
+
 import timber.log.Timber
+
 
 class FhirApplication : Application(), DataCaptureConfig.Provider {
     // Only initiate the FhirEngine when used for the first time, not when the app is created.
@@ -29,20 +27,22 @@ class FhirApplication : Application(), DataCaptureConfig.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
+//        if (BuildConfig.DEBUG) {
+//            Timber.plant(Timber.DebugTree())
+//        }
+        Timber.plant(Timber.DebugTree())
+
         FhirEngineProvider.init(
             FhirEngineConfiguration(
                 enableEncryptionIfSupported = false,
                 DatabaseErrorStrategy.RECREATE_AT_OPEN,
                 ServerConfiguration(
-//                    "http://chanjoke.intellisoftkenya.com:8900/fhir/",
-                    "http://162.254.33.53:8081/fhir/",
+                    BASE_FHIR_URL,
                     httpLogger =
                     HttpLogger(
                         HttpLogger.Configuration(
-                            if (BuildConfig.DEBUG) HttpLogger.Level.BODY else HttpLogger.Level.BASIC
+//                            if (BuildConfig.DEBUG) HttpLogger.Level.BODY else HttpLogger.Level.BASIC
+                            HttpLogger.Level.BODY
                         )
                     ) { Timber.tag("App-HttpLog").d(it) }
                 )
@@ -54,7 +54,9 @@ class FhirApplication : Application(), DataCaptureConfig.Provider {
             DataCaptureConfig().apply {
                 urlResolver = ReferenceUrlResolver(this@FhirApplication as Context)
                 valueSetResolverExternal = object : ValueSetResolver() {}
-                xFhirQueryResolver = XFhirQueryResolver { fhirEngine.search(it) }
+                xFhirQueryResolver =
+                    XFhirQueryResolver { fhirEngine.search(it).map { it.resource } }
+//                    XFhirQueryResolver{fhirEngine.search(it)}
 
             }
     }
@@ -64,10 +66,12 @@ class FhirApplication : Application(), DataCaptureConfig.Provider {
     }
 
     companion object {
-        fun fhirEngine(context: Context) = (context.applicationContext as FhirApplication).fhirEngine
+        fun fhirEngine(context: Context) =
+            (context.applicationContext as FhirApplication).fhirEngine
 
         fun dataStore(context: Context) = (context.applicationContext as FhirApplication).dataStore
     }
 
-    override fun getDataCaptureConfig(): DataCaptureConfig = dataCaptureConfig ?: DataCaptureConfig()
+    override fun getDataCaptureConfig(): DataCaptureConfig =
+        dataCaptureConfig ?: DataCaptureConfig()
 }

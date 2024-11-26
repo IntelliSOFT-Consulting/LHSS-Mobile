@@ -6,13 +6,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.google.android.fhir.sync.DownloadWorkManager
 import kotlinx.coroutines.flow.first
 import org.hl7.fhir.r4.model.ResourceType
 
+
 private val Context.dataStorage: DataStore<Preferences> by
 preferencesDataStore(name = "demo_app_storage")
-
 
 class DemoDataStore(private val context: Context) {
 

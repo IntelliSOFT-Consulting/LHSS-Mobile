@@ -132,14 +132,23 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation("net.openid:appauth:0.11.1")
     implementation("com.auth0.android:jwtdecode:2.0.1")
-    implementation("com.google.android.fhir:engine:0.1.0-beta03")
-    implementation("com.google.android.fhir:data-capture:1.0.0")
-    implementation("com.google.android.fhir:knowledge:0.1.0-alpha01")
-    implementation("com.google.android.fhir:workflow:0.1.0-alpha03")
+    implementation("com.google.android.fhir:engine:1.0.0")
+    implementation("com.google.android.fhir:data-capture:1.2.0")
+    implementation("com.google.android.fhir:knowledge:0.1.0-beta01")
+    implementation("com.google.android.fhir:workflow:0.1.0-beta01")
+    implementation("com.hbb20:ccp:2.6.0")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Kotlin DSL
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
+
+
+
 }

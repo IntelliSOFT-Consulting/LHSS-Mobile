@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_with_rounded_corners"
+    android:padding="8dp"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Tag TextView -->
+            <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/referral_reason"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvReferralReason"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Text TextView -->
+            <TextView
+                android:id="@+id/tvReferralReason"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/njuguna_sarafina"
+                app:layout_constraintStart_toEndOf="@+id/nameLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:lineSpacingMultiplier="1.1" />
+
+            <!-- Bottom Line Divider with Margin -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/darker_gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"/> <!-- Added Top Margin -->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Tag TextView -->
+            <TextView
+                android:id="@+id/crossBorderIdLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/referral_id"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvReferralId"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Text TextView -->
+            <TextView
+                android:id="@+id/tvReferralId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/_072bedf"
+                app:layout_constraintStart_toEndOf="@+id/crossBorderIdLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:lineSpacingMultiplier="1.1" />
+
+            <!-- Bottom Line Divider with Margin -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/darker_gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"/> <!-- Added Top Margin -->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Tag TextView -->
+            <TextView
+                android:id="@+id/dobLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/referral_date"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                android:padding="5dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvReferralDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <!-- Text TextView -->
+            <TextView
+                android:id="@+id/tvReferralDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/_2024_03_04"
+                app:layout_constraintStart_toEndOf="@+id/dobLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:lineSpacingMultiplier="1.1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgBtnStatus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
