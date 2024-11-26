@@ -3,6 +3,8 @@
     <style name="Base.Theme.LHSS" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item> <!-- For AppBar and StatusBar -->
     </style>
 
     <style name="Theme.LHSS" parent="Base.Theme.LHSS" />

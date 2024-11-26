@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.intellisoftkenya.a24cblhss.SplashFragment"
+        android:name="com.intellisoft.lhss.SplashFragment"
         android:label="@string/splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/demographicsFragment"
-        android:name="com.intellisoftkenya.a24cblhss.registration.fragment.DemographicsFragment"
+        android:name="com.intellisoft.lhss.registration.fragment.DemographicsFragment"
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_demographics" >
         <action
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/nextOfKinFragment"
-        android:name="com.intellisoftkenya.a24cblhss.registration.fragment.NextOfKinFragment"
+        android:name="com.intellisoft.lhss.registration.fragment.NextOfKinFragment"
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_next_of_kin" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientRegistrationSummaryFragment"
-        android:name="com.intellisoftkenya.a24cblhss.registration.PatientRegistrationSummaryFragment"
+        android:name="com.intellisoft.lhss.registration.PatientRegistrationSummaryFragment"
         android:label="@string/register_patient_review"
         tools:layout="@layout/fragment_patient_registration_summary" >
         <action
@@ -169,7 +169,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralListFragment"
-        android:name="com.intellisoftkenya.a24cblhss.referrals.fragment.ReferralListFragment"
+        android:name="com.intellisoft.lhss.referrals.fragment.ReferralListFragment"
         android:label="@string/referrals"
         tools:layout="@layout/fragment_referral_list" >
         <action
@@ -179,7 +179,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralDetailsFragment"
-        android:name="com.intellisoftkenya.a24cblhss.referrals.fragment.ReferralDetailsFragment"
+        android:name="com.intellisoft.lhss.referrals.fragment.ReferralDetailsFragment"
         android:label="@string/referral_details"
         tools:layout="@layout/fragment_referral_details" >
         <action
@@ -189,7 +189,7 @@
     </fragment>
     <fragment
         android:id="@+id/acknoledgementFormFragment"
-        android:name="com.intellisoftkenya.a24cblhss.referrals.fragment.AcknoledgementFormFragment"
+        android:name="com.intellisoft.lhss.referrals.fragment.AcknoledgementFormFragment"
         android:label="Acknowledgement Form"
         tools:layout="@layout/fragment_acknoledgement_form" >
         <action
@@ -199,7 +199,7 @@
     </fragment>
     <fragment
         android:id="@+id/acknoledgementDetailsFragment"
-        android:name="com.intellisoftkenya.a24cblhss.referrals.fragment.AcknoledgementDetailsFragment"
+        android:name="com.intellisoft.lhss.referrals.fragment.AcknoledgementDetailsFragment"
         android:label="@string/acknowledgement_form_review"
         tools:layout="@layout/fragment_acknoledgement_details" >
         <action
@@ -286,7 +286,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralPatientList"
-        android:name="com.intellisoftkenya.a24cblhss.referrals.fragment.ReferralPatientList"
+        android:name="com.intellisoft.lhss.referrals.fragment.ReferralPatientList"
         android:label="@string/patient_referral_list"
         tools:layout="@layout/fragment_referral_patient_list" >
         <action
@@ -301,7 +301,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/patientFileFragment"
-        android:name="com.intellisoftkenya.a24cblhss.clinical_info.fragment.PatientFileFragment"
+        android:name="com.intellisoft.lhss.clinical_info.fragment.PatientFileFragment"
         android:label="@string/patient_file"
         tools:layout="@layout/fragment_patient_file" >
         <action
@@ -313,7 +313,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoSectionsFragment"
-        android:name="com.intellisoftkenya.a24cblhss.clinical_info.fragment.ClinicalInfoSectionsFragment"
+        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoSectionsFragment"
         android:label="@string/clinical_info"
         tools:layout="@layout/fragment_clinical_info_sections" >
         <action
@@ -358,7 +358,7 @@
     </fragment>
     <fragment
         android:id="@+id/endTreatmentReviewFragment"
-        android:name="com.intellisoftkenya.a24cblhss.clinical_info.fragment.EndTreatmentReviewFragment"
+        android:name="com.intellisoft.lhss.clinical_info.fragment.EndTreatmentReviewFragment"
         android:label="@string/end_of_treatment_review"
         tools:layout="@layout/fragment_end_treatment_review" >
         <action
