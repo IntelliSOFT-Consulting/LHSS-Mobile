@@ -159,8 +159,12 @@ class EndTreatmentFormFragment : Fragment() {
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Our TB Registration No", true,
-                InputType.TYPE_CLASS_NUMBER
+                "Our TB Registration No",
+                true,
+                InputType.TYPE_CLASS_NUMBER,
+                emptyList(),
+                true,
+                Constants.TB_OUR_REGISTRATION_CODE
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -214,7 +218,7 @@ class EndTreatmentFormFragment : Fragment() {
         }
 
         //Get and populate form data from the database if available
-        val tbRegistrationFhirCode = Constants.TB_REGISTRATION_CODE
+        val tbRegistrationFhirCode = Constants.TB_YOUR_REGISTRATION_CODE
         val tbRegistration = referralViewModel.getObservationCode(tbRegistrationFhirCode)
 
         val rootViewParent = binding.rootLayout.findViewWithTag<View>("Your TB Registration No")

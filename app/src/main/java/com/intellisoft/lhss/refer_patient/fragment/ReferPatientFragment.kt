@@ -184,6 +184,11 @@ class ReferPatientFragment : Fragment() {
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             ),
             DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Tb Focal Person", true,
+                InputType.TYPE_CLASS_TEXT
+            ),
+            DbField(
                 DbWidgets.SPINNER.name,
                 "Title", true, null,
                 titleList),

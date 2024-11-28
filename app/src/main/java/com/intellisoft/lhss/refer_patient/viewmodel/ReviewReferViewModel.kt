@@ -291,7 +291,7 @@ class ReviewReferViewModel (
 
         val fhirCode = dbFormData.fhirCode
             ?: when (dbFormData.tag) {
-                "TB Registration Number" -> { Constants.TB_REGISTRATION_CODE }
+                "TB Registration Number" -> { Constants.TB_YOUR_REGISTRATION_CODE }
                 "Name of Receiving facility" -> { Constants.RECEIVING_FACILITY_NAME }
                 "Date of Referral" -> { Constants.REFERRAL_DATE }
                 else -> { generateRandomLoincCode() }

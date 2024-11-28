@@ -212,6 +212,11 @@ class AcknoledgementFormFragment : Fragment() {
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             ),
             DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Tb Focal Person", true,
+                InputType.TYPE_CLASS_TEXT
+            ),
+            DbField(
                 DbWidgets.SPINNER.name,
                 "Designation", true, null,
                 listOf("Doctor", "Nurse", "Clinical Officer")
@@ -232,6 +237,22 @@ class AcknoledgementFormFragment : Fragment() {
 
         FormUtils.populateView(ArrayList(dbFieldList), binding.rootLayout, fieldManager, requireContext())
 
+        //Get and populate form data from the database if available
+        val ourTbFhirCode = Constants.TB_OUR_REGISTRATION_CODE
+        val ourTbRegistration = referralViewModel.getObservationCode(ourTbFhirCode)
+
+        val rootViewOurTbParent = binding.rootLayout
+            .findViewWithTag<View>("Our TB Registration No")
+        if (rootViewOurTbParent != null && ourTbRegistration != null) {
+            //Check if rootViewParent is EditText and set its text from the retrieved observation
+            if (rootViewOurTbParent is EditText) {
+                rootViewOurTbParent.setText(ourTbRegistration.text)
+                rootViewOurTbParent.setTypeface(rootViewOurTbParent.typeface, Typeface.BOLD)
+                //Set the color to bold
+                rootViewOurTbParent.setTextColor(Color.BLACK)
+            }
+        }
+
         //get the patient name from the database if available
         val patientName = formatterClass.getSharedPref("", "patientName")?: ""
 
@@ -248,7 +269,7 @@ class AcknoledgementFormFragment : Fragment() {
         }
 
         //Get and populate form data from the database if available
-        val fhirCode = Constants.TB_REGISTRATION_CODE
+        val fhirCode = Constants.TB_YOUR_REGISTRATION_CODE
         val tbRegistration = referralViewModel.getObservationCode(fhirCode)
 
         val rootViewParent = binding.rootLayout
@@ -262,6 +283,8 @@ class AcknoledgementFormFragment : Fragment() {
                 rootViewParent.setTextColor(Color.BLACK)
             }
         }
+
+
 
         //Get When the patient was referred from the database if available
         val referralDateFhirCode = Constants.REFERRAL_DATE
