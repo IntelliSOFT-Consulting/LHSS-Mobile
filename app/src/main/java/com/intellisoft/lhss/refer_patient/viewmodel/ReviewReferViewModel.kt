@@ -284,17 +284,18 @@ class ReviewReferViewModel (
         encounterId: String): Observation {
 
         val observation = Observation()
-        observation.id =  formatterClass.generateUuid() // Use timestamp as a unique ID
+        observation.id = formatterClass.generateUuid() // Use timestamp as a unique ID
         observation.status = Observation.ObservationStatus.FINAL
         observation.subject = Reference("Patient/$patientId")
 
-        val fhirCode = if (dbFormData.tag == "TB Registration Number"){
-            Constants.TB_REGISTRATION_CODE
-        }else if (dbFormData.tag == "Name of Receiving facility"){
-            Constants.RECEIVING_FACILITY_NAME
-        }else{
-            generateRandomLoincCode()
-        }
+
+        val fhirCode = dbFormData.fhirCode
+            ?: when (dbFormData.tag) {
+                "TB Registration Number" -> { Constants.TB_REGISTRATION_CODE }
+                "Name of Receiving facility" -> { Constants.RECEIVING_FACILITY_NAME }
+                "Date of Referral" -> { Constants.REFERRAL_DATE }
+                else -> { generateRandomLoincCode() }
+            }
 
 
 //        val fhirCode = dbFormData.fhirCode ?: generateRandomLoincCode()
