@@ -235,7 +235,8 @@ class AcknoledgementFormFragment : Fragment() {
         //get the patient name from the database if available
         val patientName = formatterClass.getSharedPref("", "patientName")?: ""
 
-        val rootViewParentName = binding.rootLayout.findViewWithTag<View>("Name of Patient")
+        val rootViewParentName = binding.rootLayout
+            .findViewWithTag<View>("Name of Patient")
         if (rootViewParentName!= null && patientName!= "") {
             //Check if rootViewParent is EditText and set its text from the retrieved patient name
             if (rootViewParentName is EditText) {
@@ -250,7 +251,8 @@ class AcknoledgementFormFragment : Fragment() {
         val fhirCode = Constants.TB_REGISTRATION_CODE
         val tbRegistration = referralViewModel.getObservationCode(fhirCode)
 
-        val rootViewParent = binding.rootLayout.findViewWithTag<View>("Your TB Registration No")
+        val rootViewParent = binding.rootLayout
+            .findViewWithTag<View>("Your TB Registration No")
         if (rootViewParent != null && tbRegistration != null) {
             //Check if rootViewParent is EditText and set its text from the retrieved observation
             if (rootViewParent is EditText) {
@@ -258,6 +260,23 @@ class AcknoledgementFormFragment : Fragment() {
                 rootViewParent.setTypeface(rootViewParent.typeface, Typeface.BOLD)
                 //Set the color to bold
                 rootViewParent.setTextColor(Color.BLACK)
+            }
+        }
+
+        //Get When the patient was referred from the database if available
+        val referralDateFhirCode = Constants.REFERRAL_DATE
+        val referralDate = referralViewModel.getObservationCode(referralDateFhirCode)
+
+        val rootViewParentReferralDate = binding.rootLayout
+            .findViewWithTag<View>("Date Patient Reported at Receiving Facility")
+        if (rootViewParentReferralDate!= null && referralDate!= null) {
+            //Check if rootViewParent is EditText and set its text from the retrieved observation
+            if (rootViewParentReferralDate is EditText) {
+                rootViewParentReferralDate.setText(referralDate.text)
+                rootViewParentReferralDate.isEnabled = false
+                rootViewParentReferralDate.setTypeface(rootViewParentReferralDate.typeface, Typeface.BOLD)
+                //Set the color to bold
+                rootViewParentReferralDate.setTextColor(Color.BLACK)
             }
         }
 
