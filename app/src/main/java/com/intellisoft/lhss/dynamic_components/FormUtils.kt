@@ -1,6 +1,7 @@
 package com.intellisoft.lhss.dynamic_components
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
@@ -184,9 +185,13 @@ object FormUtils {
         val missingFields = ArrayList<DbFormData>()
         val addedFields = ArrayList<DbFormData>()
 
+        Log.e("******","*****")
+
         // Traverse through all child views of rootLayout
         for (i in 0 until rootLayout.childCount) {
             val childView = rootLayout.getChildAt(i)
+
+            println("childView : $childView")
 
             if (childView.visibility == View.VISIBLE) { // Only process visible views
 
@@ -319,12 +324,12 @@ object FormUtils {
                                     addedFields.add(formData)
                                 }
                             }
-                        }
-
-                        // Process other fields like First Name or any other field without a country code
-                        else if (editText != null) {
+                        }else if (editText != null) {
                             val tag = editText.tag?.toString() ?: ""
                             val text = editText.text.toString()
+
+                            println("tag $tag")
+                            println("text $text")
 
                             // Check if the field is mandatory
                             if (editText.isMandatory) {
@@ -350,6 +355,8 @@ object FormUtils {
                 }
             }
         }
+
+        Log.e("******","*****")
 
         return Pair(ArrayList(addedFields), ArrayList(missingFields))
 

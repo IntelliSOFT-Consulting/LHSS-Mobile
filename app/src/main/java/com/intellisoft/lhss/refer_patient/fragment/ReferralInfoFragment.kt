@@ -3,6 +3,7 @@ package com.intellisoft.lhss.refer_patient.fragment
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -87,7 +88,9 @@ class ReferralInfoFragment : Fragment() {
             // Handle next button click
             // Navigate to the next fragment or perform any action
 
-            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) =
+                FormUtils.extractAllFormData(binding.rootLayout)
+
             if (missingFields.isNotEmpty()){
                 var missingText = ""
                 missingFields.forEach { missingText += "\n ${it.tag}, " }

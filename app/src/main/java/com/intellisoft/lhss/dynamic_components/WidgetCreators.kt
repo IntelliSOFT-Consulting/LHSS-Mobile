@@ -185,9 +185,10 @@ class DatePickerFieldCreator(private val context: Context) : FieldCreator {
     ): View {
 
         // Create an EditText field to display the selected date
-        val dateEditText = EditText(context).apply {
+        val dateEditText = MandatoryEditText(context).apply {
             isFocusable = false // Prevent typing
             background = ContextCompat.getDrawable(context, R.drawable.rounded_edittext)
+            tag = label
             hint = if (isMandatory) "$label *" else label
 
             // Set drawable to the right (use 0 for other positions if no drawable is needed)
