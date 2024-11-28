@@ -31,6 +31,7 @@ class ClinicalInfoSectionsFragment : Fragment() {
     private val binding get() = _binding!!
     private var patientId:String = ""
     private var carePlanId:String = ""
+    private var carePlanStatus:String = ""
     private lateinit var clinicalViewModel: ClinicalInfoDetailsViewModel
 
 
@@ -42,6 +43,7 @@ class ClinicalInfoSectionsFragment : Fragment() {
         formatterClass = FormatterClass(requireContext())
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
         carePlanId = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanId") ?: ""
+        carePlanStatus = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanStatus") ?: ""
 
         clinicalViewModel =
             ViewModelProvider(
@@ -108,14 +110,11 @@ class ClinicalInfoSectionsFragment : Fragment() {
 
         val btnEndTreatment = view.findViewById<Button>(R.id.btnEndTreatment)
 
-
-//        val hasActiveStatus = carePlanList.any { it.status == "ACTIVE" }
-//        if (hasActiveStatus) {
-//            btnEndTreatment.visibility = View.VISIBLE
-//        }else{
-//            btnEndTreatment.visibility = View.GONE
-//        }
-
+        if (carePlanStatus == "COMPLETED"){
+            btnEndTreatment.visibility = View.GONE
+        }else{
+            btnEndTreatment.visibility = View.VISIBLE
+        }
 
         val layoutList = layoutViewModel.getLayoutList()
 

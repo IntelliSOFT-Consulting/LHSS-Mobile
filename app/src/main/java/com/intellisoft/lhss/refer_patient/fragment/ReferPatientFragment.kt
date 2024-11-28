@@ -73,14 +73,10 @@ class ReferPatientFragment : Fragment() {
 
         navigationButtons.setNextButtonClickListener {
 
-            findNavController().navigate(R.id.action_referPatientFragment_to_referralInfoFragment)
-
             // Handle next button click
             // Navigate to the next fragment or perform any action
             val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
 
-            Log.e("------>","<------")
-            println("addedFields $addedFields")
 
             if (missingFields.isNotEmpty()){
                 var missingText = ""

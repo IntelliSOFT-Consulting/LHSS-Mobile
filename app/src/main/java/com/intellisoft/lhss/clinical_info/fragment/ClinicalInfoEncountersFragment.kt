@@ -32,6 +32,7 @@ class ClinicalInfoEncountersFragment : Fragment() {
     private lateinit var formatterClass: FormatterClass
     private var patientId:String = ""
     private var carePlanId:String = ""
+    private var carePlanStatus:String = ""
     private var clinicalInfo:String? = null
     private lateinit var viewModel: ReferralDetailsViewModel
 
@@ -44,6 +45,7 @@ class ClinicalInfoEncountersFragment : Fragment() {
         formatterClass = FormatterClass(requireContext())
         patientId = formatterClass.getSharedPref("", "patientId")?: ""
         carePlanId = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanId")?: ""
+        carePlanStatus = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanStatus")?: ""
         clinicalInfo = formatterClass.getSharedPref("", "CLINICAL_REFERRAL")
         fhirEngine = FhirApplication.fhirEngine(requireContext())
 
@@ -84,6 +86,11 @@ class ClinicalInfoEncountersFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.recyclerView.adapter = formDataAdapter
+
+                if(carePlanStatus == "COMPLETED") {
+                    binding.btnAdd.visibility = View.GONE
+                }
+
             }
         }
 

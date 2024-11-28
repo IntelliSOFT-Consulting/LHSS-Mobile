@@ -70,7 +70,9 @@ class PatientFileAdapter(
         //Add a setOnClickListener to navigate to the corresponding section when the chip is clicked
         holder.linear.setOnClickListener {
             val carePlanId = parentItem.id.replace("CarePlan/", "")
+            val carePlanStatus = parentItem.status
             FormatterClass(context).saveSharedPref(DbNavigationDetails.CARE_PLAN.name, "carePlanId", carePlanId)
+            FormatterClass(context).saveSharedPref(DbNavigationDetails.CARE_PLAN.name, "carePlanStatus", carePlanStatus)
             findNavController(fragment).navigate(R.id.action_patientFileFragment_to_clinicalInfoSectionsFragment)
         }
 

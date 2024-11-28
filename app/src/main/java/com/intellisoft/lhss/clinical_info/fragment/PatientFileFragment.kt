@@ -42,6 +42,7 @@ class PatientFileFragment : Fragment() {
         formatterClass = FormatterClass(requireContext())
 
         formatterClass.deleteSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanId")
+        formatterClass.deleteSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanStatus")
 
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
 

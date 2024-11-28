@@ -52,6 +52,7 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
         "21 months", "24 months")
     private lateinit var fhirEngine: FhirEngine
     private var carePlanId:String = ""
+    private var carePlanStatus:String = ""
     private var encounterId:String = ""
     private val clinicalInfoViewViewModel: ClinicalInfoViewViewModel by viewModels()
     private val spinnerSelectionHandler: SpinnerSelectionHandler = DefaultSpinnerSelectionHandler()
@@ -71,6 +72,7 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
         workflowTitles = formatterClass.getSharedPref("", "CLINICAL_REFERRAL")?: ""
 
         carePlanId = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanId")?: ""
+        carePlanStatus = formatterClass.getSharedPref(DbNavigationDetails.CARE_PLAN.name,"carePlanStatus")?: ""
         encounterId = formatterClass.getSharedPref("","encounterId")?: ""
 
         if (workflowTitles != ""){
@@ -84,6 +86,10 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
         }
 
         val dbFieldList = loadFormData()
+
+        if (carePlanStatus == "COMPLETED"){
+            binding.btnAdd.visibility = View.GONE
+        }
 
         binding.btnAdd.setOnClickListener {
             val bottomNavigationDrawerFragment =
