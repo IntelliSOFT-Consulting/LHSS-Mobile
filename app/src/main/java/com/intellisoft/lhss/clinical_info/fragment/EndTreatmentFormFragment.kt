@@ -214,8 +214,8 @@ class EndTreatmentFormFragment : Fragment() {
         }
 
         //Get and populate form data from the database if available
-        val fhirCode = Constants.TB_REGISTRATION_CODE
-        val tbRegistration = referralViewModel.getObservationCode(fhirCode)
+        val tbRegistrationFhirCode = Constants.TB_REGISTRATION_CODE
+        val tbRegistration = referralViewModel.getObservationCode(tbRegistrationFhirCode)
 
         val rootViewParent = binding.rootLayout.findViewWithTag<View>("Your TB Registration No")
         if (rootViewParent != null && tbRegistration != null) {
@@ -227,6 +227,24 @@ class EndTreatmentFormFragment : Fragment() {
                 rootViewParent.setTextColor(Color.BLACK)
             }
         }
+
+        //Get When the patient was referred from the database if available
+        val referralDateFhirCode = Constants.REFERRAL_DATE
+        val referralDate = referralViewModel.getObservationCode(referralDateFhirCode)
+
+        val rootViewParentReferralDate = binding.rootLayout.findViewWithTag<View>("Date Patient Reported to Facility")
+        if (rootViewParentReferralDate!= null && referralDate!= null) {
+            //Check if rootViewParent is EditText and set its text from the retrieved observation
+            if (rootViewParentReferralDate is EditText) {
+                rootViewParentReferralDate.setText(referralDate.text)
+                rootViewParentReferralDate.isEnabled = false
+                rootViewParentReferralDate.setTypeface(rootViewParentReferralDate.typeface, Typeface.BOLD)
+                //Set the color to bold
+                rootViewParentReferralDate.setTextColor(Color.BLACK)
+            }
+        }
+
+
 
         FormUtils.loadFormData(
             requireContext(),
