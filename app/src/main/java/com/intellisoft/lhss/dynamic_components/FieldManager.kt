@@ -28,7 +28,9 @@ class FieldManager(
         parentLayout: LinearLayout,
         inputType: Int?,
         isEnabled: Boolean = true,
-        isPastDate: Boolean = true
+        isPastDate: Boolean = true,
+        startDate: String? = null,
+        endDate: String? = null
         ) {
 
         val field = fieldCreator.createField(
@@ -36,7 +38,9 @@ class FieldManager(
             isMandatory,
             inputType,
             isEnabled,
-            isPastDate
+            isPastDate,
+            startDate,
+            endDate
         )
         parentLayout.addView(field)
     }

@@ -69,6 +69,8 @@ object FormUtils {
             val isEnabled = field.isEnabled
             val inputType = field.inputType
             val isPastDate = field.isPastDate
+            val startDate = field.startDate
+            val endDate = field.endDate
 
             // Look for an existing view with the same label as the tag in the root layout
             var existingView: View? = null
@@ -159,7 +161,9 @@ object FormUtils {
                         rootLayout,
                         inputType,
                         isEnabled,
-                        isPastDate
+                        isPastDate,
+                        startDate,
+                        endDate
                     )
                 }
             }

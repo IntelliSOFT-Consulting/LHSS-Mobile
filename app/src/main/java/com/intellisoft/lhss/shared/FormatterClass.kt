@@ -603,12 +603,12 @@ class FormatterClass(private val context: Context) {
         // Define the input date formats to check
         val inputDateFormats = arrayOf(
             "yyyy-MM-dd",
+            "dd/MM/yyyy",
             "MM/dd/yyyy",
             "yyyyMMdd",
             "dd-MM-yyyy",
             "yyyy/MM/dd",
             "MM-dd-yyyy",
-            "dd/MM/yyyy",
             "yyyyMMddHHmmss",
             "yyyy-MM-dd HH:mm:ss",
             "EEE, dd MMM yyyy HH:mm:ss Z",  // "Mon, 25 Dec 2023 12:30:45 +0000"

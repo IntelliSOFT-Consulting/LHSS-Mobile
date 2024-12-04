@@ -204,7 +204,7 @@ class DemographicsFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Sex", true, null,
-                listOf("Male", "Female", "Intersex")
+                listOf("Male", "Female")
             )
 
 

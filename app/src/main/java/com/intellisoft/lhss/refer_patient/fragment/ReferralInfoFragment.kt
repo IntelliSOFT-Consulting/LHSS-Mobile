@@ -1,5 +1,6 @@
 package com.intellisoft.lhss.refer_patient.fragment
 
+import android.app.Application
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
@@ -9,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.clinical_info.viewmodel.ClinicalInfoViewViewModel
@@ -24,7 +27,11 @@ import com.intellisoft.lhss.dynamic_components.FieldManager
 import com.intellisoft.lhss.shared.FormData
 import com.intellisoft.lhss.dynamic_components.FormUtils
 import com.intellisoft.lhss.dynamic_components.SpinnerSelectionHandler
+import com.intellisoft.lhss.fhir.Constants
+import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.refer_patient.viewmodel.ReferralInfoViewModel
+import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModel
+import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModelFactory
 import com.intellisoft.lhss.shared.FormatterClass
 
 class ReferralInfoFragment : Fragment() {
@@ -39,6 +46,12 @@ class ReferralInfoFragment : Fragment() {
     private var referralReasonList = listOf(
         "Leave", "Holidays", "Permanent  Return", "Medical", "Work", "Others")
     private lateinit var formatterClass: FormatterClass
+    private var startDate: String? = null
+    private var endDate: String? = null
+    private lateinit var referralViewModel: ReferralDetailsViewModel
+    private lateinit var fhirEngine: FhirEngine
+    private var patientId:String = ""
+    private var serviceRequestId:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +73,23 @@ class ReferralInfoFragment : Fragment() {
             binding.tvTitle.text = formatterClass.toSentenceCase(workflowTitles.text)
             binding.imgBtn.setImageResource(workflowTitles.iconId)
         }
+
+        fhirEngine = FhirApplication.fhirEngine(requireContext())
+
+        patientId = formatterClass.getSharedPref("", "patientId") ?: ""
+        serviceRequestId = formatterClass.getSharedPref("", "serviceRequestId") ?: ""
+
+        referralViewModel =
+            ViewModelProvider(
+                this,
+                ReferralDetailsViewModelFactory(
+                    requireContext().applicationContext as Application,
+                    fhirEngine,
+                    patientId,
+                    serviceRequestId
+                ),
+            )
+                .get(ReferralDetailsViewModel::class.java)
 
         return binding.root
 
@@ -124,6 +154,31 @@ class ReferralInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e("---->","<----")
+
+        val gson = Gson()
+
+        var referralDate = ""
+
+        val savedJson = formatterClass.getSharedPref(
+            DbNavigationDetails.REFER_PATIENT.name,
+            DbClasses.REFERRING_FACILITY_INFO.name)
+
+        val formDataFromJson = gson.fromJson(savedJson, FormData::class.java)
+
+        formDataFromJson?.formDataList?.forEach {
+            val tag = it.tag
+            val text = it.text
+            if (tag == "Date of Referral") referralDate = text
+        }
+
+        if (referralDate != "") {
+            val newDate = formatterClass.convertDateFormat(referralDate)
+            if (newDate!= null) {
+                startDate = newDate
+            }
+        }
+
         // Initialize FieldManager with dependencies (inject via constructor or manually)
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
@@ -145,7 +200,8 @@ class ReferralInfoFragment : Fragment() {
                 emptyList(),
                 true,
                 "",
-                false,
+                true,
+                startDate
             )
 
         )

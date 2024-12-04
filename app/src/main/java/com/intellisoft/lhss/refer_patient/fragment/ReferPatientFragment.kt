@@ -138,7 +138,7 @@ class ReferPatientFragment : Fragment() {
                 emptyList(),
                 true,
                 com.intellisoft.lhss.fhir.Constants.REFERRAL_DATE,
-                true
+                true,
             ),
             DbField(
                 DbWidgets.SPINNER.name,
