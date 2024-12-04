@@ -82,6 +82,8 @@ class LandingPageFragment : Fragment() {
         val recyclerView = requireView().findViewById<RecyclerView>(R.id.sdcLayoutsRecyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 2)
+
+        binding.tvFacilityName.text = formatterClass.getSharedPref("","userFullName") ?: "Facility"
     }
 
     override fun onDestroyView() {

@@ -11,6 +11,7 @@
     <string name="enter_your_password">Enter Your Password</string>
     <string name="password_recovery">Password Recovery</string>
     <string name="home">Home</string>
+    <string name="welcomeTo">Welcome To</string>
     <string name="search_patient">Search Patient</string>
     <string name="register_patient">Register Patient</string>
     <string name="referrals">Referrals</string>

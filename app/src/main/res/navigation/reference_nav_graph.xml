@@ -55,7 +55,7 @@
     <fragment
         android:id="@+id/landingPageFragment"
         android:name="com.intellisoft.lhss.LandingPageFragment"
-        android:label="@string/home"
+        android:label="@string/welcomeTo"
         tools:layout="@layout/fragment_landing_page" >
         <action
             android:id="@+id/action_landingPageFragment_to_patientListFragment"
