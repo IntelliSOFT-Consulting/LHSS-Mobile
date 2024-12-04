@@ -231,7 +231,7 @@ class AcknoledgementFormFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Designation", true, null,
-                listOf("Doctor", "Nurse", "Clinical Officer")
+                listOf("Doctor", "Nurse", "Clinical Officer", "Other")
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,

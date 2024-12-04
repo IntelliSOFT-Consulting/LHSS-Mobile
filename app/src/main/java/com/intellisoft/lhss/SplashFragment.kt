@@ -14,7 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.intellisoft.lhss.referrals.viewmodels.ReferralPatientListViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 /**
@@ -48,6 +50,7 @@ class SplashFragment : Fragment() {
         formatterClass.clearData()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,16 +76,18 @@ class SplashFragment : Fragment() {
                 ),
             )[ReferralPatientListViewModel::class.java]
 
-        CoroutineScope(Dispatchers.IO).launch {
-            viewModel.referralNumber()
-            notificationServiceViewModel.getCommunicationList()
+        GlobalScope.launch {
+            getStoredData()
         }
-
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
+    private suspend fun getStoredData() {
+        viewModel.referralNumber()
+        notificationServiceViewModel.getCommunicationList()
+    }
 
 
     companion object {

@@ -1,6 +1,7 @@
 package com.intellisoft.lhss.referrals.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.google.android.fhir.search.count
 import com.google.android.fhir.search.search
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.shared.DbPatientItem
+import com.intellisoft.lhss.shared.DbServiceRequest
 import com.intellisoft.lhss.shared.FormatterClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,8 +67,16 @@ class ReferralPatientListViewModel(
 
     fun referralNumber(){
         CoroutineScope(Dispatchers.IO).launch {
-            val referralList = getSearchResults("")
-            val referralNumber = referralList.size
+
+            val dbPatientItemList = ArrayList<DbServiceRequest?>()
+
+            fhirEngine
+                .search<ServiceRequest> {}
+                .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
+                .let { dbPatientItemList.addAll(it) }
+
+//            val referralList = getSearchResults("")
+            val referralNumber = dbPatientItemList.size
             formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
         }
     }
@@ -84,7 +94,7 @@ class ReferralPatientListViewModel(
 
         fhirEngine
             .search<ServiceRequest> {}
-            .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
+            .mapIndexed { index, fhirPatient -> createServiceRequestPatient(fhirPatient.resource) }
             .let { dbPatientItemList.addAll(it) }
 
         val sortedPatients = sortByMostRecentDateCreated(dbPatientItemList)
@@ -110,7 +120,8 @@ class ReferralPatientListViewModel(
         }
     }
 
-    private suspend fun createServiceRequest(resource: ServiceRequest):DbPatientItem? {
+
+    private suspend fun createServiceRequestPatient(resource: ServiceRequest):DbPatientItem? {
 
         val id = resource.id.replace("ServiceRequest/","")
 
@@ -193,6 +204,54 @@ class ReferralPatientListViewModel(
 
         }
         return null
+
+    }
+
+    private suspend fun createServiceRequest(resource: ServiceRequest):DbServiceRequest? {
+
+        val id = resource.id.replace("ServiceRequest/","")
+
+        val patientId = if (resource.hasSubject())
+            resource.subject.referenceElement_
+                .toString().replace("Patient/","")
+
+        else ""
+        val status = if (resource.hasStatus()) resource.status.toString() else ""
+        val occurrenceDateTime = if (resource.hasOccurrenceDateTimeType()) resource.occurrenceDateTimeType.toString().replace("DateTimeType[", "") else null
+        val supportingInfo = if (resource.hasSupportingInfo()) resource.supportingInfo else emptyList()
+        val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
+        var isReferral = false
+        var display = ""
+
+        reasonCodeList.forEach {
+
+            val text = if (it.hasText()) it.text else ""
+            if (text == "REFERRAL_MODULE") isReferral = true
+            if (text == "REASON_FOR_REFERRAL"){
+                val coding = if (it.hasCoding()) it.codingFirstRep else null
+                if (coding != null){
+                    display = if (coding.hasDisplay()) coding.displayElement.toString() else ""
+                }
+            }
+        }
+
+        if (isReferral){
+
+            if (status == "ACTIVE"){
+                return DbServiceRequest(
+                    id,
+                    patientId,
+                    status,
+                    occurrenceDateTime.toString(),
+                    ArrayList(supportingInfo),
+                    reasonCodeList.firstOrNull()?.text
+                    )
+            }
+
+        }
+
+
+            return null
 
     }
 

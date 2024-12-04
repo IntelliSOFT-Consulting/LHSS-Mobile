@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         // List of fragments where the BottomNavigationView should be hidden
         val fragmentsToHideBottomNav = setOf(
             R.id.splashFragment,  // Add fragment IDs where BottomNav should be hidden
-            R.id.landingPageFragment,
+//            R.id.landingPageFragment,
             R.id.loginFragment,
             R.id.recoverPasswordFragment,
             R.id.newPasswordFragment,
