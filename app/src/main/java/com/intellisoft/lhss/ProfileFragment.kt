@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.intellisoft.lhss.ProfileViewModel
 import com.intellisoft.lhss.databinding.FragmentProfileBinding
@@ -43,16 +44,36 @@ class ProfileFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // Create sample data
-        val itemList = listOf(
-            Item("Facility Name", "Tanaka", R.drawable.ic_facility_name),
-            Item("Telephone", "0712345678", R.drawable.ic_facility_telephone),
-            Item("Email", "tanakafacility@tanaka.com", R.drawable.ic_facility_email)
-        )
+        getUserDetails()
+
+        binding.btnSignOut.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment2_to_loginFragment)
+            formatterClass.clearSharedPreferences("")
+        }
+
+    }
+
+    private fun getUserDetails() {
+
+        val userPhoneNumber = formatterClass.getSharedPref("","userPhoneNumber")
+        val userId = formatterClass.getSharedPref("","userId")
+        val userRole = formatterClass.getSharedPref("","userRole")
+        val userFullName = formatterClass.getSharedPref("","userFullName")
+        val userEmailNumber = formatterClass.getSharedPref("","userEmailNumber")
+
+        val itemList = ArrayList<Item>()
+        // Update UI with user details
+        if (userPhoneNumber != null)
+            itemList.add(Item("Phone Number", userPhoneNumber, R.drawable.ic_facility_telephone))
+        if (userFullName!= null)
+            itemList.add(Item("Full Name", userFullName, R.drawable.ic_facility_name))
+        if (userEmailNumber!= null)
+            itemList.add(Item("Email", userEmailNumber, R.drawable.ic_facility_email))
 
         // Set the adapter
         val adapter = ItemAdapter(itemList)
         binding.recyclerView.adapter = adapter
+
     }
 
     override fun onDestroyView() {

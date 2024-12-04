@@ -74,6 +74,7 @@
     <string name="now">Now</string>
     <string name="view_form">View Form</string>
     <string name="form_details">Form Details</string>
+    <string name="sign_out">Sign Out</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>French</item>

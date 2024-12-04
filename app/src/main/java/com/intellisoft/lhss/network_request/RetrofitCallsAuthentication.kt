@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.intellisoft.lhss.R
 import com.intellisoft.lhss.fhir.Constants
 import com.intellisoft.lhss.shared.DbResponseError
 import com.intellisoft.lhss.shared.DbSignIn
@@ -24,19 +23,29 @@ import timber.log.Timber
 class RetrofitCallsAuthentication {
 
 
-    fun loginUser(context: Context, dbSignIn: DbSignIn, fragment:Fragment) {
+    fun loginUser(
+        context: Context,
+        dbSignIn: DbSignIn,
+        fragment: Fragment,
+        landingPageFragment: Int
+    ) {
 
         CoroutineScope(Dispatchers.Main).launch {
 
             val job = Job()
             CoroutineScope(Dispatchers.IO + job).launch {
-                starLogin(context, dbSignIn, fragment)
+                starLogin(context, dbSignIn, fragment, landingPageFragment)
             }.join()
         }
 
     }
 
-    private suspend fun starLogin(context: Context, dbSignIn: DbSignIn, fragment:Fragment) {
+    private suspend fun starLogin(
+        context: Context,
+        dbSignIn: DbSignIn,
+        fragment: Fragment,
+        landingPageFragment: Int
+    ) {
 
 
         val job1 = Job()
@@ -73,17 +82,45 @@ class RetrofitCallsAuthentication {
 
                                 Timber.e("User Information ${Gson().toJson(body)}")
 
-                                formatter.saveSharedPref("","access_token", accessToken)
-                                formatter.saveSharedPref("", "expires_in", expiresIn)
-                                formatter.saveSharedPref("", "refresh_expires_in", refreshExpiresIn)
-                                formatter.saveSharedPref("","refresh_token", refreshToken)
-                                formatter.saveSharedPref("","isLoggedIn", "true")
+                                val apiInterfaceGetUser = apiService.getUserInfo("Bearer $accessToken")
 
-//                                getUserDetails(context)
+                                if (apiInterfaceGetUser.isSuccessful) {
 
-                                messageToast = "Login successful.."
+                                    val statusCodeUser = apiInterfaceGetUser.code()
+                                    val bodyUser = apiInterfaceGetUser.body()
 
-                                findNavController(fragment).navigate(R.id.landingPageFragment)
+                                    if (statusCodeUser == 200 || statusCodeUser == 201) {
+
+                                        if (bodyUser != null) {
+
+                                            formatter.saveSharedPref("","access_token", accessToken)
+                                            formatter.saveSharedPref("", "expires_in", expiresIn)
+                                            formatter.saveSharedPref("", "refresh_expires_in", refreshExpiresIn)
+                                            formatter.saveSharedPref("","refresh_token", refreshToken)
+                                            formatter.saveSharedPref("","isLoggedIn", "true")
+
+                                            formatter.saveSharedPref("","userPhoneNumber", bodyUser.user.phone)
+                                            formatter.saveSharedPref("","userId", bodyUser.user.id)
+                                            formatter.saveSharedPref("","userRole", bodyUser.user.role)
+                                            formatter.saveSharedPref("","userFullName", bodyUser.user.fullNames)
+                                            formatter.saveSharedPref("","userEmailNumber", bodyUser.user.email)
+
+                                            CoroutineScope(Dispatchers.Main).launch {
+                                                findNavController(fragment).navigate(landingPageFragment)
+                                            }
+
+                                            messageToast = "Login successful.."
+
+                                        }else {
+                                            messageToast = "User not found"
+                                        }
+                                    }else{
+                                        messageToast = "Error: Failed to retrieve user information"
+                                    }
+
+                                }else{
+                                    messageToast = "Error: Failed to retrieve user information"
+                                }
 
                             } else {
                                 messageToast = "Error: Body is null"
@@ -243,40 +280,7 @@ class RetrofitCallsAuthentication {
 //
 //    }
 //
-//    private fun saveUserInformation(user: DbUser, context: Context) {
-//        val formatter = FormatterClass()
-//        formatter.saveSharedPref(
-//            "countyName ", user.countyName.toString(), context
-//        )
-//        formatter.saveSharedPref(
-//            "practitionerFacility", user.facility, context
-//        )
-//        formatter.saveSharedPref(
-//            "practitionerFacilityName", user.facilityName, context
-//        )
-//        formatter.saveSharedPref(
-//            "fhirPractitionerId", user.fhirPractitionerId, context
-//        )
-//        formatter.saveSharedPref(
-//            "id", user.id, context
-//        )
-//        formatter.saveSharedPref(
-//            "idNumber", user.idNumber, context
-//        )
-//        formatter.saveSharedPref(
-//            "phone", user.phone.toString(), context
-//        )
-//        formatter.saveSharedPref(
-//            "practitionerRole", user.practitionerRole, context
-//        )
-//        formatter.saveSharedPref(
-//            "subCountyName", user.subCountyName.toString(), context
-//        )
-//        formatter.saveSharedPref(
-//            "wardName", user.wardName.toString(), context
-//        )
-//
-//    }
+
 
 
     // Parse error response using Gson

@@ -71,7 +71,7 @@ class LoginFragment : Fragment() {
             }else if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
 
                 val dbSignIn = DbSignIn(username, password)
-                retrofitCallsAuthentication.loginUser(requireContext(), dbSignIn, this)
+                retrofitCallsAuthentication.loginUser(requireContext(), dbSignIn, this, R.id.landingPageFragment)
 
             } else{
                 if (TextUtils.isEmpty(username)) binding.etUsername.error = "Please Enter Username"
