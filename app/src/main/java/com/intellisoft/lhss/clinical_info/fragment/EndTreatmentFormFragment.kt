@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.fhir.FhirEngine
@@ -108,6 +109,7 @@ class EndTreatmentFormFragment : Fragment() {
 
 
             val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+
             if (missingFields.isNotEmpty()){
                 var missingText = ""
                 missingFields.forEach { missingText += "\n ${it.tag}, " }
@@ -118,6 +120,18 @@ class EndTreatmentFormFragment : Fragment() {
 
                 formatterClass.showDialog("Missing Content", mandatoryText)
             }else{
+
+                val emailData = addedFields.find { it.tag == "Email Contact" }
+                if (emailData == null){
+                    Toast.makeText(requireContext(), "Email Contact cannot be null", Toast.LENGTH_SHORT).show()
+                    return@setNextButtonClickListener
+                }
+
+                if (emailData.text.isEmpty() || !formatterClass.isValidEmail(emailData.text)){
+                    Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
+                    return@setNextButtonClickListener
+                }
+                
                 findNavController().navigate(R.id.action_endTreatmentFormFragment_to_endTreatmentReviewFragment)
 
                 val formData = FormData(
