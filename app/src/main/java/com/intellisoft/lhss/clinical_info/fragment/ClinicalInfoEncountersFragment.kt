@@ -66,6 +66,9 @@ class ClinicalInfoEncountersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+
         CoroutineScope(Dispatchers.IO).launch {
 
             val fhirCode = Constants.RECEIVING_FACILITY_NAME
@@ -79,12 +82,11 @@ class ClinicalInfoEncountersFragment : Fragment() {
             encounterList.removeIf{ it.referralReason != clinicalInfo }
 
             val formDataAdapter = ClinicalEncounterAdapter(
-                requireActivity().applicationContext,
+                requireContext().applicationContext,
                 this@ClinicalInfoEncountersFragment,
                 clinicalInfo,
                 encounterList)
             CoroutineScope(Dispatchers.Main).launch {
-                binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.recyclerView.adapter = formDataAdapter
 
                 if(carePlanStatus == "COMPLETED") {
