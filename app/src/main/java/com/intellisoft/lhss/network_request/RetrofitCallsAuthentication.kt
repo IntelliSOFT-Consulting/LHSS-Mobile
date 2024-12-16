@@ -106,6 +106,34 @@ class RetrofitCallsAuthentication {
                                             formatter.saveSharedPref("","userEmailNumber", bodyUser.user.email)
                                             formatter.saveSharedPref("","userFacility", bodyUser.user.facility)
 
+                                            var country = ""
+                                            var countyName = ""
+                                            var subCountyName = ""
+                                            var regionName = ""
+                                            var wardName = ""
+
+                                            if (bodyUser.user.facility == "Location/17149"){
+                                                country = "Kenya"
+                                                countyName = "Busia"
+                                                subCountyName = "Funyula"
+                                                wardName = "Bwiri"
+                                            }
+                                            if (bodyUser.user.facility == "Location/Kachumbala-Health-Centre-IV"){
+                                                country = "Uganda"
+                                                countyName = "Bukedea"
+                                                subCountyName = "Bukedea"
+                                                regionName = "Eastern Region"
+                                                wardName = "Bukedea"
+                                            }
+
+                                            formatter.saveSharedPref("","userCountry", country)
+                                            formatter.saveSharedPref("","userCountyName", countyName)
+                                            formatter.saveSharedPref("","userSubCountyName", subCountyName)
+                                            formatter.saveSharedPref("","userRegionName", regionName)
+                                            formatter.saveSharedPref("","userWardName", wardName)
+
+
+
                                             CoroutineScope(Dispatchers.Main).launch {
                                                 findNavController(fragment).navigate(landingPageFragment)
                                             }
