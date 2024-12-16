@@ -76,6 +76,8 @@ class ReferralListViewModel(
             .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
             .let { patients.addAll(it) }
 
+        //Remove status with value COMPLETED
+        patients = patients.filter { it?.status!= "COMPLETED" } as MutableList<DbServiceRequest?>
 
         return ArrayList(patients)
     }

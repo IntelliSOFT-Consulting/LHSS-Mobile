@@ -67,16 +67,23 @@ class ReferralPatientListViewModel(
 
     fun referralNumber(){
         CoroutineScope(Dispatchers.IO).launch {
+            formatterClass.saveSharedPref("","referralNumbers", "0")
 
-            val dbPatientItemList = ArrayList<DbServiceRequest?>()
+
+            val dbServiceList = ArrayList<DbServiceRequest?>()
 
             fhirEngine
                 .search<ServiceRequest> {}
                 .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
-                .let { dbPatientItemList.addAll(it) }
+                .let { dbServiceList.addAll(it) }
+
+            Log.e("---->","<-----")
+            println("dbServiceList: $dbServiceList")
+            println("dbServiceList: ${dbServiceList.filterNotNull()}")
+            Log.e("---->","<-----")
 
 //            val referralList = getSearchResults("")
-            val referralNumber = dbPatientItemList.size
+            val referralNumber = dbServiceList.filterNotNull().size
             formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
         }
     }
@@ -141,18 +148,12 @@ class ReferralPatientListViewModel(
         val userFacility = formatterClass.getSharedPref("","userFacility")
         val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
         locationReferenceList?.forEach { reference ->
-
             if (reference.hasReference() && reference.hasReferenceElement()){
-
                 if (userFacility == reference.referenceElement_.valueAsString){
                     isUsersFacility = true
                 }
             }
-
-
         }
-
-
 
         reasonCodeList.forEach {
 
@@ -226,7 +227,9 @@ class ReferralPatientListViewModel(
 
     private suspend fun createServiceRequest(resource: ServiceRequest):DbServiceRequest? {
 
+
         val id = resource.id.replace("ServiceRequest/","")
+
 
         val patientId = if (resource.hasSubject())
             resource.subject.referenceElement_
@@ -238,7 +241,20 @@ class ReferralPatientListViewModel(
         val supportingInfo = if (resource.hasSupportingInfo()) resource.supportingInfo else emptyList()
         val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
         var isReferral = false
+
+        var isUsersFacility = false
         var display = ""
+
+        val userFacility = formatterClass.getSharedPref("","userFacility")
+        val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
+        locationReferenceList?.forEach { reference ->
+            if (reference.hasReference() && reference.hasReferenceElement()){
+                if (userFacility == reference.referenceElement_.valueAsString){
+                    isUsersFacility = true
+                }
+            }
+        }
+
 
         reasonCodeList.forEach {
 
@@ -252,7 +268,7 @@ class ReferralPatientListViewModel(
             }
         }
 
-        if (isReferral){
+        if (isReferral && isUsersFacility){
 
             if (status == "ACTIVE"){
                 return DbServiceRequest(
@@ -266,6 +282,8 @@ class ReferralPatientListViewModel(
             }
 
         }
+
+
 
 
             return null
