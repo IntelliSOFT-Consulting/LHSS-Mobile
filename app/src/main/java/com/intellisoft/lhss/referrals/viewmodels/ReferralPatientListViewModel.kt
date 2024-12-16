@@ -135,7 +135,24 @@ class ReferralPatientListViewModel(
         val supportingInfo = if (resource.hasSupportingInfo()) resource.supportingInfo else emptyList()
         val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
         var isReferral = false
+        var isUsersFacility = false
         var display = ""
+
+        val userFacility = formatterClass.getSharedPref("","userFacility")
+        val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
+        locationReferenceList?.forEach { reference ->
+
+            if (reference.hasReference() && reference.hasReferenceElement()){
+
+                if (userFacility == reference.referenceElement_.valueAsString){
+                    isUsersFacility = true
+                }
+            }
+
+
+        }
+
+
 
         reasonCodeList.forEach {
 
@@ -149,7 +166,7 @@ class ReferralPatientListViewModel(
             }
         }
 
-        if (isReferral){
+        if (isReferral && isUsersFacility){
 
             val searchResult =
                 fhirEngine.search<Patient> {
