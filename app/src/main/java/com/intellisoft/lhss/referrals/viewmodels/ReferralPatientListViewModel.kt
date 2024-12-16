@@ -77,10 +77,6 @@ class ReferralPatientListViewModel(
                 .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
                 .let { dbServiceList.addAll(it) }
 
-            Log.e("---->","<-----")
-            println("dbServiceList: $dbServiceList")
-            println("dbServiceList: ${dbServiceList.filterNotNull()}")
-            Log.e("---->","<-----")
 
 //            val referralList = getSearchResults("")
             val referralNumber = dbServiceList.filterNotNull().size

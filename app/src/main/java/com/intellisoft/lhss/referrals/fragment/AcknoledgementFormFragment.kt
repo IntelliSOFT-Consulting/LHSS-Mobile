@@ -215,8 +215,8 @@ class AcknoledgementFormFragment : Fragment() {
 //            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Telephone Number", true,
-                InputType.TYPE_CLASS_PHONE
+                "Phone Number", false,
+                InputType.TYPE_CLASS_TEXT
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -312,6 +312,33 @@ class AcknoledgementFormFragment : Fragment() {
                 rootViewParentReferralDate.setTypeface(rootViewParentReferralDate.typeface, Typeface.BOLD)
                 //Set the color to bold
                 rootViewParentReferralDate.setTextColor(Color.BLACK)
+            }
+        }
+
+        val healthFacilityName = formatterClass.getSharedPref("", "userFacility")?: ""
+        val rootViewParentHealthFacilityName = binding.rootLayout
+            .findViewWithTag<View>("Name of Health Facility")
+        if (rootViewParentHealthFacilityName!= null) {
+            //Check if rootViewParent is EditText and set its text from the retrieved observation
+            if (rootViewParentHealthFacilityName is EditText) {
+                rootViewParentHealthFacilityName.setText(healthFacilityName)
+                rootViewParentHealthFacilityName.isEnabled = false
+                rootViewParentHealthFacilityName.setTypeface(rootViewParentHealthFacilityName.typeface, Typeface.BOLD)
+                //Set the color to bold
+                rootViewParentHealthFacilityName.setTextColor(Color.BLACK)
+            }
+        }
+        val userPhoneNumber = formatterClass.getSharedPref("", "userPhoneNumber")?: ""
+        val rootViewParentPhoneNumber = binding.rootLayout
+            .findViewWithTag<View>("Phone Number")
+        if (rootViewParentPhoneNumber!= null) {
+            //Check if rootViewParent is EditText and set its text from the retrieved observation
+            if (rootViewParentPhoneNumber is EditText) {
+                rootViewParentPhoneNumber.setText(userPhoneNumber)
+                rootViewParentHealthFacilityName.isEnabled = false
+                rootViewParentPhoneNumber.setTypeface(rootViewParentPhoneNumber.typeface, Typeface.BOLD)
+                //Set the color to bold
+                rootViewParentPhoneNumber.setTextColor(Color.BLACK)
             }
         }
 
