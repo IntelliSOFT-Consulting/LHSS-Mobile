@@ -1,5 +1,7 @@
 package com.intellisoft.lhss.refer_patient.fragment
 
+import android.graphics.Color
+import android.graphics.Typeface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
@@ -8,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
@@ -22,6 +25,7 @@ import com.intellisoft.lhss.dynamic_components.FieldManager
 import com.intellisoft.lhss.shared.FormData
 import com.intellisoft.lhss.dynamic_components.FormUtils
 import com.intellisoft.lhss.refer_patient.viewmodel.ReferPatientViewModel
+import com.intellisoft.lhss.shared.DbWorkFlow
 import com.intellisoft.lhss.shared.FormatterClass
 
 class ReferPatientFragment : Fragment() {
@@ -31,7 +35,7 @@ class ReferPatientFragment : Fragment() {
     private lateinit var fieldManager: FieldManager
 
     private val viewModel: ReferPatientViewModel by viewModels()
-    private val countryList = listOf("Djibouti", "Eritrea", "Kenya", "Ethiopia", "Somalia", "South Sudan", "Sudan", "Uganda")
+    private val countryList = listOf("Kenya", "Uganda")
     private val titleList = listOf("Mr", "Miss", "Mrs", "Dr")
     private lateinit var formatterClass: FormatterClass
 
@@ -129,6 +133,9 @@ class ReferPatientFragment : Fragment() {
         // Initialize FieldManager with dependencies (inject via constructor or manually)
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
+        val userRequestedLocationReference = formatterClass.getSharedPref("","userRequestedLocationReference") ?: ""
+        val availableLocations = listOf(userRequestedLocationReference)
+
         val dbFieldList = listOf(
             DbField(
                 DbWidgets.DATE_PICKER.name,
@@ -140,18 +147,15 @@ class ReferPatientFragment : Fragment() {
                 com.intellisoft.lhss.fhir.Constants.REFERRAL_DATE,
                 true,
             ),
+//            DbField(
+//                DbWidgets.SPINNER.name,
+//                "Country", true, null,
+//                countryList),
             DbField(
-                DbWidgets.SPINNER.name,
-                "Country", true, null,
-                countryList),
-//            DbField(
-//                DbWidgets.SPINNER.name,
-//                "Region/Province/County", true, null,
-//                countryList),
-//            DbField(
-//                DbWidgets.SPINNER.name,
-//                "District/Sub County", true, null,
-//                countryList),
+                DbWidgets.EDIT_TEXT.name,
+                "Country", true,
+                InputType.TYPE_CLASS_TEXT
+            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Region/Province/County", true,
@@ -167,6 +171,7 @@ class ReferPatientFragment : Fragment() {
                 "Ward", true,
                 InputType.TYPE_CLASS_TEXT
             ),
+
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Name of Referring Officer", true,
@@ -175,7 +180,7 @@ class ReferPatientFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Name of Receiving facility", true, null,
-                listOf("Pumwani", "Avenue Hospital"), true,
+                availableLocations, true,
                 com.intellisoft.lhss.fhir.Constants.RECEIVING_FACILITY_NAME,
             ),
             DbField(
@@ -206,6 +211,47 @@ class ReferPatientFragment : Fragment() {
         )
 
         FormUtils.populateView(ArrayList(dbFieldList), binding.rootLayout, fieldManager, requireContext())
+
+        val rootViewParentReferralCountry = binding.rootLayout.findViewWithTag<View>("Country")
+        val rootViewParentReferralCounty = binding.rootLayout.findViewWithTag<View>("Region/Province/County")
+        val rootViewParentReferralSubCountry = binding.rootLayout.findViewWithTag<View>("District/Sub County")
+        val rootViewParentReferralWard = binding.rootLayout.findViewWithTag<View>("Ward")
+        val rootViewParentReferralNameReceivingFacility = binding.rootLayout.findViewWithTag<View>("Name of Receiving facility")
+
+        val referralList = ArrayList<DbWorkFlow>()
+
+        referralList.add(DbWorkFlow(rootViewParentReferralNameReceivingFacility, formatterClass.getSharedPref("", "userCountry") ?: ""))
+
+        referralList.add(DbWorkFlow(rootViewParentReferralCountry, formatterClass.getSharedPref("", "userCountry") ?: ""))
+        referralList.add(DbWorkFlow(rootViewParentReferralCounty, formatterClass.getSharedPref("", "userCountyName") ?: ""))
+
+        referralList.add(DbWorkFlow(rootViewParentReferralWard, formatterClass.getSharedPref("", "userWardName") ?: ""))
+
+        referralList.add(DbWorkFlow(rootViewParentReferralSubCountry,
+            formatterClass.getSharedPref("", "userSubCountyName") ?:
+            formatterClass.getSharedPref("", "userRegionName") ?: "")
+        )
+
+        referralList.forEach { view ->
+
+            val viewData = view.view
+            val value = view.value
+
+            if (viewData != null) {
+
+                //Check if rootViewParent is EditText and set its text from the retrieved observation
+                if (viewData is EditText) {
+                    viewData.setText(value)
+                    viewData.isEnabled = false
+                    viewData.setTypeface(viewData.typeface, Typeface.BOLD)
+                    //Set the color to bold
+                    viewData.setTextColor(Color.BLACK)
+                }
+            }
+
+        }
+
+
 
         FormUtils.loadFormData(
             requireContext(),

@@ -88,6 +88,8 @@ class ReviewReferFragment : Fragment() {
     }
     private fun submitData() {
 
+        val requesterId = formatterClass.getSharedPref("", "userFhirPractitionerId")?: ""
+
         CoroutineScope(Dispatchers.Main).launch {
 
             val progressDialog = ProgressDialog(requireContext())
@@ -102,7 +104,7 @@ class ReviewReferFragment : Fragment() {
             CoroutineScope(Dispatchers.IO + job).launch {
 
                 savedResources = ArrayList(viewModel.createServiceRequest(
-                    formDataList, patientId, null))
+                    formDataList, patientId, requesterId))
 
                 registrationClassesList.forEach {
                     formatterClass.deleteSharedPref(navigationDetails, it)

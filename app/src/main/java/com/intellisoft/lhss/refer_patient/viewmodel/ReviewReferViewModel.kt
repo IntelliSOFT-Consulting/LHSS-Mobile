@@ -110,6 +110,12 @@ class ReviewReferViewModel (
         serviceRequest.occurrence = DateTimeType.now()
         serviceRequest.supportingInfo = ArrayList()
 
+        val userRequestedLocationReference = formatterClass.getSharedPref("","userRequestedLocationReference")?:""
+        //Get the patient's location reference
+        val locationReference = userRequestedLocationReference
+
+        serviceRequest.locationReference.add(Reference(locationReference))
+
         // Iterate through formDataList and create Encounters and Observations
         formDataList.forEach { formData ->
             // Create an Encounter based on the title

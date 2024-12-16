@@ -1,5 +1,6 @@
 package com.intellisoft.lhss.shared
 
+import android.view.View
 import androidx.annotation.DrawableRes
 import com.intellisoft.lhss.R
 import org.hl7.fhir.r4.model.Communication
@@ -144,6 +145,10 @@ enum class DbClasses{
     ACKNOWLEDGEMENT_FORM,
     END_TREATMENT_FORM,
 }
+data class DbWorkFlow(
+    val view: View?,
+    val value: String
+)
 enum class WorkflowTitles(
     @DrawableRes val iconId: Int,
     val textId: String,
@@ -183,6 +188,7 @@ data class DbUserInfoResponse(
 )
 data class DbUserInfo(
     val id: String,
+    val fhirPractitionerId: String,
     val fullNames: String,
     val idNumber: String,
     val phone: String,
