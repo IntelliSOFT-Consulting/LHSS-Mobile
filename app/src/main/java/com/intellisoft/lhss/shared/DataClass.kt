@@ -187,6 +187,7 @@ data class DbUserInfo(
     val idNumber: String,
     val phone: String,
     val email: String,
+    val facility: String,
     val role: String)
 
 data class DbResponseError(

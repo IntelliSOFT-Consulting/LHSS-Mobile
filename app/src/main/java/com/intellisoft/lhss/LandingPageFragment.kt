@@ -83,7 +83,11 @@ class LandingPageFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        binding.tvFacilityName.text = formatterClass.getSharedPref("","userFullName") ?: "Facility"
+        val userFacility = formatterClass.getSharedPref("","userFacility") ?: "Facility"
+
+        val userFullName = formatterClass.getSharedPref("","userFullName")
+
+        binding.tvFacilityName.text = userFullName?.lowercase() ?: ""
     }
 
     override fun onDestroyView() {

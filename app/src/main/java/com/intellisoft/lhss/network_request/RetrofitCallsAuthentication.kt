@@ -104,6 +104,7 @@ class RetrofitCallsAuthentication {
                                             formatter.saveSharedPref("","userRole", bodyUser.user.role)
                                             formatter.saveSharedPref("","userFullName", bodyUser.user.fullNames)
                                             formatter.saveSharedPref("","userEmailNumber", bodyUser.user.email)
+                                            formatter.saveSharedPref("","userFacility", bodyUser.user.facility)
 
                                             CoroutineScope(Dispatchers.Main).launch {
                                                 findNavController(fragment).navigate(landingPageFragment)
