@@ -95,6 +95,7 @@ class ReferralListViewModel(
         val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
         var isReferral = false
         var display = ""
+        var requesterId = if (resource.hasRequester()) resource.requester.referenceElement_.toString().replace("Practitioner/","") else ""
 
         reasonCodeList.forEach {
 
@@ -127,7 +128,8 @@ class ReferralListViewModel(
                 status,
                 convertedDate,
                 ArrayList(supportingInfo),
-                display
+                display,
+                requesterId
             )
             return dbServiceRequest
         }

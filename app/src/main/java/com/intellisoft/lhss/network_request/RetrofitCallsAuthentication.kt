@@ -113,6 +113,7 @@ class RetrofitCallsAuthentication {
                                             var regionName = ""
                                             var wardName = ""
                                             var requestedLocationReference = ""
+                                            var requestedLocation = ""
 
                                             if (bodyUser.user.facility == "Location/17149"){
                                                 country = "Kenya"
@@ -120,6 +121,7 @@ class RetrofitCallsAuthentication {
                                                 subCountyName = "Funyula"
                                                 wardName = "Bwiri"
                                                 requestedLocationReference = "Location/Kachumbala-Health-Centre-IV"
+                                                requestedLocation = "Location/Kachumbala-Health-Centre-IV"
                                             }
                                             if (bodyUser.user.facility == "Location/Kachumbala-Health-Centre-IV"){
                                                 country = "Uganda"
@@ -128,6 +130,7 @@ class RetrofitCallsAuthentication {
                                                 regionName = "Eastern Region"
                                                 wardName = "Bukedea"
                                                 requestedLocationReference = "Location/17149"
+                                                requestedLocation = "Location/17149"
                                             }
 
                                             formatter.saveSharedPref("","userCountry", country)
@@ -135,6 +138,7 @@ class RetrofitCallsAuthentication {
                                             formatter.saveSharedPref("","userSubCountyName", subCountyName)
                                             formatter.saveSharedPref("","userRegionName", regionName)
                                             formatter.saveSharedPref("","userWardName", wardName)
+                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
                                             formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
 
 

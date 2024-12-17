@@ -29,6 +29,7 @@ class ReferralListFragment : Fragment() {
     private lateinit var fhirEngine: FhirEngine
     private lateinit var formatterClass: FormatterClass
     private var patientId:String = ""
+    private var userFhirPractitionerId:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,7 @@ class ReferralListFragment : Fragment() {
         fhirEngine = FhirApplication.fhirEngine(requireContext())
 
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
+        userFhirPractitionerId = formatterClass.getSharedPref("", "userFhirPractitionerId") ?: ""
 
 
         viewModel =
@@ -99,9 +101,13 @@ class ReferralListFragment : Fragment() {
 
                 val serviceId = selectedPatient?.id
                 val status = selectedPatient?.status
+                val requesterId = selectedPatient?.requesterId
+
                 if (status == "COMPLETED") {
                     Toast.makeText(requireContext(), "Patient has already been received. " +
                             "The action cannot be performed twice.", Toast.LENGTH_SHORT).show()
+                }else if (requesterId == userFhirPractitionerId) {
+                    Toast.makeText(requireContext(), "You cannot receive your own referral.", Toast.LENGTH_SHORT).show()
                 }else{
                     showReceivePatientDialog()
 

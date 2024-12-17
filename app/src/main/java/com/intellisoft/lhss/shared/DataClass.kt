@@ -114,7 +114,8 @@ data class DbServiceRequest(
     val status: String,
     val dateRecorded: String,
     val encounterList: ArrayList<Reference>,
-    val referralReason: String?
+    val referralReason: String?,
+    val requesterId:String? = null
 )
 enum class DbNavigationDetails{
     PATIENT_REGISTRATION,

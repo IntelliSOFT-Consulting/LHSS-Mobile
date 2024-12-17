@@ -133,7 +133,7 @@ class ReferPatientFragment : Fragment() {
         // Initialize FieldManager with dependencies (inject via constructor or manually)
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
-        val userRequestedLocationReference = formatterClass.getSharedPref("","userRequestedLocationReference") ?: ""
+        val userRequestedLocationReference = formatterClass.getSharedPref("","userFullName") ?: ""
         val availableLocations = listOf(userRequestedLocationReference)
 
         val dbFieldList = listOf(
@@ -220,7 +220,7 @@ class ReferPatientFragment : Fragment() {
 
         val referralList = ArrayList<DbWorkFlow>()
 
-        referralList.add(DbWorkFlow(rootViewParentReferralNameReceivingFacility, formatterClass.getSharedPref("", "userCountry") ?: ""))
+        referralList.add(DbWorkFlow(rootViewParentReferralNameReceivingFacility, formatterClass.getSharedPref("", "userFullName") ?: ""))
 
         referralList.add(DbWorkFlow(rootViewParentReferralCountry, formatterClass.getSharedPref("", "userCountry") ?: ""))
         referralList.add(DbWorkFlow(rootViewParentReferralCounty, formatterClass.getSharedPref("", "userCountyName") ?: ""))
