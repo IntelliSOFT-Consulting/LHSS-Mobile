@@ -275,6 +275,8 @@ class AcknoledgementFormFragment : Fragment() {
             if (rootViewParentName is EditText) {
                 rootViewParentName.setText(patientName)
                 rootViewParentName.setTypeface(rootViewParentName.typeface, Typeface.BOLD)
+                rootViewParentName.isEnabled = false
+
                 //Set the color to bold
                 rootViewParentName.setTextColor(Color.BLACK)
             }
@@ -316,12 +318,18 @@ class AcknoledgementFormFragment : Fragment() {
         }
 
         val healthFacilityName = formatterClass.getSharedPref("", "userFacility")?: ""
+        val healthName = if (healthFacilityName == "Location/Kachumbala-Health-Centre-IV"){
+            "Kachumbala HEALTH CENTER"
+        }else{
+            "HAKATI DISPENSARY"
+        }
+
         val rootViewParentHealthFacilityName = binding.rootLayout
             .findViewWithTag<View>("Name of Health Facility")
         if (rootViewParentHealthFacilityName!= null) {
             //Check if rootViewParent is EditText and set its text from the retrieved observation
             if (rootViewParentHealthFacilityName is EditText) {
-                rootViewParentHealthFacilityName.setText(healthFacilityName)
+                rootViewParentHealthFacilityName.setText(healthName)
                 rootViewParentHealthFacilityName.isEnabled = false
                 rootViewParentHealthFacilityName.setTypeface(rootViewParentHealthFacilityName.typeface, Typeface.BOLD)
                 //Set the color to bold

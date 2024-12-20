@@ -24,6 +24,7 @@ class TimestampBasedDownloadWorkManagerImpl(private val dataStore: DemoDataStore
         listOf(
             "Patient?_sort=_lastUpdated",
             "ServiceRequest",
+            "Location"
         )
     )
 

@@ -171,17 +171,16 @@ class ReferPatientFragment : Fragment() {
                 "Ward", true,
                 InputType.TYPE_CLASS_TEXT
             ),
-
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Name of Referring Officer", true,
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            ),
             DbField(
                 DbWidgets.SPINNER.name,
                 "Name of Receiving facility", true, null,
                 availableLocations, true,
                 com.intellisoft.lhss.fhir.Constants.RECEIVING_FACILITY_NAME,
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Name of Referring Officer", true,
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
