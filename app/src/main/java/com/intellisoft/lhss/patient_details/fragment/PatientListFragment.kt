@@ -81,26 +81,6 @@ class PatientListFragment : Fragment() {
             binding.datePickerLayout.visibility = View.VISIBLE
         }
 
-        // Handle close DatePicker layout
-        binding.closeDatePicker.setOnClickListener {
-            binding.datePickerLayout.visibility = View.GONE
-
-            binding.tvFromDate.text = ""
-            binding.tvToDate.text = ""
-        }
-
-        binding.tvFromDate.setOnClickListener {
-            formatterClass.showDatePickerWithLimits(binding.tvFromDate, true, null)
-            populateRecyclerView(patientFilterList)
-        }
-        binding.tvToDate.setOnClickListener {
-            val fromDate = binding.tvFromDate.text.toString()
-            val fromDateStr = if (!TextUtils.isEmpty(fromDate)) fromDate else null
-
-            formatterClass.showDatePickerWithLimits(binding.tvToDate, false, fromDateStr)
-            populateRecyclerView(patientFilterList)
-        }
-
         patientListViewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
 
             val patientList = ArrayList(it)
@@ -108,6 +88,43 @@ class PatientListFragment : Fragment() {
             populateRecyclerView(patientList)
 
         }
+
+        // Handle close DatePicker layout
+        binding.closeDatePicker.setOnClickListener {
+            binding.datePickerLayout.visibility = View.GONE
+
+            binding.tvFromDate.text = ""
+            binding.tvToDate.text = ""
+
+            populateRecyclerView(patientFilterList)
+        }
+
+
+        binding.tvFromDate.setOnClickListener {
+            formatterClass.showDatePickerWithLimits(binding.tvFromDate, true, null)
+
+            val fromDate = binding.tvFromDate.text
+            val toDate = binding.tvFromDate.text
+
+            val patientList = formatterClass.filterPatients(patientFilterList, fromDate, toDate)
+            populateRecyclerView(ArrayList(patientList))
+
+        }
+
+        binding.tvToDate.setOnClickListener {
+            val fromDate = binding.tvFromDate.text.toString()
+            val fromDateStr = if (!TextUtils.isEmpty(fromDate)) fromDate else null
+
+            formatterClass.showDatePickerWithLimits(binding.tvToDate, false, fromDateStr)
+
+            val fromDateFilter = binding.tvFromDate.text
+            val toDate = binding.tvFromDate.text
+
+            val patientList = formatterClass.filterPatients(patientFilterList, fromDateFilter, toDate)
+            populateRecyclerView(ArrayList(patientList))
+        }
+
+
 
     }
 

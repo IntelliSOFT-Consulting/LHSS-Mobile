@@ -1,5 +1,6 @@
 package com.intellisoft.lhss.shared
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -728,6 +729,47 @@ class FormatterClass(private val context: Context) {
         val textIdValue = entries.find { it.textId == textId }
         return textIdValue
     }
+
+    fun filterPatients(
+        patientList: ArrayList<DbPatientItem>,
+        fromDateChar: CharSequence? = null,
+        toDateChar: CharSequence? = null
+    ): List<DbPatientItem> {
+        // Define supported date formats
+        val dateFormats = listOf(
+            SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH),
+            SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        )
+
+        // Helper function to parse dates using the supported formats
+        fun parseDate(dateStr: String?): Date? {
+            if (dateStr == null) return null
+            for (format in dateFormats) {
+                try {
+                    return format.parse(dateStr)
+                } catch (e: ParseException) {
+                    // Ignore and try the next format
+                }
+            }
+            return null // Return null if none of the formats work
+        }
+
+        // Parse fromDate and toDate using the helper function
+        val fromDate: Date? = parseDate(fromDateChar?.toString())
+        val toDate: Date? = parseDate(toDateChar?.toString())
+
+        // Filter the patientList
+        return patientList.filter { patient ->
+            val patientDate = parseDate(patient.dateCreated)
+            when {
+                fromDate != null && toDate != null -> patientDate != null && !patientDate.before(fromDate) && !patientDate.after(toDate)
+                fromDate != null -> patientDate != null && !patientDate.before(fromDate)
+                toDate != null -> patientDate != null && !patientDate.after(toDate)
+                else -> true // No filtering if both fromDate and toDate are null
+            }
+        }
+    }
+
 
 
 }

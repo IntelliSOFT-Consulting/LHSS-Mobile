@@ -1,6 +1,8 @@
 package com.intellisoft.lhss.referrals.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -91,6 +93,11 @@ class ReferralPatientList : Fragment() {
         // Handle close DatePicker layout
         binding.closeDatePicker.setOnClickListener {
             binding.datePickerLayout.visibility = View.GONE
+
+            binding.tvFromDate.text = ""
+            binding.tvToDate.text = ""
+
+            populateRecyclerView(patientList)
         }
 
         viewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
@@ -99,6 +106,32 @@ class ReferralPatientList : Fragment() {
             // Initialize RecyclerView and adapter
             populateRecyclerView(patientList)
         }
+
+        binding.tvFromDate.setOnClickListener {
+            formatterClass.showDatePickerWithLimits(binding.tvFromDate, true, null)
+
+            val fromDate = binding.tvFromDate.text
+            val toDate = binding.tvFromDate.text
+
+            val patientList = formatterClass.filterPatients(patientList, fromDate, toDate)
+            populateRecyclerView(ArrayList(patientList))
+
+        }
+
+        binding.tvToDate.setOnClickListener {
+            val fromDate = binding.tvFromDate.text.toString()
+            val fromDateStr = if (!TextUtils.isEmpty(fromDate)) fromDate else null
+
+            formatterClass.showDatePickerWithLimits(binding.tvToDate, false, fromDateStr)
+
+            val fromDateFilter = binding.tvFromDate.text
+            val toDate = binding.tvFromDate.text
+
+            val patientList = formatterClass.filterPatients(patientList, fromDateFilter, toDate)
+            populateRecyclerView(ArrayList(patientList))
+        }
+
+
 
     }
 
@@ -132,6 +165,7 @@ class ReferralPatientList : Fragment() {
 
         // Set total patients
         binding.totalPatientsTextView.text = "Total Patients: ${distinctPatientList.size}"
+
     }
     fun searchPatientsByName(patients: List<DbPatientItem>, query: String): ArrayList<DbPatientItem> {
         return ArrayList(patients.filter { it.name.contains(query, ignoreCase = true) })
