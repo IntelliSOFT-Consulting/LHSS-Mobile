@@ -8,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.fhir.FhirEngine
+import com.intellisoft.lhss.LocationViewModel
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.databinding.FragmentLoginBinding
 import com.intellisoft.lhss.shared.DbSignIn
 import com.intellisoft.lhss.auth.viewmodel.LoginViewModel
+import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.network_request.RetrofitCallsAuthentication
 
 
@@ -25,6 +29,8 @@ class LoginFragment : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels()
     private var retrofitCallsAuthentication = RetrofitCallsAuthentication()
+    private lateinit var locationViewModel: LocationViewModel
+    private lateinit var fhirEngine: FhirEngine
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +58,16 @@ class LoginFragment : Fragment() {
             // Apply the adapter to the spinner
             binding.languageSpinner.adapter = adapter
         }
+        fhirEngine = FhirApplication.fhirEngine(requireContext())
+
+        locationViewModel =
+            ViewModelProvider(
+                this,
+                LocationViewModel.LocationViewModelFactory(
+                    requireActivity().application,
+                    fhirEngine
+                ),
+            )[LocationViewModel::class.java]
 
         return binding.root
     }
@@ -71,7 +87,12 @@ class LoginFragment : Fragment() {
             }else if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
 
                 val dbSignIn = DbSignIn(username, password)
-                retrofitCallsAuthentication.loginUser(requireContext(), dbSignIn, this, R.id.landingPageFragment)
+                retrofitCallsAuthentication.loginUser(
+                    requireContext(),
+                    dbSignIn,
+                    this,
+                    R.id.landingPageFragment,
+                    locationViewModel)
 
             } else{
                 if (TextUtils.isEmpty(username)) binding.etUsername.error = "Please Enter Username"

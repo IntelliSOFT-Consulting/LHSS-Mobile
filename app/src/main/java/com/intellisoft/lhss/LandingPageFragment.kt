@@ -115,7 +115,7 @@ class LandingPageFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
 
             val locationDetails =
-                locationViewModel.getLocationDetails("Location/17149")
+                locationViewModel.getLocationDetails("Location/Kachumbala-Health-Centre-IV")
 
             locationDetails.forEach {
                 Log.e("------->","<--------")

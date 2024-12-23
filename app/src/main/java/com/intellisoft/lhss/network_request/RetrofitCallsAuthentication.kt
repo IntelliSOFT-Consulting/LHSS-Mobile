@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.intellisoft.lhss.LocationViewModel
 import com.intellisoft.lhss.fhir.Constants
 import com.intellisoft.lhss.shared.DbResponseError
 import com.intellisoft.lhss.shared.DbSignIn
 import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.LocationDetails
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,14 +29,15 @@ class RetrofitCallsAuthentication {
         context: Context,
         dbSignIn: DbSignIn,
         fragment: Fragment,
-        landingPageFragment: Int
+        landingPageFragment: Int,
+        locationViewModel: LocationViewModel
     ) {
 
         CoroutineScope(Dispatchers.Main).launch {
 
             val job = Job()
             CoroutineScope(Dispatchers.IO + job).launch {
-                starLogin(context, dbSignIn, fragment, landingPageFragment)
+                starLogin(context, dbSignIn, fragment, landingPageFragment, locationViewModel)
             }.join()
         }
 
@@ -44,7 +47,8 @@ class RetrofitCallsAuthentication {
         context: Context,
         dbSignIn: DbSignIn,
         fragment: Fragment,
-        landingPageFragment: Int
+        landingPageFragment: Int,
+        locationViewModel: LocationViewModel
     ) {
 
 
@@ -106,18 +110,37 @@ class RetrofitCallsAuthentication {
                                             formatter.saveSharedPref("","userFullName", bodyUser.user.fullNames)
                                             formatter.saveSharedPref("","userEmailNumber", bodyUser.user.email)
                                             formatter.saveSharedPref("","userFacility", bodyUser.user.facility)
+                                            formatter.saveSharedPref("","userRequestedLocationReference", bodyUser.user.facility)
 
-                                            var country = ""
-                                            var countyName = ""
-                                            var subCountyName = ""
-                                            var regionName = ""
-                                            var wardName = ""
+                                            val locationHierarchyList = locationViewModel.getLocationDetails(bodyUser.user.facility)
+                                            locationHierarchyList.forEach {
 
-                                            formatter.saveSharedPref("","userCountry", country)
-                                            formatter.saveSharedPref("","userCountyName", countyName)
-                                            formatter.saveSharedPref("","userSubCountyName", subCountyName)
-                                            formatter.saveSharedPref("","userRegionName", regionName)
-                                            formatter.saveSharedPref("","userWardName", wardName)
+                                                val code = it.code
+                                                val name = it.name
+                                                val partOf = it.partOf
+
+                                                if (partOf != null && partOf == "Location/Uganda"){
+                                                    formatter.saveSharedPref("","userCountry", "Location/Uganda")
+                                                }
+
+                                                when (code) {
+                                                    LocationDetails.WARD.name -> {
+                                                        formatter.saveSharedPref("","userWardName", name)
+                                                    }
+                                                    "SUB-COUNTY", LocationDetails.DISTRICT.name -> {
+                                                        formatter.saveSharedPref("","userSubCountyName", name)
+                                                    }
+                                                    LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
+                                                        formatter.saveSharedPref("","userCountyName", name)
+                                                    }
+                                                    LocationDetails.COUNTRY.name -> {
+                                                        formatter.saveSharedPref("","userCountry", name)
+                                                    }
+                                                }
+
+                                            }
+
+//                                            formatter.saveSharedPref("","userRegionName", regionName)
 //                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
 //                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
 
