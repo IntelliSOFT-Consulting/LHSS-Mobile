@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.fhir.FhirEngine
+import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.StringFilterModifier
 import com.google.android.fhir.search.count
 import com.google.android.fhir.search.search
@@ -18,6 +19,9 @@ import com.intellisoft.lhss.shared.FormatterClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.hl7.fhir.r4.model.Bundle
+import org.hl7.fhir.r4.model.Location
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.ServiceRequest
@@ -67,22 +71,123 @@ class ReferralPatientListViewModel(
 
     fun referralNumber(){
         CoroutineScope(Dispatchers.IO).launch {
+
             formatterClass.saveSharedPref("","referralNumbers", "0")
 
-
-            val dbServiceList = ArrayList<DbServiceRequest?>()
-
-            fhirEngine
-                .search<ServiceRequest> {}
-                .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
-                .let { dbServiceList.addAll(it) }
-
+            val dbServiceList = getTotalReferrals()
 
 //            val referralList = getSearchResults("")
-            val referralNumber = dbServiceList.filterNotNull().size
+            val referralNumber = dbServiceList.toList().size
             formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
+
         }
     }
+
+    fun getTotalReferrals()= runBlocking {
+        getTotalReferralsBac()
+    }
+
+    private suspend fun getTotalReferralsBac(): ArrayList<DbServiceRequest> {
+
+        var serviceList: MutableList<DbServiceRequest?> = mutableListOf()
+        var serviceList1: MutableList<ServiceRequest?> = mutableListOf()
+
+        fhirEngine
+            .search<ServiceRequest> {
+            sort(ServiceRequest.AUTHORED, Order.ASCENDING)
+            }
+            .mapIndexed { index, serviceRequest -> createServiceRequestBac(serviceRequest.resource) }
+            .let { serviceList1.addAll(it) }
+
+        return ArrayList(serviceList.filterNotNull())
+
+    }
+
+    private fun createServiceRequestBac(resource: ServiceRequest):ServiceRequest? {
+
+        val status = if (resource.hasStatus()) resource.status.toString() else ""
+        var isUsersFacility = false
+        var savedReference = ""
+
+        val userFacility = formatterClass.getSharedPref("","userFacility")
+        val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
+        locationReferenceList?.forEach { reference ->
+            if (reference.hasReference() && reference.hasReferenceElement()){
+                if (userFacility == reference.referenceElement_.valueAsString){
+                    savedReference = reference.referenceElement_.valueAsString
+                    isUsersFacility = true
+                }
+            }
+        }
+
+        return resource
+    }
+
+    private suspend fun createServiceRequest(resource: ServiceRequest):DbServiceRequest? {
+
+
+        val id = resource.id.replace("ServiceRequest/","")
+
+
+        val patientId = if (resource.hasSubject())
+            resource.subject.referenceElement_
+                .toString().replace("Patient/","")
+
+        else ""
+        val status = if (resource.hasStatus()) resource.status.toString() else ""
+        val occurrenceDateTime = if (resource.hasOccurrenceDateTimeType()) resource.occurrenceDateTimeType.toString().replace("DateTimeType[", "") else null
+        val supportingInfo = if (resource.hasSupportingInfo()) resource.supportingInfo else emptyList()
+        val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
+        var isReferral = false
+
+        var isUsersFacility = false
+        var display = ""
+
+        val userFacility = formatterClass.getSharedPref("","userFacility")
+        val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
+        locationReferenceList?.forEach { reference ->
+            if (reference.hasReference() && reference.hasReferenceElement()){
+                if (userFacility == reference.referenceElement_.valueAsString){
+                    isUsersFacility = true
+                }
+            }
+        }
+
+
+        reasonCodeList.forEach {
+
+            val text = if (it.hasText()) it.text else ""
+            if (text == "REFERRAL_MODULE") isReferral = true
+            if (text == "REASON_FOR_REFERRAL"){
+                val coding = if (it.hasCoding()) it.codingFirstRep else null
+                if (coding != null){
+                    display = if (coding.hasDisplay()) coding.displayElement.toString() else ""
+                }
+            }
+        }
+
+        if (isReferral && isUsersFacility){
+
+            if (status == "ACTIVE"){
+                return DbServiceRequest(
+                    id,
+                    patientId,
+                    status,
+                    occurrenceDateTime.toString(),
+                    ArrayList(supportingInfo),
+                    reasonCodeList.firstOrNull()?.text
+                )
+            }
+
+        }
+
+
+
+
+        return null
+
+    }
+
 
     fun searchPatientsByName(nameQuery: String) {
         updatePatientListAndPatientCount({ getSearchResults(nameQuery) }, { count(nameQuery) })
@@ -218,71 +323,6 @@ class ReferralPatientListViewModel(
 
         }
         return null
-
-    }
-
-    private suspend fun createServiceRequest(resource: ServiceRequest):DbServiceRequest? {
-
-
-        val id = resource.id.replace("ServiceRequest/","")
-
-
-        val patientId = if (resource.hasSubject())
-            resource.subject.referenceElement_
-                .toString().replace("Patient/","")
-
-        else ""
-        val status = if (resource.hasStatus()) resource.status.toString() else ""
-        val occurrenceDateTime = if (resource.hasOccurrenceDateTimeType()) resource.occurrenceDateTimeType.toString().replace("DateTimeType[", "") else null
-        val supportingInfo = if (resource.hasSupportingInfo()) resource.supportingInfo else emptyList()
-        val reasonCodeList = if (resource.hasReasonCode()) resource.reasonCode else emptyList()
-        var isReferral = false
-
-        var isUsersFacility = false
-        var display = ""
-
-        val userFacility = formatterClass.getSharedPref("","userFacility")
-        val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
-        locationReferenceList?.forEach { reference ->
-            if (reference.hasReference() && reference.hasReferenceElement()){
-                if (userFacility == reference.referenceElement_.valueAsString){
-                    isUsersFacility = true
-                }
-            }
-        }
-
-
-        reasonCodeList.forEach {
-
-            val text = if (it.hasText()) it.text else ""
-            if (text == "REFERRAL_MODULE") isReferral = true
-            if (text == "REASON_FOR_REFERRAL"){
-                val coding = if (it.hasCoding()) it.codingFirstRep else null
-                if (coding != null){
-                    display = if (coding.hasDisplay()) coding.displayElement.toString() else ""
-                }
-            }
-        }
-
-        if (isReferral && isUsersFacility){
-
-            if (status == "ACTIVE"){
-                return DbServiceRequest(
-                    id,
-                    patientId,
-                    status,
-                    occurrenceDateTime.toString(),
-                    ArrayList(supportingInfo),
-                    reasonCodeList.firstOrNull()?.text
-                    )
-            }
-
-        }
-
-
-
-
-            return null
 
     }
 

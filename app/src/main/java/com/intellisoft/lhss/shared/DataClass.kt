@@ -202,3 +202,29 @@ data class DbResponseError(
     val error: String,
 )
 
+enum class LocationDetails {
+    WARD,
+    SUB_COUNTY,
+    COUNTY,
+    COUNTRY,
+    FACILITY,
+    DISTRICT,
+    REGION
+}
+data class DbLocation(
+    val ward: String? = null,
+    val subCounty: String? = null,
+    val county: String? = null,
+    val country: String? = null,
+    val facility: String? = null,
+    val district: String? = null,
+    val region: String? = null,
+)
+data class DbLocationResponse(
+    val name: String,
+    val code: String,
+    val partOf: String?
+)
+
+
+

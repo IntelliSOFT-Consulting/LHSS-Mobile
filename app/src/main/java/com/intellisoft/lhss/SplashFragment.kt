@@ -84,7 +84,7 @@ class SplashFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    private suspend fun getStoredData() {
+    private fun getStoredData() {
         viewModel.referralNumber()
         notificationServiceViewModel.getCommunicationList()
     }

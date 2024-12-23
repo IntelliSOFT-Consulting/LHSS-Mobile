@@ -112,34 +112,14 @@ class RetrofitCallsAuthentication {
                                             var subCountyName = ""
                                             var regionName = ""
                                             var wardName = ""
-                                            var requestedLocationReference = ""
-                                            var requestedLocation = ""
-
-                                            if (bodyUser.user.facility == "Location/17149"){
-                                                country = "Kenya"
-                                                countyName = "Busia"
-                                                subCountyName = "Funyula"
-                                                wardName = "Bwiri"
-                                                requestedLocationReference = "Location/Kachumbala-Health-Centre-IV"
-                                                requestedLocation = "Location/Kachumbala-Health-Centre-IV"
-                                            }
-                                            if (bodyUser.user.facility == "Location/Kachumbala-Health-Centre-IV"){
-                                                country = "Uganda"
-                                                countyName = "Bukedea"
-                                                subCountyName = "Bukedea"
-                                                regionName = "Eastern Region"
-                                                wardName = "Bukedea"
-                                                requestedLocationReference = "Location/17149"
-                                                requestedLocation = "Location/17149"
-                                            }
 
                                             formatter.saveSharedPref("","userCountry", country)
                                             formatter.saveSharedPref("","userCountyName", countyName)
                                             formatter.saveSharedPref("","userSubCountyName", subCountyName)
                                             formatter.saveSharedPref("","userRegionName", regionName)
                                             formatter.saveSharedPref("","userWardName", wardName)
-                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
-                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
+//                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
+//                                            formatter.saveSharedPref("","userRequestedLocationReference", requestedLocationReference)
 
 
                                             CoroutineScope(Dispatchers.Main).launch {

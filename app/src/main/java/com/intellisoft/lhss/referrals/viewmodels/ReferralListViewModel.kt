@@ -16,6 +16,7 @@ import com.intellisoft.lhss.shared.DbPatientItem
 import com.intellisoft.lhss.shared.DbServiceRequest
 import com.intellisoft.lhss.shared.FormatterClass
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.ServiceRequest
 
@@ -61,6 +62,7 @@ class ReferralListViewModel(
     fun searchPatientsByName(nameQuery: String) {
         updatePatientListAndPatientCount({ getSearchResults(nameQuery) }, { count(nameQuery) })
     }
+
 
     private suspend fun getSearchResults(nameQuery: String = ""):
             ArrayList<DbServiceRequest?> {
