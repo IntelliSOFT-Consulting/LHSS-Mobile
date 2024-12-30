@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hbb20.CCPCountry.getLibraryMasterCountriesEnglish
 import com.intellisoft.lhss.LocationViewModel
 import com.intellisoft.lhss.fhir.Constants
 import com.intellisoft.lhss.shared.DbResponseError
@@ -113,11 +114,13 @@ class RetrofitCallsAuthentication {
                                             formatter.saveSharedPref("","userRequestedLocationReference", bodyUser.user.facility)
 
                                             val locationHierarchyList = locationViewModel.getLocationDetails(bodyUser.user.facility)
+
                                             locationHierarchyList.forEach {
 
                                                 val code = it.code
                                                 val name = it.name
                                                 val partOf = it.partOf
+
 
                                                 if (partOf != null && partOf == "Location/Uganda"){
                                                     formatter.saveSharedPref("","userCountry", "Location/Uganda")
@@ -138,6 +141,21 @@ class RetrofitCallsAuthentication {
                                                     }
                                                 }
 
+                                            }
+
+                                            CoroutineScope(Dispatchers.IO).launch {
+                                                val userCountry = formatter.getSharedPref("","userCountry")
+
+                                                if (userCountry != null){
+                                                    val country = userCountry.replace("Location/","")
+                                                    val countryList = getLibraryMasterCountriesEnglish()
+                                                    val ccpCountry = countryList.find { it.name.contains(country) }
+                                                    val phoneCode = ccpCountry?.phoneCode
+                                                    val nameCode = ccpCountry?.nameCode
+
+                                                    if (phoneCode != null) formatter.saveSharedPref("","userCountryPhoneCode", phoneCode)
+                                                    if (nameCode != null) formatter.saveSharedPref("","userCountryNameCode", nameCode)
+                                                }
                                             }
 
 //                                            formatter.saveSharedPref("","userRegionName", regionName)

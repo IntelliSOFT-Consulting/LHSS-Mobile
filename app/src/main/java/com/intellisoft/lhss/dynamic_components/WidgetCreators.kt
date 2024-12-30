@@ -17,6 +17,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.intellisoft.lhss.R
+import com.intellisoft.lhss.shared.FormatterClass
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -83,10 +84,15 @@ class EditTextFieldCreator(
                 setMargins(0, 0, 16, 0)
             }
 
-            // Set default country code (e.g., Kenya)
-            setDefaultCountryUsingNameCode("ke")  // Set using country code, like "KE" for Kenya
-            // Or alternatively, you can set by phone code:
-             setCountryForPhoneCode(254) // Set using phone code for Kenya
+            val formatterCall = FormatterClass(context)
+
+            //get the country code from the cpp library
+            val userCountryPhoneCode = formatterCall.getSharedPref("","userCountryPhoneCode")?.toIntOrNull()
+            val userCountryNameCode = formatterCall.getSharedPref("","userCountryNameCode")
+
+            if (userCountryPhoneCode!= null) setCountryForPhoneCode(userCountryPhoneCode) else setCountryForPhoneCode(254)
+            if (userCountryNameCode!= null) setDefaultCountryUsingNameCode(userCountryNameCode) else setDefaultCountryUsingNameCode("ke")
+
         }
 
         // EditText field
