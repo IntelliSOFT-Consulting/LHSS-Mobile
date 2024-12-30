@@ -133,9 +133,6 @@ class ReferPatientFragment : Fragment() {
         // Initialize FieldManager with dependencies (inject via constructor or manually)
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
-        val userRequestedLocationReference = formatterClass.getSharedPref("","userFullName") ?: ""
-        val availableLocations = listOf(userRequestedLocationReference)
-
         val dbFieldList = listOf(
             DbField(
                 DbWidgets.DATE_PICKER.name,
@@ -171,22 +168,22 @@ class ReferPatientFragment : Fragment() {
                 "Ward", true,
                 InputType.TYPE_CLASS_TEXT
             ),
-            DbField(
-                DbWidgets.SPINNER.name,
-                "Name of Receiving facility", true, null,
-                availableLocations, true,
-                com.intellisoft.lhss.fhir.Constants.RECEIVING_FACILITY_NAME,
-            ),
+//            DbField(
+//                DbWidgets.SPINNER.name,
+//                "Name of Receiving facility", true, null,
+//                availableLocations, true,
+//                com.intellisoft.lhss.fhir.Constants.RECEIVING_FACILITY_NAME,
+//            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Name of Referring Officer", true,
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             ),
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Name of Receiving facility", true,
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-            ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Name of Receiving facility", true,
+//                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+//            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Tb Focal Person", true,
@@ -215,16 +212,16 @@ class ReferPatientFragment : Fragment() {
         val rootViewParentReferralCounty = binding.rootLayout.findViewWithTag<View>("Region/Province/County")
         val rootViewParentReferralSubCountry = binding.rootLayout.findViewWithTag<View>("District/Sub County")
         val rootViewParentReferralWard = binding.rootLayout.findViewWithTag<View>("Ward")
-        val rootViewParentReferralNameReceivingFacility = binding.rootLayout.findViewWithTag<View>("Name of Receiving facility")
+//        val rootViewParentReferralNameReceivingFacility = binding.rootLayout.findViewWithTag<View>("Name of Receiving facility")
 
         val referralList = ArrayList<DbWorkFlow>()
 
-        referralList.add(DbWorkFlow(rootViewParentReferralNameReceivingFacility, formatterClass.getSharedPref("", "userFullName") ?: ""))
+//        referralList.add(DbWorkFlow(rootViewParentReferralNameReceivingFacility, formatterClass.getSharedPref("", "userFullName") ?: ""))
 
         referralList.add(DbWorkFlow(rootViewParentReferralCountry, formatterClass.getSharedPref("", "userCountry") ?: ""))
         referralList.add(DbWorkFlow(rootViewParentReferralCounty, formatterClass.getSharedPref("", "userCountyName") ?: ""))
 
-        referralList.add(DbWorkFlow(rootViewParentReferralWard, formatterClass.getSharedPref("", "userWardName") ?: ""))
+//        referralList.add(DbWorkFlow(rootViewParentReferralWard, formatterClass.getSharedPref("", "userWardName") ?: ""))
 
         referralList.add(DbWorkFlow(rootViewParentReferralSubCountry,
             formatterClass.getSharedPref("", "userSubCountyName") ?:

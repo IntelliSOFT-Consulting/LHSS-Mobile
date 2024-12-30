@@ -71,6 +71,7 @@ class LandingPageFragment : Fragment() {
                 ),
             )[LocationViewModel::class.java]
 
+
         return binding.root
     }
 

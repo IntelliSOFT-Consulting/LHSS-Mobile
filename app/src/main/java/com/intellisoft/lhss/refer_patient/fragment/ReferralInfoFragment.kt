@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
+import com.intellisoft.lhss.LocationViewModel
 import com.intellisoft.lhss.R
 import com.intellisoft.lhss.clinical_info.viewmodel.ClinicalInfoViewViewModel
 import com.intellisoft.lhss.databinding.FragmentReferralInfoBinding
@@ -32,7 +34,9 @@ import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.refer_patient.viewmodel.ReferralInfoViewModel
 import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModel
 import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModelFactory
+import com.intellisoft.lhss.shared.DbLocationResponse
 import com.intellisoft.lhss.shared.FormatterClass
+import com.intellisoft.lhss.shared.LocationDetails
 
 class ReferralInfoFragment : Fragment() {
 
@@ -52,6 +56,9 @@ class ReferralInfoFragment : Fragment() {
     private lateinit var fhirEngine: FhirEngine
     private var patientId:String = ""
     private var serviceRequestId:String = ""
+    private lateinit var locationViewModel: LocationViewModel
+    val countryList = listOf("Kenya", "Uganda", "Tanzania")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +97,15 @@ class ReferralInfoFragment : Fragment() {
                 ),
             )
                 .get(ReferralDetailsViewModel::class.java)
+
+        locationViewModel =
+            ViewModelProvider(
+                this,
+                LocationViewModel.LocationViewModelFactory(
+                    requireActivity().application,
+                    fhirEngine
+                ),
+            )[LocationViewModel::class.java]
 
         return binding.root
 
@@ -154,8 +170,6 @@ class ReferralInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.e("---->","<----")
-
         val gson = Gson()
 
         var referralDate = ""
@@ -182,7 +196,30 @@ class ReferralInfoFragment : Fragment() {
         // Initialize FieldManager with dependencies (inject via constructor or manually)
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
+
         val dbFieldList = listOf(
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Country of Receiving Facility", true, null,
+                countryList
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Region/Province/County of Receiving Facility", true, null,
+                emptyList()
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "District/Sub County of Receiving Facility", true, null,
+                emptyList()
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Ward of Receiving Facility", true, null,
+                emptyList()
+            ),
+
+
             DbField(
                 DbWidgets.SPINNER.name,
                 "Reason for Referral", true, null,
@@ -209,7 +246,10 @@ class ReferralInfoFragment : Fragment() {
         FormUtils.populateView(ArrayList(dbFieldList), binding.rootLayout, fieldManager, requireContext())
 
         setSpinnerListener(
-            listOf("Reason for Referral")
+            listOf(
+                "Country of Receiving Facility",
+                "Region/Province/County of Receiving Facility"
+            )
         )
 
         FormUtils.loadFormData(
@@ -220,22 +260,56 @@ class ReferralInfoFragment : Fragment() {
         )
 
         clinicalInfoViewViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
-            val otherReasons = binding.rootLayout.findViewWithTag<View>("Specify Other Referral Reasons")
-            val otherReasonsText = formatterClass.findTextViewByText(binding.rootLayout, "Specify Other Referral Reasons")
 
-            when (selectedItem) {
-                "Others" -> {
-                    otherReasons?.visibility = View.VISIBLE
-                    otherReasonsText?.visibility = View.VISIBLE
-                }
-                else -> {
-                    otherReasons?.visibility = View.GONE
-                    otherReasonsText?.visibility = View.GONE
+            val countryReceiving = binding.rootLayout.findViewWithTag<View>("Country of Receiving Facility") as Spinner
+            val regionReceiving = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Receiving Facility") as Spinner
+            val districtReceiving = binding.rootLayout.findViewWithTag<View>("District/Sub County of Receiving Facility") as Spinner
+            val wardReceiving = binding.rootLayout.findViewWithTag<View>("Ward of Receiving Facility") as Spinner
+
+            val countryName = if (selectedItem == "Kenya"){
+                "0"
+            }else {
+                selectedItem
+            }
+
+            val locationList = locationViewModel
+                .getHierarchyDetails("Location/$countryName","")
+
+            val codeName = locationList.firstOrNull()?.code
+            if (codeName != null){
+                when (codeName) {
+                    LocationDetails.WARD.name -> {
+                        populateSpinner(wardReceiving, locationList)
+                    }
+                    "SUB-COUNTY", LocationDetails.DISTRICT.name -> {
+                        populateSpinner(districtReceiving, locationList)
+                    }
+                    LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
+                        populateSpinner(regionReceiving, locationList)
+                    }
                 }
             }
 
+
+
+            Log.e("---------->","<----------")
+            println("selectedItem $selectedItem")
+            Log.e("---------->","<----------")
+
         }
 
+    }
+
+    private fun populateSpinner(spinner: Spinner, data: List<DbLocationResponse>) {
+        val dataList = data.map { it.name }
+        // Create an ArrayAdapter using the string list and a default spinner layout
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dataList)
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Apply the adapter to the spinner
+        spinner.adapter = adapter
     }
 
     override fun onDestroyView() {

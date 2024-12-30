@@ -24,6 +24,76 @@ class LocationViewModel(
     private var formatterClass = FormatterClass(application.applicationContext)
     val locationList = MutableLiveData<List<DbPatientItem>>()
 
+    // Function to list counties or regions based on the country
+
+    fun getHierarchyDetails(requestParam: String, code: String)= runBlocking {
+        getHierarchyDetailsBac(requestParam, code)
+    }
+
+    private suspend fun getHierarchyDetailsBac(requestParam: String, code: String): List<DbLocationResponse>{
+
+        val locationList = when (code) {
+            "REGION" -> {
+                getCountiesOrRegions(requestParam)
+            }
+            "SUB_COUNTY" -> {
+                getSubCountiesOrDistricts(requestParam)
+            }
+            "WARD" -> {
+                getWards(requestParam)
+            }
+            "FACILITY" -> {
+                getFacilities(requestParam)
+            }
+            else -> {
+                fetchLocationsByCodeAndPartOf("", requestParam)
+            }
+        }
+
+        return locationList
+
+    }
+
+    private suspend fun getCountiesOrRegions(country: String): List<DbLocationResponse> {
+        return fetchLocationsByCodeAndPartOf("REGION", country) // "REGION" for Uganda or "COUNTY" for Kenya
+    }
+
+    // Function to list sub-counties or districts based on the county/region
+    private suspend fun getSubCountiesOrDistricts(countyOrRegion: String): List<DbLocationResponse> {
+        return fetchLocationsByCodeAndPartOf("SUB_COUNTY", countyOrRegion) // "SUB_COUNTY" or "DISTRICT"
+    }
+
+    // Function to list wards based on the sub-county/district
+    private suspend fun getWards(subCountyOrDistrict: String): List<DbLocationResponse> {
+        return fetchLocationsByCodeAndPartOf("WARD", subCountyOrDistrict)
+    }
+
+    // Function to list facilities based on the ward
+    private suspend fun getFacilities(ward: String): List<DbLocationResponse> {
+        return fetchLocationsByCodeAndPartOf("FACILITY", ward)
+    }
+
+    // Helper function to fetch locations dynamically based on a type code and parent reference
+    private suspend fun fetchLocationsByCodeAndPartOf(code: String, parentReference: String): List<DbLocationResponse> {
+        return fhirEngine.search<Location> {
+            // Filter by partOf reference
+            filter(Location.PARTOF, {value = parentReference })
+        }.map { createLocationDataItem(it.resource) }
+    }
+
+    // Function to create a location item (same as before)
+    private fun createLocationDataItem(resource: Location): DbLocationResponse {
+        val name = if (resource.hasName()) resource.name else ""
+        val code = resource.typeFirstRep.codingFirstRep.code ?: ""
+        val partOf = resource.partOf?.reference
+
+        return DbLocationResponse(
+            name = name,
+            code = code,
+            partOf = partOf
+        )
+    }
+
     fun getLocationDetails(locationReference: String) = runBlocking {
         getLocationHierarchy(locationReference)
     }
