@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
@@ -227,6 +228,11 @@ class ReferralInfoFragment : Fragment() {
                 "Ward of Receiving Facility", false, null,
                 emptyList()
             ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Name of Receiving Facility", false, null,
+                emptyList()
+            ),
 
 
             DbField(
@@ -275,9 +281,6 @@ class ReferralInfoFragment : Fragment() {
             val districtReceiving = binding.rootLayout.findViewWithTag<View>("District/Sub County of Receiving Facility") as Spinner
             val wardReceiving = binding.rootLayout.findViewWithTag<View>("Ward of Receiving Facility") as Spinner
 
-            Log.e("---->","<-----")
-            println("selectedItem $selectedItem")
-
             //Check if country is in countryList
             val countryId = countryList.firstOrNull { it.name == selectedItem }?.id
             //Set region and district dropdowns to empty
@@ -289,6 +292,21 @@ class ReferralInfoFragment : Fragment() {
                     when (codeName) {
                         LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
                             populateSpinner(regionReceiving, locationList)
+
+                            // Handle county/region selection dynamically
+                            regionReceiving.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                    val selectedRegion = locationList[position].id
+                                    //Use this to get the Districts
+                                    val extractedId = selectedRegion?.split("/")?.get(1)
+
+                                    if (extractedId != null) {
+                                        fetchAndPopulateDistricts(extractedId, districtReceiving)
+                                    }
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                            }
                         }
                     }
                 }
@@ -299,8 +317,7 @@ class ReferralInfoFragment : Fragment() {
             //Update region and district dropdowns based on selected country
 
 
-            println("countryId $countryId")
-            Log.e("---->","<-----")
+
 
 //            val partOfName = if (selectedItem == "Kenya"){
 //                "0"
@@ -329,6 +346,60 @@ class ReferralInfoFragment : Fragment() {
 
         }
 
+    }
+
+    /**
+     * Function to fetch districts/sub-counties and populate the spinner
+     */
+    private fun fetchAndPopulateDistricts(regionProvinceId: String, districtSpinner: Spinner) {
+        val districtList = locationViewModel
+            .getHierarchyDetails("Location/$regionProvinceId", "")
+        populateSpinner(districtSpinner, districtList)
+
+        // Handle district/sub-county selection dynamically
+        districtSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedDistrict = districtList[position].id
+                val extractedId = selectedDistrict?.split("/")?.get(1)
+                if (extractedId != null) {
+                    fetchAndPopulateWards(extractedId)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    /**
+     * Function to fetch wards and populate the spinner
+     */
+    private fun fetchAndPopulateWards(districtId: String) {
+        val wardList = locationViewModel.getHierarchyDetails("Location/$districtId", "")
+        val wardSpinner = binding.rootLayout.findViewWithTag<View>("Ward of Receiving Facility") as Spinner
+        populateSpinner(wardSpinner, wardList)
+
+        // Handle ward selection dynamically
+        wardSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedWard = wardList[position].id
+                val extractedId = selectedWard?.split("/")?.get(1)
+
+                if (extractedId != null) {
+                    fetchAndPopulateFacilities(extractedId)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    /**
+     * Function to fetch facilities and populate the spinner
+     */
+    private fun fetchAndPopulateFacilities(wardId: String) {
+        val facilityList = locationViewModel.getHierarchyDetails("Location/$wardId", "")
+        val facilitySpinner = binding.rootLayout.findViewWithTag<View>("Name of Receiving Facility") as Spinner
+        populateSpinner(facilitySpinner, facilityList)
     }
 
     private fun populateSpinner(spinner: Spinner, data: List<DbLocationResponse>) {
