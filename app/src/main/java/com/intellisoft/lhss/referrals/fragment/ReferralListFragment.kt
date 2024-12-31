@@ -127,7 +127,7 @@ class ReferralListFragment : Fragment() {
     }
 
 
-    fun showReceivePatientDialog() {
+    private fun showReceivePatientDialog() {
         // Create an AlertDialog builder
         val builder = AlertDialog.Builder(requireContext())
 

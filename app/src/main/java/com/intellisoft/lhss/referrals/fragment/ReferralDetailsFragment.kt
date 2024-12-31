@@ -35,6 +35,7 @@ class ReferralDetailsFragment : Fragment() {
     private var patientId:String = ""
     private var serviceRequestId:String = ""
     private lateinit var formDataAdapter: FormDataAdapter
+    private lateinit var patientDetailsViewModel: PatientCardViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +69,17 @@ class ReferralDetailsFragment : Fragment() {
             )
                 .get(ReferralDetailsViewModel::class.java)
 
+        patientDetailsViewModel =
+            ViewModelProvider(
+                this,
+                PatientDetailsViewModelFactory(
+                    requireContext().applicationContext as Application,
+                    fhirEngine,
+                    patientId
+                ),
+            )
+                .get(PatientCardViewModel::class.java)
+
         navigationActions()
 
         return binding.root
@@ -93,6 +105,17 @@ class ReferralDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val patientDataList = patientDetailsViewModel.getPatientInfo()
+        val patientData = patientDataList.firstOrNull()
+        if (patientData != null) {
+
+            val fullName = formatterClass.getSharedPref("","patientName") ?: ""
+            binding.tvFullName.text = fullName
+
+        }
+
+
+
         val formDataList = viewModel.getServiceRequest()
 
         formDataAdapter = FormDataAdapter(formDataList, requireContext())
@@ -100,8 +123,6 @@ class ReferralDetailsFragment : Fragment() {
 
         binding.recyclerView.adapter = formDataAdapter
 
-        val fullName = formatterClass.getNameFields(formDataList)
-        binding.tvFullName.text = fullName
         val crossBorderId = "Cross Border Id: ${patientId.substring(0,6)}"
         binding.tvCrossBorderId.text = crossBorderId
     }
