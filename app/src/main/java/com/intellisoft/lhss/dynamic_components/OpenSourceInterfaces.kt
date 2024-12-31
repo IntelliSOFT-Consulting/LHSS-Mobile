@@ -19,6 +19,7 @@ interface FieldCreator {
         isPastDate: Boolean = true,
         startDate: String? = null,
         endDate: String? = null,
+        hint: String? = null,
     ): View
 }
 

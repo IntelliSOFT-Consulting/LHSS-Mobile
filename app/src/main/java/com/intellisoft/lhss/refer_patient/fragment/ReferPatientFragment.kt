@@ -148,26 +148,26 @@ class ReferPatientFragment : Fragment() {
 //                DbWidgets.SPINNER.name,
 //                "Country", true, null,
 //                countryList),
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Country", true,
-                InputType.TYPE_CLASS_TEXT
-            ),
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Region/Province/County", true,
-                InputType.TYPE_CLASS_TEXT
-            ),
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "District/Sub County", true,
-                InputType.TYPE_CLASS_TEXT
-            ),
-            DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Ward", true,
-                InputType.TYPE_CLASS_TEXT
-            ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Country", true,
+//                InputType.TYPE_CLASS_TEXT
+//            ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Region/Province/County", true,
+//                InputType.TYPE_CLASS_TEXT
+//            ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "District/Sub County", true,
+//                InputType.TYPE_CLASS_TEXT
+//            ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Ward", true,
+//                InputType.TYPE_CLASS_TEXT
+//            ),
 //            DbField(
 //                DbWidgets.SPINNER.name,
 //                "Name of Receiving facility", true, null,
@@ -196,11 +196,23 @@ class ReferPatientFragment : Fragment() {
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Telephone", true,
-                InputType.TYPE_CLASS_PHONE
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Email", false,
+                InputType.TYPE_CLASS_TEXT
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Comments", false,
                 InputType.TYPE_CLASS_TEXT
             ),
 

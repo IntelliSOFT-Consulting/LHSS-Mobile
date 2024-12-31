@@ -41,19 +41,48 @@ class ReferralPatientListViewModel(
 
     val liveSearchedPatients = MutableLiveData<List<DbPatientItem>>()
     val patientCount = MutableLiveData<Long>()
+    val referralCount = MutableLiveData<Int>()
 
     init {
-        updatePatientListAndPatientCount({ getSearchResults("") }, { count() })
+        updatePatientListAndPatientCount({ getSearchResults("") }, { count() }, {getReferralCount()} )
     }
 
     private fun updatePatientListAndPatientCount(
         search: suspend () -> List<DbPatientItem>,
         count: suspend () -> Long,
+        getReferralCount: suspend () -> Int
     ) {
         viewModelScope.launch {
             liveSearchedPatients.value = search()
             patientCount.value = count()
+            referralCount.value = getReferralCount()
         }
+    }
+
+    private suspend fun getReferralCount():Int {
+        //Get the list of patients and then get the list of referrals
+        val patients = getSearchResults()
+
+        val serviceList: MutableList<ServiceRequest?> = mutableListOf()
+
+        patients.forEach { dbPatientItem ->
+
+            val patientId = dbPatientItem.id
+
+            fhirEngine
+                .search<ServiceRequest> {
+                    filter(ServiceRequest.SUBJECT, {value = "Patient/$patientId"})
+                }
+                .mapIndexed { index, serviceRequest -> createServiceRequestBac(serviceRequest.resource) }
+                .let { serviceList.addAll(it) }
+
+        }
+
+        val referralNumber = serviceList.toList().size
+        referralCount.postValue(referralNumber)
+        formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
+
+        return referralNumber
     }
 
     private suspend fun count(nameQuery: String = ""): Long {
@@ -73,13 +102,13 @@ class ReferralPatientListViewModel(
     fun referralNumber(){
         CoroutineScope(Dispatchers.IO).launch {
 
-            formatterClass.saveSharedPref("","referralNumbers", "0")
-
-            val dbServiceList = getTotalReferrals()
-
-//            val referralList = getSearchResults("")
-            val referralNumber = dbServiceList.toList().size
-            formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
+//            formatterClass.saveSharedPref("","referralNumbers", "0")
+//
+//            val dbServiceList = getTotalReferrals()
+//
+////            val referralList = getSearchResults("")
+//            val referralNumber = dbServiceList.toList().size
+//            formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
 
         }
     }
@@ -191,7 +220,7 @@ class ReferralPatientListViewModel(
 
 
     fun searchPatientsByName(nameQuery: String) {
-        updatePatientListAndPatientCount({ getSearchResults(nameQuery) }, { count(nameQuery) })
+        updatePatientListAndPatientCount({ getSearchResults(nameQuery) }, { count(nameQuery) }, {getReferralCount()})
     }
 
     private suspend fun getSearchResults(nameQuery: String = ""): ArrayList<DbPatientItem> {
@@ -209,9 +238,10 @@ class ReferralPatientListViewModel(
 
         patients = sortedPatients.filterNotNull().toMutableList()
 
-
         return ArrayList(patients)
     }
+
+
 
     fun sortByMostRecentDateCreated(patientList: ArrayList<DbPatientItem?>): List<DbPatientItem?> {
         val dateFormat = SimpleDateFormat("MMM d yyyy", Locale.ENGLISH)
@@ -252,14 +282,6 @@ class ReferralPatientListViewModel(
         if (locationReference != null){
             isUsersFacility = true
         }
-
-        Log.e("*****","*****")
-        println("userFacility $userFacility")
-        println("locationReferenceList $locationReferenceList")
-        println("locationReference $locationReference")
-        println("isUsersFacility $isUsersFacility")
-        Log.e("*****","*****")
-
 
         reasonCodeList.forEach {
 

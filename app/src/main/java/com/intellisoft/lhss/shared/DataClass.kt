@@ -40,6 +40,7 @@ data class DbField(
     val isPastDate: Boolean = true,
     val startDate: String? = null,
     val endDate: String? = null,
+    val hint:String? = null
     )
 
 data class DbEncounterDetails(

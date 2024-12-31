@@ -184,21 +184,35 @@ class DemographicsFragment : Fragment() {
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Telephone in referring country", true,
-                InputType.TYPE_CLASS_PHONE
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
                 "Telephone in receiving country", false,
-                InputType.TYPE_CLASS_PHONE
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "Document Type", true, null,
+                "Document Type", false, null,
                 identificationTypes
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Document Number", true, // Have this at 9 characters for now
+                "Document Number", false, // Have this at 9 characters for now
                 InputType.TYPE_CLASS_NUMBER
             ),
             DbField(

@@ -61,7 +61,8 @@ class EditTextFieldCreator(
         isEnable: Boolean,
         isPastDate: Boolean,
         startDate: String?,
-        endDate: String?
+        endDate: String?,
+        hintValue: String?,
     ): View {
         // LinearLayout to hold both Country Code Picker and EditText
         val containerLayout = LinearLayout(context).apply {
@@ -97,7 +98,7 @@ class EditTextFieldCreator(
 
         // EditText field
         val editText = MandatoryEditText(context).apply {
-            this.hint = label
+            this.hint = hintValue ?: label
             this.inputType = inputType ?: InputType.TYPE_CLASS_TEXT
             this.background = ContextCompat.getDrawable(context, R.drawable.rounded_edittext) // Set rounded border
             this.tag = label
@@ -136,7 +137,8 @@ class SpinnerFieldCreator(
         isEnabled: Boolean,
         isPastDate: Boolean,
         startDate: String?,
-        endDate: String?
+        endDate: String?,
+        hint: String?,
     ): View {
 
         val spinner = Spinner(context)
@@ -161,7 +163,8 @@ class RadioButtonFieldCreator(
         isEnabled: Boolean,
         isPastDate: Boolean,
         startDate: String?,
-        endDate: String?
+        endDate: String?,
+        hint: String?
     ): View {
         // Create a RadioGroup
         val radioGroup = MandatoryRadioGroup(context).apply {
@@ -198,7 +201,8 @@ class DatePickerFieldCreator(private val context: Context) : FieldCreator {
         isEnabled: Boolean,
         isPastDate: Boolean,
         startDate: String?,
-        endDate: String?
+        endDate: String?,
+        hint1: String?
     ): View {
 
         // Create an EditText field to display the selected date
@@ -306,7 +310,8 @@ class CheckboxFieldCreator(
         isEnabled: Boolean,
         isPastDate: Boolean,
         startDate: String?,
-        endDate: String?
+        endDate: String?,
+        hint: String?
     ): View {
 
         // Create a LinearLayout to hold the checkbox and label
