@@ -12,6 +12,7 @@ import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.StringFilterModifier
 import com.google.android.fhir.search.count
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss.fhir.Constants
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.shared.DbPatientItem
 import com.intellisoft.lhss.shared.DbServiceRequest
@@ -193,8 +194,7 @@ class ReferralPatientListViewModel(
         updatePatientListAndPatientCount({ getSearchResults(nameQuery) }, { count(nameQuery) })
     }
 
-    private suspend fun getSearchResults(nameQuery: String = ""):
-            ArrayList<DbPatientItem> {
+    private suspend fun getSearchResults(nameQuery: String = ""): ArrayList<DbPatientItem> {
 
         val dbPatientItemList = ArrayList<DbPatientItem?>()
 
@@ -248,13 +248,18 @@ class ReferralPatientListViewModel(
 
         val userFacility = formatterClass.getSharedPref("","userFacility")
         val locationReferenceList = if (resource.hasLocationReference()) resource.locationReference else null
-        locationReferenceList?.forEach { reference ->
-            if (reference.hasReference() && reference.hasReferenceElement()){
-                if (userFacility == reference.referenceElement_.valueAsString){
-                    isUsersFacility = true
-                }
-            }
+        val locationReference = locationReferenceList?.find { it.reference == userFacility }
+        if (locationReference != null){
+            isUsersFacility = true
         }
+
+        Log.e("*****","*****")
+        println("userFacility $userFacility")
+        println("locationReferenceList $locationReferenceList")
+        println("locationReference $locationReference")
+        println("isUsersFacility $isUsersFacility")
+        Log.e("*****","*****")
+
 
         reasonCodeList.forEach {
 

@@ -3,13 +3,17 @@ package com.intellisoft.lhss.refer_patient.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.fhir.FhirEngine
+import com.google.android.fhir.search.search
+import com.intellisoft.lhss.LocationViewModel
 import com.intellisoft.lhss.clinical_info.viewmodel.ClinicalInfoDetailsViewModel
 import com.intellisoft.lhss.fhir.Constants
 import com.intellisoft.lhss.fhir.Constants.COUNTRY_RECEIVING
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.shared.DbCommunication
 import com.intellisoft.lhss.shared.DbFormData
+import com.intellisoft.lhss.shared.DbLocationResponse
 import com.intellisoft.lhss.shared.DbNavigationDetails
 import com.intellisoft.lhss.shared.FormData
 import com.intellisoft.lhss.shared.FormatterClass
@@ -24,6 +28,7 @@ import org.hl7.fhir.r4.model.Coding
 import org.hl7.fhir.r4.model.Communication
 import org.hl7.fhir.r4.model.DateTimeType
 import org.hl7.fhir.r4.model.Encounter
+import org.hl7.fhir.r4.model.Location
 import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Period
 import org.hl7.fhir.r4.model.Reference
@@ -45,6 +50,7 @@ class ReviewReferViewModel (
 
     private var viewModel =  NotificationServiceViewModel(application)
 
+    private var locationViewModel = LocationViewModel(application, fhirEngine)
 
 
     fun createServiceRequest(formDataList: List<FormData>,
@@ -149,11 +155,27 @@ class ReviewReferViewModel (
                     //Check if observation has code in this list receivingInfoList
                     val countryReceiving = receivingInfoList.find { it == code }?.firstOrNull()
                     if (countryReceiving != null){
+
                         val reference = Reference()
                         reference.id = formatterClass.generateUuid()
-                        reference.display = dbFormData.tag
                         reference.type = code
-                        reference.setReference("Location/${dbFormData.text}")
+                        reference.display = dbFormData.tag
+
+                        if (dbFormData.tag == "Name of Receiving Facility") {
+
+                            val dbLocationDetails =
+                                locationViewModel.getFacilityByName(dbFormData.text)
+                            val locationDetails = dbLocationDetails.firstOrNull()
+
+                            if (locationDetails != null){
+                                val locationId = locationDetails.id
+                                val extractedId = locationId?.split("/")?.get(1)
+
+                                reference.setReference("Location/$extractedId")
+                            }
+                        }else{
+                            reference.setReference("Location/${dbFormData.text}")
+                        }
 
                         serviceRequest.locationReference.add(reference)
 
@@ -173,9 +195,6 @@ class ReviewReferViewModel (
     }
 
     fun findFhirCode(formDataList: List<FormData>, targetFhirCode: String): DbFormData? {
-
-        println("formDataList $formDataList")
-        println("targetFhirCode $targetFhirCode")
 
         return formDataList
             .asSequence() // Use a sequence for better performance with nested lists
@@ -351,10 +370,6 @@ class ReviewReferViewModel (
                 else -> { generateRandomLoincCode() }
             }
 
-
-//        val fhirCode = dbFormData.fhirCode ?: generateRandomLoincCode()
-
-
         // Generate a random LOINC code for the observation
         observation.code = CodeableConcept()
             .addCoding(
@@ -366,12 +381,35 @@ class ReviewReferViewModel (
         // Set the encounter for the observation
         observation.encounter = Reference("Encounter/$encounterId")
 
-        //set the value
-        val type = StringType()
-        type.id = formatterClass.generateUuid()
-        type.value = dbFormData.text
+        Log.e("----->","<------")
+        println("tag ${dbFormData.tag}")
 
-        observation.value = type
+        if (dbFormData.tag == "Name of Receiving Facility"){
+
+            val dbLocationDetails = locationViewModel.getFacilityByName(dbFormData.text)
+            val locationDetails = dbLocationDetails.firstOrNull()
+
+            println("dbLocationDetails $dbLocationDetails")
+            println("locationDetails $locationDetails")
+
+            if (locationDetails != null){
+                val locationId = locationDetails.id
+                val extractedId = locationId?.split("/")?.get(1)
+
+                println("locationId $locationId")
+                println("extractedId $extractedId")
+
+                //set the value
+                val type = StringType()
+                type.id = formatterClass.generateUuid()
+                type.value = extractedId
+
+                observation.value = type
+            }
+
+        }
+
+        Log.e("----->","<------")
 
         // Add the observation note from the form data
         val noteList = ArrayList<org.hl7.fhir.r4.model.Annotation>()
@@ -384,6 +422,7 @@ class ReviewReferViewModel (
 
         return observation
     }
+
 
     // Function to generate a random LOINC code (for example purposes)
     private fun generateRandomLoincCode(): String {

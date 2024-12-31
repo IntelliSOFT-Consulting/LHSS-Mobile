@@ -82,6 +82,10 @@ class LocationViewModel(
         }.map { createLocationDataItem(it.resource) }
     }
 
+    fun getFacilityByName(name: String) = runBlocking {
+        fetchLocationsByName("FACILITY", name)
+    }
+
     private suspend fun fetchLocationsByName(code: String, parentReference: String): List<DbLocationResponse> {
         return fhirEngine.search<Location> {
             // Filter by partOf reference
