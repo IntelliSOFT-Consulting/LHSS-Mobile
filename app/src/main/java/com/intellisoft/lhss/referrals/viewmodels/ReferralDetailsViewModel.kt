@@ -127,6 +127,8 @@ class ReferralDetailsViewModel(
 
     private fun createObservationItem(resource: Observation):DbFormData {
 
+        val id = if (resource.hasId()) resource.id else ""
+
         val tag = if(resource.hasCode() && resource.code.hasCoding()){
             resource.code.codingFirstRep.display
         }else ""
@@ -134,6 +136,10 @@ class ReferralDetailsViewModel(
         val text = if (resource.hasValueStringType()){
             resource.valueStringType.valueAsString
         }else ""
+
+        println("tag $tag")
+        println("text $text")
+        println("id $id")
 
         return DbFormData(
             tag, text
@@ -198,7 +204,6 @@ class ReferralDetailsViewModel(
                 }else ""
             }
         }
-
 
         if (title != "" && observationList.isNotEmpty()){
             val formData = FormData(

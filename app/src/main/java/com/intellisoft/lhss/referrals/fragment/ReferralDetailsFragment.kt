@@ -108,14 +108,14 @@ class ReferralDetailsFragment : Fragment() {
         val patientDataList = patientDetailsViewModel.getPatientInfo()
         val patientData = patientDataList.firstOrNull()
         if (patientData != null) {
-
             val fullName = formatterClass.getSharedPref("","patientName") ?: ""
             binding.tvFullName.text = fullName
-
         }
 
+        val crossBorderId = "Cross Border Id: ${patientId.substring(0,6)}"
+        binding.tvCrossBorderId.text = crossBorderId
 
-
+        //Get referral information
         val formDataList = viewModel.getServiceRequest()
 
         formDataAdapter = FormDataAdapter(formDataList, requireContext())
@@ -123,8 +123,6 @@ class ReferralDetailsFragment : Fragment() {
 
         binding.recyclerView.adapter = formDataAdapter
 
-        val crossBorderId = "Cross Border Id: ${patientId.substring(0,6)}"
-        binding.tvCrossBorderId.text = crossBorderId
     }
 
     override fun onDestroyView() {

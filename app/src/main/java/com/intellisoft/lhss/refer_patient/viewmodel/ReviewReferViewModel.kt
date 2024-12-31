@@ -59,7 +59,7 @@ class ReviewReferViewModel (
         generateServiceRequest(formDataList,patientId, requesterId )
     }
 
-    fun getReasonForReferral(formDataList: List<FormData>): String? {
+    private fun getReasonForReferral(formDataList: List<FormData>): String? {
         // Find the FormData with the title "REFERRAL_INFO"
         val referralInfo = formDataList.find { it.title == "REFERRAL_INFO" }
 
@@ -381,35 +381,25 @@ class ReviewReferViewModel (
         // Set the encounter for the observation
         observation.encounter = Reference("Encounter/$encounterId")
 
-        Log.e("----->","<------")
-        println("tag ${dbFormData.tag}")
+        //set the value
+        val type = StringType()
+        type.id = formatterClass.generateUuid()
 
         if (dbFormData.tag == "Name of Receiving Facility"){
 
             val dbLocationDetails = locationViewModel.getFacilityByName(dbFormData.text)
             val locationDetails = dbLocationDetails.firstOrNull()
 
-            println("dbLocationDetails $dbLocationDetails")
-            println("locationDetails $locationDetails")
-
             if (locationDetails != null){
                 val locationId = locationDetails.id
                 val extractedId = locationId?.split("/")?.get(1)
-
-                println("locationId $locationId")
-                println("extractedId $extractedId")
-
-                //set the value
-                val type = StringType()
-                type.id = formatterClass.generateUuid()
                 type.value = extractedId
-
-                observation.value = type
             }
-
+        }else{
+            type.value = dbFormData.text
         }
 
-        Log.e("----->","<------")
+        observation.value = type
 
         // Add the observation note from the form data
         val noteList = ArrayList<org.hl7.fhir.r4.model.Annotation>()
