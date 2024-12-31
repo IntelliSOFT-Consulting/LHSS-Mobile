@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.google.android.fhir.FhirEngine
 import com.intellisoft.lhss.clinical_info.viewmodel.ClinicalInfoDetailsViewModel
 import com.intellisoft.lhss.fhir.Constants
+import com.intellisoft.lhss.fhir.Constants.COUNTRY_RECEIVING
 import com.intellisoft.lhss.fhir.FhirApplication
 import com.intellisoft.lhss.shared.DbCommunication
 import com.intellisoft.lhss.shared.DbFormData
@@ -29,6 +30,7 @@ import org.hl7.fhir.r4.model.Reference
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.ServiceRequest
 import org.hl7.fhir.r4.model.StringType
+import java.util.Arrays
 import java.util.Date
 
 class ReviewReferViewModel (
@@ -110,11 +112,13 @@ class ReviewReferViewModel (
         serviceRequest.occurrence = DateTimeType.now()
         serviceRequest.supportingInfo = ArrayList()
 
-        val userRequestedLocationReference = formatterClass.getSharedPref("","userRequestedLocationReference")?:""
-        //Get the patient's location reference
-        val locationReference = userRequestedLocationReference
-
-        serviceRequest.locationReference.add(Reference(locationReference))
+        val receivingInfoList = listOf(
+            Constants.COUNTRY_RECEIVING,
+            Constants.REGION_COUNTY_RECEIVING,
+            Constants.DISTRICT_SUB_COUNTY_RECEIVING,
+            Constants.WARD_RECEIVING,
+            Constants.FACILITY_RECEIVING
+        )
 
         // Iterate through formDataList and create Encounters and Observations
         formDataList.forEach { formData ->
@@ -133,6 +137,32 @@ class ReviewReferViewModel (
             formData.formDataList.forEach { dbFormData ->
                 val observation = createObservation(
                     dbFormData, patientId, encounter.id)
+
+                if (
+                    observation.hasCode() &&
+                    observation.code.hasCoding() &&
+                    observation.code.codingFirstRep.hasCode()
+                    )
+                {
+                    val code = observation.code.codingFirstRep.code
+
+                    //Check if observation has code in this list receivingInfoList
+                    val countryReceiving = receivingInfoList.find { it == code }?.firstOrNull()
+                    if (countryReceiving != null){
+                        val reference = Reference()
+                        reference.id = formatterClass.generateUuid()
+                        reference.display = dbFormData.tag
+                        reference.type = code
+                        reference.setReference("Location/${dbFormData.text}")
+
+                        serviceRequest.locationReference.add(reference)
+
+                    }
+
+                }
+
+
+
                 saveResourceToDatabase(observation, "Observation")
             }
             // Add Observation to supportingInfo of ServiceRequest
@@ -140,6 +170,17 @@ class ReviewReferViewModel (
 
         return saveResourceToDatabase(serviceRequest, "ServiceRequest")
 //        serviceRequest.note = listOf(Annotation().setText("ServiceRequest for referral created"))
+    }
+
+    fun findFhirCode(formDataList: List<FormData>, targetFhirCode: String): DbFormData? {
+
+        println("formDataList $formDataList")
+        println("targetFhirCode $targetFhirCode")
+
+        return formDataList
+            .asSequence() // Use a sequence for better performance with nested lists
+            .flatMap { it.formDataList.asSequence() } // Flatten the nested DbFormData lists
+            .firstOrNull { it.fhirCode == targetFhirCode } // Find the first match
     }
 
     private suspend fun saveResourceToDatabase(resource: Resource, type: String) :List<String>{
@@ -301,6 +342,12 @@ class ReviewReferViewModel (
                 "Our TB Registration No" -> { Constants.TB_OUR_REGISTRATION_CODE }
                 "Name of Receiving facility" -> { Constants.RECEIVING_FACILITY_NAME }
                 "Date of Referral" -> { Constants.REFERRAL_DATE }
+
+                "Country of Receiving Facility" -> { Constants.COUNTRY_RECEIVING }
+                "Region/Province/County of Receiving Facility" -> { Constants.REGION_COUNTY_RECEIVING }
+                "District/Sub County of Receiving Facility" -> { Constants.DISTRICT_SUB_COUNTY_RECEIVING }
+                "Ward of Receiving Facility" -> { Constants.WARD_RECEIVING }
+                "Name of Receiving Facility" -> { Constants.FACILITY_RECEIVING }
                 else -> { generateRandomLoincCode() }
             }
 

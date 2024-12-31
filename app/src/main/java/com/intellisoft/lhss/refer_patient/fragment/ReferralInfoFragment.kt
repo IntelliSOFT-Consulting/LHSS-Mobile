@@ -210,28 +210,48 @@ class ReferralInfoFragment : Fragment() {
         val dbFieldList = listOf(
             DbField(
                 DbWidgets.SPINNER.name,
-                "Country of Receiving Facility", true, null,
-                countryList.map { it.name }
+                "Country of Receiving Facility",
+                true,
+                null,
+                countryList.map { it.name },
+                true,
+                Constants.COUNTRY_RECEIVING
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "Region/Province/County of Receiving Facility", true, null,
-                emptyList()
+                "Region/Province/County of Receiving Facility",
+                true,
+                null,
+                emptyList(),
+                true,
+                Constants.REGION_COUNTY_RECEIVING
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "District/Sub County of Receiving Facility", false, null,
-                emptyList()
+                "District/Sub County of Receiving Facility",
+                false,
+                null,
+                emptyList(),
+                true,
+                Constants.DISTRICT_SUB_COUNTY_RECEIVING
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "Ward of Receiving Facility", false, null,
-                emptyList()
+                "Ward of Receiving Facility",
+                false,
+                null,
+                emptyList(),
+                true,
+                Constants.WARD_RECEIVING
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "Name of Receiving Facility", false, null,
-                emptyList()
+                "Name of Receiving Facility",
+                false,
+                null,
+                emptyList(),
+                true,
+                Constants.FACILITY_RECEIVING
             ),
 
 
