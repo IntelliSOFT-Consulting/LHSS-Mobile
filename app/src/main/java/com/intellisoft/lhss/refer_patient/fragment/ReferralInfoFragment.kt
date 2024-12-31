@@ -37,6 +37,9 @@ import com.intellisoft.lhss.referrals.viewmodels.ReferralDetailsViewModelFactory
 import com.intellisoft.lhss.shared.DbLocationResponse
 import com.intellisoft.lhss.shared.FormatterClass
 import com.intellisoft.lhss.shared.LocationDetails
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ReferralInfoFragment : Fragment() {
 
@@ -57,11 +60,17 @@ class ReferralInfoFragment : Fragment() {
     private var patientId:String = ""
     private var serviceRequestId:String = ""
     private lateinit var locationViewModel: LocationViewModel
-    val countryList = listOf("Kenya", "Uganda", "Tanzania")
+
+    private val countryList = listOf(
+        DbLocationResponse("Kenya","","", "0"),
+        DbLocationResponse("Uganda","","", "Uganda"),
+    )
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         // TODO: Use the ViewModel
     }
@@ -201,7 +210,7 @@ class ReferralInfoFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Country of Receiving Facility", true, null,
-                countryList
+                countryList.map { it.name }
             ),
             DbField(
                 DbWidgets.SPINNER.name,
@@ -210,12 +219,12 @@ class ReferralInfoFragment : Fragment() {
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "District/Sub County of Receiving Facility", true, null,
+                "District/Sub County of Receiving Facility", false, null,
                 emptyList()
             ),
             DbField(
                 DbWidgets.SPINNER.name,
-                "Ward of Receiving Facility", true, null,
+                "Ward of Receiving Facility", false, null,
                 emptyList()
             ),
 
@@ -266,35 +275,57 @@ class ReferralInfoFragment : Fragment() {
             val districtReceiving = binding.rootLayout.findViewWithTag<View>("District/Sub County of Receiving Facility") as Spinner
             val wardReceiving = binding.rootLayout.findViewWithTag<View>("Ward of Receiving Facility") as Spinner
 
-            val countryName = if (selectedItem == "Kenya"){
-                "0"
-            }else {
-                selectedItem
-            }
+            Log.e("---->","<-----")
+            println("selectedItem $selectedItem")
 
-            val locationList = locationViewModel
-                .getHierarchyDetails("Location/$countryName","")
-
-            val codeName = locationList.firstOrNull()?.code
-            if (codeName != null){
-                when (codeName) {
-                    LocationDetails.WARD.name -> {
-                        populateSpinner(wardReceiving, locationList)
-                    }
-                    "SUB-COUNTY", LocationDetails.DISTRICT.name -> {
-                        populateSpinner(districtReceiving, locationList)
-                    }
-                    LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
-                        populateSpinner(regionReceiving, locationList)
+            //Check if country is in countryList
+            val countryId = countryList.firstOrNull { it.name == selectedItem }?.id
+            //Set region and district dropdowns to empty
+            if (countryId != null){
+                val locationList = locationViewModel
+                    .getHierarchyDetails("Location/$countryId","")
+                val codeName = locationList.firstOrNull()?.code
+                if (codeName!= null){
+                    when (codeName) {
+                        LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
+                            populateSpinner(regionReceiving, locationList)
+                        }
                     }
                 }
             }
 
 
 
-            Log.e("---------->","<----------")
-            println("selectedItem $selectedItem")
-            Log.e("---------->","<----------")
+            //Update region and district dropdowns based on selected country
+
+
+            println("countryId $countryId")
+            Log.e("---->","<-----")
+
+//            val partOfName = if (selectedItem == "Kenya"){
+//                "0"
+//            }else {
+//                countyId ?: selectedItem
+//            }
+
+//            val locationList = locationViewModel
+//                .getHierarchyDetails("Location/$partOfName","")
+
+//            val codeName = locationList.firstOrNull()?.code
+//            if (codeName != null){
+//                when (codeName) {
+//                    LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
+//                        populateSpinner(regionReceiving, locationList)
+//                    }
+//                    "SUB-COUNTY", LocationDetails.DISTRICT.name -> {
+//                        populateSpinner(districtReceiving, locationList)
+//                    }
+//                    LocationDetails.WARD.name -> {
+//                        populateSpinner(wardReceiving, locationList)
+//                    }
+//                }
+//            }
+
 
         }
 

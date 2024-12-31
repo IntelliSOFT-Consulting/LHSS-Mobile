@@ -37,7 +37,7 @@ class LocationViewModel(
                 getCountiesOrRegions(requestParam)
             }
             "SUB_COUNTY" -> {
-                getSubCountiesOrDistricts(requestParam)
+                fetchLocationsByName("COUNTY",requestParam)
             }
             "WARD" -> {
                 getWards(requestParam)
@@ -60,7 +60,7 @@ class LocationViewModel(
 
     // Function to list sub-counties or districts based on the county/region
     private suspend fun getSubCountiesOrDistricts(countyOrRegion: String): List<DbLocationResponse> {
-        return fetchLocationsByCodeAndPartOf("SUB_COUNTY", countyOrRegion) // "SUB_COUNTY" or "DISTRICT"
+        return fetchLocationsByName("SUB_COUNTY", countyOrRegion) // "SUB_COUNTY" or "DISTRICT"
     }
 
     // Function to list wards based on the sub-county/district
@@ -78,6 +78,15 @@ class LocationViewModel(
         return fhirEngine.search<Location> {
             // Filter by partOf reference
             filter(Location.PARTOF, {value = parentReference })
+//            filter(Location.NAME, {value = parentReference})
+        }.map { createLocationDataItem(it.resource) }
+    }
+
+    private suspend fun fetchLocationsByName(code: String, parentReference: String): List<DbLocationResponse> {
+        return fhirEngine.search<Location> {
+            // Filter by partOf reference
+            filter(Location.TYPE, {value = of(code)})
+            filter(Location.NAME, {value = parentReference})
         }.map { createLocationDataItem(it.resource) }
     }
 
@@ -86,11 +95,13 @@ class LocationViewModel(
         val name = if (resource.hasName()) resource.name else ""
         val code = resource.typeFirstRep.codingFirstRep.code ?: ""
         val partOf = resource.partOf?.reference
+        val id = if (resource.hasId()) resource.id else null
 
         return DbLocationResponse(
             name = name,
             code = code,
-            partOf = partOf
+            partOf = partOf,
+            id = id
         )
     }
 

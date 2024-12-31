@@ -223,7 +223,8 @@ data class DbLocation(
 data class DbLocationResponse(
     val name: String,
     val code: String,
-    val partOf: String?
+    val partOf: String?,
+    val id:String? = null
 )
 
 
