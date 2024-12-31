@@ -263,7 +263,10 @@ class ReferralInfoFragment : Fragment() {
         setSpinnerListener(
             listOf(
                 "Country of Receiving Facility",
-                "Region/Province/County of Receiving Facility"
+                "Region/Province/County of Receiving Facility",
+                "District/Sub County of Receiving Facility",
+                "Ward of Receiving Facility",
+                "Name of Receiving Facility"
             )
         )
 
@@ -311,37 +314,6 @@ class ReferralInfoFragment : Fragment() {
                     }
                 }
             }
-
-
-
-            //Update region and district dropdowns based on selected country
-
-
-
-
-//            val partOfName = if (selectedItem == "Kenya"){
-//                "0"
-//            }else {
-//                countyId ?: selectedItem
-//            }
-
-//            val locationList = locationViewModel
-//                .getHierarchyDetails("Location/$partOfName","")
-
-//            val codeName = locationList.firstOrNull()?.code
-//            if (codeName != null){
-//                when (codeName) {
-//                    LocationDetails.COUNTY.name, LocationDetails.REGION.name -> {
-//                        populateSpinner(regionReceiving, locationList)
-//                    }
-//                    "SUB-COUNTY", LocationDetails.DISTRICT.name -> {
-//                        populateSpinner(districtReceiving, locationList)
-//                    }
-//                    LocationDetails.WARD.name -> {
-//                        populateSpinner(wardReceiving, locationList)
-//                    }
-//                }
-//            }
 
 
         }
@@ -404,6 +376,9 @@ class ReferralInfoFragment : Fragment() {
 
     private fun populateSpinner(spinner: Spinner, data: List<DbLocationResponse>) {
         val dataList = data.map { it.name }
+        //Change the texts to Uppercase
+        dataList.map { it.uppercase() }
+
         // Create an ArrayAdapter using the string list and a default spinner layout
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dataList)
 
