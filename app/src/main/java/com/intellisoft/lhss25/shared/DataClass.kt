@@ -163,7 +163,7 @@ enum class WorkflowTitles(
     REFERRING_FACILITY_INFO(R.drawable.ic_referring_facility_info, DbClasses.REFERRING_FACILITY_INFO.name,  "Referring Facility Information"),
     REFERRAL_INFO(R.drawable.ic_referrals, DbClasses.REFERRAL_INFO.name,  "Referral Information"),
 
-    TB_TREATMENT(R.drawable.ic_action_next_kin, DbClasses.TB_TREATMENT.name,  "Tb Treatment"),
+    TB_TREATMENT(R.drawable.ic_action_next_kin, DbClasses.TB_TREATMENT.name,  "TB Treatment"),
     HIV_STATUS_TREATMENT(R.drawable.ic_action_next_kin, DbClasses.HIV_STATUS_TREATMENT.name,  "HIV Status and Treatment"),
     LABORATORY_RESULTS(R.drawable.ic_action_next_kin, DbClasses.LABORATORY_RESULTS.name,  "Laboratory Results"),
     DST(R.drawable.ic_action_next_kin, DbClasses.DST.name,  "DST/Cultures/LPA"),

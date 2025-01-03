@@ -63,7 +63,7 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
         if (workflowTitles != ""){
             var title = formatterClass.toSentenceCase(workflowTitles)
             if (workflowTitles == DbClasses.TB_TREATMENT.name){
-                title = "Tb Treatment"
+                title = "TB Treatment"
             }
             binding.tvTitle.text = title
 //            binding.imgBtn.setImageResource(workflowTitles)
@@ -162,7 +162,7 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
                 ),
                 DbField(
                     DbWidgets.DATE_PICKER.name,
-                    "Tb Treatment initiation date",
+                    "TB Treatment initiation date",
                     true
                 ),
                 DbField(
@@ -232,7 +232,7 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
             val rootViewParent = binding.rootLayout.findViewWithTag<View>(tag)
             if (rootViewParent is Spinner) {
                 spinnerSelectionHandler.handleSelection(rootViewParent) { selectedItem ->
-                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem)
+                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem, rootViewParent)
                 }
             }
         }
@@ -253,7 +253,7 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
         // Make a function that will handle multiple tags from a
 
         setSpinnerListener(
-            listOf("HIV Status", "Tb Location", "Regimen")
+            listOf("HIV Status", "TB Location", "Regimen")
         )
 
 

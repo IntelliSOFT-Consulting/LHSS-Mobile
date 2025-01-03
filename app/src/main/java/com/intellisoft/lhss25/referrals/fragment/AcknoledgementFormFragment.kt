@@ -131,15 +131,22 @@ class AcknoledgementFormFragment : Fragment() {
             }else{
 
                 val emailData = addedFields.find { it.tag == "Email Contact" }
-                if (emailData == null){
-                    Toast.makeText(requireContext(), "Email Contact cannot be null", Toast.LENGTH_SHORT).show()
-                    return@setNextButtonClickListener
+//                if (emailData == null){
+//                    Toast.makeText(requireContext(), "Email Contact cannot be null", Toast.LENGTH_SHORT).show()
+//                    return@setNextButtonClickListener
+//                }
+
+                if (emailData != null){
+                    if (!formatterClass.isValidEmail(emailData.text)){
+                        Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
+                        return@setNextButtonClickListener
+                    }
                 }
 
-                if (emailData.text.isEmpty() || !formatterClass.isValidEmail(emailData.text)){
-                    Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
-                    return@setNextButtonClickListener
-                }
+//                if (emailData.text.isEmpty() || !formatterClass.isValidEmail(emailData.text)){
+//                    Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
+//                    return@setNextButtonClickListener
+//                }
 
                 findNavController().navigate(R.id.action_acknoledgementFormFragment_to_acknoledgementDetailsFragment)
 

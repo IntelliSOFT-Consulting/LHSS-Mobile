@@ -62,7 +62,7 @@ class ClinicalInfoSectionsFragment : Fragment() {
 
         var clinicalReferral = ""
         when (layout.textId) {
-            "Tb Treatment" -> { clinicalReferral = DbClasses.TB_TREATMENT.name }
+            "TB Treatment" -> { clinicalReferral = DbClasses.TB_TREATMENT.name }
             "HIV Status and Treatment" -> { clinicalReferral = DbClasses.HIV_STATUS_TREATMENT.name }
             "Laboratory Results" -> { clinicalReferral = DbClasses.LABORATORY_RESULTS.name }
             "DST/Cultures/LPA" -> { clinicalReferral = DbClasses.DST.name }

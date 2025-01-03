@@ -75,7 +75,7 @@ class NextOfKinFragment : Fragment() {
             val rootViewParent = binding.rootLayout.findViewWithTag<View>(tag)
             if (rootViewParent is Spinner) {
                 spinnerSelectionHandler.handleSelection(rootViewParent) { selectedItem ->
-                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem)
+                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem, rootViewParent)
                 }
             }
         }

@@ -149,7 +149,7 @@ class ClnicalInfoIIFragment : Fragment() {
             ),
             DbField(
                 DbWidgets.DATE_PICKER.name,
-                "Tb Treatment initiation date",
+                "TB Treatment initiation date",
                 true
             ),
             DbField(

@@ -105,7 +105,7 @@ class DemographicsFragment : Fragment() {
 
 //                val telephoneReceivingData = addedFields.find { it.tag == "Telephone in receiving country" }
 
-                if (telephoneReferringData != null && documentNumber != null && documentNumber.text.length <= 9){
+                if (telephoneReferringData != null){
 
                     val textReferringNumber = telephoneReferringData.text
 //                    val textReceivingNumber = telephoneReceivingData.text
@@ -132,15 +132,14 @@ class DemographicsFragment : Fragment() {
                     }
                 }else{
 
-                    if (documentNumber == null || documentNumber.text.length > 9)
-                        Toast.makeText(context,
-                            "The document number is not correct. Check if the number is less than 9 characters.",
-                            Toast.LENGTH_LONG).show()
+//                    if (documentNumber == null || documentNumber.text.length > 9)
+//                        Toast.makeText(context,
+//                            "The document number is not correct. Check if the number is less than 9 characters.",
+//                            Toast.LENGTH_LONG).show()
 
-                    if (telephoneReferringData == null)
-                        Toast.makeText(context,
-                            "The telephone number in referring country is not provided.",
-                            Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,
+                        "The telephone number in referring country is not provided.",
+                        Toast.LENGTH_LONG).show()
                 }
             }
         }
