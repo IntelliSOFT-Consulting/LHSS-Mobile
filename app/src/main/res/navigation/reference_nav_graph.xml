@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.intellisoft.lhss.SplashFragment"
+        android:name="com.intellisoft.lhss25.SplashFragment"
         android:label="@string/splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.intellisoft.lhss.auth.fragment.LoginFragment"
+        android:name="com.intellisoft.lhss25.auth.fragment.LoginFragment"
         android:label="@string/login_text"
         tools:layout="@layout/fragment_login" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/recoverPasswordFragment"
-        android:name="com.intellisoft.lhss.auth.fragment.RecoverPasswordFragment"
+        android:name="com.intellisoft.lhss25.auth.fragment.RecoverPasswordFragment"
         android:label="@string/enter_new_password"
         tools:layout="@layout/fragment_recover_password" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="com.intellisoft.lhss.auth.fragment.NewPasswordFragment"
+        android:name="com.intellisoft.lhss25.auth.fragment.NewPasswordFragment"
         android:label="@string/password_recovery"
         tools:layout="@layout/fragment_new_password" >
         <action
@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/landingPageFragment"
-        android:name="com.intellisoft.lhss.LandingPageFragment"
+        android:name="com.intellisoft.lhss25.LandingPageFragment"
         android:label="@string/welcomeTo"
         tools:layout="@layout/fragment_landing_page" >
         <action
@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientListFragment"
-        android:name="com.intellisoft.lhss.patient_details.fragment.PatientListFragment"
+        android:name="com.intellisoft.lhss25.patient_details.fragment.PatientListFragment"
         android:label="@string/search_patient"
         tools:layout="@layout/fragment_patient_list" >
         <action
@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/demographicsFragment"
-        android:name="com.intellisoft.lhss.registration.fragment.DemographicsFragment"
+        android:name="com.intellisoft.lhss25.registration.fragment.DemographicsFragment"
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_demographics" >
         <action
@@ -99,7 +99,7 @@
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
-        android:name="com.intellisoft.lhss.registration.fragment.AddressFragment"
+        android:name="com.intellisoft.lhss25.registration.fragment.AddressFragment"
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_address" >
         <action
@@ -109,7 +109,7 @@
     </fragment>
     <fragment
         android:id="@+id/nextOfKinFragment"
-        android:name="com.intellisoft.lhss.registration.fragment.NextOfKinFragment"
+        android:name="com.intellisoft.lhss25.registration.fragment.NextOfKinFragment"
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_next_of_kin" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientRegistrationSummaryFragment"
-        android:name="com.intellisoft.lhss.registration.PatientRegistrationSummaryFragment"
+        android:name="com.intellisoft.lhss25.registration.PatientRegistrationSummaryFragment"
         android:label="@string/register_patient_review"
         tools:layout="@layout/fragment_patient_registration_summary" >
         <action
@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientCardFragment"
-        android:name="com.intellisoft.lhss.patient_details.fragment.PatientCardFragment"
+        android:name="com.intellisoft.lhss25.patient_details.fragment.PatientCardFragment"
         android:label="@string/patient_card"
         tools:layout="@layout/fragment_patient_card" >
         <action
@@ -169,7 +169,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralListFragment"
-        android:name="com.intellisoft.lhss.referrals.fragment.ReferralListFragment"
+        android:name="com.intellisoft.lhss25.referrals.fragment.ReferralListFragment"
         android:label="@string/referrals"
         tools:layout="@layout/fragment_referral_list" >
         <action
@@ -179,7 +179,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralDetailsFragment"
-        android:name="com.intellisoft.lhss.referrals.fragment.ReferralDetailsFragment"
+        android:name="com.intellisoft.lhss25.referrals.fragment.ReferralDetailsFragment"
         android:label="@string/referral_details"
         tools:layout="@layout/fragment_referral_details" >
         <action
@@ -189,7 +189,7 @@
     </fragment>
     <fragment
         android:id="@+id/acknoledgementFormFragment"
-        android:name="com.intellisoft.lhss.referrals.fragment.AcknoledgementFormFragment"
+        android:name="com.intellisoft.lhss25.referrals.fragment.AcknoledgementFormFragment"
         android:label="Acknowledgement Form"
         tools:layout="@layout/fragment_acknoledgement_form" >
         <action
@@ -199,7 +199,7 @@
     </fragment>
     <fragment
         android:id="@+id/acknoledgementDetailsFragment"
-        android:name="com.intellisoft.lhss.referrals.fragment.AcknoledgementDetailsFragment"
+        android:name="com.intellisoft.lhss25.referrals.fragment.AcknoledgementDetailsFragment"
         android:label="@string/acknowledgement_form_review"
         tools:layout="@layout/fragment_acknoledgement_details" >
         <action
@@ -211,7 +211,7 @@
     </fragment>
     <fragment
         android:id="@+id/referPatientFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ReferPatientFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ReferPatientFragment"
         android:label="@string/refer_patient"
         tools:layout="@layout/fragment_refer_patient" >
         <action
@@ -221,7 +221,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralInfoFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ReferralInfoFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ReferralInfoFragment"
         android:label="@string/referral_info"
         tools:layout="@layout/fragment_referral_info" >
         <action
@@ -236,7 +236,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoIFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ClinicalInfoIFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ClinicalInfoIFragment"
         android:label="@string/clinical_info_section_i"
         tools:layout="@layout/fragment_clinical_info_i" >
         <action
@@ -246,7 +246,7 @@
     </fragment>
     <fragment
         android:id="@+id/clnicalInfoIIFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ClnicalInfoIIFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ClnicalInfoIIFragment"
         android:label="@string/clinical_info_section_ii"
         tools:layout="@layout/fragment_clnical_info_i_i" >
         <action
@@ -256,7 +256,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoIIIFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ClinicalInfoIIIFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ClinicalInfoIIIFragment"
         android:label="@string/clinical_info_section_iii"
         tools:layout="@layout/fragment_clinical_info_i_i_i" >
         <action
@@ -266,7 +266,7 @@
     </fragment>
     <fragment
         android:id="@+id/reviewReferFragment"
-        android:name="com.intellisoft.lhss.refer_patient.fragment.ReviewReferFragment"
+        android:name="com.intellisoft.lhss25.refer_patient.fragment.ReviewReferFragment"
         android:label="@string/refer_patient_review"
         tools:layout="@layout/fragment_review_refer" >
         <action
@@ -286,7 +286,7 @@
     </fragment>
     <fragment
         android:id="@+id/referralPatientList"
-        android:name="com.intellisoft.lhss.referrals.fragment.ReferralPatientList"
+        android:name="com.intellisoft.lhss25.referrals.fragment.ReferralPatientList"
         android:label="@string/patient_referral_list"
         tools:layout="@layout/fragment_referral_patient_list" >
         <action
@@ -296,7 +296,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment2"
-        android:name="com.intellisoft.lhss.ProfileFragment"
+        android:name="com.intellisoft.lhss25.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -307,7 +307,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientFileFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.PatientFileFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.PatientFileFragment"
         android:label="@string/patient_file"
         tools:layout="@layout/fragment_patient_file" >
         <action
@@ -319,7 +319,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoSectionsFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoSectionsFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoSectionsFragment"
         android:label="@string/clinical_info"
         tools:layout="@layout/fragment_clinical_info_sections" >
         <action
@@ -331,17 +331,17 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoDetailsFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoDetailsFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoDetailsFragment"
         android:label="@string/clinical_form"
         tools:layout="@layout/fragment_clinical_info_details" />
     <fragment
         android:id="@+id/clinicalInfoViewFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoViewFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoViewFragment"
         android:label="@string/clinical_form"
         tools:layout="@layout/fragment_clinical_info_view" />
     <fragment
         android:id="@+id/clinicalInfoFormI_IIFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoFormI_IIFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoFormI_IIFragment"
         android:label="@string/clinical_form"
         tools:layout="@layout/fragment_clinical_info_form_i__i_i" >
         <action
@@ -350,12 +350,12 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoFormIII_IVFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoFormIII_IVFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoFormIII_IVFragment"
         android:label="@string/clinical_form"
         tools:layout="@layout/fragment_clinical_info_form_i_i_i__i_v" />
     <fragment
         android:id="@+id/endTreatmentFormFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.EndTreatmentFormFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.EndTreatmentFormFragment"
         android:label="@string/end_of_treatment_form"
         tools:layout="@layout/fragment_end_treatment_form" >
         <action
@@ -364,7 +364,7 @@
     </fragment>
     <fragment
         android:id="@+id/endTreatmentReviewFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.EndTreatmentReviewFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.EndTreatmentReviewFragment"
         android:label="@string/end_of_treatment_review"
         tools:layout="@layout/fragment_end_treatment_review" >
         <action
@@ -373,7 +373,7 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoEncountersFragment"
-        android:name="com.intellisoft.lhss.clinical_info.fragment.ClinicalInfoEncountersFragment"
+        android:name="com.intellisoft.lhss25.clinical_info.fragment.ClinicalInfoEncountersFragment"
         android:label="@string/clinical_information"
         tools:layout="@layout/fragment_clinical_info_encounters" >
         <action
@@ -388,12 +388,12 @@
     </fragment>
     <fragment
         android:id="@+id/clinicalViewEncountersFragment"
-        android:name="com.intellisoft.lhss.ClinicalViewEncountersFragment"
+        android:name="com.intellisoft.lhss25.ClinicalViewEncountersFragment"
         android:label="@string/clinical_details"
         tools:layout="@layout/fragment_clinical_view_encounters" />
     <fragment
         android:id="@+id/clinicalInfoReview"
-        android:name="com.intellisoft.lhss.ClinicalInfoReview"
+        android:name="com.intellisoft.lhss25.ClinicalInfoReview"
         android:label="@string/clinical_info_review"
         tools:layout="@layout/fragment_clinical_info_review" >
         <action
@@ -414,7 +414,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.intellisoft.lhss.NotificationFragment"
+        android:name="com.intellisoft.lhss25.NotificationFragment"
         android:label="Notification"
         tools:layout="@layout/fragment_notification" >
         <action
@@ -428,7 +428,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewFormFragment"
-        android:name="com.intellisoft.lhss.ViewFormFragment"
+        android:name="com.intellisoft.lhss25.ViewFormFragment"
         android:label="@string/form_details"
         tools:layout="@layout/fragment_view_form" />
 

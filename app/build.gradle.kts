@@ -8,16 +8,16 @@ plugins {
 }
 
 android {
-    namespace = "com.intellisoft.lhss"
+    namespace = "com.intellisoft.lhss25"
     compileSdk = 34
     defaultConfig {
-        applicationId = "com.intellisoft.lhss"
+        applicationId = "com.intellisoft.lhss25"
         minSdk = 24
         targetSdk = 34
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders["appAuthRedirectScheme"] = applicationId!!
         buildFeatures.buildConfig = true
-        versionCode = 55
+        versionCode = 56
         versionName = "Live"
     }
     buildTypes {

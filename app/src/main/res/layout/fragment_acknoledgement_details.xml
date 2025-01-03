@@ -14,7 +14,7 @@
         android:orientation="vertical" />
 
 
-    <com.intellisoft.lhss.shared.NavigationButtons
+    <com.intellisoft.lhss25.shared.NavigationButtons
         android:layout_margin="10dp"
         android:id="@+id/navigationButtons"
         android:layout_alignParentBottom="true"
