@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import org.hl7.fhir.r4.model.Patient
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.ServiceRequest
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -37,7 +39,9 @@ class ReferralPatientListViewModel(
 
     val liveSearchedPatients = MutableLiveData<List<DbPatientItem>>()
     val patientCount = MutableLiveData<Long>()
-    val referralCount = MutableLiveData<Int>()
+    val allReferralNumber = MutableLiveData<Int>()
+    val completeReferralNumber = MutableLiveData<Int>()
+    val activeReferralNumber = MutableLiveData<Int>()
 
     init {
         updatePatientListAndPatientCount({ getSearchResults("") }, { count() }, {getReferralCount()} )
@@ -46,16 +50,19 @@ class ReferralPatientListViewModel(
     private fun updatePatientListAndPatientCount(
         search: suspend () -> List<DbPatientItem>,
         count: suspend () -> Long,
-        getReferralCount: suspend () -> Int
+        getReferralCount: suspend () -> Triple<Int, Int, Int>
     ) {
         viewModelScope.launch {
             liveSearchedPatients.value = search()
             patientCount.value = count()
-            referralCount.value = getReferralCount()
+            val (allReferralNumbers, completeReferralNumbers, activeReferralNumbers) = getReferralCount()
+            allReferralNumber.value = allReferralNumbers
+            completeReferralNumber.value = completeReferralNumbers
+            activeReferralNumber.value = activeReferralNumbers
         }
     }
 
-    private suspend fun getReferralCount():Int {
+    private suspend fun getReferralCount():Triple<Int, Int, Int> {
         //Get the list of patients and then get the list of referrals
         val patients = getSearchResults()
 
@@ -74,11 +81,23 @@ class ReferralPatientListViewModel(
 
         }
 
-        val referralNumber = serviceList.toList().size
-        referralCount.postValue(referralNumber)
-        formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
 
-        return referralNumber
+        val completeStatusList = serviceList.filterNotNull().filter { it.status.toString() == "completed" || it.status.toString() == "COMPLETED" }
+        val activeStatusList = serviceList.filterNotNull().filter { it.status.toString() == "active" || it.status.toString() == "ACTIVE" }
+
+        val allReferralNumbers = serviceList.size
+        val completeReferralNumbers = completeStatusList.size
+        val activeReferralNumbers = activeStatusList.size
+
+        allReferralNumber.postValue(allReferralNumbers)
+        completeReferralNumber.postValue(completeReferralNumbers)
+        activeReferralNumber.postValue(activeReferralNumbers)
+
+        formatterClass.saveSharedPref("","allReferralNumbers", allReferralNumbers.toString())
+        formatterClass.saveSharedPref("","completeReferralNumbers", completeReferralNumbers.toString())
+        formatterClass.saveSharedPref("","activeReferralNumbers", activeReferralNumbers.toString())
+
+        return Triple(allReferralNumbers, completeReferralNumbers, activeReferralNumbers )
     }
 
     private suspend fun count(nameQuery: String = ""): Long {
@@ -95,19 +114,7 @@ class ReferralPatientListViewModel(
         }
     }
 
-    fun referralNumber(){
-        CoroutineScope(Dispatchers.IO).launch {
 
-//            formatterClass.saveSharedPref("","referralNumbers", "0")
-//
-//            val dbServiceList = getTotalReferrals()
-//
-////            val referralList = getSearchResults("")
-//            val referralNumber = dbServiceList.toList().size
-//            formatterClass.saveSharedPref("","referralNumbers", referralNumber.toString())
-
-        }
-    }
 
     fun getTotalReferrals()= runBlocking {
         getTotalReferralsBac()
@@ -129,7 +136,7 @@ class ReferralPatientListViewModel(
 
     }
 
-    private fun createServiceRequestBac(resource: ServiceRequest):ServiceRequest? {
+    private fun createServiceRequestBac(resource: ServiceRequest):ServiceRequest {
 
         val status = if (resource.hasStatus()) resource.status.toString() else ""
         var isUsersFacility = false

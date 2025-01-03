@@ -105,22 +105,6 @@ class LandingPageFragment : Fragment() {
         binding.tvFacilityName.text = userFullName?.lowercase() ?: ""
 
 
-//        CoroutineScope(Dispatchers.IO).launch {
-//
-//            val locationDetails =
-//                locationViewModel.getLocationDetails("Location/Kachumbala-Health-Centre-IV")
-//
-//            locationDetails.forEach {
-//                Log.e("------->","<--------")
-//                println("name ${it.name}")
-//                println("code ${it.code}")
-//                println("partOf ${it.partOf}")
-//                Log.e("------->","<--------")
-//
-//            }
-//
-//        }
-
 
     }
 

@@ -1,5 +1,6 @@
 package com.intellisoft.lhss25.shared
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +30,8 @@ class LayoutViewHolder(
     private val onItemClick: (LayoutListViewModel.Layout) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private val referralNumbers = FormatterClass(binding.root.context)
-        .getSharedPref("","referralNumbers")
+    private val activeReferralNumbers = FormatterClass(binding.root.context)
+        .getSharedPref("","activeReferralNumbers")
     private val notificationSize = FormatterClass(binding.root.context)
         .getSharedPref("","notificationSize")
     fun bind(layout: LayoutListViewModel.Layout) {
@@ -38,9 +39,13 @@ class LayoutViewHolder(
         binding.componentLayoutTextView.text = layout.textId
         binding.root.setOnClickListener { onItemClick(layout) }
 
+        Log.e("******", "*******")
+        println("activeReferralNumbers $activeReferralNumbers")
+        Log.e("******", "*******")
+
         if (layout.textId == "Referrals") {
             binding.tvNumber.visibility = View.VISIBLE
-            binding.tvNumber.text = referralNumbers
+            binding.tvNumber.text = activeReferralNumbers
         }
         if (layout.textId == "Notifications") {
             binding.tvNumber.visibility = View.VISIBLE

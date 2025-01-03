@@ -83,11 +83,13 @@ class SplashFragment : Fragment() {
     }
 
     private fun getStoredData() {
-        val referralCount = viewModel.referralCount.value
-        if (referralCount != null){
-            formatterClass.saveSharedPref("","referralNumbers", referralCount.toString())
+        val allReferralNumber = viewModel.allReferralNumber
+        val activeReferralNumber = viewModel.activeReferralNumber
+        val completeReferralNumber = viewModel.completeReferralNumber
 
-        }
+//        formatterClass.saveSharedPref("","allReferralNumbers", allReferralNumber.value.toString())
+//        formatterClass.saveSharedPref("","completeReferralNumbers", completeReferralNumber.value.toString())
+//        formatterClass.saveSharedPref("","activeReferralNumbers", activeReferralNumber.value.toString())
 
         notificationServiceViewModel.getCommunicationList()
     }
