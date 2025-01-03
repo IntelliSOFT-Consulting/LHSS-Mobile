@@ -239,10 +239,6 @@ class DatePickerFieldCreator(private val context: Context) : FieldCreator {
         startDate:String? = null,
         endDate: String? = null) {
 
-        Log.e("****","****")
-        println("startDate: $startDate")
-        Log.e("****","****")
-
         // Get the current date
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

@@ -231,6 +231,18 @@ class AcknoledgementFormFragment : Fragment() {
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
+                "Telephone of contact person", true,
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
                 "Tb Focal Person", true,
                 InputType.TYPE_CLASS_TEXT
             ),

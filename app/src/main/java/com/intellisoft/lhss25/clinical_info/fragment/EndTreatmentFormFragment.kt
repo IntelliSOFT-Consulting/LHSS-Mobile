@@ -198,6 +198,18 @@ class EndTreatmentFormFragment : Fragment() {
                 InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             ),
             DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Telephone of contact person", true,
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
+            ),
+            DbField(
                 DbWidgets.SPINNER.name,
                 "Designation", true, null,
                 listOf("Doctor", "Nurse", "Clinical Officer", "Other")
