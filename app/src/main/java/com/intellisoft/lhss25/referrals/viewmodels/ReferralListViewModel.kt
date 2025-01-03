@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
+import android.net.http.UrlRequest.Status
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -74,10 +75,16 @@ class ReferralListViewModel(
             .mapIndexed { index, fhirPatient -> createServiceRequest(fhirPatient.resource) }
             .let { patients.addAll(it) }
 
-        //Remove status with value COMPLETED
-        patients = patients.filter { it?.status!= "COMPLETED" } as MutableList<DbServiceRequest?>
+        val referralStatus = formatterClass.getSharedPref("","referralStatus")
+        val patientsList = if (referralStatus != null && referralStatus == "COMPLETED") {
+            //Remove status with value COMPLETED
+            patients.filter { it?.status!= "COMPLETED" } as MutableList<DbServiceRequest?>
+        }else{
+            //Keep all statuses
+            patients
+        }
 
-        return ArrayList(patients)
+        return ArrayList(patientsList)
     }
 
     private fun createServiceRequest(resource: ServiceRequest):DbServiceRequest? {

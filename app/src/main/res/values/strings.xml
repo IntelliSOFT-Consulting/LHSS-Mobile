@@ -76,6 +76,9 @@
     <string name="view_form">View Form</string>
     <string name="form_details">Form Details</string>
     <string name="sign_out">Sign Out</string>
+    <string name="enter_referral_reason">Enter Referral Reason</string>
+    <string name="referral_list">Referral List</string>
+    <string name="view_form_details">View Form Details</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>French</item>

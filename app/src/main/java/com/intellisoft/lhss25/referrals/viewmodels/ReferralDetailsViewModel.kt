@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -101,13 +102,13 @@ class ReferralDetailsViewModel(
 
         if (searchResult.isNotEmpty()) {
             searchResult.first().let {
-
                 val encounterList = it.resource.supportingInfo
+
                 encounterList.forEach { encounterDetails ->
 
                     val encounter = encounterDetails.reference
-
                     val dbFormData = getEncounterDetails(encounter)
+
                     if (dbFormData != null){
                         formDataList.addAll(listOf(dbFormData))
                     }
@@ -116,6 +117,7 @@ class ReferralDetailsViewModel(
 
             }
         }
+
         return formDataList
 
     }

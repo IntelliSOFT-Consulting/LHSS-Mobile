@@ -47,6 +47,8 @@ class PatientCardFragment : Fragment() {
 
         formatterClass = FormatterClass(requireContext())
 
+        formatterClass.deleteSharedPref("","referralStatus")
+
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
 
         fhirEngine = FhirApplication.fhirEngine(requireContext())
@@ -82,7 +84,7 @@ class PatientCardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnReferrals.setOnClickListener {
-            findNavController().navigate(R.id.action_patientCardFragment_to_referralListFragment)
+            findNavController().navigate(R.id.action_patientCardFragment_to_patientOwnReferralListFragment)
         }
         binding.btnReferPatient.setOnClickListener {
             findNavController().navigate(R.id.action_patientCardFragment_to_referPatientFragment)

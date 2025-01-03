@@ -1,4 +1,4 @@
-package com.intellisoft.lhss25.referrals.fragment
+package com.intellisoft.lhss25
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,23 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
-import com.intellisoft.lhss25.R
+import com.intellisoft.lhss25.databinding.FragmentPatientOwnReferralListBinding
 import com.intellisoft.lhss25.databinding.FragmentReferralListBinding
 import com.intellisoft.lhss25.fhir.FhirApplication
 import com.intellisoft.lhss25.referrals.viewmodels.ReferralListViewModel
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.PatientReferralAdapter
 
-class ReferralListFragment : Fragment() {
-    private var _binding: FragmentReferralListBinding? = null
-    private val binding get() = _binding!!
+class PatientOwnReferralListFragment : Fragment() {
 
+    private var _binding: FragmentPatientOwnReferralListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: ReferralListViewModel
     private lateinit var fhirEngine: FhirEngine
     private lateinit var formatterClass: FormatterClass
@@ -32,15 +31,15 @@ class ReferralListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
+        // Inflate the layout for this fragment
 
-        _binding = FragmentReferralListBinding.inflate(inflater, container, false)
+        _binding = FragmentPatientOwnReferralListBinding.inflate(inflater, container, false)
 
         formatterClass = FormatterClass(requireContext())
 
@@ -49,8 +48,7 @@ class ReferralListFragment : Fragment() {
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
         userFhirPractitionerId = formatterClass.getSharedPref("", "userFhirPractitionerId") ?: ""
 
-        formatterClass.saveSharedPref("", "referralStatus", "COMPLETED")
-
+        formatterClass.saveSharedPref("", "referralStatus", "ALL")
 
         viewModel =
             ViewModelProvider(
@@ -61,7 +59,6 @@ class ReferralListFragment : Fragment() {
                     patientId
                 ),
             )[ReferralListViewModel::class.java]
-
 
         return binding.root
 
@@ -82,16 +79,6 @@ class ReferralListFragment : Fragment() {
             }
         })
 
-        // Handle DatePicker icon click
-        binding.datepickerIcon.setOnClickListener {
-            binding.datePickerLayout.visibility = View.VISIBLE
-        }
-
-        // Handle close DatePicker layout
-        binding.closeDatePicker.setOnClickListener {
-            binding.datePickerLayout.visibility = View.GONE
-        }
-
         viewModel.liveSearchedPatients.observe(viewLifecycleOwner) {
 
             val requestList = ArrayList(it)
@@ -103,18 +90,10 @@ class ReferralListFragment : Fragment() {
                 val status = selectedPatient?.status
                 val requesterId = selectedPatient?.requesterId
 
-                if (status == "COMPLETED") {
-                    Toast.makeText(requireContext(), "Patient has already been received. " +
-                            "The action cannot be performed twice.", Toast.LENGTH_SHORT).show()
-                }else if (requesterId == userFhirPractitionerId) {
-                    Toast.makeText(requireContext(), "You cannot receive your own referral.", Toast.LENGTH_SHORT).show()
-                }else{
-                    showReceivePatientDialog()
+                formatterClass.saveSharedPref("","serviceRequestId", serviceId.toString())
 
-                    formatterClass.saveSharedPref("","serviceRequestId", serviceId.toString())
-                }
+                findNavController().navigate(R.id.action_patientOwnReferralListFragment_to_viewFormDetailsFragment)
 
-                
             }
 
             binding.patientRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -123,39 +102,15 @@ class ReferralListFragment : Fragment() {
             // Set total patients
             binding.totalPatientsTextView.text = "Total Referrals: ${requestList.size}"
 
+
         }
+
     }
-
-
-    private fun showReceivePatientDialog() {
-        // Create an AlertDialog builder
-        val builder = AlertDialog.Builder(requireContext())
-
-        builder.setTitle("Receive Patient")
-        // Set dialog message
-        builder.setMessage("Do you want to Receive the Patient?\n\n" +
-                "When you choose to receive patient you will fill in an acknowledgement form. ")
-
-        // Set Yes button and its action
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            // Trigger the form when Yes is clicked
-            dialog.dismiss() // Close the dialog
-            findNavController().navigate(R.id.action_referralListFragment_to_referralDetailsFragment)
-        }
-
-        // Set No button and its action
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss() // Just close the dialog when No is clicked
-        }
-
-        // Create and show the dialog
-        val dialog = builder.create()
-        dialog.show()
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

@@ -165,6 +165,10 @@
             app:popUpTo="@id/patientListFragment"
             app:popUpToInclusive="true"
             app:destination="@id/patientListFragment" />
+        <action
+            android:id="@+id/action_patientCardFragment_to_patientOwnReferralListFragment"
+            app:destination="@id/patientOwnReferralListFragment"
+            app:popUpTo="@id/patientCardFragment" />
 
     </fragment>
     <fragment
@@ -431,7 +435,20 @@
         android:name="com.intellisoft.lhss25.ViewFormFragment"
         android:label="@string/form_details"
         tools:layout="@layout/fragment_view_form" />
-
+    <fragment
+        android:id="@+id/patientOwnReferralListFragment"
+        android:name="com.intellisoft.lhss25.PatientOwnReferralListFragment"
+        android:label="@string/referral_list"
+        tools:layout="@layout/fragment_patient_own_referral_list" >
+        <action
+            android:id="@+id/action_patientOwnReferralListFragment_to_viewFormDetailsFragment"
+            app:destination="@id/viewFormDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewFormDetailsFragment"
+        android:name="com.intellisoft.lhss25.ViewFormDetailsFragment"
+        android:label="@string/view_form_details"
+        tools:layout="@layout/fragment_view_form_details" />
 
 
 </navigation>
