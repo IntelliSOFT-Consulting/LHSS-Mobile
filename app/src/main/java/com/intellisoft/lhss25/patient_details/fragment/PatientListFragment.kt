@@ -2,6 +2,7 @@ package com.intellisoft.lhss25.patient_details.fragment
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -103,11 +104,11 @@ class PatientListFragment : Fragment() {
         binding.tvFromDate.setOnClickListener {
             formatterClass.showDatePickerWithLimits(binding.tvFromDate, true, null)
 
-            val fromDate = binding.tvFromDate.text
-            val toDate = binding.tvFromDate.text
+//            val fromDate = binding.tvFromDate.text
+//            val toDate = binding.tvToDate.text
 
-            val patientList = formatterClass.filterPatients(patientFilterList, fromDate, toDate)
-            populateRecyclerView(ArrayList(patientList))
+//            val patientList = formatterClass.filterPatients(patientFilterList, fromDate, toDate)
+            populateRecyclerView(ArrayList(patientFilterList))
 
         }
 
@@ -117,11 +118,12 @@ class PatientListFragment : Fragment() {
 
             formatterClass.showDatePickerWithLimits(binding.tvToDate, false, fromDateStr)
 
-            val fromDateFilter = binding.tvFromDate.text
-            val toDate = binding.tvFromDate.text
+//            val fromDateFilter = binding.tvFromDate.text
+//            val toDate = binding.tvToDate.text
 
-            val patientList = formatterClass.filterPatients(patientFilterList, fromDateFilter, toDate)
-            populateRecyclerView(ArrayList(patientList))
+//            val patientList = formatterClass.filterPatients(patientFilterList, fromDateFilter, toDate)
+            populateRecyclerView(ArrayList(patientFilterList))
+
         }
 
 
@@ -136,11 +138,17 @@ class PatientListFragment : Fragment() {
         val fromDateStr = if (!TextUtils.isEmpty(fromDate)) fromDate else null
         val toDateStr = if (!TextUtils.isEmpty(toDate)) toDate else null
 
-        val patientSortedList = formatterClass.sortPatientListByDate(
-            patientList, fromDateStr, toDateStr)
+        val sortedPatientList = formatterClass
+            .filterPatientsByDate(patientList, fromDateStr, toDateStr)
+
+        val patientNewList = if(!TextUtils.isEmpty(fromDateStr) || !TextUtils.isEmpty(toDateStr)){
+            ArrayList(sortedPatientList)
+        }else{
+            ArrayList(patientList)
+        }
 
         // Initialize RecyclerView and adapter
-        val patientAdapter = PatientAdapter(patientList) { selectedPatient ->
+        val patientAdapter = PatientAdapter(patientNewList) { selectedPatient ->
 
             val id = selectedPatient.id
             val patientName = selectedPatient.name
@@ -153,7 +161,7 @@ class PatientListFragment : Fragment() {
         binding.patientRecyclerView.adapter = patientAdapter
 
         // Set total patients
-        binding.totalPatientsTextView.text = "Total Patients: ${patientList.size}"
+        binding.totalPatientsTextView.text = "Total Patients: ${patientNewList.size}"
 
     }
 

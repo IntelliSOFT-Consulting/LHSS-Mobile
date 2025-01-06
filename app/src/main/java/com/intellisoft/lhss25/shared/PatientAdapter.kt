@@ -16,6 +16,7 @@ class PatientAdapter(
         val nameValue: TextView = itemView.findViewById(R.id.nameValue)
         val crossBorderIdValue: TextView = itemView.findViewById(R.id.crossBorderIdValue)
         val dobValue: TextView = itemView.findViewById(R.id.dobValue)
+        val dateCreated: TextView = itemView.findViewById(R.id.dateCreated)
 
         // Bind click listener to the itemView
         fun bind(patient: DbPatientItem) {
@@ -35,6 +36,7 @@ class PatientAdapter(
         holder.nameValue.text = patient.name
         holder.crossBorderIdValue.text = patient.crossBorderId
         holder.dobValue.text = patient.dob
+        holder.dateCreated.text = patient.dateCreated
 
         // Call the bind function to set the click listener
         holder.bind(patient)

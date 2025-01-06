@@ -143,6 +143,41 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="5dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Tag TextView -->
+                <TextView
+                    android:id="@+id/dateCreatedLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_birth"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="8dp"
+                    android:padding="5dp"
+                    app:layout_constraintEnd_toStartOf="@+id/dateCreated"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <!-- Text TextView -->
+                <TextView
+                    android:id="@+id/dateCreated"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/_2024_03_04"
+                    app:layout_constraintStart_toEndOf="@+id/dateCreatedLabel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:lineSpacingMultiplier="1.1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </LinearLayout>
 
         <!-- ImageView next to Cross Border ID -->

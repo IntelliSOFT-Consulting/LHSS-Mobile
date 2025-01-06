@@ -1,5 +1,6 @@
 package com.intellisoft.lhss25.shared
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -540,6 +541,14 @@ class FormatterClass(private val context: Context) {
         // Define the date format that matches the format of dateCreated field
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
 
+        // Define supported date formats
+        val inputDateFormats = listOf(
+            SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH),
+            SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH),
+            SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
+        )
+
         // Parse the fromDate and toDate if they are not null
         val minDate: Date? = fromDate?.let { parseDateSafely(it, dateFormat) }
         val maxDate: Date? = toDate?.let { parseDateSafely(it, dateFormat) }
@@ -575,17 +584,6 @@ class FormatterClass(private val context: Context) {
                 null
             }
         })
-//
-//        val sortedPatientList = patientList.sortedWith(compareByDescending<DbPatientItem> {
-//            try {
-//                // Parse date if it's not empty
-//                if (it.dateCreated.isNullOrEmpty()) null else dateFormat.parse(it.dateCreated)
-//            } catch (e: Exception) {
-//                null // Handle unparseable date
-//            }
-//        }.thenBy {
-//            it.dateCreated.isNullOrEmpty() // Push empty dateCreated to the bottom
-//        })
 
         return sortedPatients
     }
@@ -735,15 +733,18 @@ class FormatterClass(private val context: Context) {
         toDateChar: CharSequence? = null
     ): List<DbPatientItem> {
         // Define supported date formats
-        val dateFormats = listOf(
+        val inputDateFormats = listOf(
             SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH),
-            SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH),
+            SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
         )
+
 
         // Helper function to parse dates using the supported formats
         fun parseDate(dateStr: String?): Date? {
             if (dateStr == null) return null
-            for (format in dateFormats) {
+            for (format in inputDateFormats) {
                 try {
                     return format.parse(dateStr)
                 } catch (e: ParseException) {
@@ -758,13 +759,60 @@ class FormatterClass(private val context: Context) {
         val toDate: Date? = parseDate(toDateChar?.toString())
 
         // Filter the patientList
-        return patientList.filter { patient ->
+        val patientList1 = patientList.filter { patient ->
             val patientDate = parseDate(patient.dateCreated)
             when {
-                fromDate != null && toDate != null -> patientDate != null && !patientDate.before(fromDate) && !patientDate.after(toDate)
+                fromDate != null && toDate != null -> patientDate != null
+                        && !patientDate.before(fromDate) && !patientDate.after(toDate)
                 fromDate != null -> patientDate != null && !patientDate.before(fromDate)
                 toDate != null -> patientDate != null && !patientDate.after(toDate)
                 else -> true // No filtering if both fromDate and toDate are null
+            }
+        }
+
+        return patientList1
+    }
+
+
+    fun filterPatientsByDate(
+        patients: List<DbPatientItem>,
+        fromDate: String?,
+        toDate: String?
+    ): List<DbPatientItem> {
+        val dateFormat = SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH) // Format for fromDate and toDate
+        val dateCreatedFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH) // Format for dateCreated
+
+        val from: Date? = try {
+            fromDate?.let { dateFormat.parse(it) }
+        } catch (e: Exception) {
+            println("Unparseable fromDate: $fromDate")
+            null
+        }
+
+        val to: Date? = try {
+            toDate?.let { dateFormat.parse(it) }
+        } catch (e: Exception) {
+            println("Unparseable toDate: $toDate")
+            null
+        }
+
+        return patients.filter { patient ->
+            val patientDateCreated: Date? = try {
+                dateCreatedFormat.parse(patient.dateCreated)
+            } catch (e: Exception) {
+                println("Unparseable dateCreated for patient ID ${patient.id}: ${patient.dateCreated}")
+                null
+            }
+
+            if (patientDateCreated == null) {
+                false // Exclude patients with unparseable dateCreated
+            } else {
+                when {
+                    from != null && to != null -> patientDateCreated in from..to
+                    from != null -> patientDateCreated >= from
+                    to != null -> patientDateCreated <= to
+                    else -> true // Include all patients if both fromDate and toDate are null
+                }
             }
         }
     }
