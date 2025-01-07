@@ -263,7 +263,7 @@ class ReferralInfoFragment : Fragment() {
             DbField(
                 DbWidgets.DATE_PICKER.name,
                 "Projected Time of Return",
-                true,
+                false,
                 null,
                 emptyList(),
                 true,

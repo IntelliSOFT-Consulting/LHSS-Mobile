@@ -187,10 +187,15 @@ class EndTreatmentFormFragment : Fragment() {
                 emptyList(),
                 false
             ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Final Outcome of treatment", true,
+//                InputType.TYPE_CLASS_TEXT
+//            ),
             DbField(
-                DbWidgets.EDIT_TEXT.name,
-                "Final Outcome of treatment", true,
-                InputType.TYPE_CLASS_TEXT
+                DbWidgets.SPINNER.name,
+                "Final Outcome of treatment", true, null,
+                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed", "Died")
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
