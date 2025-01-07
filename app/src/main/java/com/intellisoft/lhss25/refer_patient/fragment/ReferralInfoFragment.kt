@@ -48,7 +48,7 @@ class ReferralInfoFragment : Fragment() {
 
     private val viewModel: ReferralInfoViewModel by viewModels()
     private var referralReasonList = listOf(
-        "Leave", "Holidays", "Permanent  Return", "Medical", "Work", "Others")
+        "Leave", "Holidays", "Permanent  Return", "Medical", "Work", "Other Referral Reason")
     private lateinit var formatterClass: FormatterClass
     private var startDate: String? = null
     private var endDate: String? = null
@@ -270,7 +270,12 @@ class ReferralInfoFragment : Fragment() {
                 "",
                 true,
                 startDate
-            )
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Comments", false,
+                InputType.TYPE_CLASS_TEXT
+            ),
 
         )
 
@@ -279,6 +284,7 @@ class ReferralInfoFragment : Fragment() {
         setSpinnerListener(
             listOf(
                 "Country of Receiving Facility",
+                "Reason for Referral",
                 "Region/Province/County of Receiving Facility",
                 "District/Sub County of Receiving Facility",
                 "Ward of Receiving Facility",
@@ -294,6 +300,18 @@ class ReferralInfoFragment : Fragment() {
         )
 
         clinicalInfoViewViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
+
+            val otherReferralReason = binding.rootLayout.findViewWithTag<View>("Specify Other Referral Reasons")
+            val otherReferralReasonText = formatterClass.findTextViewByText(binding.rootLayout, "Specify Other Referral Reasons")
+
+
+            if (selectedItem == "Other Referral Reason"){
+                otherReferralReason.visibility = View.VISIBLE
+                otherReferralReasonText?.visibility = View.VISIBLE
+            }else{
+                otherReferralReason.visibility = View.GONE
+                otherReferralReasonText?.visibility = View.GONE
+            }
 
             val countryReceiving = binding.rootLayout.findViewWithTag<View>("Country of Receiving Facility") as Spinner
             val regionReceiving = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Receiving Facility") as Spinner
