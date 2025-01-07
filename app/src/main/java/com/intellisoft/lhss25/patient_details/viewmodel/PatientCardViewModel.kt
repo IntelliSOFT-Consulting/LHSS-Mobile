@@ -107,6 +107,14 @@ class PatientCardViewModel(
                         demographicFormDataList.add(
                             DbFormData("Date of Birth", birthDateElement)
                         )
+                        //Get the Age of the Patient
+                        val age = formatterClass.calculateAge(birthDateElement)
+                        if (age != null) {
+                            demographicFormDataList.add(
+                                DbFormData("Age", age)
+                            )
+                        }
+
                     }
                 }
 

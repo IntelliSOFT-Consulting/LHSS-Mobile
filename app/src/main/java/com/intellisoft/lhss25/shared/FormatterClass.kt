@@ -30,7 +30,9 @@ import com.intellisoft.lhss25.dynamic_components.MandatoryRadioGroup
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -71,6 +73,25 @@ class FormatterClass(private val context: Context) {
 
     fun generateUuid(): String {
         return UUID.randomUUID().toString()
+    }
+
+    fun calculateAge(dob: String): String? {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        try {
+            // Parse the input date
+            val birthDate = LocalDate.parse(dob, formatter)
+
+            // Get the current date
+            val currentDate = LocalDate.now()
+
+            // Calculate the period between the two dates
+            val age = Period.between(birthDate, currentDate)
+
+            // Return age as years, months, and days
+            return "${age.years} years, ${age.months} months, ${age.days} days"
+        } catch (e: DateTimeParseException) {
+            return null
+        }
     }
 
     fun showDialog(title:String, message: String) {
