@@ -39,10 +39,6 @@ class LayoutViewHolder(
         binding.componentLayoutTextView.text = layout.textId
         binding.root.setOnClickListener { onItemClick(layout) }
 
-        Log.e("******", "*******")
-        println("activeReferralNumbers $activeReferralNumbers")
-        Log.e("******", "*******")
-
         if (layout.textId == "Referrals") {
             binding.tvNumber.visibility = View.VISIBLE
             binding.tvNumber.text = activeReferralNumbers

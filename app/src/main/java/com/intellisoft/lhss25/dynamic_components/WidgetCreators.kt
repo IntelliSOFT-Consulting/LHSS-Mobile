@@ -98,6 +98,12 @@ class EditTextFieldCreator(
 
         // EditText field
         val editText = MandatoryEditText(context).apply {
+
+            Log.e("------>","<-------")
+            println("hintValue $hintValue")
+            println("label $label")
+            Log.e("------>","<-------")
+
             this.hint = hintValue ?: label
             this.inputType = inputType ?: InputType.TYPE_CLASS_TEXT
             this.background = ContextCompat.getDrawable(context, R.drawable.rounded_edittext) // Set rounded border
