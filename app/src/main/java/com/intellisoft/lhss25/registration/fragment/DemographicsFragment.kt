@@ -7,21 +7,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.intellisoft.lhss25.R
+import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoViewViewModel
 import com.intellisoft.lhss25.databinding.FragmentDemographicsBinding
 import com.intellisoft.lhss25.shared.DbClasses
 import com.intellisoft.lhss25.shared.DbField
 import com.intellisoft.lhss25.shared.DbNavigationDetails
 import com.intellisoft.lhss25.shared.DbWidgets
 import com.intellisoft.lhss25.dynamic_components.DefaultLabelCustomizer
+import com.intellisoft.lhss25.dynamic_components.DefaultSpinnerSelectionHandler
 import com.intellisoft.lhss25.dynamic_components.FieldManager
 import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils
 import com.intellisoft.lhss25.dynamic_components.FormUtils.extractAllFormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils.loadFormData
+import com.intellisoft.lhss25.dynamic_components.SpinnerSelectionHandler
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.MainActivityViewModel
 
@@ -34,7 +38,9 @@ class DemographicsFragment : Fragment() {
 
     private val viewModel: MainActivityViewModel by viewModels()
     private var identificationTypes =
-        listOf("Birth Certificate", "National ID", "Passport","Drivers License")
+        listOf("Birth Certificate", "National ID", "Passport","Drivers License", "None")
+    private val clinicalInfoViewViewModel: ClinicalInfoViewViewModel by viewModels()
+    private val spinnerSelectionHandler: SpinnerSelectionHandler = DefaultSpinnerSelectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -221,6 +227,25 @@ class DemographicsFragment : Fragment() {
         // On picking the dates have it start at it
         formatterClass.addRadioButtonWithDatePicker(requireContext(), binding.rootLayout)
 
+        setSpinnerListener(
+            listOf("Document Type")
+        )
+
+        clinicalInfoViewViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
+
+            val documentNumberText = formatterClass.findTextViewByText(binding.rootLayout, "Document Number")
+            val documentNumberOthers = binding.rootLayout.findViewWithTag<View>("Document Number")
+
+            if (selectedItem == "None"){
+                documentNumberText?.visibility = View.GONE
+                documentNumberOthers?.visibility = View.GONE
+            }else{
+                documentNumberText?.visibility = View.VISIBLE
+                documentNumberOthers?.visibility = View.VISIBLE
+            }
+
+        }
+
         //Repopulate date of birth
 
         loadFormData(
@@ -231,6 +256,16 @@ class DemographicsFragment : Fragment() {
         )
 
 
+    }
+    private fun setSpinnerListener(tagList: List<String>) {
+        tagList.forEach { tag ->
+            val rootViewParent = binding.rootLayout.findViewWithTag<View>(tag)
+            if (rootViewParent is Spinner) {
+                spinnerSelectionHandler.handleSelection(rootViewParent) { selectedItem ->
+                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem, rootViewParent)
+                }
+            }
+        }
     }
 
 
