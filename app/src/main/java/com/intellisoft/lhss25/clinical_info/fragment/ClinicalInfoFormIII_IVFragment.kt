@@ -169,6 +169,11 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
                     "Date",
                     true
                 ),
+                DbField(
+                    DbWidgets.EDIT_TEXT.name,
+                    "Comments", false,
+                    InputType.TYPE_CLASS_TEXT
+                )
             )
             return dbFieldList
         }
@@ -189,6 +194,11 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
                     "Result", true, null,
                     listOf("Resistance", "Susceptible","Not Done","Done Awaiting Results")
                 ),
+                DbField(
+                    DbWidgets.EDIT_TEXT.name,
+                    "Comments", false,
+                    InputType.TYPE_CLASS_TEXT
+                )
 
             )
             return dbFieldList
@@ -209,6 +219,11 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
                     "Smear Result", false,
                     InputType.TYPE_TEXT_VARIATION_PERSON_NAME
                 ),
+                DbField(
+                    DbWidgets.EDIT_TEXT.name,
+                    "Comments", false,
+                    InputType.TYPE_CLASS_TEXT
+                )
             )
             return dbFieldList
         }

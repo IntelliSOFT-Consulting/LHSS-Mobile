@@ -81,16 +81,6 @@ class ReferralPatientListViewModel(
 
         }
 
-        serviceList.forEach { dbPatientItem ->
-
-            Log.e("-------->","<-------")
-            println("dbPatientItem $dbPatientItem")
-            println("id ${dbPatientItem?.id}")
-            println("status ${dbPatientItem?.status}")
-            Log.e("-------->","<-------")
-
-        }
-
         val completeStatusList = serviceList.filterNotNull().filter { it.status.toString() == "completed" || it.status.toString() == "COMPLETED" }.distinctBy { it.id }
         val activeStatusList = serviceList.filterNotNull().filter { it.status.toString() == "active" || it.status.toString() == "ACTIVE" }.distinctBy { it.id }
 

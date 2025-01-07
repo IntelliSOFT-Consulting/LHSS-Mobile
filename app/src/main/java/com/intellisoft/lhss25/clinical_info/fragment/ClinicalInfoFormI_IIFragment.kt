@@ -184,6 +184,11 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
                     DbWidgets.EDIT_TEXT.name,
                     "Drugs issued for (Indicate duration)", false,
                     InputType.TYPE_CLASS_TEXT
+                ),
+                DbField(
+                    DbWidgets.EDIT_TEXT.name,
+                    "Comments", false,
+                    InputType.TYPE_CLASS_TEXT
                 )
 
             )
@@ -214,6 +219,11 @@ class ClinicalInfoFormI_IIFragment : Fragment() {
                 DbField(
                     DbWidgets.EDIT_TEXT.name,
                     "Others", false,
+                    InputType.TYPE_CLASS_TEXT
+                ),
+                DbField(
+                    DbWidgets.EDIT_TEXT.name,
+                    "Comments", false,
                     InputType.TYPE_CLASS_TEXT
                 )
             )
