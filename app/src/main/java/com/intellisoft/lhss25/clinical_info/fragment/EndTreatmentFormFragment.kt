@@ -10,17 +10,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
 import com.intellisoft.lhss25.R
 import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoDetailsViewModel
+import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoViewViewModel
 import com.intellisoft.lhss25.databinding.FragmentEndTreatmentFormBinding
 import com.intellisoft.lhss25.dynamic_components.DefaultLabelCustomizer
+import com.intellisoft.lhss25.dynamic_components.DefaultSpinnerSelectionHandler
 import com.intellisoft.lhss25.dynamic_components.FieldManager
 import com.intellisoft.lhss25.dynamic_components.FormUtils
+import com.intellisoft.lhss25.dynamic_components.SpinnerSelectionHandler
 import com.intellisoft.lhss25.fhir.Constants
 import com.intellisoft.lhss25.fhir.FhirApplication
 import com.intellisoft.lhss25.referrals.viewmodels.ReferralDetailsViewModel
@@ -45,6 +50,9 @@ class EndTreatmentFormFragment : Fragment() {
     private lateinit var clinicalViewModel: ClinicalInfoDetailsViewModel
     private lateinit var referralViewModel: ReferralDetailsViewModel
     private lateinit var fhirEngine: FhirEngine
+
+    private val clinicalInfoViewViewModel: ClinicalInfoViewViewModel by viewModels()
+    private val spinnerSelectionHandler: SpinnerSelectionHandler = DefaultSpinnerSelectionHandler()
 
 
     override fun onCreateView(
@@ -217,7 +225,12 @@ class EndTreatmentFormFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Designation", true, null,
-                listOf("Doctor", "Nurse", "Clinical Officer", "Other")
+                listOf("Doctor", "Nurse", "Clinical Officer", "Other Designation")
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Specify the designation", false,
+                InputType.TYPE_CLASS_TEXT
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -288,6 +301,36 @@ class EndTreatmentFormFragment : Fragment() {
             DbClasses.END_TREATMENT_FORM.name
         )
 
+        setSpinnerListener(
+            listOf("Designation")
+        )
+
+        clinicalInfoViewViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
+
+            val designationOthersText = formatterClass.findTextViewByText(binding.rootLayout, "Specify the designation")
+            val designationOthers = binding.rootLayout.findViewWithTag<View>("Specify the designation")
+
+            if (selectedItem == "Other Designation"){
+                designationOthersText?.visibility = View.VISIBLE
+                designationOthers?.visibility = View.VISIBLE
+            }else{
+                designationOthersText?.visibility = View.GONE
+                designationOthers?.visibility = View.GONE
+            }
+
+        }
+
+    }
+
+    private fun setSpinnerListener(tagList: List<String>) {
+        tagList.forEach { tag ->
+            val rootViewParent = binding.rootLayout.findViewWithTag<View>(tag)
+            if (rootViewParent is Spinner) {
+                spinnerSelectionHandler.handleSelection(rootViewParent) { selectedItem ->
+                    clinicalInfoViewViewModel.updateSelectedItem(selectedItem, rootViewParent)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
