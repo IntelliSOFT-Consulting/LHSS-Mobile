@@ -63,6 +63,7 @@ class LandingPageFragment : Fragment() {
                 ),
             )[LocationViewModel::class.java]
 
+        formatterClass.getAvailableList(requireContext(), locationViewModel)
 
         return binding.root
     }

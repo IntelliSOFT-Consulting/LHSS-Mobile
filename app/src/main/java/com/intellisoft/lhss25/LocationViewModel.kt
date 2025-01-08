@@ -173,6 +173,7 @@ class LocationViewModel(
         return hierarchy.reversed() // Reverse to display hierarchy from country to facility
     }
 
+
     // Function to fetch a location from FHIR engine
     private suspend fun fetchLocation(locationId: String): Location? {
         return fhirEngine.search<Location> {

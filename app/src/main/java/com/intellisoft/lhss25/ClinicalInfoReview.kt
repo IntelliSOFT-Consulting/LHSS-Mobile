@@ -36,7 +36,7 @@ class ClinicalInfoReview : Fragment() {
 
     private var formDataList = ArrayList<FormData>()
 
-    val navigationDetails = DbNavigationDetails.REFER_PATIENT.name
+    private val navigationDetails = DbNavigationDetails.REFER_PATIENT.name
 
     private var patientId:String = ""
     private var carePlanId:String = ""

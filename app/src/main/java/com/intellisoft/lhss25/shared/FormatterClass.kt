@@ -1,6 +1,5 @@
 package com.intellisoft.lhss25.shared
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -23,6 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.hbb20.CCPCountry
+import com.intellisoft.lhss25.LocationViewModel
 import com.intellisoft.lhss25.R
 import com.intellisoft.lhss25.dynamic_components.MandatoryRadioGroup
 
@@ -40,6 +40,60 @@ import java.util.UUID
 import java.util.regex.Pattern
 
 class FormatterClass(private val context: Context) {
+
+    fun getAvailableList(context: Context, locationViewModel: LocationViewModel): ArrayList<String> {
+
+        val kenyaHospitals = context.resources
+            .getStringArray(R.array.available_kenya_countries_array)
+        val ugandaHospitals = context.resources
+            .getStringArray(R.array.available_uganda_countries_array)
+
+        val userCountryNameCode = getSharedPref("","userCountryNameCode")
+            ?: return ArrayList(emptyList())
+
+        val allHospitals = ArrayList<String>()
+        val kenyaHospitalsList = ArrayList(kenyaHospitals.toList())
+        val ugandaHospitalsList = ArrayList(ugandaHospitals.toList())
+
+        // Add both lists to allHospitals
+        allHospitals.addAll(kenyaHospitalsList)
+        allHospitals.addAll(ugandaHospitalsList)
+
+        Log.e("------>","<------")
+        println("allHospitals $allHospitals")
+
+        allHospitals.forEach {hospitalName ->
+            println("hospitalName $hospitalName")
+
+            val locationReferenceList = locationViewModel.getFacilityByName(hospitalName)
+            println("locationReferenceList $locationReferenceList")
+
+            if (locationReferenceList.isNotEmpty()){
+                val locationReference = locationReferenceList.first()
+                val locationName = locationReference.name
+                val locationCode = locationReference.code
+                val locationId = locationReference.id?.split("/")?.get(1)
+
+                println("locationReference $locationReference")
+                println("locationName $locationName")
+                println("locationCode $locationCode")
+                println("locationId $locationId")
+                Log.e("------>","<------")
+            }
+        }
+
+
+
+
+
+
+        return when (userCountryNameCode) {
+            "KE" -> ArrayList(ugandaHospitals.toList())
+            "UG" -> ArrayList(kenyaHospitals.toList())
+            else -> ArrayList(emptyList())
+        }
+
+    }
 
     fun findTextViewByText(rootLayout: ViewGroup, searchText: String): TextView? {
         for (i in 0 until rootLayout.childCount) {
