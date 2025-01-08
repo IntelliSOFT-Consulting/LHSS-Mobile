@@ -31,6 +31,8 @@ class SplashViewModel(application: Application) : AndroidViewModel(application){
     val lastSyncTimestampLiveData: LiveData<String>
         get() = _lastSyncTimestampLiveData
 
+    private val applicationValue = application
+
     private val _oneTimeSyncTrigger =
         MutableSharedFlow<Boolean>(
             extraBufferCapacity = 1,
@@ -57,8 +59,12 @@ class SplashViewModel(application: Application) : AndroidViewModel(application){
             .shareIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     fun triggerOneTimeSync() {
+        updateLastSyncTimestamp()
         viewModelScope.launch { _oneTimeSyncTrigger.emit(true) }
+        Sync.oneTimeSync<FhirSyncWorker>(context = applicationValue.applicationContext)
     }
+
+
 
     /** Emits last sync time. */
     fun updateLastSyncTimestamp(lastSync: OffsetDateTime? = null) {

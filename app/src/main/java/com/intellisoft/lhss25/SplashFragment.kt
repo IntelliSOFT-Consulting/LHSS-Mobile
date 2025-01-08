@@ -36,7 +36,7 @@ class SplashFragment : Fragment() {
     private lateinit var formatterClass : FormatterClass
     private lateinit var viewModel: ReferralPatientListViewModel
     private val notificationServiceViewModel: NotificationServiceViewModel by viewModels()
-
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,25 +74,14 @@ class SplashFragment : Fragment() {
                 ),
             )[ReferralPatientListViewModel::class.java]
 
-        GlobalScope.launch {
-            getStoredData()
-        }
+        splashViewModel.triggerOneTimeSync()
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    private fun getStoredData() {
-        val allReferralNumber = viewModel.allReferralNumber
-        val activeReferralNumber = viewModel.activeReferralNumber
-        val completeReferralNumber = viewModel.completeReferralNumber
 
-//        formatterClass.saveSharedPref("","allReferralNumbers", allReferralNumber.value.toString())
-//        formatterClass.saveSharedPref("","completeReferralNumbers", completeReferralNumber.value.toString())
-//        formatterClass.saveSharedPref("","activeReferralNumbers", activeReferralNumber.value.toString())
-
-        notificationServiceViewModel.getCommunicationList()
-    }
 
 
     companion object {

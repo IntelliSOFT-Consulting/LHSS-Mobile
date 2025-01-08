@@ -36,6 +36,7 @@ class LandingPageFragment : Fragment() {
     private lateinit var formatterClass: FormatterClass
     private lateinit var fhirEngine: FhirEngine
     private lateinit var locationViewModel: LocationViewModel
+    private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,9 @@ class LandingPageFragment : Fragment() {
             )[LocationViewModel::class.java]
 
         formatterClass.getAvailableList(requireContext(), locationViewModel)
+
+        splashViewModel.updateLastSyncTimestamp()
+        splashViewModel.triggerOneTimeSync()
 
         return binding.root
     }
