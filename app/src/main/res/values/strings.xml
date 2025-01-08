@@ -84,4 +84,13 @@
         <item>French</item>
     </string-array>
 
+    <string-array name="available_kenya_countries_array">
+        <item>Busia County Referral Hospital</item>
+        <item>MALABA DISPENSARY</item>
+    </string-array>
+    <string-array name="available_uganda_countries_array">
+        <item>Malaba Health Centre III</item>
+        <item>Masafu General Hospital</item>
+    </string-array>
+
 </resources>

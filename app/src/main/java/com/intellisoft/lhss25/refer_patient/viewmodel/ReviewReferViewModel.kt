@@ -271,7 +271,7 @@ class ReviewReferViewModel (
             var navigationId = 0
 
             title = convertToTitleCase(workflowTitles)
-            "A new $title Form has been submitted for patient $patientName".also { content = it }
+            "A new $title Form has been submitted for patient $patientName .".also { content = it }
 
             val basedOnReference = Reference("CarePlan/$carePlanId")
             val subjectReference = Reference("Patient/$patientId")
@@ -281,13 +281,13 @@ class ReviewReferViewModel (
              */
 
             val dbCommunication = DbCommunication(
-                Communication.CommunicationStatus.INPROGRESS,
-                subjectReference,
-                subjectReference,
-                subjectReference,
-                supportingInfoList,
-                title,
-                content,
+                status = Communication.CommunicationStatus.INPROGRESS,
+                subject = subjectReference,
+                recipient = subjectReference,
+                sender = subjectReference,
+                basedOn = supportingInfoList,
+                title = title,
+                content = content,
             )
             viewModel.createNotification(dbCommunication)
 
