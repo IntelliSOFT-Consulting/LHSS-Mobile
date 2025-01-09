@@ -203,7 +203,7 @@ class EndTreatmentFormFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Final Outcome of treatment", true, null,
-                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed", "Died")
+                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed", "Died", "Other")
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
