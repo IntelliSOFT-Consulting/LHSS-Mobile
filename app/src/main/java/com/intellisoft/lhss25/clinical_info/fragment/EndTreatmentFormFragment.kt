@@ -203,7 +203,8 @@ class EndTreatmentFormFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Final Outcome of treatment", true, null,
-                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed", "Died", "Other")
+                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed",
+                    "Died", "Other Final Outcome of treatment")
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -316,6 +317,16 @@ class EndTreatmentFormFragment : Fragment() {
             }else{
                 designationOthersText?.visibility = View.GONE
                 designationOthers?.visibility = View.GONE
+            }
+
+            val finalOutcomeOthersText = formatterClass.findTextViewByText(binding.rootLayout, "Final Outcome of treatment")
+            val finalOutcomeOthers = binding.rootLayout.findViewWithTag<View>("Final Outcome of treatment")
+            if (selectedItem == "Other Final Outcome of treatment"){
+                finalOutcomeOthersText?.visibility = View.VISIBLE
+                finalOutcomeOthers?.visibility = View.VISIBLE
+            }else{
+                finalOutcomeOthersText?.visibility = View.GONE
+                finalOutcomeOthers?.visibility = View.GONE
             }
 
         }
