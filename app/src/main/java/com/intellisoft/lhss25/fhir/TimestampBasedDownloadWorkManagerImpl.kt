@@ -23,7 +23,9 @@ class TimestampBasedDownloadWorkManagerImpl(private val dataStore: DemoDataStore
         listOf(
             "Patient?_sort=_lastUpdated",
             "ServiceRequest",
-            "Location"
+            "Location",
+            "Encounter",
+            "Observation"
         )
     )
 
@@ -120,9 +122,9 @@ private fun affixLastUpdatedTimestamp(url: String, lastUpdated: String): String 
 
     // Affix lastUpdate to non-$everything queries as per:
     // https://hl7.org/fhir/operation-patient-everything.html
-    if (!downloadUrl.contains("\$everything")) {
-        downloadUrl = "$downloadUrl&_lastUpdated=gt$lastUpdated"
-    }
+//    if (!downloadUrl.contains("\$everything")) {
+//        downloadUrl = "$downloadUrl&_lastUpdated=gt$lastUpdated"
+//    }
 //    if (!downloadUrl.contains("\$everything") && downloadUrl.contains("ServiceRequest")) {
 //        downloadUrl = "$downloadUrl?&_lastUpdated=gt$lastUpdated"
 //    }
