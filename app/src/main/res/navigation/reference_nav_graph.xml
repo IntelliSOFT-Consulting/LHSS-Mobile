@@ -454,7 +454,7 @@
         tools:layout="@layout/fragment_view_form_details" />
     <fragment
         android:id="@+id/addressCountryResidence"
-        android:name="com.intellisoft.lhss25.AddressCountryResidence"
+        android:name="com.intellisoft.lhss25.registration.fragment.AddressCountryResidence"
         android:label="@string/country_of_residence"
         tools:layout="@layout/fragment_address_country_residence" >
         <action

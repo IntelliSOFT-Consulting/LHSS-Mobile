@@ -114,13 +114,44 @@ class PatientRegistrationSummaryViewModel(
                         address.id = formatterClass.generateUuid()
                         address.text = tag
 
-                        if (tag == "Country of Origin" || tag == "Country of Residence"){
+                        if (tag == "Country of Origin"){
                             address.country = text
                         }
-                        if (tag == "Residential Address in Referring Country"){
+                        if (tag == "Region/Province/County of Origin"){
                             address.state = text
                         }
-                        if (tag == "Residential Address in Receiving Country"){
+                        if (tag == "District/Sub County of Origin"){
+                            address.district = text
+                        }
+                        if (tag == "Ward of Origin"){
+                            address.city = text
+                        }
+
+                        patient.addAddress(address)
+                    }
+                }
+                DbClasses.ADDRESS_RESIDENCE.name -> {
+
+                    formData.formDataList.forEach { dbFormData ->
+
+                        val address = Address()
+
+                        val tag = dbFormData.tag
+                        val text = dbFormData.text
+
+                        address.id = formatterClass.generateUuid()
+                        address.text = tag
+
+                        if (tag == "Country of Residence"){
+                            address.country = text
+                        }
+                        if (tag == "Region/Province/County of Residence"){
+                            address.state = text
+                        }
+                        if (tag == "District/Sub County of Residence"){
+                            address.district = text
+                        }
+                        if (tag == "Ward of Residence"){
                             address.city = text
                         }
 

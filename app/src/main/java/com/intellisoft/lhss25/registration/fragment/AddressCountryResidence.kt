@@ -1,4 +1,4 @@
-package com.intellisoft.lhss25
+package com.intellisoft.lhss25.registration.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,8 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
+import com.intellisoft.lhss25.LocationViewModel
+import com.intellisoft.lhss25.R
 import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoViewViewModel
-import com.intellisoft.lhss25.databinding.FragmentAddressBinding
 import com.intellisoft.lhss25.databinding.FragmentAddressCountryResidenceBinding
 import com.intellisoft.lhss25.dynamic_components.DefaultLabelCustomizer
 import com.intellisoft.lhss25.dynamic_components.DefaultSpinnerSelectionHandler
