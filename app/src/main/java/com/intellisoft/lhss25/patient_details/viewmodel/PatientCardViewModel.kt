@@ -217,8 +217,10 @@ class PatientCardViewModel(
 
         }
 
+        //Arrange the list
 
-        return formDataList
+
+        return formatterClass.sortPatientInformation(formDataList)
     }
 
 

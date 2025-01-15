@@ -41,6 +41,16 @@ import java.util.regex.Pattern
 
 class FormatterClass(private val context: Context) {
 
+    fun sortPatientInformation(formDataList :ArrayList<FormData>):ArrayList<FormData>{
+        val sortOrder = listOf("DEMOGRAPHICS", "ADDRESS_ORIGIN", "ADDRESS_RESIDENCE", "NEXT_OF_KIN")
+
+        formDataList.sortWith { formData1, formData2 ->
+            val index1 = sortOrder.indexOf(formData1.title)
+            val index2 = sortOrder.indexOf(formData2.title)
+            index1.compareTo(index2)
+        }
+        return formDataList
+    }
     fun getAvailableList(context: Context, locationViewModel: LocationViewModel): ArrayList<String> {
 
         val kenyaHospitals = context.resources
