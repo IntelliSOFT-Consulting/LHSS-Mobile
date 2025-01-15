@@ -51,6 +51,10 @@ class FormatterClass(private val context: Context) {
         val userCountryNameCode = getSharedPref("","userCountryNameCode")
             ?: return ArrayList(emptyList())
 
+        val userFacilityId = getSharedPref("","userFacility")?.replace("Location/","")
+            ?: return ArrayList(emptyList())
+
+        val availableHospitals = ArrayList<String>()
         val allHospitals = ArrayList<String>()
         val kenyaHospitalsList = ArrayList(kenyaHospitals.toList())
         val ugandaHospitalsList = ArrayList(ugandaHospitals.toList())
@@ -59,14 +63,10 @@ class FormatterClass(private val context: Context) {
         allHospitals.addAll(kenyaHospitalsList)
         allHospitals.addAll(ugandaHospitalsList)
 
-        Log.e("------>","<------")
-        println("allHospitals $allHospitals")
 
         allHospitals.forEach {hospitalName ->
-            println("hospitalName $hospitalName")
 
             val locationReferenceList = locationViewModel.getFacilityByName(hospitalName)
-            println("locationReferenceList $locationReferenceList")
 
             if (locationReferenceList.isNotEmpty()){
                 val locationReference = locationReferenceList.first()
@@ -74,24 +74,13 @@ class FormatterClass(private val context: Context) {
                 val locationCode = locationReference.code
                 val locationId = locationReference.id?.split("/")?.get(1)
 
-                println("locationReference $locationReference")
-                println("locationName $locationName")
-                println("locationCode $locationCode")
-                println("locationId $locationId")
-                Log.e("------>","<------")
+                if (locationId != null && locationId != userFacilityId){
+                    availableHospitals.add(locationName)
+                }
             }
         }
 
-
-
-
-
-
-        return when (userCountryNameCode) {
-            "KE" -> ArrayList(ugandaHospitals.toList())
-            "UG" -> ArrayList(kenyaHospitals.toList())
-            else -> ArrayList(emptyList())
-        }
+        return availableHospitals
 
     }
 

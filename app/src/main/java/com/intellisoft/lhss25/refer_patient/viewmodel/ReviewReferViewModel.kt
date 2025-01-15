@@ -113,10 +113,10 @@ class ReviewReferViewModel (
         serviceRequest.supportingInfo = ArrayList()
 
         val receivingInfoList = listOf(
-            Constants.COUNTRY_RECEIVING,
-            Constants.REGION_COUNTY_RECEIVING,
-            Constants.DISTRICT_SUB_COUNTY_RECEIVING,
-            Constants.WARD_RECEIVING,
+//            Constants.COUNTRY_RECEIVING,
+//            Constants.REGION_COUNTY_RECEIVING,
+//            Constants.DISTRICT_SUB_COUNTY_RECEIVING,
+//            Constants.WARD_RECEIVING,
             Constants.FACILITY_RECEIVING
         )
 
@@ -166,7 +166,9 @@ class ReviewReferViewModel (
                                 val extractedId = locationId?.split("/")?.get(1)
 
                                 reference.setReference("Location/$extractedId")
+
                             }
+
                         }else{
                             reference.setReference("Location/${dbFormData.text}")
                         }

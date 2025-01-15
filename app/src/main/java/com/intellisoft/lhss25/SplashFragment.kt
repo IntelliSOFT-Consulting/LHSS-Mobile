@@ -1,5 +1,6 @@
 package com.intellisoft.lhss25
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,11 @@ import com.intellisoft.lhss25.databinding.FragmentSplashBinding
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.NotificationServiceViewModel
 import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.fhir.FhirEngine
+import com.intellisoft.lhss25.fhir.FhirApplication
 import com.intellisoft.lhss25.referrals.viewmodels.ReferralPatientListViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -38,6 +42,9 @@ class SplashFragment : Fragment() {
     private val notificationServiceViewModel: NotificationServiceViewModel by viewModels()
     private val splashViewModel: SplashViewModel by viewModels()
 
+    private lateinit var fhirEngine: FhirEngine
+    private lateinit var locationViewModel: LocationViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,7 +53,22 @@ class SplashFragment : Fragment() {
         }
         formatterClass = FormatterClass(requireContext())
         formatterClass.clearData()
+
+        fhirEngine = FhirApplication.fhirEngine(requireContext())
+
+
+        locationViewModel =
+            ViewModelProvider(
+                this,
+                LocationViewModel.LocationViewModelFactory(
+                    requireActivity().application,
+                    fhirEngine
+                ),
+            )[LocationViewModel::class.java]
+
+        formatterClass.getAvailableList(requireContext(), locationViewModel)
     }
+
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(

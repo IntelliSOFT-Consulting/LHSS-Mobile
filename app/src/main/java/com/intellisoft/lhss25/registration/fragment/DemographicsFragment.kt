@@ -3,10 +3,12 @@ package com.intellisoft.lhss25.registration.fragment
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
@@ -25,6 +27,7 @@ import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils
 import com.intellisoft.lhss25.dynamic_components.FormUtils.extractAllFormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils.loadFormData
+import com.intellisoft.lhss25.dynamic_components.MandatoryRadioGroup
 import com.intellisoft.lhss25.dynamic_components.SpinnerSelectionHandler
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.MainActivityViewModel
@@ -254,6 +257,36 @@ class DemographicsFragment : Fragment() {
             DbNavigationDetails.PATIENT_REGISTRATION.name,
             DbClasses.DEMOGRAPHICS.name
         )
+
+        // Traverse through all child views of rootLayout
+//        for (i in 0 until binding.rootLayout.childCount) {
+//            val childView = binding.rootLayout.getChildAt(i)
+//            when (childView) {
+//
+//                is LinearLayout -> {
+//
+//                    for (j in 0 until childView.childCount) {
+//                        val innerChild = childView.getChildAt(j)
+//
+//                        when (innerChild) {
+//                            is MandatoryRadioGroup -> {
+//
+//                                val selectedText = innerChild.getSelectedRadioButtonText()
+//                                val isMandatory = innerChild.isMandatory
+//                                val tag = innerChild.tag?.toString() ?: ""
+//
+//                                Log.e(">>>>>>>", "<<<<<<<<")
+//                                println("selectedText $selectedText")
+//                                println("tag $tag")
+//                                Log.e(">>>>>>>", "<<<<<<<<")
+//                            }
+//                        }
+//
+//
+//                    }
+//                }
+//            }
+//        }
 
 
     }

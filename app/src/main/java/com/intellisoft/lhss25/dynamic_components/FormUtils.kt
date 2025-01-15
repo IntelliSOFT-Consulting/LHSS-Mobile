@@ -158,13 +158,9 @@ object FormUtils {
         val missingFields = ArrayList<DbFormData>()
         val addedFields = ArrayList<DbFormData>()
 
-        Log.e("******","*****")
-
         // Traverse through all child views of rootLayout
         for (i in 0 until rootLayout.childCount) {
             val childView = rootLayout.getChildAt(i)
-
-            println("childView : $childView")
 
             if (childView.visibility == View.VISIBLE) { // Only process visible views
 
@@ -301,9 +297,6 @@ object FormUtils {
                             val tag = editText.tag?.toString() ?: ""
                             val text = editText.text.toString()
 
-                            println("tag $tag")
-                            println("text $text")
-
                             // Check if the field is mandatory
                             if (editText.isMandatory) {
                                 if (tag.isNotEmpty() && text.isNotEmpty()) {
@@ -322,19 +315,17 @@ object FormUtils {
                         }
                     }
 
-
-
                     // Add more cases as needed based on widget types
                 }
             }
         }
 
-        Log.e("******","*****")
-
         return Pair(ArrayList(addedFields), ArrayList(missingFields))
 
 
     }
+
+
 
     fun populateFormData(
         formDataList: ArrayList<FormData>,
@@ -349,6 +340,7 @@ object FormUtils {
             formData.formDataList.forEach { dbFormData ->
                 // Find the widget by its tag in the parent layout
                 val view = parentLayout.findViewWithTag<View>(dbFormData.tag)
+
 
 
 

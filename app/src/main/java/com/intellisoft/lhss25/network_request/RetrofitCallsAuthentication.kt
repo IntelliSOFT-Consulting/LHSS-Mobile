@@ -115,6 +115,11 @@ class RetrofitCallsAuthentication {
 
                                             val locationHierarchyList = locationViewModel.getLocationDetails(bodyUser.user.facility)
 
+                                            Log.e("^^^^^^^^^","^^^^^^^^^")
+                                            println("bodyUser.user.facility ${bodyUser.user.facility}")
+                                            println("locationHierarchyList $locationHierarchyList")
+                                            Log.e("^^^^^^^^^","^^^^^^^^^")
+
                                             locationHierarchyList.forEach {
 
                                                 val code = it.code

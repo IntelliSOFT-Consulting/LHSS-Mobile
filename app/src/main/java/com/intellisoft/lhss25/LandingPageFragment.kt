@@ -64,7 +64,7 @@ class LandingPageFragment : Fragment() {
                 ),
             )[LocationViewModel::class.java]
 
-        formatterClass.getAvailableList(requireContext(), locationViewModel)
+//        formatterClass.getAvailableList(requireContext(), locationViewModel)
 
         splashViewModel.updateLastSyncTimestamp()
         splashViewModel.triggerOneTimeSync()
