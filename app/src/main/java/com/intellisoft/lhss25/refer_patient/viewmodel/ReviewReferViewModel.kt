@@ -363,6 +363,10 @@ class ReviewReferViewModel (
                 "District/Sub County of Receiving Facility" -> { Constants.DISTRICT_SUB_COUNTY_RECEIVING }
                 "Ward of Receiving Facility" -> { Constants.WARD_RECEIVING }
                 "Name of Receiving Facility" -> { Constants.FACILITY_RECEIVING }
+
+                "Contact Person" -> { Constants.CONTACT_PERSON }
+                "Date Patient Reported to Facility" -> { Constants.PATIENT_REPORTING_DATE }
+
                 else -> { generateRandomLoincCode() }
             }
 
