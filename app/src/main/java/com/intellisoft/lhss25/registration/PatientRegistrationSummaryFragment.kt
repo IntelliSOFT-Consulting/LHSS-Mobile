@@ -158,7 +158,8 @@ class PatientRegistrationSummaryFragment : Fragment() {
         if (formDataList.isEmpty()){
             findNavController().navigate(R.id.landingPageFragment)
         }else{
-            formDataAdapter = FormDataAdapter(formDataList, requireContext())
+            val sortedList = formatterClass.sortPatientInformation(formDataList)
+            formDataAdapter = FormDataAdapter(sortedList, requireContext())
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
             binding.recyclerView.adapter = formDataAdapter
