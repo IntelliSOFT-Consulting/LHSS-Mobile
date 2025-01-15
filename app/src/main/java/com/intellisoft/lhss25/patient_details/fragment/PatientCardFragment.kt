@@ -152,6 +152,10 @@ class PatientCardFragment : Fragment() {
                 // Perform the action for this menu item
                 true
             }
+            R.id.endTreatmentFormFragment -> {
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

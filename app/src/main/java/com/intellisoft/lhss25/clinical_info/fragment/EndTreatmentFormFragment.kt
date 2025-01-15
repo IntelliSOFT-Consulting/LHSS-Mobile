@@ -175,10 +175,19 @@ class EndTreatmentFormFragment : Fragment() {
                 emptyList(),
                 false
             ),
+//            DbField(
+//                DbWidgets.DATE_PICKER.name,
+//                "Date Patient Reported to Facility",
+//                true
+//            ),
             DbField(
                 DbWidgets.DATE_PICKER.name,
                 "Date Patient Reported to Facility",
-                true
+                true,
+                null,
+                emptyList(),
+                true,
+                Constants.PATIENT_REPORTING_DATE
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -211,10 +220,19 @@ class EndTreatmentFormFragment : Fragment() {
                 "Other Final Outcome of treatment", false,
                 InputType.TYPE_CLASS_TEXT
             ),
+//            DbField(
+//                DbWidgets.EDIT_TEXT.name,
+//                "Contact Person", true,
+//                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+//            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Contact Person", true,
-                InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+                "Contact Person",
+                true,
+                InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
+                emptyList(),
+                true,
+                Constants.CONTACT_PERSON
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
