@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -133,6 +136,24 @@ class PatientCardFragment : Fragment() {
             }
         }
 
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        // Inflate the menu specific to this fragment
+        inflater.inflate(R.menu.patient_card_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle menu item clicks here
+        return when (item.itemId) {
+            R.id.acknoledgementDetailsFragment -> {
+                // Perform the action for this menu item
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun getServiceRequestInfo():Boolean {

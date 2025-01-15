@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/acknoledgementDetailsFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/acknowledgement_forms" />
+    <item
+        android:id="@+id/endTreatmentFormFragment"
+        android:icon="@drawable/ic_patients"
+        android:title="@string/end_of_treatment_forms" />
+
+</menu>
