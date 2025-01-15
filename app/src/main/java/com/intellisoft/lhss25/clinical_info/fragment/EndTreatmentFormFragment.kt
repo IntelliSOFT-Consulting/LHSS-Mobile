@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -130,14 +131,14 @@ class EndTreatmentFormFragment : Fragment() {
             }else{
 
                 val emailData = addedFields.find { it.tag == "Email Contact" }
-                if (emailData == null){
-                    Toast.makeText(requireContext(), "Email Contact cannot be null", Toast.LENGTH_SHORT).show()
-                    return@setNextButtonClickListener
-                }
 
-                if (emailData.text.isEmpty() || !formatterClass.isValidEmail(emailData.text)){
-                    Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
-                    return@setNextButtonClickListener
+                if (emailData != null){
+                    val textEmail = emailData.text
+                    val isEmailValid = formatterClass.isValidEmail(textEmail)
+                    if (!isEmailValid){
+                        Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
+                        return@setNextButtonClickListener
+                    }
                 }
                 
                 findNavController().navigate(R.id.action_endTreatmentFormFragment_to_endTreatmentReviewFragment)
@@ -203,8 +204,12 @@ class EndTreatmentFormFragment : Fragment() {
             DbField(
                 DbWidgets.SPINNER.name,
                 "Final Outcome of treatment", true, null,
-                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed",
-                    "Died", "Other Final Outcome of treatment")
+                listOf("Cured", "Treatment Completed", "Lost to follow-up", "Treatment failed", "Died", "Other Final Outcome of treatment")
+            ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Other Final Outcome of treatment", false,
+                InputType.TYPE_CLASS_TEXT
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
@@ -303,7 +308,7 @@ class EndTreatmentFormFragment : Fragment() {
         )
 
         setSpinnerListener(
-            listOf("Designation")
+            listOf("Designation","Final Outcome of treatment")
         )
 
         clinicalInfoViewViewModel.selectedItem.observe(viewLifecycleOwner) { selectedItem ->
@@ -319,8 +324,9 @@ class EndTreatmentFormFragment : Fragment() {
                 designationOthers?.visibility = View.GONE
             }
 
-            val finalOutcomeOthersText = formatterClass.findTextViewByText(binding.rootLayout, "Final Outcome of treatment")
-            val finalOutcomeOthers = binding.rootLayout.findViewWithTag<View>("Final Outcome of treatment")
+            val finalOutcomeOthersText = formatterClass.findTextViewByText(binding.rootLayout, "Other Final Outcome of treatment")
+            val finalOutcomeOthers = binding.rootLayout.findViewWithTag<View>("Other Final Outcome of treatment")
+
             if (selectedItem == "Other Final Outcome of treatment"){
                 finalOutcomeOthersText?.visibility = View.VISIBLE
                 finalOutcomeOthers?.visibility = View.VISIBLE

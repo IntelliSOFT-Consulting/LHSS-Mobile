@@ -374,7 +374,10 @@
         tools:layout="@layout/fragment_end_treatment_review" >
         <action
             android:id="@+id/action_endTreatmentReviewFragment_to_patientCardFragment"
-            app:destination="@id/patientCardFragment" />
+            app:destination="@id/patientCardFragment"
+            app:popUpTo="@id/endTreatmentFormFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
     <fragment
         android:id="@+id/clinicalInfoEncountersFragment"
