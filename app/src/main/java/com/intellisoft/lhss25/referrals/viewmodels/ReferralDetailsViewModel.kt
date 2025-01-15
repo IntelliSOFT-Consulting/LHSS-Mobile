@@ -1,7 +1,6 @@
 package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,8 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss25.fhir.Constants
 import com.intellisoft.lhss25.shared.DbEncounter
 import com.intellisoft.lhss25.shared.DbFormData
+import com.intellisoft.lhss25.shared.DbFormsData
 import com.intellisoft.lhss25.shared.DbNavigationDetails
 import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.shared.FormatterClass
@@ -22,6 +23,9 @@ import org.hl7.fhir.r4.model.Encounter
 import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Resource
 import org.hl7.fhir.r4.model.ServiceRequest
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ReferralDetailsViewModel(
     application: Application,
@@ -137,10 +141,6 @@ class ReferralDetailsViewModel(
         val text = if (resource.hasValueStringType()){
             resource.valueStringType.valueAsString
         }else ""
-
-        println("tag $tag")
-        println("text $text")
-        println("id $id")
 
         return DbFormData(
             tag, text
@@ -268,6 +268,87 @@ class ReferralDetailsViewModel(
             referralReason,
             basedOn)
 
+    }
+
+    fun getFilledFormList(type:String) = runBlocking {
+        getBacFilledFormList(type)
+    }
+
+    private suspend fun getBacFilledFormList(type:String): ArrayList<DbFormsData>{
+
+        val formDataList = ArrayList<DbFormsData?>()
+
+        fhirEngine
+            .search<Encounter> {
+                filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
+                sort(Encounter.DATE, Order.ASCENDING)
+            }
+            .map { createEncounterFormItem(it.resource, type) }
+            .let {formDataList.addAll(it)}
+
+
+        return ArrayList(formDataList.filterNotNull())
+
+    }
+
+    private suspend fun createEncounterFormItem(resource: Encounter, type:String):DbFormsData? {
+
+        val reportingDateCode = Constants.PATIENT_REPORTING_DATE
+        val contactPerson = Constants.CONTACT_PERSON
+
+        val encounterId = if (resource.hasId()) resource.id else ""
+        val filledOn = if(resource.hasPeriod() && resource.period.hasStart()) resource.period.start.time else 0
+        val reasonCode = if (resource.hasReasonCode() &&
+            resource.reasonCodeFirstRep.hasText()) resource.reasonCodeFirstRep.text else ""
+
+        if (reasonCode != type){
+            return null
+        }
+
+        val reportingData = getObservationByCode(encounterId, reportingDateCode).firstOrNull()
+        val contactPersonData = getObservationByCode(encounterId, contactPerson).firstOrNull()
+
+        val patientDate = reportingData?.text ?: ""
+        val contactPersonInfo = contactPersonData?.text ?: ""
+
+        if (patientDate != "" && contactPersonInfo != ""){
+
+            //Convert time in long format to dd/MM/yyyy
+            val date = Date(filledOn)
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateStr = dateFormat.format(date)
+            val filledData = formatterClass.convertDateFormat(dateStr) ?: ""
+            val patientDateConverted = formatterClass.convertDateFormat(patientDate) ?: ""
+
+            val dbFormsData = DbFormsData(
+                encounterId,
+                patientDateConverted,
+                contactPersonInfo,
+                filledData
+            )
+
+            return dbFormsData
+        }
+
+
+        return null
+    }
+
+    private suspend fun getObservationByCode(encounterId: String, fhirCode: String):ArrayList<DbFormData>{
+
+        val observationList = ArrayList<DbFormData>()
+
+        fhirEngine
+            .search<Observation> {
+                filter(Observation.SUBJECT, { value = "Patient/$patientId" })
+                filter(Observation.ENCOUNTER, { value = encounterId })
+                filter(Observation.CODE, { value = of(fhirCode) })
+                sort(Observation.DATE, Order.ASCENDING)
+            }
+            .map { createObservationItem(it.resource) }
+            .let {observationList.addAll(it)}
+
+        return observationList
     }
 
 

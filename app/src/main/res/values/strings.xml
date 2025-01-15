@@ -82,6 +82,10 @@
     <string name="country_of_residence">Country of Residence</string>
     <string name="acknowledgement_forms">Acknowledgement Forms</string>
     <string name="end_of_treatment_forms">End of Treatment Forms</string>
+    <string name="forms_list">Forms List</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="reporting_date">Reporting Date</string>
+    <string name="filled_on">Filled on</string>
     <string-array name="languages_array">
         <item>English</item>
         <item>French</item>

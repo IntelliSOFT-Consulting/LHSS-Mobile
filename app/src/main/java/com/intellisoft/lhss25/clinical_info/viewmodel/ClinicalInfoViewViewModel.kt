@@ -15,7 +15,7 @@ class ClinicalInfoViewViewModel : ViewModel() {
 
     // Method to update the selected item in LiveData
     fun updateSelectedItem(item: String, rootViewParent: Spinner) {
-        Log.e("ClinicalInfoViewViewModel", "Selected item updated: $item")
+
         _selectedItem.value = item
         _rootViewSpinner.value = rootViewParent
     }

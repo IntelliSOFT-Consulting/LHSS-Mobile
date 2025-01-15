@@ -10,43 +10,43 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
-import com.intellisoft.lhss25.databinding.FragmentViewFormBinding
-import com.intellisoft.lhss25.databinding.FragmentViewFormDetailsBinding
+import com.intellisoft.lhss25.clinical_info.shared.ClinicalEncounterAdapter
+import com.intellisoft.lhss25.databinding.FragmentEndTreatmentFormBinding
+import com.intellisoft.lhss25.databinding.FragmentFilledFormsListBinding
 import com.intellisoft.lhss25.fhir.FhirApplication
+import com.intellisoft.lhss25.patient_details.FormFillsEncounterAdapter
 import com.intellisoft.lhss25.referrals.viewmodels.ReferralDetailsViewModel
 import com.intellisoft.lhss25.referrals.viewmodels.ReferralDetailsViewModelFactory
 import com.intellisoft.lhss25.shared.FormDataAdapter
 import com.intellisoft.lhss25.shared.FormatterClass
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class ViewFormDetailsFragment : Fragment() {
 
-    private var _binding: FragmentViewFormDetailsBinding? = null
+class FilledFormsListFragment : Fragment() {
+
+    private var _binding: FragmentFilledFormsListBinding? = null
     private val binding get() = _binding!!
-    private lateinit var fhirEngine: FhirEngine
+
     private lateinit var formatterClass: FormatterClass
     private var patientId:String = ""
-    private var userFhirPractitionerId:String = ""
-    private var serviceRequestId:String = ""
+    private lateinit var fhirEngine: FhirEngine
     private lateinit var viewModel: ReferralDetailsViewModel
-    private lateinit var formDataAdapter: FormDataAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        _binding = FragmentViewFormDetailsBinding.inflate(inflater, container, false)
-        formatterClass = FormatterClass(requireContext())
+        _binding = FragmentFilledFormsListBinding.inflate(inflater, container, false)
         fhirEngine = FhirApplication.fhirEngine(requireContext())
 
-        patientId = formatterClass.getSharedPref("", "patientId") ?: ""
-        userFhirPractitionerId = formatterClass.getSharedPref("", "userFhirPractitionerId") ?: ""
-        serviceRequestId = formatterClass.getSharedPref("", "serviceRequestId") ?: ""
+
+        formatterClass = FormatterClass(requireContext())
+
+        patientId = formatterClass.getSharedPref("", "patientId")?: ""
 
         viewModel =
             ViewModelProvider(
@@ -55,24 +55,28 @@ class ViewFormDetailsFragment : Fragment() {
                     requireContext().applicationContext as Application,
                     fhirEngine,
                     patientId,
-                    serviceRequestId
+                    ""
                 ),
-            )
-                .get(ReferralDetailsViewModel::class.java)
+            )[ReferralDetailsViewModel::class.java]
 
+        // Inflate the layout for this fragment
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formDataList = viewModel.getServiceRequest()
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        formDataAdapter = FormDataAdapter(formDataList, requireContext())
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        val formList  = viewModel.getFilledFormList("END_TREATMENT_FORM")
+        val formDataAdapter = FormFillsEncounterAdapter(
+            requireContext().applicationContext,
+            this@FilledFormsListFragment,
+            formList)
 
-        binding.recyclerView.adapter = formDataAdapter
+        CoroutineScope(Dispatchers.Main).launch {
+            binding.recyclerView.adapter = formDataAdapter
+        }
 
     }
 

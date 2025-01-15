@@ -229,6 +229,11 @@ data class DbLocationResponse(
     val partOf: String?,
     val id:String? = null
 )
-
+data class DbFormsData(
+    val encounterId: String,
+    val reportingDate:String?,
+    val contactPerson:String?,
+    val filledOn:String?
+)
 
 

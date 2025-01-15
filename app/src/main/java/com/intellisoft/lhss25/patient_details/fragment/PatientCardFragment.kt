@@ -150,10 +150,11 @@ class PatientCardFragment : Fragment() {
         return when (item.itemId) {
             R.id.acknoledgementDetailsFragment -> {
                 // Perform the action for this menu item
+                findNavController().navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
                 true
             }
             R.id.endTreatmentFormFragment -> {
-
+                findNavController().navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

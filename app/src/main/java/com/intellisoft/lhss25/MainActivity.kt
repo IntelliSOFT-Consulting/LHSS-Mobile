@@ -93,13 +93,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.patientsFragment -> {
                     // Handle Profile action
                     navController.navigate(R.id.patientListFragment)
-
                     true
                 }
                 R.id.profileFragment -> {
                     // Handle Settings action
                     navController.navigate(R.id.profileFragment2)
-
                     true
                 }
                 else -> false

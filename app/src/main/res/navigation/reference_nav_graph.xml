@@ -168,6 +168,9 @@
             android:id="@+id/action_patientCardFragment_to_patientOwnReferralListFragment"
             app:destination="@id/patientOwnReferralListFragment"
             app:popUpTo="@id/patientCardFragment" />
+        <action
+            android:id="@+id/action_patientCardFragment_to_filledFormsListFragment"
+            app:destination="@id/filledFormsListFragment" />
 
     </fragment>
     <fragment
@@ -462,6 +465,11 @@
             app:destination="@id/nextOfKinFragment"
             />
     </fragment>
+    <fragment
+        android:id="@+id/filledFormsListFragment"
+        android:name="com.intellisoft.lhss25.FilledFormsListFragment"
+        android:label="@string/forms_list"
+        tools:layout="@layout/fragment_filled_forms_list" />
 
 
 </navigation>
