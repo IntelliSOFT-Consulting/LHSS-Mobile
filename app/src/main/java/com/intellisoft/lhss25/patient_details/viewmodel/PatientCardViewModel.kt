@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.patient_details.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -165,7 +166,8 @@ class PatientCardViewModel(
                 /**
                  * 3. Address Information
                  */
-                val addressFormDataList =  ArrayList<DbFormData>()
+                val addressOriginFormDataList =  ArrayList<DbFormData>()
+                val addressResidenceFormDataList =  ArrayList<DbFormData>()
 
                 if (patient.hasAddress()) {
 
@@ -173,35 +175,41 @@ class PatientCardViewModel(
                     addressList.forEach { address ->
 
                         val country = if (address.hasCountry()) address.country else ""
+                        val district = if (address.hasDistrict()) address.district else ""
                         val state = if (address.hasState()) address.state else ""
                         val city = if (address.hasCity()) address.city else ""
 
                         val text = if (address.hasText()) address.text else ""
 
-                        if (country != "" && text != ""){
-                            //Country
-                             addressFormDataList.add(
-                                DbFormData(text, country)
-                            )
+                        val addressDataMap = mapOf(
+                            country to "Country",
+                            state to "County",
+                            district to "Sub County",
+                            city to "Ward"
+                        )
 
+                        addressDataMap.forEach { (location, type) ->
+                            if (location.isNotEmpty() && text.isNotEmpty()) {
+                                when {
+                                    text.contains("Origin") -> addressOriginFormDataList.add(DbFormData(text, location))
+                                    text.contains("Residence") -> addressResidenceFormDataList.add(DbFormData(text, location))
+                                }
+                            }
                         }
-                        if (state != "" && text!= ""){
-                            addressFormDataList.add(
-                                DbFormData(text, state)
-                            )
-                        }
-                        if (city!= "" && text!= ""){
-                            addressFormDataList.add(
-                                DbFormData(text, city)
-                            )
-                        }
+
                     }
 
                 }
                 formDataList.add(
                     FormData(
                         DbClasses.ADDRESS_ORIGIN.name,
-                        addressFormDataList
+                        addressOriginFormDataList
+                    )
+                )
+                formDataList.add(
+                    FormData(
+                        DbClasses.ADDRESS_RESIDENCE.name,
+                        addressResidenceFormDataList
                     )
                 )
 
