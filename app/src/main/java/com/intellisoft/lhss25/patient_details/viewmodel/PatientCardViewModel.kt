@@ -200,7 +200,7 @@ class PatientCardViewModel(
                 }
                 formDataList.add(
                     FormData(
-                        DbClasses.ADDRESS.name,
+                        DbClasses.ADDRESS_ORIGIN.name,
                         addressFormDataList
                     )
                 )

@@ -126,7 +126,8 @@ enum class DbNavigationDetails{
 }
 enum class DbClasses{
     DEMOGRAPHICS,
-    ADDRESS,
+    ADDRESS_ORIGIN,
+    ADDRESS_RESIDENCE,
     NEXT_OF_KIN,
 
     REFERRING_FACILITY_INFO,
@@ -157,7 +158,8 @@ enum class WorkflowTitles(
     val text: String,
 ) {
     DEMOGRAPHICS(R.drawable.ic_action_demographics, DbClasses.DEMOGRAPHICS.name, "Demographics"),
-    ADDRESS(R.drawable.ic_action_address, DbClasses.ADDRESS.name, "Address"),
+    ADDRESS_ORIGIN(R.drawable.ic_action_address, DbClasses.ADDRESS_ORIGIN.name, "Address Of Origin"),
+    ADDRESS_RESIDENCE(R.drawable.ic_action_address, DbClasses.ADDRESS_RESIDENCE.name, "Address of Residence"),
     NEXT_OF_KIN(R.drawable.ic_action_kin, DbClasses.NEXT_OF_KIN.name,  "Next Of Kin"),
 
     REFERRING_FACILITY_INFO(R.drawable.ic_referring_facility_info, DbClasses.REFERRING_FACILITY_INFO.name,  "Referring Facility Information"),

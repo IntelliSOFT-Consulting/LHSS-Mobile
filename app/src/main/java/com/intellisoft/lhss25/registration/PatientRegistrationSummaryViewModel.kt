@@ -102,7 +102,7 @@ class PatientRegistrationSummaryViewModel(
                     }
                     patient.name = humanNameList
                 }
-                DbClasses.ADDRESS.name -> {
+                DbClasses.ADDRESS_ORIGIN.name -> {
 
                     formData.formDataList.forEach { dbFormData ->
 

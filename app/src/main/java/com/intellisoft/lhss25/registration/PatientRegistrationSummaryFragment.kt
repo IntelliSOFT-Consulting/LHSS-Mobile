@@ -46,7 +46,8 @@ class PatientRegistrationSummaryFragment : Fragment() {
     private val navigationDetails = DbNavigationDetails.PATIENT_REGISTRATION.name
     private val registrationClassesList = listOf(
         DbClasses.DEMOGRAPHICS.name,
-        DbClasses.ADDRESS.name,
+        DbClasses.ADDRESS_ORIGIN.name,
+        DbClasses.ADDRESS_RESIDENCE.name,
         DbClasses.NEXT_OF_KIN.name,
     )
 

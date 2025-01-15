@@ -103,9 +103,8 @@
         android:label="@string/register_patient"
         tools:layout="@layout/fragment_address" >
         <action
-            android:id="@+id/action_addressFragment_to_nextOfKinFragment"
-            app:destination="@id/nextOfKinFragment"
-            />
+            android:id="@+id/action_addressFragment_to_addressCountryResidence"
+            app:destination="@id/addressCountryResidence" />
     </fragment>
     <fragment
         android:id="@+id/nextOfKinFragment"
@@ -453,6 +452,16 @@
         android:name="com.intellisoft.lhss25.ViewFormDetailsFragment"
         android:label="@string/view_form_details"
         tools:layout="@layout/fragment_view_form_details" />
+    <fragment
+        android:id="@+id/addressCountryResidence"
+        android:name="com.intellisoft.lhss25.AddressCountryResidence"
+        android:label="@string/country_of_residence"
+        tools:layout="@layout/fragment_address_country_residence" >
+        <action
+            android:id="@+id/action_addressFragment_to_nextOfKinFragment"
+            app:destination="@id/nextOfKinFragment"
+            />
+    </fragment>
 
 
 </navigation>

@@ -1,8 +1,6 @@
-package com.intellisoft.lhss25.registration.fragment
+package com.intellisoft.lhss25
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,36 +8,37 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.fhir.FhirEngine
 import com.google.gson.Gson
-import com.intellisoft.lhss25.LocationViewModel
-import com.intellisoft.lhss25.R
 import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoViewViewModel
 import com.intellisoft.lhss25.databinding.FragmentAddressBinding
-import com.intellisoft.lhss25.shared.DbClasses
-import com.intellisoft.lhss25.shared.DbField
-import com.intellisoft.lhss25.shared.DbNavigationDetails
-import com.intellisoft.lhss25.shared.DbWidgets
+import com.intellisoft.lhss25.databinding.FragmentAddressCountryResidenceBinding
 import com.intellisoft.lhss25.dynamic_components.DefaultLabelCustomizer
 import com.intellisoft.lhss25.dynamic_components.DefaultSpinnerSelectionHandler
 import com.intellisoft.lhss25.dynamic_components.FieldManager
-import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils
 import com.intellisoft.lhss25.dynamic_components.SpinnerSelectionHandler
 import com.intellisoft.lhss25.fhir.Constants
 import com.intellisoft.lhss25.fhir.FhirApplication
 import com.intellisoft.lhss25.registration.viewmodel.AddressViewModel
+import com.intellisoft.lhss25.shared.DbClasses
+import com.intellisoft.lhss25.shared.DbField
 import com.intellisoft.lhss25.shared.DbLocationResponse
+import com.intellisoft.lhss25.shared.DbNavigationDetails
+import com.intellisoft.lhss25.shared.DbWidgets
+import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.LocationDetails
 
-class AddressFragment : Fragment() {
 
-    private var _binding: FragmentAddressBinding? = null
+class AddressCountryResidence : Fragment() {
+
+    private var _binding: FragmentAddressCountryResidenceBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: AddressViewModel by viewModels()
@@ -63,20 +62,19 @@ class AddressFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
-        _binding = FragmentAddressBinding.inflate(inflater, container, false)
+        _binding = FragmentAddressCountryResidenceBinding.inflate(inflater, container, false)
 
         navigationActions()
         formatterClass = FormatterClass(requireContext())
 
-        val workflowTitles = formatterClass.getWorkflowTitles(DbClasses.ADDRESS_ORIGIN.name)
+        val workflowTitles = formatterClass.getWorkflowTitles(DbClasses.ADDRESS_RESIDENCE.name)
         if (workflowTitles != null){
             binding.tvTitle.text = formatterClass.toSentenceCase(workflowTitles.text)
             binding.imgBtn.setImageResource(workflowTitles.iconId)
@@ -123,9 +121,9 @@ class AddressFragment : Fragment() {
 
                 formatterClass.showDialog("Missing Content", mandatoryText)
             }else{
-                findNavController().navigate(R.id.action_addressFragment_to_addressCountryResidence)
+                findNavController().navigate(R.id.action_addressFragment_to_nextOfKinFragment)
                 val formData = FormData(
-                    DbClasses.ADDRESS_ORIGIN.name,
+                    DbClasses.ADDRESS_RESIDENCE.name,
                     addedFields)
 
                 val gson = Gson()
@@ -133,7 +131,7 @@ class AddressFragment : Fragment() {
 
                 formatterClass.saveSharedPref(
                     sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
-                    DbClasses.ADDRESS_ORIGIN.name,
+                    DbClasses.ADDRESS_RESIDENCE.name,
                     json
                 )
 
@@ -148,47 +146,9 @@ class AddressFragment : Fragment() {
         fieldManager = FieldManager(DefaultLabelCustomizer(), requireContext())
 
         val dbFieldList = listOf(
-            DbField(
-                DbWidgets.SPINNER.name,
-                "Country of Origin",
-                true,
-                null,
-                countryList.map { it.name },
-                true,
-                Constants.COUNTRY_RECEIVING
-            ),
-            DbField(
-                DbWidgets.SPINNER.name,
-                "Region/Province/County of Origin",
-                true,
-                null,
-                emptyList(),
-                true,
-                Constants.REGION_COUNTY_RECEIVING
-            ),
-            DbField(
-                DbWidgets.SPINNER.name,
-                "District/Sub County of Origin",
-                false,
-                null,
-                emptyList(),
-                true,
-                Constants.DISTRICT_SUB_COUNTY_RECEIVING
-            ),
-            DbField(
-                DbWidgets.SPINNER.name,
-                "Ward of Origin",
-                false,
-                null,
-                emptyList(),
-                true,
-                Constants.WARD_RECEIVING
-            ),
-
-
 //            DbField(
 //                DbWidgets.SPINNER.name,
-//                "Country of Residence",
+//                "Country of Origin",
 //                true,
 //                null,
 //                countryList.map { it.name },
@@ -197,7 +157,7 @@ class AddressFragment : Fragment() {
 //            ),
 //            DbField(
 //                DbWidgets.SPINNER.name,
-//                "Region/Province/County of Residence",
+//                "Region/Province/County of Origin",
 //                true,
 //                null,
 //                emptyList(),
@@ -206,7 +166,7 @@ class AddressFragment : Fragment() {
 //            ),
 //            DbField(
 //                DbWidgets.SPINNER.name,
-//                "District/Sub County of Residence",
+//                "District/Sub County of Origin",
 //                false,
 //                null,
 //                emptyList(),
@@ -215,13 +175,51 @@ class AddressFragment : Fragment() {
 //            ),
 //            DbField(
 //                DbWidgets.SPINNER.name,
-//                "Ward of Residence",
+//                "Ward of Origin",
 //                false,
 //                null,
 //                emptyList(),
 //                true,
 //                Constants.WARD_RECEIVING
 //            ),
+
+
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Country of Residence",
+                true,
+                null,
+                countryList.map { it.name },
+                true,
+                Constants.COUNTRY_RECEIVING
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Region/Province/County of Residence",
+                true,
+                null,
+                emptyList(),
+                true,
+                Constants.REGION_COUNTY_RECEIVING
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "District/Sub County of Residence",
+                false,
+                null,
+                emptyList(),
+                true,
+                Constants.DISTRICT_SUB_COUNTY_RECEIVING
+            ),
+            DbField(
+                DbWidgets.SPINNER.name,
+                "Ward of Residence",
+                false,
+                null,
+                emptyList(),
+                true,
+                Constants.WARD_RECEIVING
+            ),
 //            DbField(
 //                DbWidgets.SPINNER.name,
 //                "Country of Origin", true, null,
@@ -248,15 +246,15 @@ class AddressFragment : Fragment() {
 
         setSpinnerListener(
             listOf(
-                "Country of Origin",
-                "Region/Province/County of Origin",
-                "District/Sub County of Origin",
-                "Ward of Origin",
+//                "Country of Origin",
+//                "Region/Province/County of Origin",
+//                "District/Sub County of Origin",
+//                "Ward of Origin",
 
-//                "Country of Residence",
-//                "Region/Province/County of Residence",
-//                "District/Sub County of Residence",
-//                "Ward of Residence",
+                "Country of Residence",
+                "Region/Province/County of Residence",
+                "District/Sub County of Residence",
+                "Ward of Residence",
             )
         )
 
@@ -264,7 +262,7 @@ class AddressFragment : Fragment() {
             requireContext(),
             binding.rootLayout,
             DbNavigationDetails.PATIENT_REGISTRATION.name,
-            DbClasses.ADDRESS_ORIGIN.name
+            DbClasses.ADDRESS_RESIDENCE.name
         )
 
         // Use the extension
@@ -274,16 +272,16 @@ class AddressFragment : Fragment() {
 
         combinedLiveData.observe(viewLifecycleOwner) { (rootViewItem, selectedItem) ->
             // Use rootViewItem and selectedItem together
-            val countryOrigin = binding.rootLayout.findViewWithTag<View>("Country of Origin") as Spinner
-//            val countryResidence = binding.rootLayout.findViewWithTag<View>("Country of Residence") as Spinner
+//            val countryOrigin = binding.rootLayout.findViewWithTag<View>("Country of Origin") as Spinner
+            val countryResidence = binding.rootLayout.findViewWithTag<View>("Country of Residence") as Spinner
 
-            val regionOrigin = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Origin") as Spinner
-            val districtOrigin = binding.rootLayout.findViewWithTag<View>("District/Sub County of Origin") as Spinner
-            val wardOrigin = binding.rootLayout.findViewWithTag<View>("Ward of Origin") as Spinner
+//            val regionOrigin = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Origin") as Spinner
+//            val districtOrigin = binding.rootLayout.findViewWithTag<View>("District/Sub County of Origin") as Spinner
+//            val wardOrigin = binding.rootLayout.findViewWithTag<View>("Ward of Origin") as Spinner
 
-//            val regionResidence = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Residence") as Spinner
-//            val districtResidence = binding.rootLayout.findViewWithTag<View>("District/Sub County of Residence") as Spinner
-//            val wardResidence = binding.rootLayout.findViewWithTag<View>("Ward of Residence") as Spinner
+            val regionResidence = binding.rootLayout.findViewWithTag<View>("Region/Province/County of Residence") as Spinner
+            val districtResidence = binding.rootLayout.findViewWithTag<View>("District/Sub County of Residence") as Spinner
+            val wardResidence = binding.rootLayout.findViewWithTag<View>("Ward of Residence") as Spinner
 
             //Handle the origin and residence
             var countryValue: Spinner? = null
@@ -293,18 +291,18 @@ class AddressFragment : Fragment() {
 
             //Check the rootViewItem and work with the origin or residence
             when (rootViewItem) {
-                countryOrigin -> {
-                    countryValue = countryOrigin
-                    regionValue = regionOrigin
-                    districtValue = districtOrigin
-                    wardValue = wardOrigin
-                }
-//                countryResidence -> {
-//                    countryValue = countryResidence
-//                    regionValue = regionResidence
-//                    districtValue = districtResidence
-//                    wardValue = wardResidence
+//                countryOrigin -> {
+//                    countryValue = countryOrigin
+//                    regionValue = regionOrigin
+//                    districtValue = districtOrigin
+//                    wardValue = wardOrigin
 //                }
+                countryResidence -> {
+                    countryValue = countryResidence
+                    regionValue = regionResidence
+                    districtValue = districtResidence
+                    wardValue = wardResidence
+                }
                 else -> {
                     countryValue = null
                     regionValue = null
@@ -439,4 +437,6 @@ class AddressFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }

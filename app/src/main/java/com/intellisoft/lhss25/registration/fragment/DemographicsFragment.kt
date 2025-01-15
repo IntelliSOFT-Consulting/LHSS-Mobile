@@ -92,7 +92,6 @@ class DemographicsFragment : Fragment() {
             // Navigate to the next fragment or perform any action
             val gson = Gson()
 
-
             // Call the function to extract form data
             val (addedFields, missingFields) = extractAllFormData(binding.rootLayout)
 
@@ -257,37 +256,6 @@ class DemographicsFragment : Fragment() {
             DbNavigationDetails.PATIENT_REGISTRATION.name,
             DbClasses.DEMOGRAPHICS.name
         )
-
-        // Traverse through all child views of rootLayout
-//        for (i in 0 until binding.rootLayout.childCount) {
-//            val childView = binding.rootLayout.getChildAt(i)
-//            when (childView) {
-//
-//                is LinearLayout -> {
-//
-//                    for (j in 0 until childView.childCount) {
-//                        val innerChild = childView.getChildAt(j)
-//
-//                        when (innerChild) {
-//                            is MandatoryRadioGroup -> {
-//
-//                                val selectedText = innerChild.getSelectedRadioButtonText()
-//                                val isMandatory = innerChild.isMandatory
-//                                val tag = innerChild.tag?.toString() ?: ""
-//
-//                                Log.e(">>>>>>>", "<<<<<<<<")
-//                                println("selectedText $selectedText")
-//                                println("tag $tag")
-//                                Log.e(">>>>>>>", "<<<<<<<<")
-//                            }
-//                        }
-//
-//
-//                    }
-//                }
-//            }
-//        }
-
 
     }
     private fun setSpinnerListener(tagList: List<String>) {
