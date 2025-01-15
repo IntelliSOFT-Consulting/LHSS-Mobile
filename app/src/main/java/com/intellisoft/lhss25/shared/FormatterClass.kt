@@ -387,6 +387,7 @@ class FormatterClass(private val context: Context) {
 
         radioButtonEstimate.setOnClickListener {
             textViewDate.isEnabled = false
+            textViewDate.text = ""
             editTextYears.visibility = View.VISIBLE
             editTextMonths.visibility = View.VISIBLE
 
