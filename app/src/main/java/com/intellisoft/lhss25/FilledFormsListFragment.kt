@@ -68,11 +68,16 @@ class FilledFormsListFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val formList  = viewModel.getFilledFormList("END_TREATMENT_FORM")
-        val formDataAdapter = FormFillsEncounterAdapter(
-            requireContext().applicationContext,
-            this@FilledFormsListFragment,
-            formList)
+        val formName = formatterClass.getSharedPref("","FORM_NAME")
+
+        val formList  = formName?.let { viewModel.getFilledFormList(it) }
+        val formDataAdapter = formList?.let {
+            FormFillsEncounterAdapter(
+                requireContext().applicationContext,
+                this@FilledFormsListFragment,
+                it
+            )
+        }
 
         CoroutineScope(Dispatchers.Main).launch {
             binding.recyclerView.adapter = formDataAdapter

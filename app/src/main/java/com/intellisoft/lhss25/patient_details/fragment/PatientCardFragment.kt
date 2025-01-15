@@ -78,6 +78,8 @@ class PatientCardFragment : Fragment() {
 
         formatterClass.clearPatientData()
 
+        formatterClass.deleteSharedPref("","FORM_NAME")
+
         return binding.root
 
     }
@@ -150,10 +152,12 @@ class PatientCardFragment : Fragment() {
         return when (item.itemId) {
             R.id.acknoledgementDetailsFragment -> {
                 // Perform the action for this menu item
+                formatterClass.saveSharedPref("", "FORM_NAME", "ACKNOWLEDGEMENT_FORM")
                 findNavController().navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
                 true
             }
             R.id.endTreatmentFormFragment -> {
+                formatterClass.saveSharedPref("", "FORM_NAME", "END_TREATMENT_FORM")
                 findNavController().navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
                 true
             }
