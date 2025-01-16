@@ -27,6 +27,7 @@ class ViewFormDetailsFragment : Fragment() {
     private var patientId:String = ""
     private var userFhirPractitionerId:String = ""
     private var serviceRequestId:String = ""
+    private var encounterId:String = ""
     private lateinit var viewModel: ReferralDetailsViewModel
     private lateinit var formDataAdapter: FormDataAdapter
 
@@ -47,6 +48,7 @@ class ViewFormDetailsFragment : Fragment() {
         patientId = formatterClass.getSharedPref("", "patientId") ?: ""
         userFhirPractitionerId = formatterClass.getSharedPref("", "userFhirPractitionerId") ?: ""
         serviceRequestId = formatterClass.getSharedPref("", "serviceRequestId") ?: ""
+        encounterId = formatterClass.getSharedPref("", "encounterId") ?: ""
 
         viewModel =
             ViewModelProvider(
@@ -55,7 +57,8 @@ class ViewFormDetailsFragment : Fragment() {
                     requireContext().applicationContext as Application,
                     fhirEngine,
                     patientId,
-                    serviceRequestId
+                    serviceRequestId,
+                    encounterId
                 ),
             )
                 .get(ReferralDetailsViewModel::class.java)

@@ -34,6 +34,7 @@ class ReferralDetailsViewModel(
     private val fhirEngine: FhirEngine,
     private val patientId: String,
     private val serviceRequestId: String,
+    private val encounterId: String? = null,
 ) : AndroidViewModel(application) {
 
     // LiveData to expose the list of items
@@ -92,8 +93,28 @@ class ReferralDetailsViewModel(
         return items
     }
 
+
+
     fun getServiceRequest() = runBlocking {
-        getServiceRequestBac()
+
+        val formName = formatterClass.getSharedPref("", "FORM_NAME").orEmpty()
+
+        when (formName) {
+            "END_TREATMENT_FORM" -> getEncounterRequestBac()
+            "" -> getServiceRequestBac()
+            else -> getServiceRequestBac()
+        }
+
+    }
+
+    private suspend fun getEncounterRequestBac(): ArrayList<FormData>{
+
+        val formDataList = ArrayList<FormData>()
+        val dbFormData = encounterId?.let { getEncounterDetails(it) }
+        if (dbFormData != null) {
+            formDataList.add(dbFormData)
+        }
+        return formDataList
     }
 
 
@@ -447,12 +468,13 @@ class ReferralDetailsViewModelFactory(
     private val fhirEngine: FhirEngine,
     private val patientId: String,
     private val serviceRequestId: String,
+    private val encounterId: String? = null,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         require(modelClass.isAssignableFrom(ReferralDetailsViewModel::class.java)) {
             "Unknown ViewModel class"
         }
-        return ReferralDetailsViewModel(application, fhirEngine, patientId, serviceRequestId) as T
+        return ReferralDetailsViewModel(application, fhirEngine, patientId, serviceRequestId, encounterId) as T
     }
 }

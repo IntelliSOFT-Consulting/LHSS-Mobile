@@ -65,8 +65,16 @@ class FormFillsEncounterAdapter(
         holder.itemView.setOnClickListener {
 
             val id = parentItem.id
-            FormatterClass(context).saveSharedPref("","formDetailsId", id)
-            findNavController(fragment).navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
+            if (formName == "ACKNOWLEDGEMENT_FORM"){
+                formatterClass.saveSharedPref("","serviceRequestId", id)
+                formatterClass.deleteSharedPref("","encounterId")
+            }
+            if (formName == "END_TREATMENT_FORM"){
+                formatterClass.saveSharedPref("","encounterId", id)
+                formatterClass.deleteSharedPref("","serviceRequestId")
+            }
+
+            findNavController(fragment).navigate(R.id.action_filledFormsListFragment_to_viewFormDetailsFragment)
 
         }
 

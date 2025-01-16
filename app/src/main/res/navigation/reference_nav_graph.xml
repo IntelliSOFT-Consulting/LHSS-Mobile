@@ -469,7 +469,11 @@
         android:id="@+id/filledFormsListFragment"
         android:name="com.intellisoft.lhss25.FilledFormsListFragment"
         android:label="@string/forms_list"
-        tools:layout="@layout/fragment_filled_forms_list" />
+        tools:layout="@layout/fragment_filled_forms_list" >
+        <action
+            android:id="@+id/action_filledFormsListFragment_to_viewFormDetailsFragment"
+            app:destination="@id/viewFormDetailsFragment" />
+    </fragment>
 
 
 </navigation>
