@@ -230,9 +230,9 @@ data class DbLocationResponse(
     val id:String? = null
 )
 data class DbFormsData(
-    val encounterId: String,
-    val reportingDate:String?,
-    val contactPerson:String?,
+    val id: String,
+    val reportingReferralDate:String?,
+    val contactPersonReferralReason:String?,
     val filledOn:String?
 )
 

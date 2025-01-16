@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,7 @@ import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.shared.FormatterClass
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.hl7.fhir.r4.model.DocumentReference
 import org.hl7.fhir.r4.model.Encounter
 import org.hl7.fhir.r4.model.Observation
 import org.hl7.fhir.r4.model.Resource
@@ -271,7 +273,94 @@ class ReferralDetailsViewModel(
     }
 
     fun getFilledFormList(type:String) = runBlocking {
-        getBacFilledFormList(type)
+
+        when (type) {
+            "END_TREATMENT_FORM" -> {
+                getBacFilledFormList(type)
+            }
+            "ACKNOWLEDGEMENT_FORM" -> {
+                getBacAcknowledgementFilledFormList(type)
+            }
+            else -> {
+                emptyList()
+            }
+        }
+
+    }
+
+    private suspend fun getBacAcknowledgementFilledFormList(type:String): ArrayList<DbFormsData>{
+
+        val formDataList = ArrayList<DbFormsData?>()
+
+        fhirEngine
+            .search<DocumentReference> {
+                filter(Encounter.SUBJECT, { value = "Patient/$patientId" })
+                sort(Encounter.DATE, Order.ASCENDING)
+            }
+            .map { createDocumentReferenceItem(it.resource, type) }
+            .let {formDataList.addAll(it)}
+
+        return ArrayList(formDataList.filterNotNull())
+
+    }
+
+    private suspend fun createDocumentReferenceItem(resource: DocumentReference, type: String):DbFormsData? {
+
+        val id = if (resource.hasId()) resource.id else ""
+        val status = if (resource.hasStatus()) resource.statusElement else ""
+        val filledOn = if (resource.hasDate()) resource.date else null
+        val filledConverted = if (filledOn != null) formatterClass.convertDateFormat(filledOn.toString()) else ""
+        val serviceRequestReference = if (resource.hasContext() && resource.context.hasRelated()) resource.context.relatedFirstRep.reference else ""
+
+        val serviceRequestId = serviceRequestReference.replace("ServiceRequest/","")
+
+        val searchResult =
+            fhirEngine.search<ServiceRequest> {
+                filter(Resource.RES_ID, { value = of(serviceRequestId) })
+            }
+
+        if (searchResult.isEmpty()) {
+            return null
+        }
+
+        var codingDisplayValue = ""
+        var authoredOnValue = ""
+
+        searchResult.firstOrNull()?.let { serviceRequestValue ->
+            val serviceRequest = serviceRequestValue.resource
+
+            val referralReasonList = serviceRequest.reasonCode.takeIf { serviceRequest.hasReasonCode() } ?: emptyList()
+
+            referralReasonList.forEach { reason ->
+                val referralReasonText = reason.text.takeIf { reason.hasText() } ?: ""
+
+                if (referralReasonText == "REASON_FOR_REFERRAL") {
+                    val codingDisplay = reason.codingFirstRep.display.takeIf { reason.hasCoding() && reason.codingFirstRep.hasDisplay() } ?: ""
+                    codingDisplayValue = codingDisplay
+                }
+            }
+
+
+
+            val authoredOn = if(serviceRequest.hasAuthoredOn()) serviceRequest.authoredOn else null
+            authoredOnValue = if (authoredOn != null) formatterClass.convertDateFormat(authoredOn.toString()) ?: "" else ""
+
+        }
+
+        if (codingDisplayValue != "" && authoredOnValue != "" && filledConverted != null){
+            return DbFormsData(
+                serviceRequestId,
+                authoredOnValue,
+                codingDisplayValue,
+                filledConverted.toString()
+            )
+        }
+
+        return null
+
+
+
+
     }
 
     private suspend fun getBacFilledFormList(type:String): ArrayList<DbFormsData>{

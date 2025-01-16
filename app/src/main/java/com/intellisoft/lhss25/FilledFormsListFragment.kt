@@ -75,7 +75,7 @@ class FilledFormsListFragment : Fragment() {
             FormFillsEncounterAdapter(
                 requireContext().applicationContext,
                 this@FilledFormsListFragment,
-                it
+                ArrayList(it)
             )
         }
 

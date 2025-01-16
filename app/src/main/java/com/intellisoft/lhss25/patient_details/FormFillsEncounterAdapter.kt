@@ -58,14 +58,14 @@ class FormFillsEncounterAdapter(
         }
 
 
-        holder.tvContactPerson.text = parentItem.contactPerson
-        holder.tvReportingDate.text = parentItem.reportingDate
+        holder.tvContactPerson.text = parentItem.contactPersonReferralReason
+        holder.tvReportingDate.text = parentItem.reportingReferralDate
         holder.tvFilledOn.text = parentItem.filledOn
 
         holder.itemView.setOnClickListener {
 
-            val id = parentItem.encounterId.replace("Encounter/","")
-            FormatterClass(context).saveSharedPref("","encounterId", id)
+            val id = parentItem.id
+            FormatterClass(context).saveSharedPref("","formDetailsId", id)
             findNavController(fragment).navigate(R.id.action_patientCardFragment_to_filledFormsListFragment)
 
         }
