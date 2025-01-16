@@ -22,9 +22,15 @@ class FormFillsEncounterAdapter(
 ) : RecyclerView.Adapter<FormFillsEncounterAdapter.ParentViewHolder>() {
 
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val contactPerson: TextView = itemView.findViewById(R.id.contactPerson)
+        val tvContactPerson: TextView = itemView.findViewById(R.id.tvContactPerson)
         val tvReportingDate: TextView = itemView.findViewById(R.id.tvReportingDate)
         val tvFilledOn: TextView = itemView.findViewById(R.id.tvFilledOn)
+
+        val nameLabel: TextView = itemView.findViewById(R.id.nameLabel)
+        val referralReportingDateLabel: TextView = itemView.findViewById(R.id.referralReportingDateLabel)
+        val filledOnLabel: TextView = itemView.findViewById(R.id.filledOnLabel)
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentViewHolder {
@@ -37,7 +43,22 @@ class FormFillsEncounterAdapter(
 
         val formatterClass = FormatterClass(context)
 
-        holder.contactPerson.text = parentItem.contactPerson
+        val formName = formatterClass.getSharedPref("","FORM_NAME") ?: ""
+        if (formName != "") {
+            if (formName == "END_TREATMENT_FORM"){
+                holder.nameLabel.text = "Contact Person"
+                holder.referralReportingDateLabel.text = "Reporting Date"
+                holder.filledOnLabel.text = "Filled On"
+            }
+            if (formName == "ACKNOWLEDGEMENT_FORM"){
+                holder.nameLabel.text = "Referral Reason"
+                holder.referralReportingDateLabel.text = "Referral Date"
+                holder.filledOnLabel.text = "Filled On"
+            }
+        }
+
+
+        holder.tvContactPerson.text = parentItem.contactPerson
         holder.tvReportingDate.text = parentItem.reportingDate
         holder.tvFilledOn.text = parentItem.filledOn
 

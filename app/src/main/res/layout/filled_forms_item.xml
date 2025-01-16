@@ -35,14 +35,14 @@
                     android:textStyle="bold"
                     android:layout_marginEnd="8dp"
                     android:padding="5dp"
-                    app:layout_constraintEnd_toStartOf="@+id/contactPerson"
+                    app:layout_constraintEnd_toStartOf="@+id/tvContactPerson"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <!-- Text TextView -->
                 <TextView
-                    android:id="@+id/contactPerson"
+                    android:id="@+id/tvContactPerson"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/njuguna_sarafina"
@@ -73,7 +73,7 @@
 
                 <!-- Tag TextView -->
                 <TextView
-                    android:id="@+id/crossBorderIdLabel"
+                    android:id="@+id/referralReportingDateLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/reporting_date"
@@ -91,7 +91,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/_072bedf"
-                    app:layout_constraintStart_toEndOf="@+id/crossBorderIdLabel"
+                    app:layout_constraintStart_toEndOf="@+id/referralReportingDateLabel"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -118,7 +118,7 @@
 
                 <!-- Tag TextView -->
                 <TextView
-                    android:id="@+id/dobLabel"
+                    android:id="@+id/filledOnLabel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filled_on"
@@ -136,7 +136,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/_2024_03_04"
-                    app:layout_constraintStart_toEndOf="@+id/dobLabel"
+                    app:layout_constraintStart_toEndOf="@+id/filledOnLabel"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
