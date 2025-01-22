@@ -2,6 +2,7 @@ package com.intellisoft.lhss25.registration.fragment
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -184,6 +185,10 @@ class AddressFragment : Fragment() {
                 true,
                 Constants.WARD_RECEIVING
             ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Nearest Landmark", false,
+                InputType.TYPE_CLASS_TEXT),
 
 
 //            DbField(

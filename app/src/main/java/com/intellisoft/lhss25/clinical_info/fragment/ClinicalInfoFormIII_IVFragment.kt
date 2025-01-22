@@ -192,7 +192,7 @@ class ClinicalInfoFormIII_IVFragment : Fragment() {
                 DbField(
                     DbWidgets.SPINNER.name,
                     "Result", true, null,
-                    listOf("Resistance to Resistant", "Susceptible","Not Done", "Done Awaiting Results")
+                    listOf("Resistant", "Susceptible","Not Done", "Done Awaiting Results")
                 ),
                 DbField(
                     DbWidgets.EDIT_TEXT.name,

@@ -1,6 +1,7 @@
 package com.intellisoft.lhss25.registration.fragment
 
 import android.os.Bundle
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -221,6 +222,10 @@ class AddressCountryResidence : Fragment() {
                 true,
                 Constants.WARD_RECEIVING
             ),
+            DbField(
+                DbWidgets.EDIT_TEXT.name,
+                "Nearest Landmark", false,
+                InputType.TYPE_CLASS_TEXT),
 //            DbField(
 //                DbWidgets.SPINNER.name,
 //                "Country of Origin", true, null,
