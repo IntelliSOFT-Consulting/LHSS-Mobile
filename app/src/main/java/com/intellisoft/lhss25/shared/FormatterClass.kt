@@ -777,7 +777,7 @@ class FormatterClass(private val context: Context) {
 
     fun getStandardPhoneNumber(number: String):Boolean{
 
-        return if (number.length > 8){
+        return if (number.length > 8 && number.length < 14){
             val input1 = StringBuilder()
             input1.append(number)
             val reversedString = input1.reverse()

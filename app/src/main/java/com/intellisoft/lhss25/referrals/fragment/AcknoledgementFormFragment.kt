@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -138,39 +139,32 @@ class AcknoledgementFormFragment : Fragment() {
                         return@setNextButtonClickListener
                     }
                 }
-
-                val telephoneReferringData = addedFields.find { it.tag == "Phone Number" }
+                val telephoneReferringData = addedFields.find { it.tag == "Telephone of contact person" }
                 if (telephoneReferringData != null){
                     val textReferringNumber = telephoneReferringData.text
                     val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
 
-                    if (isReferringPhoneValid){
-
-                        findNavController().navigate(R.id.action_acknoledgementFormFragment_to_acknoledgementDetailsFragment)
-
-                        val formData = FormData(
-                            DbClasses.ACKNOWLEDGEMENT_FORM.name,
-                            addedFields)
-
-                        val gson = Gson()
-                        val json = gson.toJson(formData)
-
-                        formatterClass.saveSharedPref(
-                            sharedPrefName = DbNavigationDetails.REFERRALS.name,
-                            DbClasses.ACKNOWLEDGEMENT_FORM.name,
-                            json
-                        )
-                    }else{
+                    if (!isReferringPhoneValid){
                         Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
+                        return@setNextButtonClickListener
                     }
-
-
 
                 }
 
+                findNavController().navigate(R.id.action_acknoledgementFormFragment_to_acknoledgementDetailsFragment)
 
+                val formData = FormData(
+                    DbClasses.ACKNOWLEDGEMENT_FORM.name,
+                    addedFields)
 
+                val gson = Gson()
+                val json = gson.toJson(formData)
 
+                formatterClass.saveSharedPref(
+                    sharedPrefName = DbNavigationDetails.REFERRALS.name,
+                    DbClasses.ACKNOWLEDGEMENT_FORM.name,
+                    json
+                )
 
             }
 
@@ -239,7 +233,7 @@ class AcknoledgementFormFragment : Fragment() {
 //            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Phone Number", true,
+                "Phone Number", false,
                 InputType.TYPE_CLASS_PHONE,
                 emptyList(),
                 true,
