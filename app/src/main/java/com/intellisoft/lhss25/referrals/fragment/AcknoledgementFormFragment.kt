@@ -131,10 +131,6 @@ class AcknoledgementFormFragment : Fragment() {
             }else{
 
                 val emailData = addedFields.find { it.tag == "Email Contact" }
-//                if (emailData == null){
-//                    Toast.makeText(requireContext(), "Email Contact cannot be null", Toast.LENGTH_SHORT).show()
-//                    return@setNextButtonClickListener
-//                }
 
                 if (emailData != null){
                     if (!formatterClass.isValidEmail(emailData.text)){
@@ -143,25 +139,38 @@ class AcknoledgementFormFragment : Fragment() {
                     }
                 }
 
-//                if (emailData.text.isEmpty() || !formatterClass.isValidEmail(emailData.text)){
-//                    Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
-//                    return@setNextButtonClickListener
-//                }
+                val telephoneReferringData = addedFields.find { it.tag == "Phone Number" }
+                if (telephoneReferringData != null){
+                    val textReferringNumber = telephoneReferringData.text
+                    val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
 
-                findNavController().navigate(R.id.action_acknoledgementFormFragment_to_acknoledgementDetailsFragment)
+                    if (isReferringPhoneValid){
 
-                val formData = FormData(
-                    DbClasses.ACKNOWLEDGEMENT_FORM.name,
-                    addedFields)
+                        findNavController().navigate(R.id.action_acknoledgementFormFragment_to_acknoledgementDetailsFragment)
 
-                val gson = Gson()
-                val json = gson.toJson(formData)
+                        val formData = FormData(
+                            DbClasses.ACKNOWLEDGEMENT_FORM.name,
+                            addedFields)
 
-                formatterClass.saveSharedPref(
-                    sharedPrefName = DbNavigationDetails.REFERRALS.name,
-                    DbClasses.ACKNOWLEDGEMENT_FORM.name,
-                    json
-                )
+                        val gson = Gson()
+                        val json = gson.toJson(formData)
+
+                        formatterClass.saveSharedPref(
+                            sharedPrefName = DbNavigationDetails.REFERRALS.name,
+                            DbClasses.ACKNOWLEDGEMENT_FORM.name,
+                            json
+                        )
+                    }else{
+                        Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
+                    }
+
+
+
+                }
+
+
+
+
 
             }
 
@@ -230,9 +239,17 @@ class AcknoledgementFormFragment : Fragment() {
 //            ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Phone Number", false,
-                InputType.TYPE_CLASS_TEXT
+                "Phone Number", true,
+                InputType.TYPE_CLASS_PHONE,
+                emptyList(),
+                true,
+                null,
+                true,
+                null,
+                null,
+                "7XXXXXXXXXX"
             ),
+
 //            DbField(
 //                DbWidgets.EDIT_TEXT.name,
 //                "Contact Person", true,
