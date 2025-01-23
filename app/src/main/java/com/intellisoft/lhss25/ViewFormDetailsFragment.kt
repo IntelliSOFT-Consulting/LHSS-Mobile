@@ -30,6 +30,7 @@ class ViewFormDetailsFragment : Fragment() {
     private var encounterId:String = ""
     private lateinit var viewModel: ReferralDetailsViewModel
     private lateinit var formDataAdapter: FormDataAdapter
+    private lateinit var locationViewModel: LocationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,15 @@ class ViewFormDetailsFragment : Fragment() {
         serviceRequestId = formatterClass.getSharedPref("", "serviceRequestId") ?: ""
         encounterId = formatterClass.getSharedPref("", "encounterId") ?: ""
 
+        locationViewModel =
+            ViewModelProvider(
+                this,
+                LocationViewModel.LocationViewModelFactory(
+                    requireActivity().application,
+                    fhirEngine
+                ),
+            )[LocationViewModel::class.java]
+
         viewModel =
             ViewModelProvider(
                 this,
@@ -58,7 +68,8 @@ class ViewFormDetailsFragment : Fragment() {
                     fhirEngine,
                     patientId,
                     serviceRequestId,
-                    encounterId
+                    encounterId,
+                    locationViewModel
                 ),
             )
                 .get(ReferralDetailsViewModel::class.java)

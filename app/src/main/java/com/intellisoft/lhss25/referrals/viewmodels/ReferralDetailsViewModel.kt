@@ -2,6 +2,7 @@ package com.intellisoft.lhss25.referrals.viewmodels
 
 import android.app.Application
 import android.util.Log
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.fhir.FhirEngine
 import com.google.android.fhir.search.Order
 import com.google.android.fhir.search.search
+import com.intellisoft.lhss25.LocationViewModel
 import com.intellisoft.lhss25.fhir.Constants
 import com.intellisoft.lhss25.shared.DbEncounter
 import com.intellisoft.lhss25.shared.DbFormData
@@ -35,6 +37,7 @@ class ReferralDetailsViewModel(
     private val patientId: String,
     private val serviceRequestId: String,
     private val encounterId: String? = null,
+    private val locationViewModel: LocationViewModel? = null
 ) : AndroidViewModel(application) {
 
     // LiveData to expose the list of items
@@ -165,8 +168,14 @@ class ReferralDetailsViewModel(
             resource.valueStringType.valueAsString
         }else ""
 
+        var textValue = text ?: ""
+        if (tag == "Name of Receiving Facility" && text.isDigitsOnly()) {
+            textValue = locationViewModel?.getLocationById(text)?.name ?: text
+        }
+
+
         return DbFormData(
-            tag, text
+            tag, textValue
         )
 
     }
@@ -469,12 +478,13 @@ class ReferralDetailsViewModelFactory(
     private val patientId: String,
     private val serviceRequestId: String,
     private val encounterId: String? = null,
+    private val locationViewModel: LocationViewModel? = null,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         require(modelClass.isAssignableFrom(ReferralDetailsViewModel::class.java)) {
             "Unknown ViewModel class"
         }
-        return ReferralDetailsViewModel(application, fhirEngine, patientId, serviceRequestId, encounterId) as T
+        return ReferralDetailsViewModel(application, fhirEngine, patientId, serviceRequestId, encounterId, locationViewModel) as T
     }
 }

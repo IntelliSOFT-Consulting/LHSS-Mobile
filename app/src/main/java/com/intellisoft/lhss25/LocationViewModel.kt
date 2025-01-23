@@ -174,6 +174,15 @@ class LocationViewModel(
         return hierarchy.reversed() // Reverse to display hierarchy from country to facility
     }
 
+    fun getLocationById(locationId: String) = runBlocking {
+        getLocationByIdBac(locationId)
+    }
+
+    private suspend fun getLocationByIdBac(locationId: String): DbLocationResponse?{
+        val location = fetchLocation(locationId) ?: return null
+        val locationDetails = createLocationItem(location)
+        return locationDetails
+    }
 
     // Function to fetch a location from FHIR engine
     private suspend fun fetchLocation(locationId: String): Location? {
