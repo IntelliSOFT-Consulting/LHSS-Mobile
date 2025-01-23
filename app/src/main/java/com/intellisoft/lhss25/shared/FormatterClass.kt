@@ -499,7 +499,10 @@ class FormatterClass(private val context: Context) {
         val datePickerDialog = DatePickerDialog(
             context,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+
+                val formattedMonth = (selectedMonth + 1).toString().padStart(2, '0') // Ensure two digits
+                val formattedDay = selectedDay.toString().padStart(2, '0') // Ensure two digits
+                val selectedDate = "$selectedYear-$formattedMonth-$formattedDay"
                 editTextSelectedDate.text = selectedDate
 
             },
