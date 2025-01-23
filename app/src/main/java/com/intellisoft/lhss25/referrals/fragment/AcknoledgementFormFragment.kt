@@ -118,7 +118,7 @@ class AcknoledgementFormFragment : Fragment() {
             // Navigate to the next fragment or perform any action
 
             // Call the function to extract form data
-            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout, requireContext())
 
             if (missingFields.isNotEmpty()){
                 var missingText = ""

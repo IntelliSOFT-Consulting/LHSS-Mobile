@@ -152,7 +152,7 @@ object FormUtils {
         }
     }
 
-    fun extractAllFormData(rootLayout: LinearLayout):
+    fun extractAllFormData(rootLayout: LinearLayout, context: Context? = null):
             Pair<ArrayList<DbFormData>, ArrayList<DbFormData>> {
 
         val missingFields = ArrayList<DbFormData>()
@@ -272,6 +272,11 @@ object FormUtils {
                             val countryCode = countryCodePicker.selectedCountryCodeWithPlus // Get the country code with the plus sign
                             val phoneNumber = editText.text.toString() // Get the entered phone number
                             val tag = editText.tag?.toString() ?: "" // Get the tag for identifying the field
+
+                            if (context != null){
+                                FormatterClass(context).saveSharedPref("","selectedCountryCode",countryCode)
+                            }
+
 
                             // Check if the field is mandatory and has a tag containing "Telephone"
                             if (editText.isMandatory) {

@@ -524,7 +524,7 @@ class FormatterClass(private val context: Context) {
             DbNavigationDetails.REFERRALS.name).forEach {
             clearSharedPreferences(it)
         }
-        listOf("serviceRequestId", "patientId", "encounterId", "FORM_NAME",  "CLINICAL_REFERRAL").forEach {
+        listOf("serviceRequestId", "patientId", "encounterId", "FORM_NAME",  "CLINICAL_REFERRAL", "selectedCountryCode").forEach {
             deleteSharedPref("", it)
         }
 
@@ -536,7 +536,7 @@ class FormatterClass(private val context: Context) {
             DbNavigationDetails.REFERRALS.name).forEach {
             clearSharedPreferences(it)
         }
-        listOf("serviceRequestId", "CLINICAL_REFERRAL").forEach {
+        listOf("serviceRequestId", "CLINICAL_REFERRAL", "selectedCountryCode").forEach {
             deleteSharedPref("", it)
         }
 

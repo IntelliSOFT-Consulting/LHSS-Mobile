@@ -78,7 +78,7 @@ class ReferPatientFragment : Fragment() {
 
             // Handle next button click
             // Navigate to the next fragment or perform any action
-            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout, requireContext())
 
 
             if (missingFields.isNotEmpty()){

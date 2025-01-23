@@ -117,7 +117,7 @@ class EndTreatmentFormFragment : Fragment() {
             // Navigate to the next fragment or perform any action
 
 
-            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout, requireContext())
 
             if (missingFields.isNotEmpty()){
                 var missingText = ""

@@ -93,7 +93,7 @@ class DemographicsFragment : Fragment() {
             val gson = Gson()
 
             // Call the function to extract form data
-            val (addedFields, missingFields) = extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) = extractAllFormData(binding.rootLayout, requireContext())
 
             if (missingFields.isNotEmpty()){
 

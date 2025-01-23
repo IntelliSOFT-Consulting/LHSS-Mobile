@@ -88,11 +88,17 @@ class EditTextFieldCreator(
             val formatterCall = FormatterClass(context)
 
             //get the country code from the cpp library
+            val selectedCountryCode = formatterCall.getSharedPref("","selectedCountryCode")?.toIntOrNull()
+
             val userCountryPhoneCode = formatterCall.getSharedPref("","userCountryPhoneCode")?.toIntOrNull()
             val userCountryNameCode = formatterCall.getSharedPref("","userCountryNameCode")
 
-            if (userCountryPhoneCode!= null) setCountryForPhoneCode(userCountryPhoneCode) else setCountryForPhoneCode(254)
-            if (userCountryNameCode!= null) setDefaultCountryUsingNameCode(userCountryNameCode) else setDefaultCountryUsingNameCode("ke")
+            if(selectedCountryCode != null){
+                setCountryForPhoneCode(selectedCountryCode)
+            }else{
+                if (userCountryPhoneCode!= null) setCountryForPhoneCode(userCountryPhoneCode) else setCountryForPhoneCode(254)
+                if (userCountryNameCode!= null) setDefaultCountryUsingNameCode(userCountryNameCode) else setDefaultCountryUsingNameCode("ke")
+            }
 
         }
 

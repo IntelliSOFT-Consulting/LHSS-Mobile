@@ -96,7 +96,7 @@ class NextOfKinFragment : Fragment() {
             // Handle next button click
             // Navigate to the next fragment or perform any action
             // Call the function to extract form data
-            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout)
+            val (addedFields, missingFields) = FormUtils.extractAllFormData(binding.rootLayout, requireContext())
 
             // Check that if No is selected we can just proceed to the next fragment
             val contactConsent = addedFields.find { it.tag == "Can we contact your Next of Kin/Relative?" }
