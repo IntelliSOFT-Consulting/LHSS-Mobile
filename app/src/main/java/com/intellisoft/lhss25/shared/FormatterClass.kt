@@ -24,7 +24,6 @@ import androidx.core.content.ContextCompat
 import com.hbb20.CCPCountry
 import com.intellisoft.lhss25.LocationViewModel
 import com.intellisoft.lhss25.R
-import com.intellisoft.lhss25.dynamic_components.MandatoryRadioGroup
 
 
 import java.text.ParseException
@@ -218,11 +217,15 @@ class FormatterClass(private val context: Context) {
         return dateInverseFormatSeconds.format(date)
     }
 
-    fun addRadioButtonWithDatePicker(context: Context, linearLayout: LinearLayout) {
+    fun addRadioButtonWithDatePicker(
+        context: Context,
+        linearLayout: LinearLayout
+    ) {
 
         // Create a new LinearLayout with horizontal orientation
         val horizontalLayout = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
+            tag = "DOB_SELECTION_LINEAR_HORIZONTAL"
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -231,7 +234,7 @@ class FormatterClass(private val context: Context) {
         }
 
         // Add the RadioGroup inside this horizontal layout
-        val radioGroup = MandatoryRadioGroup(context).apply {
+        val radioGroup = RadioGroup(context).apply {
             // Set orientation to horizontal
             orientation = RadioGroup.HORIZONTAL
             tag = "DOB_SELECTION"
@@ -267,7 +270,7 @@ class FormatterClass(private val context: Context) {
         }
 
         val textViewDateOfBirthLabel = TextView(context).apply {
-            text = "Date of Birth *"
+            text = "Select Date of Birth *"
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

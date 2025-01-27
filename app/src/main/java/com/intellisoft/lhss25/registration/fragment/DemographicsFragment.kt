@@ -3,14 +3,11 @@ package com.intellisoft.lhss25.registration.fragment
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.intellisoft.lhss25.R
@@ -27,7 +24,6 @@ import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils
 import com.intellisoft.lhss25.dynamic_components.FormUtils.extractAllFormData
 import com.intellisoft.lhss25.dynamic_components.FormUtils.loadFormData
-import com.intellisoft.lhss25.dynamic_components.MandatoryRadioGroup
 import com.intellisoft.lhss25.dynamic_components.SpinnerSelectionHandler
 import com.intellisoft.lhss25.shared.FormatterClass
 import com.intellisoft.lhss25.shared.MainActivityViewModel
@@ -95,61 +91,76 @@ class DemographicsFragment : Fragment() {
             // Call the function to extract form data
             val (addedFields, missingFields) = extractAllFormData(binding.rootLayout, requireContext())
 
-            if (missingFields.isNotEmpty()){
+            findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
 
-                var missingText = ""
-                missingFields.forEach { missingText += "\n ${it.tag}, " }
+            val formData = FormData(
+                DbClasses.DEMOGRAPHICS.name,
+                addedFields)
 
-                val mandatoryText = "The following are mandatory fields and " +
-                        "need to be filled before proceeding: \n" +
-                        missingText
+            val json = gson.toJson(formData)
 
-                formatterClass.showDialog("Missing Content", mandatoryText)
+            formatterClass.saveSharedPref(
+                sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
+                DbClasses.DEMOGRAPHICS.name,
+                json
+            )
 
-            }else{
 
-                val telephoneReferringData = addedFields.find { it.tag == "Telephone in referring country" }
-                val documentNumber = addedFields.find { it.tag == "Document Number" }
-
-//                val telephoneReceivingData = addedFields.find { it.tag == "Telephone in receiving country" }
-
-                if (telephoneReferringData != null){
-
-                    val textReferringNumber = telephoneReferringData.text
-//                    val textReceivingNumber = telephoneReceivingData.text
-
-                    val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
-//                    val isReceivingPhoneValid = formatterClass.getStandardPhoneNumber(textReceivingNumber)
-
-                    if (isReferringPhoneValid){
-                        findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
-
-                        val formData = FormData(
-                            DbClasses.DEMOGRAPHICS.name,
-                            addedFields)
-
-                        val json = gson.toJson(formData)
-
-                        formatterClass.saveSharedPref(
-                            sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
-                            DbClasses.DEMOGRAPHICS.name,
-                            json
-                        )
-                    }else{
-                        Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
-                    }
-                }else{
-
-//                    if (documentNumber == null || documentNumber.text.length > 9)
-//                        Toast.makeText(context,
-//                            "The document number is not correct. Check if the number is less than 9 characters.",
-//                            Toast.LENGTH_LONG).show()
-
-                    Toast.makeText(context,
-                        "The telephone number in referring country is not provided.",
-                        Toast.LENGTH_LONG).show()
-                }
-            }
+//            if (missingFields.isNotEmpty()){
+//
+//                var missingText = ""
+//                missingFields.forEach { missingText += "\n ${it.tag}, " }
+//
+//                val mandatoryText = "The following are mandatory fields and " +
+//                        "need to be filled before proceeding: \n" +
+//                        missingText
+//
+//                formatterClass.showDialog("Missing Content", mandatoryText)
+//
+//            }else{
+//
+//                val telephoneReferringData = addedFields.find { it.tag == "Telephone in referring country" }
+//                val documentNumber = addedFields.find { it.tag == "Document Number" }
+//
+////                val telephoneReceivingData = addedFields.find { it.tag == "Telephone in receiving country" }
+//
+//                if (telephoneReferringData != null){
+//
+//                    val textReferringNumber = telephoneReferringData.text
+////                    val textReceivingNumber = telephoneReceivingData.text
+//
+//                    val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
+////                    val isReceivingPhoneValid = formatterClass.getStandardPhoneNumber(textReceivingNumber)
+//
+//                    if (isReferringPhoneValid){
+//                        findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
+//
+//                        val formData = FormData(
+//                            DbClasses.DEMOGRAPHICS.name,
+//                            addedFields)
+//
+//                        val json = gson.toJson(formData)
+//
+//                        formatterClass.saveSharedPref(
+//                            sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
+//                            DbClasses.DEMOGRAPHICS.name,
+//                            json
+//                        )
+//                    }else{
+//                        Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
+//                    }
+//                }else{
+//
+////                    if (documentNumber == null || documentNumber.text.length > 9)
+////                        Toast.makeText(context,
+////                            "The document number is not correct. Check if the number is less than 9 characters.",
+////                            Toast.LENGTH_LONG).show()
+//
+//                    Toast.makeText(context,
+//                        "The telephone number in referring country is not provided.",
+//                        Toast.LENGTH_LONG).show()
+//                }
+//            }
         }
     }
 
@@ -274,4 +285,8 @@ class DemographicsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }
+

@@ -201,11 +201,6 @@ class RetrofitCallsAuthentication {
 
                 } catch (e: Exception) {
 
-                    Log.e("******", "")
-                    Log.e("******", e.toString())
-                    Log.e("******", "")
-
-
                     messageToast = "Cannot login user.."
                 }
 

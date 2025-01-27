@@ -81,6 +81,16 @@ object FormUtils {
                             context
                         )
                     }
+
+                    is LinearLayout -> {
+                        if (label == "DOB_SELECTION_LINEAR_HORIZONTAL") {
+                            RadioButtonFieldCreator(
+                                optionList,
+                                context,
+                                isHorizontal = true)
+                        }
+                    }
+
                 }
             } else {
                 // Create a new widget if it doesn't exist
@@ -253,17 +263,15 @@ object FormUtils {
 
                         // Loop through the children of this LinearLayout to find CountryCodePicker and EditText
                         for (j in 0 until childView.childCount) {
-                            val innerChild = childView.getChildAt(j)
-
-
                             // Check the type of each inner child
-                            when (innerChild) {
+                            when (val innerChild = childView.getChildAt(j)) {
                                 is com.hbb20.CountryCodePicker -> {
                                     countryCodePicker = innerChild
                                 }
                                 is MandatoryEditText -> {
                                     editText = innerChild
                                 }
+
                             }
                         }
 
@@ -318,6 +326,14 @@ object FormUtils {
                                 }
                             }
                         }
+
+                        val selectedText = getSelectedDOBText(childView)
+                        if (selectedText != null) {
+                            val formData = DbFormData("Select Date of Birth", selectedText)
+                            addedFields.add(formData)
+                        }
+
+
                     }
 
                     // Add more cases as needed based on widget types
@@ -330,6 +346,27 @@ object FormUtils {
 
     }
 
+    // Function to get the selected text from the RadioGroup with tag "DOB_SELECTION"
+    private fun getSelectedDOBText(linearLayout: LinearLayout): String? {
+
+        val dobLinear = linearLayout.tag
+        if (dobLinear == "DOB_SELECTION_LINEAR_HORIZONTAL") {
+            // Find the RadioGroup with the specified tag
+            val radioGroup = linearLayout.findViewWithTag<RadioGroup>("DOB_SELECTION")
+
+            // Check if the RadioGroup is not null and has a selected RadioButton
+            val selectedRadioButtonId = radioGroup?.checkedRadioButtonId
+            val selectedId = radioGroup.checkedRadioButtonId
+            if (selectedId != -1) {
+                val selectedRadioButton = radioGroup.findViewById<RadioButton>(selectedId)
+                val selectedText = selectedRadioButton?.text.toString()
+                return selectedText
+            }
+
+        }
+
+        return null // No selection or RadioGroup not found
+    }
 
 
     fun populateFormData(
@@ -344,10 +381,14 @@ object FormUtils {
         formDataList.forEach { formData ->
             formData.formDataList.forEach { dbFormData ->
                 // Find the widget by its tag in the parent layout
-                val view = parentLayout.findViewWithTag<View>(dbFormData.tag)
+                var view = parentLayout.findViewWithTag<View>(dbFormData.tag)
 
-
-
+                if (dbFormData.tag == "Select Date of Birth"){
+                    val dobView = parentLayout.findViewWithTag<View>("DOB_SELECTION_LINEAR_HORIZONTAL")
+                    if (dobView != null){
+                        view = dobView
+                    }
+                }
 
                 // Check for the type of view and set the appropriate text/value
                 when (view) {
@@ -380,6 +421,28 @@ object FormUtils {
                                 break
                             }
                         }
+                    }
+                    is TextView -> {
+                        // Set TextView text
+                        view.text = dbFormData.text
+                    }
+                    is LinearLayout -> {
+
+                        val radioGroup = view.findViewWithTag<RadioGroup>("DOB_SELECTION")
+                        if (radioGroup != null){
+
+                            for (i in 0 until radioGroup.childCount) {
+                                val view = radioGroup.getChildAt(i)
+                                if (view is RadioButton) {
+                                    if (view.text.toString() == dbFormData.text) {
+                                        view.isChecked = true // Programmatically check the RadioButton
+                                        break // Exit the loop since we found the match
+                                    }
+                                }
+                            }
+
+                        }
+
                     }
 
 

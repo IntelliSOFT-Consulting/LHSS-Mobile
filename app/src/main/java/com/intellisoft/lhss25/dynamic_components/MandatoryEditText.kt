@@ -101,6 +101,10 @@ class MandatoryRadioGroup @JvmOverloads constructor(
         return radioGroup.checkedRadioButtonId != -1
     }
 
+    fun checkedRadioButtonId():Int{
+        return radioGroup.checkedRadioButtonId
+    }
+
     // Function to get the selected RadioButton's text
     fun getSelectedRadioButtonText(): String? {
         val selectedId = radioGroup.checkedRadioButtonId
