@@ -145,6 +145,9 @@ class PatientCardFragment : Fragment() {
 
             }
 
+            findNavController().navigate(R.id.action_patientCardFragment_to_demographicsFragment2)
+
+
         }
 
         // get navController to listen for back button presses

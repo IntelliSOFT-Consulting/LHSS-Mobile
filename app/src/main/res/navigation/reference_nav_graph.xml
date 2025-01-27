@@ -171,6 +171,9 @@
         <action
             android:id="@+id/action_patientCardFragment_to_filledFormsListFragment"
             app:destination="@id/filledFormsListFragment" />
+        <action
+            android:id="@+id/action_patientCardFragment_to_demographicsFragment2"
+            app:destination="@id/demographicsFragment" />
 
     </fragment>
     <fragment
