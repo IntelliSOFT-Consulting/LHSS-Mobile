@@ -432,10 +432,10 @@ object FormUtils {
                         if (radioGroup != null){
 
                             for (i in 0 until radioGroup.childCount) {
-                                val view = radioGroup.getChildAt(i)
-                                if (view is RadioButton) {
-                                    if (view.text.toString() == dbFormData.text) {
-                                        view.isChecked = true // Programmatically check the RadioButton
+                                val innerView = radioGroup.getChildAt(i)
+                                if (innerView is RadioButton) {
+                                    if (innerView.text.toString() == dbFormData.text) {
+                                        innerView.isChecked = true // Programmatically check the RadioButton
                                         break // Exit the loop since we found the match
                                     }
                                 }

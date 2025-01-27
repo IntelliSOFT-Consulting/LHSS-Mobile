@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.intellisoft.lhss25.R
@@ -91,76 +92,62 @@ class DemographicsFragment : Fragment() {
             // Call the function to extract form data
             val (addedFields, missingFields) = extractAllFormData(binding.rootLayout, requireContext())
 
-            findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
 
-            val formData = FormData(
-                DbClasses.DEMOGRAPHICS.name,
-                addedFields)
+            if (missingFields.isNotEmpty()){
 
-            val json = gson.toJson(formData)
+                var missingText = ""
+                missingFields.forEach { missingText += "\n ${it.tag}, " }
 
-            formatterClass.saveSharedPref(
-                sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
-                DbClasses.DEMOGRAPHICS.name,
-                json
-            )
+                val mandatoryText = "The following are mandatory fields and " +
+                        "need to be filled before proceeding: \n" +
+                        missingText
 
+                formatterClass.showDialog("Missing Content", mandatoryText)
 
-//            if (missingFields.isNotEmpty()){
-//
-//                var missingText = ""
-//                missingFields.forEach { missingText += "\n ${it.tag}, " }
-//
-//                val mandatoryText = "The following are mandatory fields and " +
-//                        "need to be filled before proceeding: \n" +
-//                        missingText
-//
-//                formatterClass.showDialog("Missing Content", mandatoryText)
-//
-//            }else{
-//
-//                val telephoneReferringData = addedFields.find { it.tag == "Telephone in referring country" }
-//                val documentNumber = addedFields.find { it.tag == "Document Number" }
-//
-////                val telephoneReceivingData = addedFields.find { it.tag == "Telephone in receiving country" }
-//
-//                if (telephoneReferringData != null){
-//
-//                    val textReferringNumber = telephoneReferringData.text
-////                    val textReceivingNumber = telephoneReceivingData.text
-//
-//                    val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
-////                    val isReceivingPhoneValid = formatterClass.getStandardPhoneNumber(textReceivingNumber)
-//
-//                    if (isReferringPhoneValid){
-//                        findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
-//
-//                        val formData = FormData(
-//                            DbClasses.DEMOGRAPHICS.name,
-//                            addedFields)
-//
-//                        val json = gson.toJson(formData)
-//
-//                        formatterClass.saveSharedPref(
-//                            sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
-//                            DbClasses.DEMOGRAPHICS.name,
-//                            json
-//                        )
-//                    }else{
-//                        Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
-//                    }
-//                }else{
-//
-////                    if (documentNumber == null || documentNumber.text.length > 9)
-////                        Toast.makeText(context,
-////                            "The document number is not correct. Check if the number is less than 9 characters.",
-////                            Toast.LENGTH_LONG).show()
-//
-//                    Toast.makeText(context,
-//                        "The telephone number in referring country is not provided.",
-//                        Toast.LENGTH_LONG).show()
-//                }
-//            }
+            }else{
+
+                val telephoneReferringData = addedFields.find { it.tag == "Telephone in referring country" }
+                val documentNumber = addedFields.find { it.tag == "Document Number" }
+
+//                val telephoneReceivingData = addedFields.find { it.tag == "Telephone in receiving country" }
+
+                if (telephoneReferringData != null){
+
+                    val textReferringNumber = telephoneReferringData.text
+//                    val textReceivingNumber = telephoneReceivingData.text
+
+                    val isReferringPhoneValid = formatterClass.getStandardPhoneNumber(textReferringNumber)
+//                    val isReceivingPhoneValid = formatterClass.getStandardPhoneNumber(textReceivingNumber)
+
+                    if (isReferringPhoneValid){
+                        findNavController().navigate(R.id.action_demographicsFragment_to_addressFragment)
+
+                        val formData = FormData(
+                            DbClasses.DEMOGRAPHICS.name,
+                            addedFields)
+
+                        val json = gson.toJson(formData)
+
+                        formatterClass.saveSharedPref(
+                            sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
+                            DbClasses.DEMOGRAPHICS.name,
+                            json
+                        )
+                    }else{
+                        Toast.makeText(context, "You have provided an invalid phone number", Toast.LENGTH_LONG).show()
+                    }
+                }else{
+
+//                    if (documentNumber == null || documentNumber.text.length > 9)
+//                        Toast.makeText(context,
+//                            "The document number is not correct. Check if the number is less than 9 characters.",
+//                            Toast.LENGTH_LONG).show()
+
+                    Toast.makeText(context,
+                        "The telephone number in referring country is not provided.",
+                        Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 
