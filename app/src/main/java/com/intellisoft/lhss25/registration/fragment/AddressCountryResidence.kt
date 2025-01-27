@@ -224,7 +224,7 @@ class AddressCountryResidence : Fragment() {
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Nearest Landmark", false,
+                "Nearest Landmark in Country of Residence", false,
                 InputType.TYPE_CLASS_TEXT),
 //            DbField(
 //                DbWidgets.SPINNER.name,

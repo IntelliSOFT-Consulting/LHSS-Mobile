@@ -126,6 +126,9 @@ class PatientRegistrationSummaryViewModel(
                         if (tag == "Ward of Origin"){
                             address.city = text
                         }
+                        if (tag == "Nearest Landmark in Country of Origin"){
+                            address.addLine(text)
+                        }
 
                         patient.addAddress(address)
                     }
@@ -153,6 +156,9 @@ class PatientRegistrationSummaryViewModel(
                         }
                         if (tag == "Ward of Residence"){
                             address.city = text
+                        }
+                        if (tag == "Nearest Landmark in Country of Residence"){
+                            address.addLine(text)
                         }
 
                         patient.addAddress(address)

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.fhir.FhirEngine
+import com.google.gson.Gson
 import com.intellisoft.lhss25.R
 import com.intellisoft.lhss25.clinical_info.viewmodel.ClinicalInfoDetailsViewModel
 import com.intellisoft.lhss25.databinding.FragmentPatientCardBinding
@@ -23,6 +24,9 @@ import com.intellisoft.lhss25.dynamic_components.FieldManager
 import com.intellisoft.lhss25.fhir.FhirApplication
 import com.intellisoft.lhss25.patient_details.viewmodel.PatientCardViewModel
 import com.intellisoft.lhss25.patient_details.viewmodel.PatientDetailsViewModelFactory
+import com.intellisoft.lhss25.shared.DbClasses
+import com.intellisoft.lhss25.shared.DbNavigationDetails
+import com.intellisoft.lhss25.shared.FormData
 import com.intellisoft.lhss25.shared.FormDataAdapter
 import com.intellisoft.lhss25.shared.FormatterClass
 
@@ -117,26 +121,60 @@ class PatientCardFragment : Fragment() {
         val crossBorderId = "Cross Border Id: ${patientId.substring(0,6)}"
         binding.tvCrossBorderId.text = crossBorderId
 
+        binding.imgBtnEdit.setOnClickListener {
+
+            val gson = Gson()
+
+            formDataList.forEach {formDataValue ->
+
+                val title = formDataValue.title
+                val addedFields = formDataValue.formDataList
+
+                val formData = FormData(
+                    title,
+                    addedFields)
+
+                val json = gson.toJson(formData)
+
+                formatterClass.saveSharedPref(
+                    sharedPrefName = DbNavigationDetails.PATIENT_REGISTRATION.name,
+                    title,
+                    json
+                )
+
+
+            }
+
+        }
+
         // get navController to listen for back button presses
         val navController = findNavController()
         navController.addOnDestinationChangedListener { previous, destination, res ->
             lastDestinationId = previous.previousBackStackEntry?.destination?.id
         }
 
+        formDataList.forEach {
+            Log.e("-------->","<------")
+            println(it)
+            println(it.title)
+            println(it.formDataList)
+            Log.e("-------->","<------")
+        }
+
         // Access the backQueue which contains the back stack entries
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            Log.e("BackStack", "Navigated to: ${destination.displayName}")
-
-            // Log current and previous entries
-            controller.currentBackStackEntry?.let {
-                Log.e("BackStack", "Current Fragment: ${it.destination.displayName}")
-            }
-
-            controller.previousBackStackEntry?.let {
-                Log.e("BackStack", "Previous Fragment: ${it.destination.displayName}")
-            }
-        }
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            Log.e("BackStack", "Navigated to: ${destination.displayName}")
+//
+//            // Log current and previous entries
+//            controller.currentBackStackEntry?.let {
+//                Log.e("BackStack", "Current Fragment: ${it.destination.displayName}")
+//            }
+//
+//            controller.previousBackStackEntry?.let {
+//                Log.e("BackStack", "Previous Fragment: ${it.destination.displayName}")
+//            }
+//        }
 
         setHasOptionsMenu(true)
     }

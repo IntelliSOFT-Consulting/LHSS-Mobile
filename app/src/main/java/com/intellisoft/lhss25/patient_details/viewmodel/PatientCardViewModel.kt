@@ -178,6 +178,7 @@ class PatientCardViewModel(
                         val district = if (address.hasDistrict()) address.district else ""
                         val state = if (address.hasState()) address.state else ""
                         val city = if (address.hasCity()) address.city else ""
+                        val line = if (address.hasLine()) address.line[0].valueAsString else ""
 
                         val text = if (address.hasText()) address.text else ""
 
@@ -185,7 +186,8 @@ class PatientCardViewModel(
                             country to "Country",
                             state to "County",
                             district to "Sub County",
-                            city to "Ward"
+                            city to "Ward",
+                            line to "Nearest",
                         )
 
                         addressDataMap.forEach { (location, type) ->

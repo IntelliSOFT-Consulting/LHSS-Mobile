@@ -187,7 +187,7 @@ class AddressFragment : Fragment() {
             ),
             DbField(
                 DbWidgets.EDIT_TEXT.name,
-                "Nearest Landmark", false,
+                "Nearest Landmark in Country of Origin", false,
                 InputType.TYPE_CLASS_TEXT),
 
 
